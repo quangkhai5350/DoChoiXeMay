@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -126,6 +134,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChiTietTC.cs" />
+    <Compile Include="Models\ChitietXuatNhap.cs" />
+    <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\HangHoa.cs" />
+    <Compile Include="Models\HanhDong.cs" />
+    <Compile Include="Models\HinhThucTC.cs" />
+    <Compile Include="Models\KyXuatNhap.cs" />
+    <Compile Include="Models\LoaiUserTek.cs" />
+    <Compile Include="Models\Manufacturer.cs" />
+    <Compile Include="Models\MaTC.cs" />
+    <Compile Include="Models\Model1.cs" />
+    <Compile Include="Models\NoteKythuat.cs" />
+    <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\ThuChi.cs" />
+    <Compile Include="Models\UserTek.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -357,7 +380,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
