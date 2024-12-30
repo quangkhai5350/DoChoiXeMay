@@ -42,12 +42,6 @@ namespace DoChoiXeMay.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<HanhDong>()
-                .HasMany(e => e.ChitietXuatNhaps)
-                .WithRequired(e => e.HanhDong)
-                .HasForeignKey(e => e.IdHanhDong)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<HanhDong>()
                 .HasMany(e => e.KyXuatNhaps)
                 .WithRequired(e => e.HanhDong)
                 .HasForeignKey(e => e.IdHanhDong)

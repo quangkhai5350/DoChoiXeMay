@@ -12,7 +12,12 @@ namespace DoChoiXeMay
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+               name: "DangNhap",
+               url: "Dang-Nhap",
+               defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional },
+               namespaces: new[] { "DoChoiXeMay.Controllers" }
+           );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

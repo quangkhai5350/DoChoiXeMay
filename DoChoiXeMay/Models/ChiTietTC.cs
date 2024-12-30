@@ -36,7 +36,9 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string Filesave3 { get; set; }
-
+        public int UserId { get; set; }
+        public bool AdminXacNhan { get; set; }
+        public virtual UserTek UserTek { get; set; }
         public virtual HinhThucTC HinhThucTC { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }

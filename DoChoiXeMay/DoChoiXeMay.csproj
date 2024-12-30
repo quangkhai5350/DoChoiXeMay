@@ -130,7 +130,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\ProtectAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -172,6 +174,7 @@
     <Content Include="Areas\Admin\Content\css\dialog\sweetalert2.min.css" />
     <Content Include="Areas\Admin\Content\css\dropzone\dropzone.css" />
     <Content Include="Areas\Admin\Content\css\font-awesome.min.css" />
+    <Content Include="Areas\Admin\Content\css\Info_Style.css" />
     <Content Include="Areas\Admin\Content\css\jquery.dataTables.min.css" />
     <Content Include="Areas\Admin\Content\css\jvectormap\jquery-jvectormap-2.0.3.css" />
     <Content Include="Areas\Admin\Content\css\main.css" />
@@ -351,6 +354,7 @@
     <Content Include="Areas\Admin\Content\fonts\notika-icon.eot" />
     <Content Include="Areas\Admin\Content\fonts\notika-icon.ttf" />
     <Content Include="Areas\Admin\Content\fonts\notika-icon.woff" />
+    <Content Include="Areas\Admin\Views\Home\InsertThuChi.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -376,10 +380,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
