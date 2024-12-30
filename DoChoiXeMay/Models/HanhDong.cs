@@ -12,7 +12,6 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HanhDong()
         {
-            ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
             KyXuatNhaps = new HashSet<KyXuatNhap>();
             NoteKythuats = new HashSet<NoteKythuat>();
         }
@@ -26,9 +25,6 @@ namespace DoChoiXeMay.Models
 
         [StringLength(500)]
         public string Ghichu { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KyXuatNhap> KyXuatNhaps { get; set; }

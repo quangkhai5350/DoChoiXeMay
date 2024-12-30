@@ -25,8 +25,6 @@ namespace DoChoiXeMay.Models
 
         public double Gianhap { get; set; }
 
-        public int IdHanhDong { get; set; }
-
         [StringLength(100)]
         public string PushtoCTNXId { get; set; }
 
@@ -50,8 +48,6 @@ namespace DoChoiXeMay.Models
         public virtual Color Color { get; set; }
 
         public virtual HangHoa HangHoa { get; set; }
-
-        public virtual HanhDong HanhDong { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }
 

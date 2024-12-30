@@ -22,8 +22,10 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<LoaiUserTek> LoaiUserTeks { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<MaTC> MaTCs { get; set; }
+        public virtual DbSet<NhatKyUTek> NhatKyUTeks { get; set; }
         public virtual DbSet<NoteKythuat> NoteKythuats { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UserTek> UserTeks { get; set; }
         public virtual DbSet<ThuChi> ThuChis { get; set; }
 
@@ -39,12 +41,6 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ChitietXuatNhaps)
                 .WithRequired(e => e.HangHoa)
                 .HasForeignKey(e => e.Idten)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<HanhDong>()
-                .HasMany(e => e.ChitietXuatNhaps)
-                .WithRequired(e => e.HanhDong)
-                .HasForeignKey(e => e.IdHanhDong)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<HanhDong>()
@@ -99,6 +95,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ChitietXuatNhaps)
                 .WithRequired(e => e.Size)
                 .HasForeignKey(e => e.IDSize)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTek>()
+                .HasMany(e => e.ChiTietTCs)
+                .WithRequired(e => e.UserTek)
+                .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserTek>()
