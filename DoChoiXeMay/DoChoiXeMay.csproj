@@ -147,8 +147,10 @@
     <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\MaTC.cs" />
     <Compile Include="Models\Model1.cs" />
+    <Compile Include="Models\NhatKyUTek.cs" />
     <Compile Include="Models\NoteKythuat.cs" />
     <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\ThuChi.cs" />
     <Compile Include="Models\UserTek.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

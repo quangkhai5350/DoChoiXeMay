@@ -26,7 +26,6 @@ namespace DoChoiXeMay.Models
         [StringLength(500)]
         public string Ghichu { get; set; }
 
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KyXuatNhap> KyXuatNhaps { get; set; }
 

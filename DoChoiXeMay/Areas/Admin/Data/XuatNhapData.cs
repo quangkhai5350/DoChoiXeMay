@@ -18,5 +18,31 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return 0;
         }
+        public static bool InsertNhatKy_Admin(Model1 dbc, int UserID, string LoaiUser, string UserName, string CongViec, string GhiChu)
+        {
+            try
+            {
+                if (LoaiUser != "Guest")
+                {
+                    NhatKyUTek model = new NhatKyUTek();
+                    model.Id = Guid.NewGuid();
+                    model.UserID = UserID;
+                    model.UserName = UserName;
+                    model.LoaiUser = LoaiUser;
+                    model.CreateDate = DateTime.Now;
+                    model.CongViec = CongViec;
+                    model.GhiChu = GhiChu;
+                    dbc.NhatKyUTeks.Add(model);
+                    dbc.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+
+        }
     }
 }

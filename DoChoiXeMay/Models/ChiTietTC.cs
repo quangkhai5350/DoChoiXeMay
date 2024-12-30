@@ -36,13 +36,21 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string Filesave3 { get; set; }
+
+        public DateTime NgayTC { get; set; }
+
+        public DateTime NgayAuto { get; set; }
+
         public int UserId { get; set; }
+
         public bool AdminXacNhan { get; set; }
-        public virtual UserTek UserTek { get; set; }
+
         public virtual HinhThucTC HinhThucTC { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }
 
         public virtual MaTC MaTC { get; set; }
+
+        public virtual UserTek UserTek { get; set; }
     }
 }

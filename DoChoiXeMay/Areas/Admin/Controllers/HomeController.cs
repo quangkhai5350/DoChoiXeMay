@@ -15,36 +15,66 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         Model1 dbc = new Model1();
         public ActionResult Index()
         {
-            Session["User"] = "Admin";
-            Session["UserId"] = 1;
+            Session["UserName"] = "Admin";
+            Session["UserId"] = "1";
             Session["quyen"] = "Admin";
             return View();
         }
         [Protect]
+        [HttpGet]
         public ActionResult InsertThuChi()
         {
-            ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh=>kh.SuDung==true).ToList(),"Id", "TenMa");
-            ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true).ToList(), "Id", "TenHT");
-            
+            var model = new ChiTietTC();
+            ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "TenMa");
+            //dbc.MaTCs.Select(x => new SelectListItem { Text = x.TenMa, Value = x.Id.ToString() }).ToList();
+
+            //new SelectList(dbc.MaTCs.Where(kh=>kh.SuDung==true),"Id", "TenMa",0);
+            ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT");
+            //dbc.HinhThucTCs.Select(x => new SelectListItem { Text = x.TenHT, Value = x.Id.ToString() }).ToList();
+
+            //new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT",0);
+
             return View();
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult InsertThuChi(ChiTietTC TC)
+        public ActionResult InsertThuChikh(ChiTietTC TC)
         {
+            ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT");
+            ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "TenMa");
             try
             {
                 ChiTietTC p = new ChiTietTC();
                 p.Id = Guid.NewGuid();
-                p.SoTien = TC.SoTien;
-                p.ThuChi = TC.ThuChi;
+                p.IdMa = TC.IdMa;
+                p.IdHT = TC.IdHT;
+                p.IdKyxuatnhap = TC.IdKyxuatnhap;
                 p.Noidung = TC.Noidung;
+                p.ThuChi = TC.ThuChi;
+                p.Ghichu = TC.Ghichu;
+                p.Filesave1 = "";
+                p.Filesave2 = "";
+                p.Filesave3 = "";
+                p.NgayTC = TC.NgayTC;
+                p.NgayAuto = DateTime.Now;
+                p.SoTien = double.Parse(TC.SoTien.ToString());
+                p.UserId = int.Parse(Session["UserId"].ToString());
+                p.AdminXacNhan = false;
+                dbc.ChiTietTCs.Add(p);
+                int kt = dbc.SaveChanges();
+                if(kt > 0)
+                {
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, p.UserId, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "InsertThuChi-" + p.NgayTC, "");
+                    Session["ThongBao_InsertTC"] = "Insert thành công File Thu Chi Ngày: " + p.NgayTC;
+                    return RedirectToAction("Index");
+                }
             }
             catch (Exception ex)
             {
                 string loi = ex.ToString();
                 ModelState.AddModelError("", "Thêm mới Thất Bại !!!!!!!!!!. Có lỗi hệ thống");
-                return View();
+                return View("InsertThuChi");
             }
             return RedirectToAction("Index");
         }
