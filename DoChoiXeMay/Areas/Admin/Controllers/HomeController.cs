@@ -51,9 +51,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var ten = file.FileName;
                     string[] str = ten.Split('.');
 
-                    //var ext = ten.Substring(ten.LastIndexOf('.'));
                     var ext = str[str.Count()-1].ToLower();
-                    //var ext = ten.Substring(ten.LastIndexOf('.')).ToLower();
                     if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "xls"|| ext == "pdf"||ext=="xlsx"
                         ||ext =="doc"||ext =="docx")
                     {
