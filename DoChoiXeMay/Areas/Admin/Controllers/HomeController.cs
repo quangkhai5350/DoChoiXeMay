@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using DoChoiXeMay.Utils;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -26,14 +28,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var model = new ChiTietTC();
             ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "TenMa");
-            //dbc.MaTCs.Select(x => new SelectListItem { Text = x.TenMa, Value = x.Id.ToString() }).ToList();
-
-            //new SelectList(dbc.MaTCs.Where(kh=>kh.SuDung==true),"Id", "TenMa",0);
+            
             ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT");
-            //dbc.HinhThucTCs.Select(x => new SelectListItem { Text = x.TenHT, Value = x.Id.ToString() }).ToList();
-
-            //new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT",0);
-
+            
             return View();
         }
         [HttpPost]
@@ -45,19 +42,40 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             try
             {
                 ChiTietTC p = new ChiTietTC();
+                p = TC;
                 p.Id = Guid.NewGuid();
-                p.IdMa = TC.IdMa;
-                p.IdHT = TC.IdHT;
-                p.IdKyxuatnhap = TC.IdKyxuatnhap;
-                p.Noidung = TC.Noidung;
-                p.ThuChi = TC.ThuChi;
-                p.Ghichu = TC.Ghichu;
-                p.Filesave1 = "";
-                p.Filesave2 = "";
-                p.Filesave3 = "";
-                p.NgayTC = TC.NgayTC;
+
+                var file = Request.Files["Filesave1"];
+                if (file.ContentLength > 0)
+                {
+                    var ten = file.FileName;
+                    string[] str = ten.Split('.');
+
+                    //var ext = ten.Substring(ten.LastIndexOf('.'));
+                    var ext = str[str.Count()-1].ToLower();
+                    //var ext = ten.Substring(ten.LastIndexOf('.')).ToLower();
+                    if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "xls"|| ext == "pdf"||ext=="xlsx"
+                        ||ext =="doc"||ext =="docx")
+                    {
+                        var sub = XString.MakeAotuName();
+                        ten = str[str.Count()-2] + sub + "."+ext;
+                        p.Filesave1 = ten;
+                        //Thu nho hinh anh qua to
+                        WebImage img = new WebImage(file.InputStream);
+                        if (img.Width > 400)
+                            img.Resize(400, 450);
+                        img.Save(Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + ten));
+                        
+                    }
+                    else p.Filesave1 = "";
+                }
+                //else dn.Logo = "logo/TNThumbnail.jpg";
+                //model.Logo = dn.Logo;
+                ////p.Filesave1 = "";
+                ////p.Filesave2 = "";
+                ////p.Filesave3 = "";
+                ////p.NgayTC = TC.NgayTC;
                 p.NgayAuto = DateTime.Now;
-                p.SoTien = double.Parse(TC.SoTien.ToString());
                 p.UserId = int.Parse(Session["UserId"].ToString());
                 p.AdminXacNhan = false;
                 dbc.ChiTietTCs.Add(p);

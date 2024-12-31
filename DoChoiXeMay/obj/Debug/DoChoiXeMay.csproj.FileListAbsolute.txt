@@ -160,3 +160,7 @@ E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.dll
 E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.SqlServer.dll
 E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.xml
 E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.SqlServer.xml
+D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.dll
+D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.SqlServer.dll
+D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.xml
+D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.SqlServer.xml
