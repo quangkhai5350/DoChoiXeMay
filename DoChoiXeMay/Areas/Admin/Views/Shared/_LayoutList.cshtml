@@ -83,8 +83,9 @@
                                 <span>@Session["UserName"].ToString()</span>
                             }
                         </p>
-                        
-                    </div>
+
+
+                        </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                     
@@ -167,7 +168,6 @@
                                         </div>
                                     </div>
                                 </li>
-
                                 <li class="nav-item nc-al">
                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-alarm"></i></span><div class="spinner4 spinner-4"></div><div class="ntd-ctn"><span>3</span></div></a>
                                     <div role="menu" class="dropdown-menu message-dd notification-dd animated zoomIn">
@@ -502,28 +502,29 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
-                        <li>
-                            <a data-toggle="tab" href="#Home" class="color-tile-tek"><i class="notika-icon notika-bar-chart"></i> Thu Chi Tek</a>
+                        <li id="HomeHome">
+                            <a data-toggle="tab" href="#Home"class="color-tile-tek"><i class="notika-icon notika-bar-chart"></i> Thu Chi Tek</a>
                         </li>
-                        <li>
-                            <a data-toggle="tab" href="#mailbox" class="color-tile-tek"><i class="notika-icon notika-form"></i> Xuất Nhập Tek</a>
+                        <li id="mailboxmailbox">
+                            <a data-toggle="tab" href="#mailbox"class="color-tile-tek"><i class="notika-icon notika-form"></i> Xuất Nhập Tek</a>
                         </li>
-                        <li>
-                            <a data-toggle="tab" href="#Interface" class="color-tile-tek"><i class="notika-icon notika-edit"></i> Note Tek</a>
+                        <li id="InterfaceInterface">
+                            <a data-toggle="tab" href="#Interface"class="color-tile-tek"><i class="notika-icon notika-edit"></i> Note Tek</a>
                         </li>
-                        @if (Session["quyen"].ToString() == "Admin")
+                        @if(Session["quyen"].ToString() == "Admin")
                         {
                             <li id="ChartsCharts">
                                 <a data-toggle="tab" href="#Charts"><i class="notika-icon notika-bar-chart"></i> Thu Chi User</a>
                             </li>
                         }
-                        <li>
+                        
+                        <li id="TablesTables">
                             <a data-toggle="tab" href="#Tables"><i class="notika-icon notika-form"></i> Xuất Nhập User</a>
                         </li>
-                        <li>
+                        <li id="FormsForms">
                             <a data-toggle="tab" href="#Forms"><i class="notika-icon notika-edit"></i> Note User</a>
                         </li>
-
+                        
                     </ul>
                     <div class="tab-content custom-menu-content">
                         <div id="Home" class="tab-pane notika-tab-menu-bg animated flipInX">
@@ -619,7 +620,7 @@
         </div>
     </div>
 
-    <div class="container body-content" style="min-height: 650px; margin: 0 auto">
+    <div class="body-content" style="width:98%; min-height:650px;margin:0 auto">
         @RenderBody()
 
     </div>
@@ -715,6 +716,13 @@
     <!-- tawk chat JS
         ============================================ -->
     @*<script src="~/Areas/Admin/Content/js/tawk-chat.js"></script>*@
+    @*<script>
+        $(function () {
+            $('#mailboxmailbox').click(function () {
+                $('#mailboxmailbox').addClass('active')
+            });
+        });
+    </script>*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 

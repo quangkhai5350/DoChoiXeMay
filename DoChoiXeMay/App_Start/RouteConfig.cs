@@ -15,7 +15,7 @@ namespace DoChoiXeMay
             routes.MapRoute(
                name: "DangNhap",
                url: "Dang-Nhap",
-               defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional },
+               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                namespaces: new[] { "DoChoiXeMay.Controllers" }
            );
             routes.MapRoute(
