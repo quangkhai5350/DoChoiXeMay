@@ -128,7 +128,7 @@ namespace DoChoiXeMay.Controllers
                         , Session["UserName"].ToString(), "LoginWeb", "");
 
                                
-                                return RedirectToAction("ListThuChiTeK", "Home", new { area = "Admin" });
+                                return RedirectToAction("ListThuChiTeK", "ThuChi", new { area = "Admin" });
                             }
                             else
                             {

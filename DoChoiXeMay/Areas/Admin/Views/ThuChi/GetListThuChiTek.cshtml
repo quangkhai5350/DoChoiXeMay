@@ -1,26 +1,11 @@
 ﻿
-@{
-    ViewBag.Title = "ListThuChiTeK";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutList.cshtml";
-}
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-<h5>***Kỳ XuấtN: Thêm mới + Xóa(KyXN +ChiTietXN) nếu chưa add bảng ChitietTC</h5>
-<h5>***ChiTietXN(SubAdmin):Thêm Mới + Xóa</h5>
-<div style="text-align:right">
-    <span style="color:brown;margin-left:10px;font-display:inherit">
-        @Session["ThongBaoThuChiTEK"]
-    </span>
-</div>
-<h2>Danh Sách Thu Chi TeK</h2>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead>
             <tr style="background-color: #00bcd4">
 
-                <th style="text-align: center">UserName</th>
-                <th style="text-align: center">Mã TC</th>
+                <th style="text-align:center">UserName</th>
+                <th style="text-align:center">Mã TC</th>
                 <th style="text-align:center">Hình Thức</th>
                 <th style="text-align:center">Kỳ Xuất Nhập</th>
                 <th style="text-align:center">Nội Dung TC</th>
@@ -51,35 +36,33 @@
                     <td style="text-align:center">@Item.KyXuatNhap.TenKy</td>
                     <td style="text-align:center">@Item.Noidung</td>
                     <td style="text-align:center">@Html.FormatValue(Item.SoTien, "{0:#,###,###}")</td>
-                    
-                        @if (Item.ThuChi == true)
-                        {
+
+                    @if (Item.ThuChi == true)
+                    {
                         <td style="text-align:center;background-color:bisque">
-                            <span>Thu</span>
+                            <span>Thu vào</span>
                         </td>
                     }
                     else
                     {
                         <td style="text-align:center">
-                            <span>Chi</span>
+                            <span>Chi ra</span>
                         </td>
                     }
 
-                        <td style="text-align:center">@Html.FormatValue(Item.NgayTC, "{0:dd/MM/yyyy}")</td>
-                        <td style="text-align:center">@Item.Ghichu</td>
-                        <td style="text-align:center">@Html.FormatValue(Item.NgayAuto, "{0:dd/MM/yyyy}")</td>
-                        @if (Session["quyen"].ToString() == "Admin")
-                        {
-                            <td>
-                                <a class="btn btn-danger" href=""><span class="glyphicon glyphicon-edit"></span></a>
-                                <a style="display:none" class="btn btn-warning text-center" onclick="return confirm('Bạn muốn xóa ThuChi ngày @Item.NgayTC ??')" href="/Admin/Home/DeleteThuChi/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
-                            </td>
-                        }
-                    </tr>
+                    <td style="text-align:center">@Html.FormatValue(Item.NgayTC, "{0:dd/MM/yyyy}")</td>
+                    <td style="text-align:center">@Item.Ghichu</td>
+                    <td style="text-align:center">@Html.FormatValue(Item.NgayAuto, "{0:dd/MM/yyyy}")</td>
+                    @if (Session["quyen"].ToString() == "Admin")
+                    {
+                        <td>
+                            <a class="btn btn-danger" href=""><span class="glyphicon glyphicon-edit"></span></a>
+                            <a style="display:none" class="btn btn-warning text-center" onclick="return confirm('Bạn muốn xóa ThuChi ngày @Item.NgayTC ??')" href="/Admin/Home/DeleteThuChi/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    }
+                </tr>
 
-                }
+            }
         </tbody>
     </table>
 </div>
-
-

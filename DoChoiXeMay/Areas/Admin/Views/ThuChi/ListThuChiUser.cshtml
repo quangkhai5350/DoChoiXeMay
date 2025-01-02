@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "ListThuChiUser";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutList.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <style>
     .mauthuchi {
@@ -164,7 +164,7 @@
             }
             
             $.ajax({
-                url: "/Admin/Home/DayThuChiTek",
+                url: "/Admin/ThuChi/DayThuChiTek",
                 data: { Id: actionId, key:key},
                 type: "POST",
                 datatype: 'Json',
