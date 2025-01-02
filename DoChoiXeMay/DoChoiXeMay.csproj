@@ -133,6 +133,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
+    <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\ProtectAttribute.cs" />
@@ -361,10 +363,12 @@
     <Content Include="Areas\Admin\Content\fonts\notika-icon.eot" />
     <Content Include="Areas\Admin\Content\fonts\notika-icon.ttf" />
     <Content Include="Areas\Admin\Content\fonts\notika-icon.woff" />
-    <Content Include="Areas\Admin\Views\Home\InsertThuChi.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\ListThuChiUser.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuChi\InsertThuChi.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuChi\ListThuChiUser.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutList.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\ListThuChiTeK.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuChi\ListThuChiTeK.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuChi\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuChi\GetListThuChiTek.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

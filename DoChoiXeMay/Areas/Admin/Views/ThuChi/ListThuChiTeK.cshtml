@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "ListThuChiTeK";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<h5>***Kỳ XuấtN: Thêm mới + Xóa(KyXN +ChiTietXN) nếu chưa add bảng ChitietTC</h5>
+<h5>***ChiTietXN(SubAdmin):Thêm Mới + Xóa</h5>
+@*<div style="text-align:right">
+    <span style="color:brown;margin-left:10px;font-display:inherit">
+        @Session["ThongBaoThuChiTEK"]
+    </span>
+</div>*@
+<h2>Danh Sách Thu Chi TeK</h2>
+<div class="panel panel-default" style="margin-top:10px">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="pull-right label label-warning" style="margin-bottom:5px;color:white;font-family:monospace;font-weight:bold;font-size:large">
+                @Session["ThongBaoThuChiTEK"]
+            </div>
+            <div class="col-md-12">
+
+                <div class="col-lg-6">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control input-sm pull-right" name="KeywordsTT" id="KeywordsTT" onkeyup="TimKiemsp()" placeholder="Tìm Theo Tên hoặc Loại sản phẩm." />
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="input-group-btn ">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-lg-6">
+                    <a href="/Admin/AddNewProduct" class="btn btn-success pull-right">
+                        <span class="fa fa-plus"></span>&nbsp;Thêm Mới
+                    </a>
+                </div>*@
+            </div>
+
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="list">
+
+
+        </div>
+    </div>
+    <div class="panel-footer">
+        <span class="TongSanPham"></span>
+        <ul class="pager">
+            <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        pageNo = 0;
+        pageSize = 7;
+        TongSP = 0;
+        //var KeywordsTT = $('#Can_FileKeywords').val();
+        var KeywordsTT = $('#KeywordsTT').val();
+        getTongSanPham(KeywordsTT, pageSize, pageNo);
+
+        $(".pager a:eq(0)").click(function () {
+            if (pageNo > 0) {
+                pageNo = 0;
+                LoadPage(KeywordsTT, pageNo, pageSize);
+            }
+            return false;
+        });
+
+        $(".pager a:eq(1)").click(function () {
+            if (pageNo > 0) {
+                pageNo--;
+                LoadPage(KeywordsTT, pageNo, pageSize);
+            }
+            return false;
+        });
+
+        $(".pager a:eq(2)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo++
+                LoadPage(KeywordsTT, pageNo, pageSize);
+            }
+            return false;
+        });
+
+        $(".pager a:eq(3)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo = pageCount - 1;
+                LoadPage(KeywordsTT, pageNo, pageSize);
+            }
+            return false
+        });
+    
+    function TimKiemsp() {
+        pageNo = 0;
+        pageSize = 7;
+        TongSP = 0;
+        var KeywordsTT = $('#KeywordsTT').val();
+        getTongSanPham(KeywordsTT, pageSize, pageNo);
+    }
+    function LoadPage(KeywordsTT, pageNo, pageSize) {
+        $.ajax({
+            url: "/Admin/ThuChi/GetListThuChiTek",
+            data: { strk: KeywordsTT, PageNo: pageNo, PageSize: pageSize },
+            success: function (respone) {
+                $(".list").html(respone);
+                var pagesp = pageNo + 1;
+                $('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+    }
+    function getTongSanPham(KeywordsTT, pageSize, pageNo) {
+        $.ajax({
+            url: "/Admin/ThuChi/GetPageCountThuChiTek",
+            data: { Keyword: KeywordsTT, PageSize: pageSize },
+            success: function (respone) {
+                pageCount = respone;
+                TongSP = respone;
+                LoadPage(KeywordsTT, pageNo, pageSize);
+            }
+        });
+        };
+    });
+</script>
+
+
