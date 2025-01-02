@@ -51,6 +51,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="MaHoa_GiaiMa_TaiKhoan">
+      <HintPath>..\..\..\pulishwebninhthuan\bin\MaHoa_GiaiMa_TaiKhoan.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -332,6 +335,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Login_Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -358,6 +362,9 @@
     <Content Include="Areas\Admin\Content\fonts\notika-icon.ttf" />
     <Content Include="Areas\Admin\Content\fonts\notika-icon.woff" />
     <Content Include="Areas\Admin\Views\Home\InsertThuChi.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ListThuChiUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutList.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ListThuChiTeK.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
