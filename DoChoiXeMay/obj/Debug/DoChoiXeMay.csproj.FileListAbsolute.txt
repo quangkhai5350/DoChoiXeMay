@@ -165,3 +165,4 @@ D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.SqlServer.dll
 D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.xml
 D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\EntityFramework.SqlServer.xml
 E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\bin\MaHoa_GiaiMa_TaiKhoan.dll
+D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\MaHoa_GiaiMa_TaiKhoan.dll

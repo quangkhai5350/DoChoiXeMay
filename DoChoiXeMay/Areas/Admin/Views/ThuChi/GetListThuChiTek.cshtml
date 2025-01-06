@@ -24,7 +24,7 @@
 
             </tr>
         </thead>
-        <tbody>
+        <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.ChiTietTC Item in ViewBag.ChitietTCTEK)
             {
                 <tr class="canhgiua">
@@ -84,7 +84,7 @@
                     @if (Session["quyen"].ToString() == "Admin")
                     {
                         <td>
-                            <a class="btn btn-danger" href=""><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" href="/Admin/ThuChi/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
                             <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa ThuChi ngày @Item.NgayTC ??')" href="/Admin/Home/DeleteThuChi/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     }
@@ -121,7 +121,9 @@
                 <td colspan="4" style="color:mediumblue">
                     ConLai TK:@ViewBag.conlaiTK
                 </td>
-                <td></td>
+                <td style="font-size: 15px; color: magenta">
+                    Tổng Tiền Còn Lại: @ViewBag.TTconlai
+                </td>
                 <td colspan="4" style="color:mediumblue">
                     ConLai Tiền Mặt:@ViewBag.conlaiTienmat
                 </td>
@@ -129,14 +131,7 @@
                     ConLai TK-Tek(VCB):@ViewBag.conlaiTKVCB
                 </td>
             </tr>
-            <tr class="canhgiua">
-                <td colspan="4"></td>
-                <td style="font-size: 20px; color: magenta">
-                    Tổng Tiền Còn Lại: @ViewBag.TTconlai
-                </td>
-                <td colspan="4"></td>
-                <td colspan="4"></td>
-            </tr>
+            
             @*<div class="row" style="color:chocolate">
             <div class="col-md-2">
                 TongThu TK: @ViewBag.ThuTK

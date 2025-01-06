@@ -7,17 +7,16 @@
 @*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <style>
-    .canhgiua{
-        text-align:center !important;
+    .canhgiua {
+        text-align: center !important;
     }
 </style>
-<h5>***Kỳ XuấtN: Thêm mới + Xóa(KyXN +ChiTietXN) nếu chưa add bảng ChitietTC</h5>
-<h5>***ChiTietXN(SubAdmin):Thêm Mới + Xóa</h5>
+
 @*<div style="text-align:right">
-    <span style="color:brown;margin-left:10px;font-display:inherit">
-        @Session["ThongBaoThuChiTEK"]
-    </span>
-</div>*@
+        <span style="color:brown;margin-left:10px;font-display:inherit">
+            @Session["ThongBaoThuChiTEK"]
+        </span>
+    </div>*@
 <h2>Danh Sách Thu Chi TeK</h2>
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
@@ -40,10 +39,10 @@
                     </div>
                 </div>
                 @*<div class="col-lg-6">
-                    <a href="/Admin/AddNewProduct" class="btn btn-success pull-right">
-                        <span class="fa fa-plus"></span>&nbsp;Thêm Mới
-                    </a>
-                </div>*@
+                        <a href="/Admin/AddNewProduct" class="btn btn-success pull-right">
+                            <span class="fa fa-plus"></span>&nbsp;Thêm Mới
+                        </a>
+                    </div>*@
             </div>
 
         </div>
@@ -55,16 +54,16 @@
         </div>
     </div>
     <div class="panel-footer">
-        
+
         <div class="row">
             <div class="col-md-8" style="font-size: 20px; color: mediumblue">
 
             </div>
-            <div class="col-md-4" style="text-align: right; font-size: 20px">
+            <div class="col-md-4" style="text-align: right">
                 <span class="TongSanPham"></span>
             </div>
         </div>
-        
+
 
         <ul class="pager">
             <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
@@ -74,9 +73,10 @@
         </ul>
 
     </div>
-    </div>
+</div>
 
-
+<h5>***Kỳ XuấtN: Thêm mới + Xóa(KyXN +ChiTietXN) nếu chưa add bảng ChitietTC</h5>
+<h5>***ChiTietXN(SubAdmin):Thêm Mới + Xóa</h5>
 <script>
     $(function () {
         pageNo = 0;
@@ -146,7 +146,7 @@
         TongSP = 0;
         var KeywordsTTT = $('#KeywordsTT').val();
         getTongSanPham(KeywordsTTT, pageSize, pageNo);
-       
+
     };
 
 </script>

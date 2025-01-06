@@ -200,6 +200,22 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
 
         }
+        [HttpGet]
+        public ActionResult UpdateCTthuchi(string Id)
+        {
+            //không cho update KyXuatNhap
+            var model = dbc.ChiTietTCs.Find(new Guid(Id));
+            ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "GhiChu",model.IdMa);
+
+            ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT",model.IdHT);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateCTthuchi(ChiTietTC TC)
+        {
+
+            return RedirectToAction("ListThuChiTeK");
+        }
         public ActionResult DeleteThuChi(string Id)
         {
             var iiii = new Guid(Id);

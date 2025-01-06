@@ -52,7 +52,7 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="MaHoa_GiaiMa_TaiKhoan">
-      <HintPath>..\..\..\pulishwebninhthuan\bin\MaHoa_GiaiMa_TaiKhoan.dll</HintPath>
+      <HintPath>..\..\web_BacNinh\webvl2024_BacNinh\bin\MaHoa_GiaiMa_TaiKhoan.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -370,6 +370,7 @@
     <Content Include="Areas\Admin\Views\ThuChi\ListThuChiTeK.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\GetListThuChiTek.cshtml" />
+    <Content Include="Areas\Admin\Views\ThuChi\UpdateCTthuchi.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
