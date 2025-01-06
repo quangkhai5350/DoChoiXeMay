@@ -4,8 +4,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<style>
+    .canhgiua{
+        text-align:center !important;
+    }
+</style>
 <h5>***Kỳ XuấtN: Thêm mới + Xóa(KyXN +ChiTietXN) nếu chưa add bảng ChitietTC</h5>
 <h5>***ChiTietXN(SubAdmin):Thêm Mới + Xóa</h5>
 @*<div style="text-align:right">
@@ -26,7 +31,7 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <input type="text" class="form-control input-sm pull-right" name="KeywordsTT" id="KeywordsTT" onkeyup="TimKiemsp()" placeholder="Tìm Theo Tên hoặc Loại sản phẩm." />
+                            <input type="text" class="form-control input-sm pull-right" name="KeywordsTT" id="KeywordsTT" onkeyup="TimKiemsp()" placeholder="Tìm Theo Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
                         </div>
                         <div class="col-lg-6">
                             <span class="input-group-btn ">
@@ -50,15 +55,26 @@
         </div>
     </div>
     <div class="panel-footer">
-        <span class="TongSanPham"></span>
+        
+        <div class="row">
+            <div class="col-md-8" style="font-size: 20px; color: mediumblue">
+
+            </div>
+            <div class="col-md-4" style="text-align: right; font-size: 20px">
+                <span class="TongSanPham"></span>
+            </div>
+        </div>
+        
+
         <ul class="pager">
             <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
         </ul>
+
     </div>
-</div>
+    </div>
 
 
 <script>
@@ -101,14 +117,7 @@
             }
             return false
         });
-    
-    function TimKiemsp() {
-        pageNo = 0;
-        pageSize = 7;
-        TongSP = 0;
-        var KeywordsTT = $('#KeywordsTT').val();
-        getTongSanPham(KeywordsTT, pageSize, pageNo);
-    }
+    });
     function LoadPage(KeywordsTT, pageNo, pageSize) {
         $.ajax({
             url: "/Admin/ThuChi/GetListThuChiTek",
@@ -119,7 +128,7 @@
                 $('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }
         });
-    }
+    };
     function getTongSanPham(KeywordsTT, pageSize, pageNo) {
         $.ajax({
             url: "/Admin/ThuChi/GetPageCountThuChiTek",
@@ -130,8 +139,16 @@
                 LoadPage(KeywordsTT, pageNo, pageSize);
             }
         });
-        };
-    });
+    };
+    function TimKiemsp() {
+        pageNo = 0;
+        pageSize = 7;
+        TongSP = 0;
+        var KeywordsTTT = $('#KeywordsTT').val();
+        getTongSanPham(KeywordsTTT, pageSize, pageNo);
+       
+    };
+
 </script>
 
 
