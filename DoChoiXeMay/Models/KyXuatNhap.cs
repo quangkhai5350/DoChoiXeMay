@@ -45,7 +45,7 @@ namespace DoChoiXeMay.Models
         public DateTime NgayAuto { get; set; }
 
         [StringLength(100)]
-        public string Filesave1 { get; set; }
+        public string HoaDon { get; set; }
 
         [StringLength(100)]
         public string Filesave2 { get; set; }

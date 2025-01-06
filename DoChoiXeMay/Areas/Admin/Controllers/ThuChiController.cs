@@ -5,6 +5,7 @@ using DoChoiXeMay.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -41,13 +42,39 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult ListThuChiTeK()
         {
-
+            
             return View();
         }
         public ActionResult GetListThuChiTek(string strk, int PageNo = 0, int PageSize = 8)
         {
+            var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk.ToLower());
             //var uid = int.Parse(Session["UserId"].ToString());
-            ViewBag.ChitietTCTEK = new Data.ThuChiData().getThuChiTek(PageNo,PageSize,strk);
+            ViewBag.ChitietTCTEK = model;
+
+            double ThuTK = new Data.ThuChiData().TongbyHTvaThuChi(model,1, true);
+            ViewBag.ThuTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTK);
+            double ChiTK = new Data.ThuChiData().TongbyHTvaThuChi(model, 1, false);
+            ViewBag.ChiTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTK);
+
+            double ThuTienMat = new Data.ThuChiData().TongbyHTvaThuChi(model, 2, true);
+            ViewBag.ThuTienMat = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTienMat);
+            double ChiTienMat = new Data.ThuChiData().TongbyHTvaThuChi(model, 2, false);
+            ViewBag.ChiTienMat = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTienMat);
+
+            double ThuTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(model, 4, true);
+            ViewBag.ThuTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTKVCB);
+            double ChiTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(model, 4, false);
+            ViewBag.ChiTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTKVCB);
+
+            double conlaiTK = ThuTK - ChiTK;
+            ViewBag.conlaiTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTK);
+            double conlaiTienmat = ThuTienMat - ChiTienMat;
+            ViewBag.conlaiTienmat = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTienmat);
+            double conlaiTKVCB = ThuTKVCB - ChiTKVCB;
+            ViewBag.conlaiTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTKVCB);
+            double TTconlai = conlaiTK + conlaiTienmat + conlaiTKVCB;
+            ViewBag.TTconlai = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", TTconlai);
+
             return PartialView();
         }
         public ActionResult GetPageCountThuChiTek(string Keyword, int PageSize = 8)
@@ -80,14 +107,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
                 var file1 = Request.Files["Filesave1"];
                 var file2 = Request.Files["Filesave2"];
-                var file3 = Request.Files["Filesave3"];
+                var file3 = Request.Files["HoaDon"];
                 var ten1 = saveFile_imgthuchi(file1);
                 var ten2 = saveFile_imgthuchi(file2);
                 var ten3 = saveFile_imgthuchi(file3);
 
                 p.Filesave1 = ten1;
                 p.Filesave2 = ten2;
-                p.Filesave3 = ten3;
+                p.HoaDon = ten3;
 
                 p.NgayAuto = DateTime.Now;
                 p.UserId = int.Parse(Session["UserId"].ToString());
@@ -206,12 +233,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     var sub = XString.MakeAotuName();
                     ten = str[str.Count() - 2] + sub + "." + ext;
-                    //p.Filesave1 = ten;
-                    //Thu nho hinh anh qua to
-                    WebImage img = new WebImage(File.InputStream);
-                    if (img.Width > 400)
-                        img.Resize(400, 450);
-                    img.Save(Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + ten));
+                    //Không thu nhỏ hình
+                    File.SaveAs(Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + ten));
                 }
                 else ten = "";
                 return ten;
