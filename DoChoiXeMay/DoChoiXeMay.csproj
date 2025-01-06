@@ -135,6 +135,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
     <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
+    <Compile Include="Areas\Admin\Data\Xstring.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\ProtectAttribute.cs" />
@@ -219,6 +220,7 @@
     <Content Include="Areas\Admin\Content\img\dialog\like.png" />
     <Content Include="Areas\Admin\Content\img\favicon.ico" />
     <Content Include="Areas\Admin\Content\img\green1.png" />
+    <Content Include="Areas\Admin\Content\img\loading.gif" />
     <Content Include="Areas\Admin\Content\img\logo\favicon.png" />
     <Content Include="Areas\Admin\Content\img\logo\logo.png" />
     <Content Include="Areas\Admin\Content\img\logo\Teklogo.png" />

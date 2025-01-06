@@ -30,7 +30,7 @@
 
                     <div class="row">
                         <div class="col-lg-6">
-                            <input type="text" class="form-control input-sm pull-right" name="KeywordsTT" id="KeywordsTT" onkeyup="TimKiemsp()" placeholder="Tìm Theo Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
+                            <input type="text" class="form-control input-sm pull-right" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
                         </div>
                         <div class="col-lg-6">
                             <span class="input-group-btn ">
@@ -48,16 +48,17 @@
         </div>
     </div>
     <div class="panel-body">
+        <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
         <div class="list">
-
+            
 
         </div>
     </div>
     <div class="panel-footer">
 
         <div class="row">
-            <div class="col-md-8" style="font-size: 20px; color: mediumblue">
-
+            <div class="col-md-8">
+                <span class="TongSanPham"></span>
             </div>
             <div class="col-md-4" style="text-align: right">
                 <span class="TongSanPham"></span>
@@ -80,7 +81,7 @@
 <script>
     $(function () {
         pageNo = 0;
-        pageSize = 7;
+        pageSize = 9;
         TongSP = 0;
         //var KeywordsTT = $('#Can_FileKeywords').val();
         var KeywordsTT = $('#KeywordsTT').val();
@@ -142,11 +143,18 @@
     };
     function TimKiemsp() {
         pageNo = 0;
-        pageSize = 7;
+        pageSize = 9;
         TongSP = 0;
         var KeywordsTTT = $('#KeywordsTT').val();
-        getTongSanPham(KeywordsTTT, pageSize, pageNo);
-
+        $("#loading").show();
+        $(".list").css('display', 'none');
+        
+        setTimeout(function () {
+            $(".list").css('display', 'block');
+            getTongSanPham(KeywordsTTT, pageSize, pageNo);
+            //1s sau hiên lên
+        }, 800);
+        $("#loading").hide();
     };
 
 </script>

@@ -2,7 +2,9 @@
 using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using DoChoiXeMay.Utils;
+using Microsoft.Ajax.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
@@ -47,23 +49,30 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListThuChiTek(string strk, int PageNo = 0, int PageSize = 8)
         {
+            strk = strk.ToLower().Trim();
+            var modelTong = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                    && (kh.Noidung.ToLower().Contains(strk) 
+                        || kh.HinhThucTC.TenHT.ToLower().Contains(strk)
+                        || kh.KyXuatNhap.TenKy.ToLower().Contains(strk)
+                        || kh.MaTC.TenMa.ToLower().Contains(strk)
+                        || kh.UserTek.UserName.ToLower().Contains(strk))).ToList();
             var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk.ToLower());
             //var uid = int.Parse(Session["UserId"].ToString());
             ViewBag.ChitietTCTEK = model;
 
-            double ThuTK = new Data.ThuChiData().TongbyHTvaThuChi(model,1, true);
+            double ThuTK = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 1, true);
             ViewBag.ThuTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTK);
-            double ChiTK = new Data.ThuChiData().TongbyHTvaThuChi(model, 1, false);
+            double ChiTK = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 1, false);
             ViewBag.ChiTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTK);
 
-            double ThuTienMat = new Data.ThuChiData().TongbyHTvaThuChi(model, 2, true);
+            double ThuTienMat = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 2, true);
             ViewBag.ThuTienMat = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTienMat);
-            double ChiTienMat = new Data.ThuChiData().TongbyHTvaThuChi(model, 2, false);
+            double ChiTienMat = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 2, false);
             ViewBag.ChiTienMat = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTienMat);
 
-            double ThuTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(model, 4, true);
+            double ThuTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 4, true);
             ViewBag.ThuTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTKVCB);
-            double ChiTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(model, 4, false);
+            double ChiTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 4, false);
             ViewBag.ChiTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTKVCB);
 
             double conlaiTK = ThuTK - ChiTK;
@@ -108,9 +117,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file1 = Request.Files["Filesave1"];
                 var file2 = Request.Files["Filesave2"];
                 var file3 = Request.Files["HoaDon"];
-                var ten1 = saveFile_imgthuchi(file1);
-                var ten2 = saveFile_imgthuchi(file2);
-                var ten3 = saveFile_imgthuchi(file3);
+                var ten1 = Xstring.saveFile(file1, Xstring.duongdanthuchi);
+                var ten2 = Xstring.saveFile(file2, Xstring.duongdanthuchi);
+                var ten3 = Xstring.saveFile(file3, Xstring.duongdanthuchi);
 
                 p.Filesave1 = ten1;
                 p.Filesave2 = ten2;
@@ -135,8 +144,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, p.UserId, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "InsertThuChi-" + p.NgayTC, "");
-                    Session["ThongBaoThuChiUser"] = "Insert thành công File Thu Chi Ngày: " + p.NgayTC;
                     
+                    Session["ThongBaoThuChiTEK"] = "Admin Insert thanh cong Thu Chi ngay: " + p.NgayTC.ToString("{dd/MM/yyyy}");
                     return RedirectToAction("ListThuChiTeK");
                 }
             }
@@ -211,10 +220,61 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult UpdateCTthuchi(ChiTietTC TC)
         {
-
-            return RedirectToAction("ListThuChiTeK");
+            try
+            {
+                var ngaythongbao = TC.NgayTC.ToString("{dd/MM/yyyy}");
+                var file1 = Request.Files["Dinhkem1"];
+                var file2 = Request.Files["Dinhkem2"];
+                var file3 = Request.Files["Dinhkem3"];
+                if (file1 != null) { 
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu(Xstring.duongdanthuchi, TC.Filesave1);
+                    TC.Filesave1 = Xstring.saveFile(file1, Xstring.duongdanthuchi);
+                }
+                if (file2 != null)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu(Xstring.duongdanthuchi, TC.Filesave2);
+                    TC.Filesave2 = Xstring.saveFile(file2, Xstring.duongdanthuchi);
+                }
+                if (file3 != null)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu(Xstring.duongdanthuchi, TC.HoaDon);
+                    TC.HoaDon = Xstring.saveFile(file3, Xstring.duongdanthuchi);
+                }
+                TC.NgayAuto = DateTime.Now;
+                var kq=new Data.ThuChiData().UPdateChiTietTC(TC);
+                if (kq == true)
+                {
+                    var userid = int.Parse(Session["UserId"].ToString());
+                    Session["ThongBaoThuChiTEK"] = "Update thanh cong Thu Chi ngay: " + ngaythongbao;
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "UpdateThuChi-" + ngaythongbao, "");
+                    return RedirectToAction("ListThuChiTeK");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Update Thu Chi Thất Bại !!!!");
+                    var model = dbc.ChiTietTCs.Find(TC.Id);
+                    ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "GhiChu", model.IdMa);
+                    ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT", model.IdHT);
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Update Thu Chi Thất Bại !!!!");
+                var model = dbc.ChiTietTCs.Find(TC.Id);
+                ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "GhiChu", model.IdMa);
+                ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT", model.IdHT);
+                return View(model);
+            }
+            
         }
         public ActionResult DeleteThuChi(string Id)
         {
@@ -227,35 +287,35 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var ngay = model.NgayTC;
                     dbc.ChiTietTCs.Remove(model);
                     dbc.SaveChanges();
-                    Session["ThongBaoThuChiUser"] = "Delete thành công file thu chi ngày: " + ngay.ToString("{dd/MM/yyyy}");
+                    Session["ThongBaoThuChiTEK"] = "Delete thành công file thu chi ngày: " + ngay.ToString("{dd/MM/yyyy}");
                 }
                 catch (Exception ex)
                 {
                     var loi = ex.Message;
                 }
             }
-            return RedirectToAction("ListThuChiUser", "Home");
+            return RedirectToAction("ListThuChiTeK");
         }
-        private string saveFile_imgthuchi(HttpPostedFileBase File)
-        {
-            if (File.ContentLength > 0)
-            {
-                var ten = File.FileName;
-                string[] str = ten.Split('.');
+        //private string saveFile_imgthuchi(HttpPostedFileBase File)
+        //{
+        //    if (File.ContentLength > 0)
+        //    {
+        //        var ten = File.FileName;
+        //        string[] str = ten.Split('.');
 
-                var ext = str[str.Count() - 1].ToLower();
-                if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "xls" || ext == "pdf" || ext == "xlsx"
-                    || ext == "doc" || ext == "docx")
-                {
-                    var sub = XString.MakeAotuName();
-                    ten = str[str.Count() - 2] + sub + "." + ext;
-                    //Không thu nhỏ hình
-                    File.SaveAs(Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + ten));
-                }
-                else ten = "";
-                return ten;
-            }
-            return "";
-        }
+        //        var ext = str[str.Count() - 1].ToLower();
+        //        if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "xls" || ext == "pdf" || ext == "xlsx"
+        //            || ext == "doc" || ext == "docx")
+        //        {
+        //            var sub = XString.MakeAotuName();
+        //            ten = str[str.Count() - 2] + sub + "." + ext;
+        //            //Không thu nhỏ hình
+        //            File.SaveAs(Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + ten));
+        //        }
+        //        else ten = "";
+        //        return ten;
+        //    }
+        //    return "";
+        //}
     }
 }

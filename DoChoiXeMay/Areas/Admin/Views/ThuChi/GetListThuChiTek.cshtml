@@ -3,7 +3,6 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
-
                 <th class="canhgiua">UserName</th>
                 <th class="canhgiua">Mã TC</th>
                 <th class="canhgiua">Hình Thức</th>
@@ -25,72 +24,76 @@
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
-            @foreach (DoChoiXeMay.Models.ChiTietTC Item in ViewBag.ChitietTCTEK)
-            {
-                <tr class="canhgiua">
-                    @*<td style="text-align:center">
-            <img class="img-responsive img-thumbnail" src="~/Content/images/SanPham/@Item.HinhSanPham" style="max-height:60px">
-        </td>*@
-
-                    <td>@Item.UserTek.UserName</td>
-
-                    <td><a title="@Item.MaTC.GhiChu">@Item.MaTC.TenMa</a></td>
-                    <td>@Item.HinhThucTC.TenHT</td>
-                    <td>@Item.KyXuatNhap.TenKy</td>
-                    <td>@Item.Noidung</td>
-                    <td>@Html.FormatValue(Item.SoTien, "{0:#,###,###}")</td>
-
-                    @if (Item.ThuChi == true)
+            @if (ViewBag.ChitietTCTEK != null)
+                {
+                    
+                    foreach (DoChoiXeMay.Models.ChiTietTC Item in ViewBag.ChitietTCTEK)
                     {
-                        <td style="background-color:bisque">
-                            <span>Thu vào</span>
-                        </td>
-                    }
-                    else
-                    {
+                    <tr class="canhgiua">
+                        @*<td style="text-align:center">
+                        <img class="img-responsive img-thumbnail" src="~/Content/images/SanPham/@Item.HinhSanPham" style="max-height:60px">
+                    </td>*@
+                        <td>@Item.UserTek.UserName</td>
+
+                        <td><a title="@Item.MaTC.GhiChu">@Item.MaTC.TenMa</a></td>
+                        <td>@Item.HinhThucTC.TenHT</td>
+                        <td>@Item.KyXuatNhap.TenKy</td>
+                        <td>@Item.Noidung</td>
+                        <td>@Html.FormatValue(Item.SoTien, "{0:#,###,###}")</td>
+
+                        @if (Item.ThuChi == true)
+                        {
+                            <td style="background-color:bisque">
+                                <span>Thu vào</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <span>Chi ra</span>
+                            </td>
+                        }
+
+                        <td>@Html.FormatValue(Item.NgayTC, "{0:dd/MM/yyyy}")</td>
+                        <td>@Item.Ghichu</td>
+
                         <td>
-                            <span>Chi ra</span>
+                            @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgthuchi/" + Item.Filesave1)))
+                            {
+                                <a target="_blank" href="~/Areas/Admin/Content/imgthuchi/@Item.Filesave1">
+                                    <i class="glyphicon glyphicon-download-alt"></i>
+                                </a>
+                            }
                         </td>
-                    }
-
-                    <td>@Html.FormatValue(Item.NgayTC, "{0:dd/MM/yyyy}")</td>
-                    <td>@Item.Ghichu</td>
-
-                    <td>
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgthuchi/" + Item.Filesave1)))
-                        {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgthuchi/@Item.Filesave1">
-                                <i class="glyphicon glyphicon-download-alt"></i>
-                            </a>
-                        }
-                    </td>
-                    <td>
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgthuchi/" + Item.Filesave2)))
-                        {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgthuchi/@Item.Filesave2" >
-                                <i class="glyphicon glyphicon-download-alt"></i>
-                            </a>
-                        }
-                    </td>
-                    <td>
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgthuchi/" +Item.HoaDon)))
-                        {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgthuchi/@Item.HoaDon">
-                                <i class="glyphicon glyphicon-download-alt"></i>
-                            </a>
-                        }
-                    </td>
-                    <td>@Html.FormatValue(Item.NgayAuto, "{0:dd/MM/yyyy}")</td>
-                    @if (Session["quyen"].ToString() == "Admin")
-                    {
                         <td>
-                            <a class="btn btn-danger" href="/Admin/ThuChi/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa ThuChi ngày @Item.NgayTC ??')" href="/Admin/Home/DeleteThuChi/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                            @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgthuchi/" + Item.Filesave2)))
+                            {
+                                <a target="_blank" href="~/Areas/Admin/Content/imgthuchi/@Item.Filesave2">
+                                    <i class="glyphicon glyphicon-download-alt"></i>
+                                </a>
+                            }
                         </td>
-                    }
-                </tr>
+                        <td>
+                            @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgthuchi/" + Item.HoaDon)))
+                            {
+                                <a target="_blank" href="~/Areas/Admin/Content/imgthuchi/@Item.HoaDon">
+                                    <i class="glyphicon glyphicon-download-alt"></i>
+                                </a>
+                            }
+                        </td>
+                        <td>@Html.FormatValue(Item.NgayAuto, "{0:dd/MM/yyyy}")</td>
+                        @if (Session["quyen"].ToString() == "Admin")
+                        {
+                            <td>
+                                <a class="btn btn-danger" href="/Admin/ThuChi/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa ThuChi ngày @Item.NgayTC ??')" href="/Admin/ThuChi/DeleteThuChi/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        }
+                    </tr>
 
+                }
             }
+
         </tbody>
         <tfoot>
             <tr class="canhgiua">
@@ -132,44 +135,6 @@
                 </td>
             </tr>
             
-            @*<div class="row" style="color:chocolate">
-            <div class="col-md-2">
-                TongThu TK: @ViewBag.ThuTK
-            </div>
-            <div class="col-md-2">
-                TongChi TK: @ViewBag.ChiTK
-            </div>
-            <div class="col-md-2">
-                TongThu Tiền Mặt: @ViewBag.ThuTienMat
-            </div>
-            <div class="col-md-2">
-                TongChi Tiền Mặt: @ViewBag.ChiTienMat
-            </div>
-            <div class="col-md-2">
-                TongThu TK-Tek(VCB): @ViewBag.ThuTKVCB
-            </div>
-            <div class="col-md-2">
-                TongChi TK-Tek(VCB): @ViewBag.ChiTKVCB
-            </div>
-        </div>
-        <div class="row" style="color:mediumblue">
-            <div class="col-md-4">
-                ConLai TK:@ViewBag.conlaiTK
-            </div>
-            <div class="col-md-4">
-                ConLai Tiền Mặt:@ViewBag.conlaiTienmat
-            </div>
-            <div class="col-md-2">
-                ConLai TK-Tek(VCB):@ViewBag.conlaiTKVCB
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-8" style="font-size: 20px; color: mediumblue">
-                Tổng Tiền Còn: @ViewBag.TTconlai
-            </div>
-
-        </div>*@
         </tfoot>
     </table>
 </div>
