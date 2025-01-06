@@ -1,0 +1,55 @@
+﻿using DoChoiXeMay.Utils;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Web;
+
+namespace DoChoiXeMay.Areas.Admin.Data
+{
+    public static class Xstring
+    {
+        public static string mapweb = ConfigurationManager.AppSettings["mapweb"];
+        public static string duongdanthuchi = "Areas\\Admin\\Content\\imgthuchi\\";
+        public static bool Xoahinhcu(string foder, string img)
+        {
+            try
+            {
+                var pathweb = mapweb + foder + "\\" + img;
+                if (File.Exists(pathweb))
+                {
+                    File.Delete(pathweb);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                return false;
+            }
+
+        }
+        public static string saveFile(HttpPostedFileBase File, string foder)
+        {
+            if (File.ContentLength > 0)
+            {
+                var ten = File.FileName;
+                string[] str = ten.Split('.');
+
+                var ext = str[str.Count() - 1].ToLower();
+                if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "xls" || ext == "pdf" || ext == "xlsx"
+                    || ext == "doc" || ext == "docx")
+                {
+                    var sub = XString.MakeAotuName();
+                    ten = str[str.Count() - 2] + sub + "." + ext;
+                    //Không thu nhỏ hình
+                    File.SaveAs(mapweb + foder+ten);
+                }
+                else ten = "";
+                return ten;
+            }
+            return "";
+        }
+    }
+}
