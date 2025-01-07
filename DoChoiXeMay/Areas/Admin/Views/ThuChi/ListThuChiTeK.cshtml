@@ -21,29 +21,39 @@
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
-            <div class="pull-right label label-warning" style="margin-bottom:5px;color:white;font-family:monospace;font-weight:bold;font-size:large">
+            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                 @Session["ThongBaoThuChiTEK"]
             </div>
-            <div class="col-md-12">
 
-                <div class="col-lg-6">
-
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control input-sm pull-right" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
-                        </div>
-                        <div class="col-lg-6">
-                            <span class="input-group-btn ">
-                            </span>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control input-sm pull-right" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
                 </div>
-                @*<div class="col-lg-6">
-                        <a href="/Admin/AddNewProduct" class="btn btn-success pull-right">
-                            <span class="fa fa-plus"></span>&nbsp;Thêm Mới
-                        </a>
-                    </div>*@
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-3" style="margin-top:5px">
+                    <select class="form-control" id="SelectTC" name="SelectTC" style="width: 70%; height: 40px; margin: 0 auto">
+                        <option value="0">Không Chọn</option>
+                        <option value="1">Thu Vào</option>
+                        <option value="2">Chi Ra</option>
+                    </select>
+                </div>
+                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-9 col-12" style="margin-top:5px">
+                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6" style="text-align:center">
+                            <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Từ Ngày</span>
+                            <input type="date" name="tungay" id="tungay" />
+                        </div>
+                        <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6" style="text-align:center">
+                            <span class="icon-case"><i class="glyphicon glyphicon-calendar"></i>Đến Ngày</span>
+                            <input type="date" name="denngay" id="denngay" />
+                        </div>
+                    
+                </div>
             </div>
+            @*<div class="col-lg-6">
+            <a href="/Admin/AddNewProduct" class="btn btn-success pull-right">
+                <span class="fa fa-plus"></span>&nbsp;Thêm Mới
+            </a>
+        </div>*@
+
 
         </div>
     </div>
@@ -83,14 +93,20 @@
         pageNo = 0;
         pageSize = 9;
         TongSP = 0;
-        //var KeywordsTT = $('#Can_FileKeywords').val();
+        var tungay = "";
+        var denngay = "";
+        var TCC = $('#SelectTC').val();
         var KeywordsTT = $('#KeywordsTT').val();
-        getTongSanPham(KeywordsTT, pageSize, pageNo);
+        tungay = $("#tungay").val();
+        denngay = $("#denngay").val();
 
+        getTongSanPham(TCC,KeywordsTT, pageSize, pageNo);
+    
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
-                LoadPage(KeywordsTT, pageNo, pageSize);
+                KeywordsTT = $('#KeywordsTT').val();
+                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
             }
             return false;
         });
@@ -98,7 +114,8 @@
         $(".pager a:eq(1)").click(function () {
             if (pageNo > 0) {
                 pageNo--;
-                LoadPage(KeywordsTT, pageNo, pageSize);
+                KeywordsTT = $('#KeywordsTT').val();
+                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
             }
             return false;
         });
@@ -106,7 +123,8 @@
         $(".pager a:eq(2)").click(function () {
             if (pageNo < pageCount - 1) {
                 pageNo++
-                LoadPage(KeywordsTT, pageNo, pageSize);
+                KeywordsTT = $('#KeywordsTT').val();
+                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
             }
             return false;
         });
@@ -114,15 +132,39 @@
         $(".pager a:eq(3)").click(function () {
             if (pageNo < pageCount - 1) {
                 pageNo = pageCount - 1;
-                LoadPage(KeywordsTT, pageNo, pageSize);
+                KeywordsTT = $('#KeywordsTT').val();
+                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
             }
             return false
         });
+        $("#SelectTC").change(function () {
+            pageNo = 0;
+            pageSize = 9;
+            TongSP = 0;
+            TCC = $("#SelectTC").val();
+            KeywordsTTT = $('#KeywordsTT').val();
+            tungay = $("#tungay").val();
+            denngay = $("#denngay").val();
+            getTongSanPham(TCC, KeywordsTTT, pageSize, pageNo);
+        });
+        $("#denngay").change(function () {
+            if ($("#tungay").val() != "" && $("#denngay").val() != "") {
+                pageNo = 0;
+                pageSize = 9;
+                TongSP = 0;
+                TCC = $("#SelectTC").val();
+                KeywordsTTT = $('#KeywordsTT').val();
+                tungay = $("#tungay").val();
+                denngay = $("#denngay").val();
+                getTongSanPham(TCC, KeywordsTTT, pageSize, pageNo);
+            }
+        });
+
     });
-    function LoadPage(KeywordsTT, pageNo, pageSize) {
+    function LoadPage(tungay, denngay,TCC,KeywordsTT, pageNo, pageSize) {
         $.ajax({
             url: "/Admin/ThuChi/GetListThuChiTek",
-            data: { strk: KeywordsTT, PageNo: pageNo, PageSize: pageSize },
+            data: { tu: tungay, den: denngay, TC: TCC, strk: KeywordsTT, PageNo: pageNo, PageSize: pageSize },
             success: function (respone) {
                 $(".list").html(respone);
                 var pagesp = pageNo + 1;
@@ -130,14 +172,16 @@
             }
         });
     };
-    function getTongSanPham(KeywordsTT, pageSize, pageNo) {
+    function getTongSanPham(TCC, KeywordsTT, pageSize, pageNo) {
+        tungay = $("#tungay").val();
+        denngay = $("#denngay").val();
         $.ajax({
             url: "/Admin/ThuChi/GetPageCountThuChiTek",
-            data: { Keyword: KeywordsTT, PageSize: pageSize },
+            data: { TC:TCC,Keyword: KeywordsTT, PageSize: pageSize },
             success: function (respone) {
                 pageCount = respone;
                 TongSP = respone;
-                LoadPage(KeywordsTT, pageNo, pageSize);
+                LoadPage(tungay, denngay, TCC, KeywordsTT, pageNo, pageSize);
             }
         });
     };
@@ -145,18 +189,19 @@
         pageNo = 0;
         pageSize = 9;
         TongSP = 0;
+        TCC = $('#SelectTC').val();
         var KeywordsTTT = $('#KeywordsTT').val();
         $("#loading").show();
         $(".list").css('display', 'none');
         
         setTimeout(function () {
             $(".list").css('display', 'block');
-            getTongSanPham(KeywordsTTT, pageSize, pageNo);
+            getTongSanPham(TCC,KeywordsTTT, pageSize, pageNo);
             //1s sau hiên lên
         }, 800);
         $("#loading").hide();
     };
-
+    
 </script>
 
 
