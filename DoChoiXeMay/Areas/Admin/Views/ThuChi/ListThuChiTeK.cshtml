@@ -91,22 +91,22 @@
 <script>
     $(function () {
         pageNo = 0;
-        pageSize = 9;
+        pageSize = 10;
         TongSP = 0;
-        var tungay = "";
-        var denngay = "";
+        var tungay = $("#tungay").val();
+        var denngay = $("#denngay").val();
         var TCC = $('#SelectTC').val();
         var KeywordsTT = $('#KeywordsTT').val();
-        tungay = $("#tungay").val();
-        denngay = $("#denngay").val();
-
-        getTongSanPham(TCC,KeywordsTT, pageSize, pageNo);
+        
+        getTongSanPham(tungay, denngay, TCC,KeywordsTT, pageSize, pageNo);
     
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
                 KeywordsTT = $('#KeywordsTT').val();
-                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
+                tungay = $("#tungay").val();
+                denngay = $("#denngay").val();
+                LoadPage(tungay, denngay, TCC, KeywordsTT, pageNo, pageSize);
             }
             return false;
         });
@@ -115,7 +115,9 @@
             if (pageNo > 0) {
                 pageNo--;
                 KeywordsTT = $('#KeywordsTT').val();
-                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
+                tungay = $("#tungay").val();
+                denngay = $("#denngay").val();
+                LoadPage(tungay, denngay, TCC, KeywordsTT, pageNo, pageSize);
             }
             return false;
         });
@@ -124,7 +126,9 @@
             if (pageNo < pageCount - 1) {
                 pageNo++
                 KeywordsTT = $('#KeywordsTT').val();
-                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
+                tungay = $("#tungay").val();
+                denngay = $("#denngay").val();
+                LoadPage(tungay, denngay, TCC, KeywordsTT, pageNo, pageSize);
             }
             return false;
         });
@@ -133,7 +137,9 @@
             if (pageNo < pageCount - 1) {
                 pageNo = pageCount - 1;
                 KeywordsTT = $('#KeywordsTT').val();
-                //LoadPage(TCC,KeywordsTT, pageNo, pageSize);
+                tungay = $("#tungay").val();
+                denngay = $("#denngay").val();
+                LoadPage(tungay, denngay, TCC,KeywordsTT, pageNo, pageSize);
             }
             return false
         });
@@ -145,7 +151,7 @@
             KeywordsTTT = $('#KeywordsTT').val();
             tungay = $("#tungay").val();
             denngay = $("#denngay").val();
-            getTongSanPham(TCC, KeywordsTTT, pageSize, pageNo);
+            getTongSanPham(tungay, denngay, TCC, KeywordsTTT, pageSize, pageNo);
         });
         $("#denngay").change(function () {
             if ($("#tungay").val() != "" && $("#denngay").val() != "") {
@@ -156,7 +162,7 @@
                 KeywordsTTT = $('#KeywordsTT').val();
                 tungay = $("#tungay").val();
                 denngay = $("#denngay").val();
-                getTongSanPham(TCC, KeywordsTTT, pageSize, pageNo);
+                getTongSanPham(tungay, denngay, TCC, KeywordsTTT, pageSize, pageNo);
             }
         });
 
@@ -172,12 +178,12 @@
             }
         });
     };
-    function getTongSanPham(TCC, KeywordsTT, pageSize, pageNo) {
-        tungay = $("#tungay").val();
-        denngay = $("#denngay").val();
+    function getTongSanPham(tungay, denngay,TCC, KeywordsTT, pageSize, pageNo) {
+        //tungay = $("#tungay").val();
+        //denngay = $("#denngay").val();
         $.ajax({
             url: "/Admin/ThuChi/GetPageCountThuChiTek",
-            data: { TC:TCC,Keyword: KeywordsTT, PageSize: pageSize },
+            data: { tu: tungay, den: denngay, TC: TCC, Keyword: KeywordsTT, PageSize: pageSize },
             success: function (respone) {
                 pageCount = respone;
                 TongSP = respone;

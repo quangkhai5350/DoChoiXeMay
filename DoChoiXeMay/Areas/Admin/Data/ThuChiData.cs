@@ -1,7 +1,9 @@
 ﻿using DoChoiXeMay.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing.Printing;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -15,7 +17,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             _context = new Model1();
         }
-        public List<ChiTietTC> getThuChiTek(int Sec, int pageSize, string strTK,string TC, string tu, string den)
+        public static List<ChiTietTC> ChiTietTCDBTEK(Model1 db, string strTK, string TC, string tu, string den)
         {
             var tungay = DateTime.Now;
             var denngay = DateTime.Now;
@@ -25,141 +27,110 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 denngay = DateTime.Parse(den);
             }
             List<ChiTietTC> model = new List<ChiTietTC>();
-            if (TC== "0" && tu == "" && den == "")
+            if (TC == "0" && tu == "" && den == "")
             {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
                         && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
                             || kh.MaTC.TenMa.ToLower().Contains(strTK)
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .OrderByDescending(kh => kh.NgayAuto)
-                        .Skip(Sec * pageSize)
-                        .Take(pageSize)
                         .ToList();
             }
             else if (TC == "0" && tu != "" && den != "")
             {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
                 && kh.NgayTC >= tungay && kh.NgayTC <= denngay
                 && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
                             || kh.MaTC.TenMa.ToLower().Contains(strTK)
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .OrderByDescending(kh => kh.NgayAuto)
-                        .Skip(Sec * pageSize)
-                        .Take(pageSize)
                         .ToList();
             }
             else if (TC == "1" && tu == "" && den == "")
             {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi == true 
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                        && kh.ThuChi == true
                         && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
                             || kh.MaTC.TenMa.ToLower().Contains(strTK)
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .OrderByDescending(kh => kh.NgayAuto)
-                        .Skip(Sec * pageSize)
-                        .Take(pageSize)
                         .ToList();
             }
             else if (TC == "1" && tu != "" && den != "")
             {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
                         && kh.ThuChi == true && kh.NgayTC >= tungay && kh.NgayTC <= denngay
                         && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
                             || kh.MaTC.TenMa.ToLower().Contains(strTK)
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .OrderByDescending(kh => kh.NgayAuto)
-                        .Skip(Sec * pageSize)
-                        .Take(pageSize)
                         .ToList();
             }
             else if (TC == "2" && tu == "" && den == "")
             {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi == false 
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                        && kh.ThuChi == false
                         && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
                             || kh.MaTC.TenMa.ToLower().Contains(strTK)
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .OrderByDescending(kh => kh.NgayAuto)
-                        .Skip(Sec * pageSize)
-                        .Take(pageSize)
                         .ToList();
             }
             else if (TC == "2" && tu != "" && den != "")
             {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
                         && kh.ThuChi == false && kh.NgayTC >= tungay && kh.NgayTC <= denngay
                         && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
                             || kh.MaTC.TenMa.ToLower().Contains(strTK)
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .OrderByDescending(kh => kh.NgayAuto)
-                        .Skip(Sec * pageSize)
-                        .Take(pageSize)
                         .ToList();
             }
             return model;
         }
-        public int GetPageCountThuChiTek(string strTK,string TC)
+        public List<ChiTietTC> getThuChiTek(int Sec, int pageSize, string strTK, string TC, string tu, string den)
         {
-            List<ChiTietTC> modelTC = new List<ChiTietTC>();
-            strTK = strTK.ToLower().Trim();
-            int model = 0;
-            if (TC == "0")
+            var model1 = ChiTietTCDBTEK(_context, strTK, TC, tu, den)
+                            .OrderBy(kh => kh.NgayAuto).ToList();
+
+
+            for (int i = 0; i < model1.Count(); i++)
             {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && (kh.Noidung.ToLower().Contains(strTK)
-                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
-                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
-                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
-                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                                             .Count();
+                model1[i].STT = i.ToString();
             }
-            else if (TC == "1")
-            {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi==true &&(kh.Noidung.ToLower().Contains(strTK)
-                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
-                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
-                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
-                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                                             .Count();
-            }
-            else
-            {
-                model = _context.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi == false && (kh.Noidung.ToLower().Contains(strTK)
-                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
-                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
-                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
-                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                                             .Count();
-            }
-                
-            return model;
+
+            model1 = model1
+                .OrderByDescending(kh => kh.NgayAuto)
+                .Skip(Sec * pageSize)
+                            .Take(pageSize)
+                            .ToList();
+
+            return model1;
         }
-        public Double TongbyHTvaThuChi(List<ChiTietTC> model, int IdHT,bool thuchi)
+        public int GetPageCountThuChiTek(string strTK, string TC, string tu, string den)
+        {
+            var model1 = ChiTietTCDBTEK(_context, strTK, TC, tu, den).Count();
+
+            return model1;
+        }
+        public Double TongbyHTvaThuChi(List<ChiTietTC> model, int IdHT, bool thuchi)
         {
             double kq = 0;
             var list = model.Where(kh => kh.IdHT == IdHT && kh.ThuChi == thuchi).ToList();
-            if(list != null)
+            if (list != null)
             {
                 for (int i = 0; i < list.Count(); i++)
                 {
                     kq = kq + list[i].SoTien;
                 }
             }
-            return kq ;
+            return kq;
         }
         public bool UPdateChiTietTC(ChiTietTC tc)
         {
@@ -169,7 +140,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 string loi = ex.ToString();
                 return false;
             }

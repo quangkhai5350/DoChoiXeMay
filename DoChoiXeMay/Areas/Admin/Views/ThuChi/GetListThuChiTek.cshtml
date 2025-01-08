@@ -3,6 +3,7 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua">STT</th>
                 <th class="canhgiua">UserName</th>
                 <th class="canhgiua">Mã TC</th>
                 <th class="canhgiua">Hình Thức</th>
@@ -11,7 +12,7 @@
                 <th class="canhgiua">Số Tiền</th>
                 <th class="canhgiua">Thu/Chi</th>
                 <th class="canhgiua">Ngày TC</th>
-                <th class="canhgiua">Ghi Chú</th>
+
                 <th class="canhgiua">File1</th>
                 <th class="canhgiua">File2</th>
                 <th class="canhgiua">Hóa Đơn</th>
@@ -31,8 +32,9 @@
                     {
                     <tr class="canhgiua">
                         @*<td style="text-align:center">
-                        <img class="img-responsive img-thumbnail" src="~/Content/images/SanPham/@Item.HinhSanPham" style="max-height:60px">
-                    </td>*@
+            <img class="img-responsive img-thumbnail" src="~/Content/images/SanPham/@Item.HinhSanPham" style="max-height:60px">
+        </td>*@
+                        <td>@Item.STT</td>
                         <td>@Item.UserTek.UserName</td>
 
                         <td><a title="@Item.MaTC.GhiChu">@Item.MaTC.TenMa</a></td>
@@ -55,7 +57,7 @@
                         }
 
                         <td>@Html.FormatValue(Item.NgayTC, "{0:dd/MM/yyyy}")</td>
-                        <td>@Item.Ghichu</td>
+
 
                         <td>
                             @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgthuchi/" + Item.Filesave1)))

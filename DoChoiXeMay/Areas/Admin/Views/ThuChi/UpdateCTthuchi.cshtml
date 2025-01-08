@@ -20,6 +20,7 @@
                 @Html.HiddenFor(kh => kh.AdminXacNhan)
                 @Html.HiddenFor(kh => kh.UserId)
                 @Html.HiddenFor(kh => kh.NgayAuto)
+                @Html.HiddenFor(kh => kh.STT)
                 <h1 class="info_header">
                     <span style="color:black">@Session["UserName"]</span>  Update thu chi ngày @Model.NgayTC.ToString("dd/MM/yyyy")
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
@@ -45,11 +46,6 @@
                             <span class="icon-case"><i class="glyphicon glyphicon-file"></i></span>
                             @Html.DropDownList("IdMa", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                         </div>
-                        @*<div class="form-group">
-                    <p>Kỳ Xuất Nhập</p>
-                    <span class="icon-case"><i class="glyphicon glyphicon-file"></i></span>
-                    @Html.DropDownList("IdKyxuatnhap", new SelectList(string.Empty, "Value", "Text"), new { style = "width: 75%; height: 40px" })
-                </div>*@
 
                         <div class="form-group">
                             <p>Số Tiền</p>
@@ -57,12 +53,7 @@
                             @Html.TextBoxFor(m => m.SoTien, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
 
                         </div>
-                        <div class="form-group">
-                            <p>Ghi Chú</p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            @Html.TextBoxFor(m => m.Ghichu, new { @class = "form-control", style = "width: 75%; height: 40px" })
-                            @*<input type="text" name="Ghichu" id="Ghichu" />*@
-                        </div>
+
                     </div>
                     <div class="rightcontact">
                         <div class="row">

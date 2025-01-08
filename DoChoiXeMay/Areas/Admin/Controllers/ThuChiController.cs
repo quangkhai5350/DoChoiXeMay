@@ -49,76 +49,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListThuChiTek(string tu, string den,string TC,string strk, int PageNo = 0, int PageSize = 8)
         {
-            var tungay = DateTime.Now;
-            var denngay = DateTime.Now;
-            if (tu !=""&& den != "")
-            {
-                tungay = DateTime.Parse(tu);
-                denngay = DateTime.Parse(den);
-            }
-           List<ChiTietTC> modelTong = new List<ChiTietTC>();
-            if (TC == "0" && tu =="" && den=="")
-            {
-                modelTong = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                    && (kh.Noidung.ToLower().Contains(strk)
-                        || kh.HinhThucTC.TenHT.ToLower().Contains(strk)
-                        || kh.KyXuatNhap.TenKy.ToLower().Contains(strk)
-                        || kh.MaTC.TenMa.ToLower().Contains(strk)
-                        || kh.UserTek.UserName.ToLower().Contains(strk))).ToList();
-            }
-            else if (TC == "0" && tu != "" && den != "")
-            {
-                modelTong = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                    && kh.NgayTC >= tungay && kh.NgayTC <= denngay
-                    && (kh.Noidung.ToLower().Contains(strk)
-                        || kh.HinhThucTC.TenHT.ToLower().Contains(strk)
-                        || kh.KyXuatNhap.TenKy.ToLower().Contains(strk)
-                        || kh.MaTC.TenMa.ToLower().Contains(strk)
-                        || kh.UserTek.UserName.ToLower().Contains(strk))).ToList();
-            }
-            else if (TC == "1" && tu == "" && den == "")
-            {
-                modelTong = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                    && kh.ThuChi == true
-                    && (kh.Noidung.ToLower().Contains(strk)
-                        || kh.HinhThucTC.TenHT.ToLower().Contains(strk)
-                        || kh.KyXuatNhap.TenKy.ToLower().Contains(strk)
-                        || kh.MaTC.TenMa.ToLower().Contains(strk)
-                        || kh.UserTek.UserName.ToLower().Contains(strk))).ToList();
-            }
-            else if (TC == "1" && tu != "" && den != "")
-            {
-                modelTong = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                    && kh.ThuChi == true && kh.NgayTC >= tungay && kh.NgayTC <= denngay
-                    &&(kh.Noidung.ToLower().Contains(strk)
-                        || kh.HinhThucTC.TenHT.ToLower().Contains(strk)
-                        || kh.KyXuatNhap.TenKy.ToLower().Contains(strk)
-                        || kh.MaTC.TenMa.ToLower().Contains(strk)
-                        || kh.UserTek.UserName.ToLower().Contains(strk))).ToList();
-            }
-            else if (TC == "2" && tu == "" && den == "")
-            {
-                modelTong = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                    && kh.ThuChi == false 
-                    && (kh.Noidung.ToLower().Contains(strk)
-                        || kh.HinhThucTC.TenHT.ToLower().Contains(strk)
-                        || kh.KyXuatNhap.TenKy.ToLower().Contains(strk)
-                        || kh.MaTC.TenMa.ToLower().Contains(strk)
-                        || kh.UserTek.UserName.ToLower().Contains(strk))).ToList();
-            }
-            else if(TC == "2" && tu != "" && den != "")
-            {
-                modelTong = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                    && kh.ThuChi == false && kh.NgayTC >= tungay && kh.NgayTC <= denngay
-                    && (kh.Noidung.ToLower().Contains(strk)
-                        || kh.HinhThucTC.TenHT.ToLower().Contains(strk)
-                        || kh.KyXuatNhap.TenKy.ToLower().Contains(strk)
-                        || kh.MaTC.TenMa.ToLower().Contains(strk)
-                        || kh.UserTek.UserName.ToLower().Contains(strk))).ToList();
-            }
             strk = strk.ToLower().Trim();
-            
-            var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk.ToLower(), TC, tu, den);
+            List<ChiTietTC> modelTong = new List<ChiTietTC>();
+            modelTong = Data.ThuChiData.ChiTietTCDBTEK(dbc, strk, TC, tu, den);
+            var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk, TC, tu, den);
+
             //var uid = int.Parse(Session["UserId"].ToString());
             ViewBag.ChitietTCTEK = model;
 
@@ -148,9 +83,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             return PartialView();
         }
-        public ActionResult GetPageCountThuChiTek(string TC,string Keyword, int PageSize = 8)
+        public ActionResult GetPageCountThuChiTek(string tu,string den,string TC,string Keyword, int PageSize = 8)
         {
-            var num = new Data.ThuChiData().GetPageCountThuChiTek(Keyword,TC);
+            var num = new Data.ThuChiData().GetPageCountThuChiTek(Keyword,TC,tu,den);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
@@ -175,7 +110,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ChiTietTC p = new ChiTietTC();
                 p = TC;
                 p.Id = Guid.NewGuid();
-
+                
                 var file1 = Request.Files["Filesave1"];
                 var file2 = Request.Files["Filesave2"];
                 var file3 = Request.Files["HoaDon"];

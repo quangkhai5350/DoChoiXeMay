@@ -25,8 +25,8 @@ namespace DoChoiXeMay.Models
 
         public bool ThuChi { get; set; }
 
-        [StringLength(500)]
-        public string Ghichu { get; set; }
+        [StringLength(50)]
+        public string STT { get; set; }
 
         [StringLength(100)]
         public string Filesave1 { get; set; }
