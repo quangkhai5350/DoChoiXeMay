@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "ListXuatNhapUser";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListXuatNhapUser</h2>
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<div class="panel panel-default" style="margin-top:10px">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoXuatNhapUser"]
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control input-sm pull-right" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo UserName - Nội Dung - Mã TC - Hình Thức TC - Kỳ Xuất Nhập." />
+                </div>
+                <div class="col-lg-2 col-xl-2 col-md-2 col-sm-3" style="margin-top:5px">
+
+                </div>
+                <div class="col-lg-6 col-xl-6 col-md-6 col-sm-9 col-12" style="margin-top:5px">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6" style="text-align:center">
+
+                    </div>
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6" style="text-align:right">
+
+                        <a class="btn btn-warning" style="margin-left:20px" onclick="uwngtuyen()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Xuất Nhập"</a>
+                        @*<a onclick="uwngtuyen()" class="btn btn-primary btn-width btn-default" style="border-radius: 5px;"> <i class="material-icons" style="font-size:16px">assignment</i> Click ứng tuyển</a>*@
+
+
+                    </div>
+
+                </div>
+            </div>
+            <div id="myModal" class="modal fade" role="dialog" style="opacity: 1">
+                <div class="modal-dialog modal-lg" style="left:0; width: 500px; height: 600px; margin-top: 20% !important; background-position: center center; background-repeat: no-repeat; background-size: cover;box-sizing:border-box ">
+                    <div class="modal-content" style="height:570px">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center" style="font-weight:bold;font-size:24px">Thêm Mới "Kỳ Xuất Nhập"</h4>
+                        </div>
+                        <div class="modal-body" style="box-shadow: 1px 0 3px #8ba6c5">
+                            <div style="padding:0 !important">
+                                @using (Html.BeginForm("InsertKyXuatNhap", "XuatNhap", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {<div class="row form-group" id="ungtuyen" style="padding:15px; margin:0px;font-size:larger">
+
+                                        <div class="row">
+                                            <input id="TenKy" placeholder="Tên Kỳ xuất nhập ..." name="TenKy" style="margin-right:10px;width:90%" required />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Chiết khấu %</p>
+                                                <input id="CKphantram" type="number" value="0" name="CKphantram" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Chiết khấu tiền mặt</p>
+                                                <input id="CKtienmat" type="number" value="0" name="CKtienmat" required />
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>Tiền Ship</p>
+                                                <input id="Shipper" type="number" value="0" name="Shipper" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Vat %</p>
+                                                <input id="VAT" type="number" value="0" name="VAT" required />
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:10px">
+                                            <div class="col-md-6">
+                                                <span>Ngày Xuất Nhập</span>
+                                                <input id="NgayXuatNhap" type="date" value="0" name="NgayXuatNhap" required />
+                                            </div>
+                                            <div class="col-md-6" style="margin-top:10px">
+                                                <span>Kỳ Xuất</span>
+                                                <input type="checkbox" id="XuatNhap" name="XuatNhap" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="margin-top:10px">
+                                            <span>Tải Hóa Đơn</span>
+                                            <input id="HoaDon" type="file" name="HoaDon" />
+
+                                        </div>
+                                        <div class="col-md-12" style="margin-top:10px">
+                                            <span>Tải File1</span>
+                                            <input id="Filesave2" type="file" name="Filesave2" />
+
+                                        </div>
+                                        <div class="col-md-12" style="margin-top:10px">
+                                            <span>Tải File2</span>
+                                            <input id="Filesave3" type="file" name="Filesave3" />
+
+                                        </div>
+                                        <div class="col-md-12" style="margin-top:10px;font-size:larger;text-align:center">
+                                            <button id="btnLuu" class="btn btn-primary" type="submit">Lưu Kỳ Xuất Nhập</button>
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="panel-body">
+        <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
+        <div class="list">
+
+
+        </div>
+    </div>
+    <div class="panel-footer">
+
+        <div class="row">
+            <div class="col-md-8">
+                <span class="TongSanPham"></span>
+            </div>
+            <div class="col-md-4" style="text-align: right">
+                <span class="TongSanPham"></span>
+            </div>
+        </div>
+
+
+        <ul class="pager">
+            <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+        </ul>
+
+    </div>
+</div>
+
+<script>
+    function uwngtuyen() {
+        $('#myModal').modal('show');
+    };
+</script>
+

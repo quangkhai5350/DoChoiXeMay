@@ -156,7 +156,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult LoadKyXuatNhap()
         {
-            var Kyxuatnhap = dbc.KyXuatNhaps.Where(kh => kh.AdminXacNhan == true && kh.Id > 1
+            var Kyxuatnhap = dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.Id > 1
                  && dbc.ChiTietTCs.FirstOrDefault(nn => nn.IdKyxuatnhap == kh.Id) == null)
                      .OrderByDescending(kh => kh.NgayAuto).Select(kh => new
                      {
