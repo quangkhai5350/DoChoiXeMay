@@ -42,6 +42,7 @@ namespace DoChoiXeMay.Models
         public DateTime NgayAuto { get; set; }
 
         public int UserId { get; set; }
+
         public bool YeuCauDay { get; set; }
 
         public bool AdminXacNhan { get; set; }

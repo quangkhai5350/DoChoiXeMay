@@ -88,6 +88,7 @@
 
 <h5>***Kỳ XuấtN: Thêm mới + Xóa(KyXN +ChiTietXN) nếu chưa add bảng ChitietTC</h5>
 <h5>***ChiTietXN(SubAdmin):Thêm Mới + Xóa</h5>
+<h5>***XuatNhap = False : nhập vào</h5>
 <script>
     $(function () {
         pageNo = 0;
@@ -153,8 +154,20 @@
             denngay = $("#denngay").val();
             getTongSanPham(tungay, denngay, TCC, KeywordsTTT, pageSize, pageNo);
         });
+        $("#tungay").change(function () {
+            if ($("#tungay").val() != "" && $("#denngay").val() != "" && $("#tungay").val() <= $("#denngay").val()) {
+                pageNo = 0;
+                pageSize = 9;
+                TongSP = 0;
+                TCC = $("#SelectTC").val();
+                KeywordsTTT = $('#KeywordsTT').val();
+                tungay = $("#tungay").val();
+                denngay = $("#denngay").val();
+                getTongSanPham(tungay, denngay, TCC, KeywordsTTT, pageSize, pageNo);
+            }
+        });
         $("#denngay").change(function () {
-            if ($("#tungay").val() != "" && $("#denngay").val() != "") {
+            if ($("#tungay").val() != "" && $("#denngay").val() != "" && $("#tungay").val() <= $("#denngay").val()) {
                 pageNo = 0;
                 pageSize = 9;
                 TongSP = 0;
@@ -196,13 +209,15 @@
         pageSize = 9;
         TongSP = 0;
         TCC = $('#SelectTC').val();
+        tungay = $("#tungay").val();
+        denngay = $("#denngay").val();
         var KeywordsTTT = $('#KeywordsTT').val();
         $("#loading").show();
         $(".list").css('display', 'none');
         
         setTimeout(function () {
             $(".list").css('display', 'block');
-            getTongSanPham(TCC,KeywordsTTT, pageSize, pageNo);
+            getTongSanPham(tungay, denngay, TCC,KeywordsTTT, pageSize, pageNo);
             //1s sau hiên lên
         }, 800);
         $("#loading").hide();

@@ -134,6 +134,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
     <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
     <Compile Include="Areas\Admin\Data\Xstring.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
@@ -156,7 +157,6 @@
     <Compile Include="Models\NhatKyUTek.cs" />
     <Compile Include="Models\NoteKythuat.cs" />
     <Compile Include="Models\Size.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\ThuChi.cs" />
     <Compile Include="Models\UserTek.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -373,6 +373,7 @@
     <Content Include="Areas\Admin\Views\ThuChi\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\GetListThuChiTek.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\UpdateCTthuchi.cshtml" />
+    <Content Include="Areas\Admin\Views\XuatNhap\ListXuatNhapUser.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

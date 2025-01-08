@@ -21,6 +21,7 @@ namespace DoChoiXeMay.Models
         [Required]
         [StringLength(100)]
         public string TenKy { get; set; }
+        public bool XuatNhap { get; set; }
 
         public int CKphantram { get; set; }
 
@@ -32,15 +33,15 @@ namespace DoChoiXeMay.Models
 
         public int UserId { get; set; }
 
-        public int IdHanhDong { get; set; }
-
-        public int PushtoNXId { get; set; }
-
         public bool UPush { get; set; }
 
-        public bool AdminXacNhan { get; set; }
+        public bool AdminXNPUSH { get; set; }
+
+        public bool UYeuCauXoa { get; set; }
 
         public double TongTienAuto { get; set; }
+
+        public DateTime NgayXuatNhap { get; set; }
 
         public DateTime NgayAuto { get; set; }
 
@@ -58,8 +59,6 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
-
-        public virtual HanhDong HanhDong { get; set; }
 
         public virtual UserTek UserTek { get; set; }
     }

@@ -28,6 +28,8 @@ namespace DoChoiXeMay.Models
         [StringLength(500)]
         public string GhiChu { get; set; }
 
+        public bool XuatNhap { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
     }
