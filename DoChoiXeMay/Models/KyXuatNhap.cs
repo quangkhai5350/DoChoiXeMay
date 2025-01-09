@@ -30,7 +30,7 @@ namespace DoChoiXeMay.Models
         public double Shipper { get; set; }
 
         public int VAT { get; set; }
-
+        public int IdMaTC { get; set; }
         public int UserId { get; set; }
 
         public bool UPush { get; set; }

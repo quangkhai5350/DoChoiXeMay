@@ -114,9 +114,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file1 = Request.Files["Filesave1"];
                 var file2 = Request.Files["Filesave2"];
                 var file3 = Request.Files["HoaDon"];
-                var ten1 = Xstring.saveFile(file1, Xstring.duongdanthuchi);
-                var ten2 = Xstring.saveFile(file2, Xstring.duongdanthuchi);
-                var ten3 = Xstring.saveFile(file3, Xstring.duongdanthuchi);
+                var ten1 = Xstring.saveFile(file1, "imgthuchi/");
+                var ten2 = Xstring.saveFile(file2, "imgthuchi/");
+                var ten3 = Xstring.saveFile(file3, "imgthuchi/");
 
                 p.Filesave1 = ten1;
                 p.Filesave2 = ten2;
@@ -228,20 +228,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file3 = Request.Files["Dinhkem3"];
                 if (file1 != null) { 
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu(Xstring.duongdanthuchi, TC.Filesave1);
-                    TC.Filesave1 = Xstring.saveFile(file1, Xstring.duongdanthuchi);
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave1);
+                    TC.Filesave1 = Xstring.saveFile(file1, "imgthuchi/");
                 }
                 if (file2 != null)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu(Xstring.duongdanthuchi, TC.Filesave2);
-                    TC.Filesave2 = Xstring.saveFile(file2, Xstring.duongdanthuchi);
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave2);
+                    TC.Filesave2 = Xstring.saveFile(file2, "imgthuchi/");
                 }
                 if (file3 != null)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu(Xstring.duongdanthuchi, TC.HoaDon);
-                    TC.HoaDon = Xstring.saveFile(file3, Xstring.duongdanthuchi);
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.HoaDon);
+                    TC.HoaDon = Xstring.saveFile(file3, "imgthuchi/");
                 }
                 TC.NgayAuto = DateTime.Now;
                 var kq=new Data.ThuChiData().UPdateChiTietTC(TC);

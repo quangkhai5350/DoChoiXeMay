@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -10,16 +11,14 @@ namespace DoChoiXeMay.Areas.Admin.Data
 {
     public static class Xstring
     {
-        public static string mapweb = ConfigurationManager.AppSettings["mapweb"];
-        public static string duongdanthuchi = "Areas\\Admin\\Content\\imgthuchi\\";
         public static bool Xoahinhcu(string foder, string img)
         {
             try
             {
-                var pathweb = mapweb + foder + "\\" + img;
-                if (File.Exists(pathweb))
+                //var pathweb = mapweb + foder + "\\" + img;
+                if (File.Exists(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img)))
                 {
-                    File.Delete(pathweb);
+                    File.Delete(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img));
                 }
                 return true;
             }
@@ -44,7 +43,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     var sub = XString.MakeAotuName();
                     ten = str[str.Count() - 2] + sub + "." + ext;
                     //Không thu nhỏ hình
-                    File.SaveAs(mapweb + foder+ten);
+                    //File.SaveAs(mapweb + foder+ten);
+                    File.SaveAs(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/"+ foder+ten));
                 }
                 else ten = "";
                 return ten;
