@@ -1,4 +1,6 @@
-﻿using DoChoiXeMay.Filters;
+﻿using DoChoiXeMay.Areas.Admin.Data;
+using DoChoiXeMay.Filters;
+using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +13,77 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     public class XuatNhapController : Controller
     {
         // GET: Admin/XuatNhap
+        Model1 dbc=new Model1();
         public ActionResult ListXuatNhapUser()
         {
-
+            ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu");
             return View();
         }
-        public ActionResult InsertKyXuatNhap()
+        public ActionResult GetListKyXNUser()
         {
+            var uid = int.Parse(Session["UserId"].ToString());
+            if(Session["quyen"].ToString() == "Admin")
+            {
+                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.UPush == false).ToList();
+            }
+            else
+            {
+                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.AdminXNPUSH == false).ToList();
+            }
+            
+            return PartialView();
+        }
+        public ActionResult InsertKyXuatNhap(KyXuatNhap XN)
+        {
+            try
+            {
+                var uid = int.Parse(Session["UserId"].ToString());
+                KyXuatNhap model = new KyXuatNhap();
+                model = XN;
+                model.UserId = uid;
+                model.UPush = false;
+                if (Session["quyen"].ToString() == "Admin")
+                {
+                    model.AdminXNPUSH = true;
+                }
+                else
+                {
+                    model.AdminXNPUSH = false;
+                }
+                model.UYeuCauXoa = false;
+                model.TongTienAuto = 0;
+                model.NgayAuto = DateTime.Now;
+                var file1 = Request.Files["HoaDon"];
+                var file2 = Request.Files["Filesave2"];
+                var file3 = Request.Files["Filesave3"];
+                var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
+                var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
 
+                model.HoaDon = ten1;
+                model.Filesave2 = ten2;
+                model.Filesave3 = ten3;
+                dbc.KyXuatNhaps.Add(model);
+                int kt = dbc.SaveChanges();
+                if (kt > 0)
+                {
+                    Session["ThongBaoXuatNhapUser"] = "Thêm mới thành công Kỳ xuất nhập ngày:" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString(),
+                         Session["UserName"].ToString(), "Insert thành công kỳ XN:" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}"), "");
+                    return RedirectToAction("ListXuatNhapUser");
+                }
+                else
+                {
+                    Session["ThongBaoXuatNhapUser"] = "Thêm mới thất bại Kỳ xuất nhập ngày:" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}") + " !!!";
+                    return RedirectToAction("ListXuatNhapUser");
+                }
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                Session["ThongBaoXuatNhapUser"]="Thêm mới Thất Bại !!!!!!!!!!. Có lỗi hệ thống";
+            }
+            
             return RedirectToAction("ListXuatNhapUser");
         }
     }
