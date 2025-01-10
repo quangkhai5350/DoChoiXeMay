@@ -24,14 +24,80 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var uid = int.Parse(Session["UserId"].ToString());
             if(Session["quyen"].ToString() == "Admin")
             {
-                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.UPush == false).ToList();
+                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.UPush == false)
+                    .OrderByDescending(kh => kh.Id)
+                    .ToList();
             }
             else
             {
-                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.AdminXNPUSH == false).ToList();
+                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.AdminXNPUSH == false)
+                    .OrderByDescending (kh => kh.Id)
+                    .ToList();
             }
             
             return PartialView();
+        }
+        [HttpGet]
+        public ActionResult UpdateKyXNUser(int id)
+        {
+            var model = dbc.KyXuatNhaps.Find(id);
+            ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateKyXNUser(KyXuatNhap XN)
+        {
+            try
+            {
+                var NgayXuatNhap = XN.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                var file1 = Request.Files["Dinhkem1"];
+                var file2 = Request.Files["Dinhkem2"];
+                var file3 = Request.Files["Dinhkem3"];
+                if (file1 != null)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.HoaDon);
+                    XN.HoaDon = Xstring.saveFile(file1, "imgxuatnhap/");
+                }
+                if (file2 != null)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.Filesave2);
+                    XN.Filesave2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                }
+                if (file3 != null)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.Filesave3);
+                    XN.Filesave3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                }
+                XN.NgayAuto = DateTime.Now;
+                var kq = new Data.XuatNhapData().UPdateKyXN(XN);
+                if (kq == true)
+                {
+                    var userid = int.Parse(Session["UserId"].ToString());
+                    Session["ThongBaoXuatNhapUser"] = "Update thanh cong kỳ xuất nhập ngay: " + NgayXuatNhap;
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "UpdateKyXNUser-" + NgayXuatNhap, "");
+                    return RedirectToAction("ListXuatNhapUser");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Update Kỳ XN Thất Bại !!!!");
+                    var model = dbc.ChiTietTCs.Find(XN.Id);
+                    ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Update Xuat Nhập Thất Bại !!!! Có Lỗi hệ thống.");
+                var model = dbc.ChiTietTCs.Find(XN.Id);
+                ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
+                return View(model);
+            }
+            
         }
         public ActionResult InsertKyXuatNhap(KyXuatNhap XN)
         {

@@ -5,6 +5,7 @@
             <tr class="canhgiua" style="background-color: #00bcd4">
                 <th class="canhgiua">Tên Kỳ</th>
                 <th class="canhgiua">Update Kỳ</th>
+                <th class="canhgiua">Thêm ChiTiet</th>
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
@@ -16,9 +17,11 @@
                         <p><span>Yêu cầu đẩy </span> <input type="checkbox" value="@Item.UPush" /></p>
                     </td>
                     <td>
-                        <a class="btn btn-danger" href="/Admin/ThuChi/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-danger" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
                     </td>
-
+                    <td>
+                        <a class="btn btn-danger" href="/Admin/XuatNhap/ThemXuatNhapUser/@Item.Id"><span class="glyphicon glyphicon-import"></span></a>
+                    </td>
                 </tr>
 
             }

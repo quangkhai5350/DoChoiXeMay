@@ -375,6 +375,7 @@
     <Content Include="Areas\Admin\Views\ThuChi\UpdateCTthuchi.cshtml" />
     <Content Include="Areas\Admin\Views\XuatNhap\ListXuatNhapUser.cshtml" />
     <Content Include="Areas\Admin\Views\XuatNhap\GetListKyXNUser.cshtml" />
+    <Content Include="Areas\Admin\Views\XuatNhap\UpdateKyXNUser.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
