@@ -3,6 +3,7 @@ using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -151,6 +152,62 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             
             return RedirectToAction("ListXuatNhapUser");
+        }
+        [HttpGet]
+        public ActionResult InsertChiTietXNbyKy(int id) {
+            var ky = dbc.KyXuatNhaps.Find(id);
+            Session["TenKy"]=ky.TenKy;
+            Session["IDKy"] = id;
+            Session["CKphantram"] = ky.CKphantram;
+            Session["CKtienmat"] = ky.CKtienmat;
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
+            ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor");
+            ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult InsertChiTietXNbyKy(ChitietXuatNhap ctxn)
+        {
+
+            ChitietXuatNhap model = new ChitietXuatNhap();
+            model = ctxn;
+            model.Id = Guid.NewGuid();
+            model.IdKy = int.Parse(Session["IDKy"].ToString());
+            model.NgayAuto = DateTime.Now;
+            var file1 = Request.Files["Hinh1"];
+            var file2 = Request.Files["Hinh2"];
+            var file3 = Request.Files["Hinh3"];
+            var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
+            var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
+            var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
+            model.Hinh1 = ten1;
+            model.Hinh2 = ten2;
+            model.Hinh3 = ten3;
+            dbc.ChitietXuatNhaps.Add(model);
+            int kq= dbc.SaveChanges();
+            if (kq > 0)
+            {
+                var tt =  TinhTongtienKy(model.IdKy);
+                KyXuatNhap XN = dbc.KyXuatNhaps.Find(model.IdKy);
+                XN.TongTienAuto = tt;
+                dbc.Entry(XN).State = EntityState.Modified;
+                var update=dbc.SaveChanges();
+            }
+            return RedirectToAction("ListXuatNhapUser");
+        }
+        public double TinhTongtienKy(int id)
+        {
+            double kq=0;
+            var ky = dbc.KyXuatNhaps.Find(id);
+            var model = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
+            
+                for (int i = 0; i < model.Count(); i++)
+                {
+                    double tong = model[i].SoLuong * model[i].Gianhap;
+                    double tongtien = tong - model[i].CKtienmat - model[i].CKphantram * tong/100;
+                    kq = kq + tong;
+                }
+            return kq + ky.Shipper + ky.VAT * kq/100;
         }
     }
 }

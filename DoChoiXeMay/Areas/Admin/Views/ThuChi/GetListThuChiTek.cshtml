@@ -3,8 +3,8 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
-                <th class="canhgiua">STT</th>
-                <th class="canhgiua">UserName</th>
+                <th class="canhgiua" style="width:10px">STT</th>
+                <th class="canhgiua" style="width:20px">UserName</th>
                 <th class="canhgiua">Mã TC</th>
                 <th class="canhgiua">Hình Thức</th>
                 <th class="canhgiua">Kỳ Xuất Nhập</th>
@@ -13,9 +13,9 @@
                 <th class="canhgiua">Thu/Chi</th>
                 <th class="canhgiua">Ngày TC</th>
 
-                <th class="canhgiua">File1</th>
-                <th class="canhgiua">File2</th>
-                <th class="canhgiua">Hóa Đơn</th>
+                <th class="canhgiua" style="width:10px">File1</th>
+                <th class="canhgiua" style="width:10px">File2</th>
+                <th class="canhgiua" style="width:10px">Hóa Đơn</th>
                 <th class="canhgiua">Ngày Tạo</th>
                 @if (Session["quyen"].ToString() == "Admin")
                 {
@@ -27,7 +27,7 @@
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.ChiTietTC Item in ViewBag.ChitietTCTEK)
             {
-            <tr class="canhgiua">
+            <tr class="canhgiua" style="border-bottom: 2px solid #808080 !important">
                 @*<td style="text-align:center">
                 <img class="img-responsive img-thumbnail" src="~/Content/images/SanPham/@Item.HinhSanPham" style="max-height:60px">
             </td>*@
@@ -38,7 +38,7 @@
                 <td>@Item.HinhThucTC.TenHT</td>
                 <td>@Item.KyXuatNhap.TenKy</td>
                 <td>@Item.Noidung</td>
-                <td>@Html.FormatValue(Item.SoTien, "{0:#,###,###}")</td>
+                <td>@Html.FormatValue(Item.SoTien, "{0:#,###,###.00}")</td>
 
                 @if (Item.ThuChi == true)
                 {

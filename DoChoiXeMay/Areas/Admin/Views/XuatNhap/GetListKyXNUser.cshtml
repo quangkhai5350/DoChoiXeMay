@@ -1,26 +1,71 @@
 ﻿<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+
 <div class="table-responsive">
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua" style="width:20px">Update Kỳ</th>
                 <th class="canhgiua">Tên Kỳ</th>
-                <th class="canhgiua">Update Kỳ</th>
-                <th class="canhgiua">Thêm ChiTiet</th>
+                <th class="canhgiua">Xuất Nhập/Số tiền </th>
+                <th class="canhgiua" style="width:20px">Hóa Đơn</th>
+                <th class="canhgiua" style="width:20px">File 2</th>
+                <th class="canhgiua" style="width:20px">File 3</th>
+                <th class="canhgiua" style="width:20px">Thêm ChiTiet</th>
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXN)
             {
-                <tr class="canhgiua">
+                <tr class="canhgiua" style="border: 2px solid black !important">
+                    <td>
+                        <a class="marginbutonkh btn btn-danger" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                    </td>
                     <td>
                         <p>@Item.TenKy</p>
+                        <hr />
                         <p><span>Yêu cầu đẩy </span> <input type="checkbox" value="@Item.UPush" /></p>
+                        <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
+                    </td>
+
+                    <td>
+                        @if (Item.XuatNhap == true)
+                        {
+                            <span style="background-color:burlywood">Xuất Hàng</span>
+                        }
+                        else
+                        {
+                            <span>Nhập Hàng</span>
+                        }
+                        <hr />
+                        <p>Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
+                        @*<p>Tổng: @Item.TongTienAuto</p>*@
                     </td>
                     <td>
-                        <a class="btn btn-danger" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.HoaDon)))
+                        {
+                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.HoaDon">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
                     </td>
                     <td>
-                        <a class="btn btn-danger" href="/Admin/XuatNhap/ThemXuatNhapUser/@Item.Id"><span class="glyphicon glyphicon-import"></span></a>
+                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Filesave2)))
+                        {
+                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Filesave2">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td style="border-right: 2px solid black !important">
+                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Filesave3)))
+                        {
+                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Filesave3">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <a class="marginbutonkh btn btn-danger" href="/Admin/XuatNhap/InsertChiTietXNbyKy/@Item.Id"><span class="glyphicon glyphicon-import"></span></a>
                     </td>
                 </tr>
 

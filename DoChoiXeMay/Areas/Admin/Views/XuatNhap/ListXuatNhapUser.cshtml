@@ -10,17 +10,22 @@
     .canhgiua {
         text-align: center !important;
     }
+    .marginbutonkh{
+        margin-top:50%;
+    }
 </style>
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoXuatNhapUser"]
+                @Session["ThongBaoXuatNhapUser"] 
+                
             </div>
 
             <div class="row">
                 <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
                     <a class="btn btn-warning" style="margin-left:20px" onclick="uwngtuyen()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Xuất Nhập"</a>
+                    <span>(Số tiền được tự động tính sau khi bạn nhập Chi Tiết)</span>
                 </div>
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-3" style="margin-top:5px">
 

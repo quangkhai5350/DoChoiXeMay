@@ -9,12 +9,6 @@ namespace DoChoiXeMay.Models
     [Table("HangHoa")]
     public partial class HangHoa
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HangHoa()
-        {
-            ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
-        }
-
         public int Id { get; set; }
 
         [Required]
@@ -31,8 +25,5 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string Hinh3 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
     }
 }

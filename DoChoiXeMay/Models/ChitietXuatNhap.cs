@@ -11,11 +11,11 @@ namespace DoChoiXeMay.Models
     {
         public Guid Id { get; set; }
 
-        public int Idten { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string Ten { get; set; }
 
         public int IdKy { get; set; }
-
-        public bool XuatNhap { get; set; }
 
         public int CKphantram { get; set; }
 
@@ -24,9 +24,6 @@ namespace DoChoiXeMay.Models
         public int SoLuong { get; set; }
 
         public double Gianhap { get; set; }
-
-        [StringLength(100)]
-        public string PushtoCTNXId { get; set; }
 
         public DateTime NgayAuto { get; set; }
 
@@ -46,8 +43,6 @@ namespace DoChoiXeMay.Models
         public int IDSize { get; set; }
 
         public virtual Color Color { get; set; }
-
-        public virtual HangHoa HangHoa { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }
 
