@@ -4,23 +4,28 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ListXuatNhapUser</h2>
+<h2>Danh Sách Xuất Nhập User @Session["UserName"]</h2>
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <style>
     .canhgiua {
         text-align: center !important;
+    }
+    .marginbutonkh{
+        margin-top:50%;
     }
 </style>
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoXuatNhapUser"]
+                @Session["ThongBaoXuatNhapUser"] 
+                
             </div>
 
             <div class="row">
                 <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
                     <a class="btn btn-warning" style="margin-left:20px" onclick="uwngtuyen()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Xuất Nhập"</a>
+                    <span>(Số tiền được tự động tính sau khi bạn nhập Chi Tiết)</span>
                 </div>
                 <div class="col-lg-2 col-xl-2 col-md-2 col-sm-3" style="margin-top:5px">
 
@@ -43,6 +48,7 @@
                 <div class="modal-dialog modal-lg" style="left:0; width: 500px; height: 600px; margin-top: 10% !important; background-position: center center; background-repeat: no-repeat; background-size: cover;box-sizing:border-box ">
                     <div class="modal-content" style="height:650px">
                         <div class="modal-header">
+                            <button type="button" class="close" onclick="closemodal()">&times;</button>
                             <h4 class="modal-title text-center" style="font-weight:bold;font-size:24px">Thêm Mới "Kỳ Xuất Nhập"</h4>
                         </div>
                         <div class="modal-body" style="box-shadow: 1px 0 3px #8ba6c5">
@@ -55,15 +61,15 @@
                                         </div>
                                         <div class="row" style="margin-top:10px">
                                             <span>Loại Hàng Xuất/Nhập</span>
-                                            @Html.DropDownList("IdMaTC", null, new {style = "width: 100%; height: 40px" })
+                                            @Html.DropDownList("IdMaTC", null, new { style = "width: 100%; height: 40px" })
                                         </div>
                                         <div class="row" style="margin-top:20px">
                                             <div class="col-md-6">
-                                                <span>Chiết khấu %</span>
+                                                <span>(-)Chiết khấu %</span>
                                                 <input id="CKphantram" type="number" value="0" name="CKphantram" required />
                                             </div>
                                             <div class="col-md-6">
-                                                <span>Chiết khấu tiền mặt</span>
+                                                <span>(-)Chiết khấu tiền mặt</span>
                                                 <input id="CKtienmat" type="number" value="0" name="CKtienmat" required />
                                             </div>
 
@@ -81,12 +87,12 @@
                                         <div class="row" style="margin-top:10px">
                                             <div class="col-md-6">
                                                 <span>Ngày Xuất Nhập</span>
-                                                <input id="NgayXuatNhap" type="date" value="0" name="NgayXuatNhap" required />
+                                                <input id="NgayXuatNhap" type="date" name="NgayXuatNhap" required />
                                             </div>
                                             <div class="col-md-6">
                                                 <span>Kỳ Xuất</span>
                                                 <input type="checkbox" id="XuatNhap" name="XuatNhap" />
-                                                <p style="font-size:small">Nếu "Xuất hàng" thì sẽ (+) chiết khấu, ngược lại thì (-)</p>
+                                                <p style="font-size:small">Chiết khấu thì (-), Ship và VAT thì (+)</p>
                                             </div>
                                         </div>
 
@@ -105,8 +111,13 @@
                                             <input id="Filesave3" type="file" name="Filesave3" />
 
                                         </div>
-                                        <div class="col-md-12" style="margin-top:10px;font-size:larger;text-align:center">
+                                        <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
                                             <button id="btnLuu" class="btn btn-primary" type="submit">Lưu Kỳ Xuất Nhập</button>
+                                            
+                                        </div>
+                                        <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
+                                            
+                                            <button id="btnLuu" class="btn btn-default" onclick="closemodal()">Đóng</button>
                                         </div>
 
                                     </div>
@@ -140,22 +151,29 @@
         </div>
 
 
-        <ul class="pager">
+        @*<ul class="pager">
             <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
             <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-        </ul>
+        </ul>*@
 
     </div>
 </div>
 <h5>***Nếu Chưa đẩy lên Tek thì cho "update", đẩy rồi thì phải "yêu cầu xóa"</h5>
 <h5>***Id=1 không thuộc về User nào</h5>
 <h5>***Yêu cầu xóa thì gắn lên XNTEK</h5>
+<h5>**Tổng tiền: Soluong*gianhap + shipper + VAT - ChietKhau% - ChietKhautienmat</h5>
 <script>
+    $(function () {
+        
+    });
     function uwngtuyen() {
-        $('#myModal').modal('show');
+        $("#myModal").addClass("show");
     };
+    function closemodal() {
+        $("#myModal").removeClass("show");
+    }
     LoadPage();
     function LoadPage() {
         $.ajax({

@@ -36,12 +36,6 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IDColor)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<HangHoa>()
-                .HasMany(e => e.ChitietXuatNhaps)
-                .WithRequired(e => e.HangHoa)
-                .HasForeignKey(e => e.Idten)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<HanhDong>()
                 .HasMany(e => e.NoteKythuats)
                 .WithRequired(e => e.HanhDong)

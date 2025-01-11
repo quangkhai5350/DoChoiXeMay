@@ -15,7 +15,7 @@ namespace DoChoiXeMay.Filters
             {
                 HttpContext.Current.Session["Message"] = "Vui lòng đăng nhập";
 
-                HttpContext.Current.Response.Redirect("/Dang-Nhap");
+                HttpContext.Current.Response.Redirect("/Home/Index");
                 return;
             }
         }

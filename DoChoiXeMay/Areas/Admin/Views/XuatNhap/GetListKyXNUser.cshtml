@@ -1,26 +1,187 @@
-﻿<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+﻿@using DoChoiXeMay.Areas.Admin.Data;
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+
 <div class="table-responsive">
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua" style="width:30px">Xóa Kỳ</th>
+                <th class="canhgiua" style="width:30px">Update Kỳ</th>
                 <th class="canhgiua">Tên Kỳ</th>
-                <th class="canhgiua">Update Kỳ</th>
-                <th class="canhgiua">Thêm ChiTiet</th>
+                <th class="canhgiua">Xuất Nhập/Số tiền </th>
+                <th class="canhgiua" style="width:20px">Hóa Đơn</th>
+                <th class="canhgiua" style="width:20px">File 2</th>
+                <th class="canhgiua" style="width:20px">File 3</th>
+                <th class="canhgiua" style="width:30px">Thêm HH</th>
+
+                <th class="canhgiua">Soluong/Tên Hàng/ThôngSố/Hãng</th>
+                <th class="canhgiua">Giá Nhập</th>
+                <th class="canhgiua" style="width:20px">Hình 1</th>
+                <th class="canhgiua" style="width:20px">Hình 2</th>
+                <th class="canhgiua" style="width:20px">Hình 3</th>
+                <th class="canhgiua" style="width:15px">STT</th>
+
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXN)
             {
-                <tr class="canhgiua">
+                var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
+                <tr class="canhgiua" style="border: 2px solid black !important">
                     <td>
-                        <p>@Item.TenKy</p>
-                        <p><span>Yêu cầu đẩy </span> <input type="checkbox" value="@Item.UPush" /></p>
+                        <a title="Xóa Kỳ hiện tại" class="marginbutonkh btn btn-danger" onclick="return confirm('Bạn muốn xóa Kỳ @Item.TenKy ??')"
+                           href="/Admin/XuatNhap/DeleteKyXNUser/@Item.Id"><span class="glyphicon glyphicon-trash" style="font-size:30px"></span></a>
                     </td>
                     <td>
-                        <a class="btn btn-danger" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a title="Update Kỳ hiện tại" class="marginbutonkh btn btn-primary" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id"><span class="glyphicon glyphicon-edit" style="font-size:30px"></span></a>
+                    </td>
+                    <td style="font-size:15px">
+                        <p style="color:red">@Item.TenKy</p>
+                        <hr />
+                        <p style="background-color:bisque"><span>Yêu cầu đẩy </span> <input type="checkbox" value="@Item.UPush" /></p>
+                        <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
+                    </td>
+
+                    <td style="font-size:15px">
+                        @if (Item.XuatNhap == true)
+                        {
+                            <span style="background-color:burlywood">Xuất Hàng</span>
+                        }
+                        else
+                        {
+                            <span>Nhập Hàng</span>
+                        }
+                        <hr />
+                        <p>Tổng: @Html.FormatValue(Item.TongTienAuto, "{0:#,###,###}")</p>
+                        <p>
+                            @if (Item.VAT > 0)
+                            {
+                                <span>(VAT:@Item.VAT %)</span>
+                            }
+                            @if (Item.CKphantram > 0)
+                            {
+                                <span>(ChietKhau%:@Item.CKphantram %)</span>
+                            }
+                            @if (Item.CKtienmat > 0)
+                            {
+                                <span>(ChietKhau tiền mặt:@Html.FormatValue(Item.CKtienmat, "{0:#,###,###}"))</span>
+                            }
+                            @if (Item.Shipper > 0)
+                            {
+                                <span>(Tiền Ship:@Html.FormatValue(Item.Shipper, "{0:#,###,###}"))</span>
+                            }
+                        </p>
                     </td>
                     <td>
-                        <a class="btn btn-danger" href="/Admin/XuatNhap/ThemXuatNhapUser/@Item.Id"><span class="glyphicon glyphicon-import"></span></a>
+                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.HoaDon)))
+                        {
+                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.HoaDon">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Filesave2)))
+                        {
+                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Filesave2">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td style="border-right: 2px solid black !important">
+                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Filesave3)))
+                        {
+                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Filesave3">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <a class="marginbutonkh btn btn-warning waves-effect" href="/Admin/XuatNhap/InsertChiTietXNbyKy/@Item.Id" title="Thêm Hàng Hóa"><span class="fa fa-plus-circle" style="font-size:30px"></span></a>
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            <p>
+                                <span style="float:left">
+                                    <a title="Xóa @ct.SoLuong @ct.Ten" class="btn btn-danger" onclick="return confirm('Bạn muốn Xóa @ct.SoLuong @ct.Ten ??')"
+                                       href="/Admin/XuatNhap/XoaChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-trash" style="font-size:10px"></span></a>
+                                </span>
+                                <span>@ct.SoLuong &nbsp;</span>
+                                <span>@ct.Ten &nbsp;</span>
+                                @if (ct.IDColor > 1)
+                                {
+                                    <span>@ct.Color.TenColor &nbsp;</span>
+                                }
+                                @if (ct.IDMF != 3)
+                                {
+                                    <span>@ct.Manufacturer.Name &nbsp;</span>
+                                }
+                                @if (ct.IDSize != 1)
+                                {
+                                    <span>size @ct.Size.TenSize &nbsp;</span>
+                                }
+                            </p>
+                            <hr />
+                        }
+
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            <p>
+                                @Html.FormatValue(ct.Gianhap, "{0:#,###,###}")
+                            </p>
+                            <hr />
+                        }
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh1)))
+                            {
+                                <p>
+                                    <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh1">
+                                        <i class="glyphicon glyphicon-download-alt"></i>
+                                    </a>
+                                </p>
+                                <hr />
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh2)))
+                            {
+                                <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh2">
+                                    <i class="glyphicon glyphicon-download-alt"></i>
+                                </a>
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh3)))
+                            {
+                                <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh3">
+                                    <i class="glyphicon glyphicon-download-alt"></i>
+                                </a>
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
+                        {
+                            <p>
+                                @ct.GhiChu
+                            </p>
+                            <hr />
+                        }
                     </td>
                 </tr>
 

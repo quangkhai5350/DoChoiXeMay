@@ -21,6 +21,7 @@ namespace DoChoiXeMay.Models
         [Required]
         [StringLength(100)]
         public string TenKy { get; set; }
+
         public bool XuatNhap { get; set; }
 
         public int CKphantram { get; set; }
@@ -30,7 +31,9 @@ namespace DoChoiXeMay.Models
         public double Shipper { get; set; }
 
         public int VAT { get; set; }
+
         public int IdMaTC { get; set; }
+
         public int UserId { get; set; }
 
         public bool UPush { get; set; }

@@ -1,0 +1,169 @@
+﻿@model DoChoiXeMay.Models.ChitietXuatNhap
+@{
+    ViewBag.Title = "InsertChiTietXNbyKy";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+@*<h2>Insert Chi tiết Xuất/Nhập</h2>*@
+<div class="container">
+    @using (Html.BeginForm("XuatNhap", "InsertChiTietXNbyKy", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset class="info_form" style="margin-top:0">
+            <div class="container">
+
+
+                <h1 class="info_header">
+                    <span style="color:black">@Session["UserName"]</span>  Thêm mới Xuất/Nhập kỳ: @Session["TenKy"]
+                    <span class="pull-right label label-warning" style="color:white;font-family:monospace">
+                        @Html.ValidationSummary()
+                    </span>
+                </h1>
+
+                <div class="contentform">
+                    <div class="leftcontact">
+
+                        <div class="form-group">
+                                <p>Tên Hàng Hóa</p>
+                                @Html.TextBoxFor(m => m.Ten, new { @class = "form-control", style = "width: 100%; height: 40px", @required = true })
+                         </div>
+                        
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <p>Số Lượng</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+                                @Html.TextBoxFor(m => m.SoLuong, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
+                            </div>
+                            <div class="col-sm-6">
+                                <p>Giá Nhập</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-usd"></i></span>
+                                @Html.TextBoxFor(m => m.Gianhap, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <p>Hãng Sản Xuất</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-subtitles"></i></span>
+                                @Html.DropDownList("IDMF", null, new { style = "width: 100%; height: 40px" })
+                            </div>
+                            <div class="col-sm-6">
+                                <p>Màu</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-text-background"></i></span>
+                                @Html.DropDownList("IDColor", null, new { style = "width: 100%; height: 40px" })
+                            </div>
+                        </div>
+
+                        </div>
+                    <div class="rightcontact">
+                        <div class="form-group">
+                            <p>Size</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-text-size"></i></span>
+                            @Html.DropDownList("IDSize", null, new { style = "width: 100%; height: 40px" })
+                        </div>
+                        <div class="form-group">
+                            <p>Hình sản phẩm 1 (giới hạn 7MB) <span></span></p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                            <input type="file" name="Hinh1" id="Hinh1" />
+                            <p id="thongbaosite1" style="color:red; display:none">File quá lớn !!!</p>
+                        </div>
+                        <div class="form-group">
+                            <p>Hình sản phẩm 2 (giới hạn 7MB) <span></span></p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                            <input type="file" name="Hinh2" id="Hinh2" />
+                            <p id="thongbaosite2" style="color:red; display:none">File quá lớn !!!</p>
+                        </div>
+                        <div class="form-group">
+                            <p>Hình sản phẩm 3 (giới hạn 7MB) <span></span></p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                            <input type="file" name="Hinh3" id="Hinh3" />
+                            <p id="thongbaosite3" style="color:red; display:none">File quá lớn !!!</p>
+                        </div>
+                        <script>
+                            var kt1 = true;
+                            var kt2 = true;
+                            var kt3 = true;
+                            $('#Hinh1').bind('change', function () {
+                                //this.files[0].size gets the size of your file.
+                                var size = this.files[0].size;
+                                const file = Math.round((size / 1024));
+                                if (file >= 7200) {
+                                    $("#thongbaosite1").css('display', 'block');
+                                    kt1 = false;
+                                    KtLuu();
+                                } else {
+                                    $("#thongbaosite1").css('display', 'none')
+                                    kt1 = true;
+                                    KtLuu();
+                                }
+                            });
+                            $('#Hinh2').bind('change', function () {
+                                //this.files[0].size gets the size of your file.
+                                var size = this.files[0].size;
+                                const file = Math.round((size / 1024));
+                                if (file >= 7200) {
+                                    $("#thongbaosite2").css('display', 'block');
+                                    kt2 = false;
+                                    KtLuu();
+                                } else {
+                                    $("#thongbaosite2").css('display', 'none')
+                                    kt2 = true;
+                                    KtLuu();
+                                }
+                            });
+                            $('#Hinh3').bind('change', function () {
+                                //this.files[0].size gets the size of your file.
+                                var size = this.files[0].size;
+                                const file = Math.round((size / 1024));
+                                if (file >= 7200) {
+                                    $("#thongbaosite3").css('display', 'block');
+                                    kt3 = false;
+                                    KtLuu();
+                                } else {
+                                    $("#thongbaosite3").css('display', 'none')
+                                    kt3 = true;
+                                    KtLuu();
+                                }
+                            });
+                            function KtLuu() {
+                                if (kt1 == true && kt2 == true && kt3 == true) {
+                                    document.getElementById('btnLuu').disabled = false;
+                                } else {
+                                    document.getElementById('btnLuu').disabled = true;
+                                }
+                            }
+
+                        </script>
+                    </div>
+                        
+                    </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <div class="text-center btn-crud">
+                            <button id="btnLuu" class="btn btn-warning" data-action="InsertChiTietXNbyKy"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Save</button>
+                            <a class="btn btn-primary" href="/Admin/XuatNhap/ListXuatNhapUser" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                        </div>
+                        <script>
+                            $(function () {
+                                $("button[data-action]").click(function () {
+                                    if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                                        return false;
+                                    } else {
+                                        var action = $(this).attr("data-action");
+                                        this.form.action = "/Admin/XuatNhap/" + action;
+                                    }
+
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    }
+
+</div>
+
+
