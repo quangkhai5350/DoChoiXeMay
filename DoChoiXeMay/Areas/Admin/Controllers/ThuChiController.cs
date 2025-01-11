@@ -281,6 +281,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 try
                 {
+                    //Xóa hình thu chi củ
+                    var file1 = model.Filesave1;
+                    var file2 = model.Filesave2;
+                    var file3 = model.HoaDon;
+                    bool xoa1 = Xstring.Xoahinhcu("imgthuchi/", file1);
+                    bool xoa2 = Xstring.Xoahinhcu("imgthuchi/", file2);
+                    bool xoa3 = Xstring.Xoahinhcu("imgthuchi/", file3);
+                    //Xóa hình thu chi củ
                     var ngay = model.NgayTC;
                     dbc.ChiTietTCs.Remove(model);
                     dbc.SaveChanges();
@@ -293,26 +301,5 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("ListThuChiTeK");
         }
-        //private string saveFile_imgthuchi(HttpPostedFileBase File)
-        //{
-        //    if (File.ContentLength > 0)
-        //    {
-        //        var ten = File.FileName;
-        //        string[] str = ten.Split('.');
-
-        //        var ext = str[str.Count() - 1].ToLower();
-        //        if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "xls" || ext == "pdf" || ext == "xlsx"
-        //            || ext == "doc" || ext == "docx")
-        //        {
-        //            var sub = XString.MakeAotuName();
-        //            ten = str[str.Count() - 2] + sub + "." + ext;
-        //            //Không thu nhỏ hình
-        //            File.SaveAs(Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + ten));
-        //        }
-        //        else ten = "";
-        //        return ten;
-        //    }
-        //    return "";
-        //}
     }
 }

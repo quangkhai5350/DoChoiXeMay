@@ -15,10 +15,12 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             try
             {
-                //var pathweb = mapweb + foder + "\\" + img;
-                if (File.Exists(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img)))
+                if(img != null && img != "")
                 {
-                    File.Delete(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img));
+                    if (File.Exists(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img)))
+                    {
+                        File.Delete(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img));
+                    }
                 }
                 return true;
             }
@@ -38,7 +40,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
 
                 var ext = str[str.Count() - 1].ToLower();
                 if (ext == "jpg" || ext == "png" || ext == "jpeg" || ext == "xls" || ext == "pdf" || ext == "xlsx"
-                    || ext == "doc" || ext == "docx")
+                    || ext == "doc" || ext == "docx" || ext == "txt" || ext == "gif")
                 {
                     var sub = XString.MakeAotuName();
                     ten = str[str.Count() - 2] + sub + "." + ext;

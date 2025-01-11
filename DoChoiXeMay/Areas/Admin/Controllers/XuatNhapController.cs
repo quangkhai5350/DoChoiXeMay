@@ -4,6 +4,7 @@ using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -73,10 +74,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     XN.Filesave3 = Xstring.saveFile(file3, "imgxuatnhap/");
                 }
                 XN.NgayAuto = DateTime.Now;
+                //Tính lại Tổng tiền
+                XN.TongTienAuto=TinhTongtienKy(XN.Id, XN.VAT, XN.Shipper, XN.CKtienmat, XN.CKphantram);
                 var kq = new Data.XuatNhapData().UPdateKyXN(XN);
                 if (kq == true)
                 {
                     var userid = int.Parse(Session["UserId"].ToString());
+                    
                     Session["ThongBaoXuatNhapUser"] = "Update thanh cong kỳ xuất nhập ngay: " + NgayXuatNhap;
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "UpdateKyXNUser-" + NgayXuatNhap, "");
@@ -187,16 +191,97 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             int kq= dbc.SaveChanges();
             if (kq > 0)
             {
-                var tt =  TinhTongtienKy(model.IdKy);
+                //Update tổng tiền
                 KyXuatNhap XN = dbc.KyXuatNhaps.Find(model.IdKy);
+                var tt = TinhTongtienKy(model.IdKy, XN.VAT, XN.Shipper, XN.CKtienmat, XN.CKphantram);
                 XN.TongTienAuto = tt;
                 dbc.Entry(XN).State = EntityState.Modified;
                 var update=dbc.SaveChanges();
+                var uid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "InsertChiTietXNbyKy-" + model.SoLuong +" "+model.Ten, "");
+                Session["ThongBaoXuatNhapUser"] = "Thêm mới thành công " + model.SoLuong+" "+model.Ten+".";
             }
             return RedirectToAction("ListXuatNhapUser");
         }
-        public double TinhTongtienKy(int id)
+        public ActionResult XoaChiTietXNbyID(string id)
         {
+            var model = dbc.ChitietXuatNhaps.Find(new Guid(id));
+            var sl = model.SoLuong;
+            var ten = model.Ten;
+            var idky = model.IdKy;
+            var tenhinh1 = model.Hinh1;
+            var tenhinh2 = model.Hinh2;
+            var tenhinh3 = model.Hinh3;
+            if (model != null)
+            {
+                dbc.ChitietXuatNhaps.Remove(model);
+                var kq= dbc.SaveChanges();
+                if (kq > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu1 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh1);
+                    bool xoahinhcu2 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh2);
+                    bool xoahinhcu3 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh3);
+                    
+                    KyXuatNhap XN = dbc.KyXuatNhaps.Find(idky);
+                    //update tổng tiền
+                    var tt = TinhTongtienKy(idky,XN.VAT,XN.Shipper,XN.CKtienmat,XN.CKphantram);
+                    XN.TongTienAuto = tt;
+                    dbc.Entry(XN).State = EntityState.Modified;
+                    var update = dbc.SaveChanges();
+                    //nhật Ký
+                    var uid = int.Parse(Session["UserId"].ToString());
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "XoaChiTietXNbyID-" + sl + " " + ten, "");
+                    Session["ThongBaoXuatNhapUser"]="Xóa thành công "+sl.ToString()+" "+ ten.ToString();
+                }
+                else
+                {
+                    Session["ThongBaoXuatNhapUser"] = "Có Lỗi Khi Xóa " + sl.ToString() + " " + ten.ToString() + " !!!";
+                }
+            }
+            return RedirectToAction("ListXuatNhapUser");
+        }
+        public ActionResult DeleteKyXNUser(int id)
+        {
+            var model = dbc.KyXuatNhaps.Find(id);
+            if(model != null)
+            {
+                //Xoa hinh kỳ củ
+                var tenhinh1 = model.HoaDon;
+                var tenhinh2 = model.Filesave2;
+                var tenhinh3 = model.Filesave3;
+                bool xoahinhcu1 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh1);
+                bool xoahinhcu2 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh2);
+                bool xoahinhcu3 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh3);
+                //Xoa hinh chitietXN củ
+                var chitietXNbyky = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
+                for(int i = 0; i < chitietXNbyky.Count(); i++)
+                {
+                    var tenhct1 = chitietXNbyky[i].Hinh1;
+                    var tenhct2 = chitietXNbyky[i].Hinh2;
+                    var tenhct3 = chitietXNbyky[i].Hinh3;
+                    bool xoa1 = Xstring.Xoahinhcu("imgxuatnhap/", tenhct1);
+                    bool xoa2 = Xstring.Xoahinhcu("imgxuatnhap/", tenhct2);
+                    bool xoa3 = Xstring.Xoahinhcu("imgxuatnhap/", tenhct3);
+                }
+                var tenky=model.TenKy;
+                var ngayky = model.NgayXuatNhap;
+                var nhapxuat = model.XuatNhap == true ? "Xuất" : "Nhập";
+                var XoaChitietXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM [TechZone].[dbo].[ChitietXuatNhap] where IdKy=" + id);
+                var XoaKyXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM [TechZone].[dbo].[KyXuatNhap] where Id=" + id);
+                Session["ThongBaoXuatNhapUser"] = "Xóa thành công kỳ " + nhapxuat + " " + tenky.ToString()+".";
+                //Nhật ký
+                var uid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "DeleteKyXNUser-" + tenky + " " + ngayky, "");
+            }
+            return RedirectToAction("ListXuatNhapUser");
+        }
+        public double TinhTongtienKy(int id , int VAT, double ship, double CKtienmat, int CKphantram)
+        {
+            //VAT và tiền ship được thay đổi 
             double kq=0;
             var ky = dbc.KyXuatNhaps.Find(id);
             var model = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
@@ -204,10 +289,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 for (int i = 0; i < model.Count(); i++)
                 {
                     double tong = model[i].SoLuong * model[i].Gianhap;
-                    double tongtien = tong - model[i].CKtienmat - model[i].CKphantram * tong/100;
                     kq = kq + tong;
                 }
-            return kq + ky.Shipper + ky.VAT * kq/100;
+            return kq + ship + VAT * kq/100 -CKtienmat - kq*CKphantram/100;
         }
     }
 }

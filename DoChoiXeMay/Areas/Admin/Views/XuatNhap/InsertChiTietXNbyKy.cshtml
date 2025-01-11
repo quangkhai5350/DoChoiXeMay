@@ -28,19 +28,7 @@
                                 <p>Tên Hàng Hóa</p>
                                 @Html.TextBoxFor(m => m.Ten, new { @class = "form-control", style = "width: 100%; height: 40px", @required = true })
                          </div>
-                        <div class="form-group" style="border: 1px dashed #423333; padding: 5px;margin-bottom:15px">
-                            <div class="col-sm-6">
-                                <p>Chiết khấu tiền mặt</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-chevron-down"></i></span>
-                                <input id="CKtienmat" type="number" value="@Session["CKtienmat"]" name="CKtienmat" required />
-                            </div>
-                            <div class="col-sm-6">
-                                <p>Chiết khấu %</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-chevron-down"></i></span>
-                                <input id="CKphantram" type="number" value="@Session["CKphantram"]" name="CKphantram" required />
-                            </div>
-                            
-                        </div>
+                        
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <p>Số Lượng</p>

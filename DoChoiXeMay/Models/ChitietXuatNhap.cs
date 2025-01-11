@@ -17,10 +17,6 @@ namespace DoChoiXeMay.Models
 
         public int IdKy { get; set; }
 
-        public int CKphantram { get; set; }
-
-        public double CKtienmat { get; set; }
-
         public int SoLuong { get; set; }
 
         public double Gianhap { get; set; }
@@ -41,6 +37,8 @@ namespace DoChoiXeMay.Models
         public int IDColor { get; set; }
 
         public int IDSize { get; set; }
+        [StringLength(200)]
+        public string GhiChu { get; set; }
 
         public virtual Color Color { get; set; }
 

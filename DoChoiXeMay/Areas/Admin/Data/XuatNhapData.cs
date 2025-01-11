@@ -59,5 +59,16 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
 
         }
+        public List<ChitietXuatNhap> GetListByKy(int id)
+        {
+            var model = _context.ChitietXuatNhaps.Where(kh=>kh.IdKy == id)
+                    .OrderByDescending(kh=>kh.NgayAuto)
+                    .ToList();
+            for(int i = 0; i < model.Count(); i++)
+            {
+                model[i].GhiChu = (i + 1).ToString();
+            }
+            return model;
+        }
     }
 }
