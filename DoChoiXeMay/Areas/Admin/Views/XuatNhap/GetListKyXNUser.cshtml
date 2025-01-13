@@ -9,16 +9,16 @@
                 <th class="canhgiua" style="width:30px">Update Kỳ</th>
                 <th class="canhgiua">Tên Kỳ</th>
                 <th class="canhgiua">Xuất Nhập/Số tiền </th>
-                <th class="canhgiua" style="width:20px">Hóa Đơn</th>
-                <th class="canhgiua" style="width:20px">File 2</th>
-                <th class="canhgiua" style="width:20px">File 3</th>
+                <th class="canhgiua" style="width: 15px">Hóa Đơn</th>
+                <th class="canhgiua" style="width: 15px">File 2</th>
+                <th class="canhgiua" style="width: 15px">File 3</th>
                 <th class="canhgiua" style="width:30px">Thêm HH</th>
 
                 <th class="canhgiua">Soluong/Tên Hàng/ThôngSố/Hãng</th>
                 <th class="canhgiua">Giá Nhập</th>
-                <th class="canhgiua" style="width:20px">Hình 1</th>
-                <th class="canhgiua" style="width:20px">Hình 2</th>
-                <th class="canhgiua" style="width:20px">Hình 3</th>
+                <th class="canhgiua" style="width: 15px">Hình 1</th>
+                <th class="canhgiua" style="width: 15px">Hình 2</th>
+                <th class="canhgiua" style="width: 15px">Hình 3</th>
                 <th class="canhgiua" style="width:15px">STT</th>
 
             </tr>
@@ -27,6 +27,7 @@
             @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXN)
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
+                var tenky = Xstring.Truncate(Item.TenKy, 20);
                 <tr class="canhgiua" style="border: 2px solid black !important">
                     <td>
                         <a title="Xóa Kỳ hiện tại" class="marginbutonkh btn btn-danger" onclick="return confirm('Bạn muốn xóa Kỳ @Item.TenKy ??')"
@@ -36,9 +37,29 @@
                         <a title="Update Kỳ hiện tại" class="marginbutonkh btn btn-primary" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id"><span class="glyphicon glyphicon-edit" style="font-size:30px"></span></a>
                     </td>
                     <td style="font-size:15px">
-                        <p style="color:red">@Item.TenKy</p>
+                        <p style="color:red">@tenky</p>
                         <hr />
-                        <p style="background-color:bisque"><span>Yêu cầu đẩy </span> <input type="checkbox" value="@Item.UPush" /></p>
+                        <p>
+                            @if (Item.UPush == false)
+                            {
+                                <a class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek/@Item.Id" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
+                                    Đẩy Xuất Nhập Đến TEK
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn notika-btn-blue">
+                                    Bạn yêu cầu "Đẩy Xuất Nhập Đến TEK"
+                                    <hr />
+                                    <span>Đang chờ Admin Xác Nhận</span>
+                                </a>
+                                <hr />
+                                <a class="btn btn-danger" href="/Admin/XuatNhap/DayXuatNhapTek/@Item.Id" onclick="return confirm('Bạn muốn ngưng yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
+                                    click: Hủy Yêu Cầu Đẩy
+                                </a>
+                            }
+
+                        </p>
                         <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
                     </td>
 
@@ -56,19 +77,19 @@
                         <p>
                             @if (Item.VAT > 0)
                             {
-                                <span>(VAT:@Item.VAT %)</span>
+                                <span>(VAT:&nbsp;@Item.VAT %)</span> <br />
                             }
                             @if (Item.CKphantram > 0)
                             {
-                                <span>(ChietKhau%:@Item.CKphantram %)</span>
+                                <span>(ChietKhau%:&nbsp;@Item.CKphantram %)</span><br />
                             }
                             @if (Item.CKtienmat > 0)
                             {
-                                <span>(ChietKhau tiền mặt:@Html.FormatValue(Item.CKtienmat, "{0:#,###,###}"))</span>
+                                <span>(ChietKhau tiền mặt:&nbsp;@Html.FormatValue(Item.CKtienmat, "{0:#,###,###}"))</span><br />
                             }
                             @if (Item.Shipper > 0)
                             {
-                                <span>(Tiền Ship:@Html.FormatValue(Item.Shipper, "{0:#,###,###}"))</span>
+                                <span>(Tiền Ship:&nbsp;@Html.FormatValue(Item.Shipper, "{0:#,###,###}"))</span><br />
                             }
                         </p>
                     </td>
@@ -97,31 +118,53 @@
                         }
                     </td>
                     <td>
-                        <a class="marginbutonkh btn btn-warning waves-effect" href="/Admin/XuatNhap/InsertChiTietXNbyKy/@Item.Id" title="Thêm Hàng Hóa"><span class="fa fa-plus-circle" style="font-size:30px"></span></a>
+                        @if (Item.UPush == true)
+                        {
+                            <a disabled class="marginbutonkh btn btn-warning waves-effect" title="Thêm Hàng Hóa" onclick="return confirm('Bạn Không thể thêm hàng hóa khi đã yêu cầu đẩy')">
+                            <span class="fa fa-plus-circle" style="font-size:30px"></span></a>
+                        }
+                        else
+                        {
+                            <a class="marginbutonkh btn btn-warning waves-effect" href="/Admin/XuatNhap/InsertChiTietXNbyKy/@Item.Id" title="Thêm Hàng Hóa"><span class="fa fa-plus-circle" style="font-size:30px"></span></a>
+                        }
+
                     </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            <p>
+                            var tenHH = Xstring.Truncate(ct.Ten, 15);
+                            <p style="height:40px">
                                 <span style="float:left">
-                                    <a title="Xóa @ct.SoLuong @ct.Ten" class="btn btn-danger" onclick="return confirm('Bạn muốn Xóa @ct.SoLuong @ct.Ten ??')"
-                                       href="/Admin/XuatNhap/XoaChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-trash" style="font-size:10px"></span></a>
+                                    @if (Item.UPush == true)
+                                    {
+                                        <a disabled title="Xóa @ct.SoLuong @ct.Ten" class="btn btn-danger"
+                                            onclick="return confirm('Bạn Không thể Xóa @ct.SoLuong @ct.Ten khi đã yêu cầu đẩy')">
+                                            <span class="glyphicon glyphicon-trash" style="font-size:10px"></span>
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+                                            <a title="Xóa @ct.SoLuong @ct.Ten" class="btn btn-danger" onclick="return confirm('Bạn muốn Xóa @ct.SoLuong @ct.Ten ??')"
+                                               href="/Admin/XuatNhap/XoaChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-trash" style="font-size:10px"></span></a>
+                                        
+                                    }
                                 </span>
-                                <span>@ct.SoLuong &nbsp;</span>
-                                <span>@ct.Ten &nbsp;</span>
-                                @if (ct.IDColor > 1)
-                                {
-                                    <span>@ct.Color.TenColor &nbsp;</span>
-                                }
-                                @if (ct.IDMF != 3)
-                                {
-                                    <span>@ct.Manufacturer.Name &nbsp;</span>
-                                }
-                                @if (ct.IDSize != 1)
-                                {
-                                    <span>size @ct.Size.TenSize &nbsp;</span>
-                                }
-                            </p>
+                                    <span>@ct.SoLuong&nbsp;</span>
+                                    <span>@tenHH</span>
+                                    @if (ct.IDColor > 1)
+                                    {
+                                        <span> <span>-</span>@ct.Color.TenColor</span>
+                                    }
+                                    @if (ct.IDMF != 3)
+                                    {
+                                        <span> <span>-</span>@ct.Manufacturer.Name</span>
+                                    }
+                                    @if (ct.IDSize != 1)
+                                    {
+                                        <span> <span>-</span>size @ct.Size.TenSize</span>
+                                    }
+                                </p>
                             <hr />
                         }
 
@@ -129,7 +172,7 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            <p>
+                            <p style="height:40px">
                                 @Html.FormatValue(ct.Gianhap, "{0:#,###,###}")
                             </p>
                             <hr />
@@ -140,7 +183,7 @@
                         {
                             if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh1)))
                             {
-                                <p>
+                                <p style="height:40px">
                                     <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh1">
                                         <i class="glyphicon glyphicon-download-alt"></i>
                                     </a>
@@ -155,9 +198,12 @@
                         {
                             if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh2)))
                             {
-                                <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh2">
-                                    <i class="glyphicon glyphicon-download-alt"></i>
-                                </a>
+                                <p style="height:40px">
+                                    <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh2">
+                                        <i class="glyphicon glyphicon-download-alt"></i>
+                                    </a>
+                                </p>
+                                <hr />
                             }
                         }
 
@@ -167,9 +213,12 @@
                         {
                             if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh3)))
                             {
-                                <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh3">
-                                    <i class="glyphicon glyphicon-download-alt"></i>
-                                </a>
+                                <p style="height:40px">
+                                    <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh3">
+                                        <i class="glyphicon glyphicon-download-alt"></i>
+                                    </a>
+                                </p>
+                                
                             }
                         }
 
@@ -177,7 +226,7 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            <p>
+                            <p style="height:40px">
                                 @ct.GhiChu
                             </p>
                             <hr />
@@ -189,8 +238,8 @@
         </tbody>
 
     </table>
-    
+
 </div>
 <script>
-    
+
 </script>

@@ -53,5 +53,21 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return "";
         }
+        public static string Truncate(string input, int length)
+        {
+            string tr = "";
+            if (input != null)
+            {
+                if (input.Length <= length)
+                {
+                    tr = input;
+                }
+                else
+                {
+                    tr = input.Substring(0, length) + "...";
+                }
+            }
+            return tr;
+        }
     }
 }

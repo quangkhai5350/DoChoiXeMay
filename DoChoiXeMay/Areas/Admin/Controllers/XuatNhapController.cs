@@ -46,6 +46,35 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
             return View(model);
         }
+        public ActionResult DayXuatNhapTek(int id)
+        {
+            var XN = dbc.KyXuatNhaps.Find(id);
+            if(XN != null)
+            {
+                if (XN.UPush == false)
+                {
+                    XN.UPush = true;
+                }
+                else
+                {
+                    XN.UPush = false;
+                }
+                dbc.Entry(XN).State = EntityState.Modified;
+                var update = dbc.SaveChanges();
+                //Insert Nhật Ký
+                var uid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXuatNhapTek - Đẩy= " + XN.UPush, "");
+                Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXuatNhapTek thành công.";
+            }
+            else
+            {
+                Session["ThongBaoXuatNhapUser"] = "Kỳ Xuất nhập không tồn tại !!!";
+            }
+            
+            
+            return RedirectToAction("ListXuatNhapUser");
+        }
         [HttpPost]
         public ActionResult UpdateKyXNUser(KyXuatNhap XN)
         {
