@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,6 +20,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult ListXuatNhapUser()
         {
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu");
+            Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapUser";
             return View();
         }
         public ActionResult GetListKyXNUser()
@@ -38,6 +40,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     .ToList();
             }
             
+            return PartialView();
+        }
+        public ActionResult ListXuatNhapTeK()
+        {
+            Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapTeK";
+            return View();
+        }
+        public ActionResult GetListKyXNTeK()
+        {
+            ViewBag.KyXNTeK = dbc.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true && kh.UPush==true)
+                    .OrderByDescending(kh => kh.NgayXuatNhap)
+                    .ToList();
             return PartialView();
         }
         [HttpGet]
@@ -67,6 +81,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXuatNhapTek - Đẩy= " + XN.UPush, "");
                 Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXuatNhapTek thành công.";
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
             }
             else
             {
@@ -91,6 +111,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "XacNhanXuatNhapTek - Đẩy File Xuất nhập- "+XN.TenKy+"- của user: " + XN.UserTek.UserName, "");
                     Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
+                    Session["ThongBaoXuatNhapTeK"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
                 }
                 else
                 {
@@ -101,6 +122,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             else
             {
                 Session["ThongBaoXuatNhapUser"] = "Kỳ Xuất nhập không tồn tại !!!";
+            }
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
             }
             return RedirectToAction("ListXuatNhapUser");
         }
@@ -140,8 +167,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var userid = int.Parse(Session["UserId"].ToString());
                     
                     Session["ThongBaoXuatNhapUser"] = "Update thành công kỳ xuất nhập ngay: " + NgayXuatNhap;
+                    Session["ThongBaoXuatNhapTeK"] = "Update thành công kỳ xuất nhập ngay: " + NgayXuatNhap;
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "UpdateKyXNUser-" + NgayXuatNhap, "");
+                    //tro lai trang truoc do 
+                    var requestUri = Session["requestUri"] as string;
+                    if (requestUri != null)
+                    {
+                        return Redirect(requestUri);
+                    }
                     return RedirectToAction("ListXuatNhapUser");
                 }
                 else
@@ -179,7 +213,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     model.AdminXNPUSH = false;
                 }
-                model.UYeuCauXoa = false;
+                model.UYeuCauThuHoi = false;
                 model.TongTienAuto = 0;
                 model.NgayAuto = DateTime.Now;
                 var file1 = Request.Files["HoaDon"];
@@ -199,6 +233,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     Session["ThongBaoXuatNhapUser"] = "Thêm mới thành công Kỳ xuất nhập ngày:" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString(),
                          Session["UserName"].ToString(), "Insert thành công kỳ XN:" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}"), "");
+                    //tro lai trang truoc do 
+                    var requestUri = Session["requestUri"] as string;
+                    if (requestUri != null)
+                    {
+                        return Redirect(requestUri);
+                    }
                     return RedirectToAction("ListXuatNhapUser");
                 }
                 else
@@ -260,6 +300,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         , Session["UserName"].ToString(), "InsertChiTietXNbyKy-" + model.SoLuong +" "+model.Ten, "");
                 Session["ThongBaoXuatNhapUser"] = "Thêm mới thành công " + model.SoLuong+" "+model.Ten+".";
             }
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
             return RedirectToAction("ListXuatNhapUser");
         }
         public ActionResult XoaChiTietXNbyID(string id)
@@ -293,6 +339,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "XoaChiTietXNbyID-" + sl + " " + ten, "");
                     Session["ThongBaoXuatNhapUser"]="Xóa thành công "+sl.ToString()+" "+ ten.ToString();
+                    Session["ThongBaoXuatNhapTeK"] = "Xóa thành công " + sl.ToString() + " " + ten.ToString();
+                    //tro lai trang truoc do 
+                    var requestUri = Session["requestUri"] as string;
+                    if (requestUri != null)
+                    {
+                        return Redirect(requestUri);
+                    }
                 }
                 else
                 {

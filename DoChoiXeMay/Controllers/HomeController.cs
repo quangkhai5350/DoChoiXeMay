@@ -50,6 +50,7 @@ namespace DoChoiXeMay.Controllers
         public ActionResult Login(String UserName, String Password, System.Boolean? remember)
         {
             var tk = new UserTek();
+            var requestUri = Session["requestUri"] as string;
             TaiKhoanInfo tk_check = new TaiKhoanInfo();
             //tài khoản không phân biệt hoa thường.
             var user = dbc.UserTeks.Where(p => p.UserName.ToLower() == UserName.ToLower()).SingleOrDefault();
@@ -127,7 +128,11 @@ namespace DoChoiXeMay.Controllers
                                 bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "LoginWeb", "");
 
-                               
+                                //tro lai trang truoc do 
+                                if (requestUri != null)
+                                {
+                                    return Redirect(requestUri);
+                                }
                                 return RedirectToAction("ListThuChiTeK", "ThuChi", new { area = "Admin" });
                             }
                             else
@@ -140,7 +145,6 @@ namespace DoChoiXeMay.Controllers
                             }
                             Session.Remove("Thongbaodangky");
                             //tro lai trang truoc do 
-                            var requestUri = Session["requestUri"] as string;
                             if (requestUri != null)
                             {
                                 return Redirect(requestUri);

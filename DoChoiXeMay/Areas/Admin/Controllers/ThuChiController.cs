@@ -39,12 +39,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ViewBag.ChitietTCUser = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == false
             && kh.UserId == uid).OrderByDescending(kh => kh.NgayAuto);
             }
-
+            Session["requestUri"] = "/Admin/ThuChi/ListThuChiUser";
             return View();
         }
         public ActionResult ListThuChiTeK()
         {
-            
+            Session["requestUri"] = "/Admin/ThuChi/ListThuChiTeK";
             return View();
         }
         public ActionResult GetListThuChiTek(string tu, string den,string TC,string strk, int PageNo = 0, int PageSize = 8)
@@ -143,6 +143,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         , Session["UserName"].ToString(), "InsertThuChi-" + p.NgayTC, "");
                     
                     Session["ThongBaoThuChiTEK"] = "Admin Insert thanh cong Thu Chi ngay: " + p.NgayTC.ToString("{dd/MM/yyyy}");
+                    //tro lai trang truoc do 
+                    var requestUri = Session["requestUri"] as string;
+                    if (requestUri != null)
+                    {
+                        return Redirect(requestUri);
+                    }
                     return RedirectToAction("ListThuChiTeK");
                 }
             }
@@ -251,6 +257,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     Session["ThongBaoThuChiTEK"] = "Update thanh cong Thu Chi ngay: " + ngaythongbao;
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "UpdateThuChi-" + ngaythongbao, "");
+                    //tro lai trang truoc do 
+                    var requestUri = Session["requestUri"] as string;
+                    if (requestUri != null)
+                    {
+                        return Redirect(requestUri);
+                    }
                     return RedirectToAction("ListThuChiTeK");
                 }
                 else
