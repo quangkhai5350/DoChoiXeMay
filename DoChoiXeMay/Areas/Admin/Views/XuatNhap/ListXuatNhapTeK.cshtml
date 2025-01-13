@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "ListXuatNhapTeK";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh Sách Xuất Nhập TeK</h2>
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<style>
+    .canhgiua {
+        text-align: center !important;
+    }
+
+    .marginbutonkh {
+        margin-top: 50%;
+    }
+</style>
+<div class="panel panel-default" style="margin-top:10px">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoXuatNhapTeK"]
+
+            </div>
+
+            <div class="row">
+                @*<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                    <a class="btn btn-warning" style="margin-left:20px" onclick="uwngtuyen()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Xuất Nhập"</a>
+                    <span>(Số tiền được tự động tính sau khi bạn nhập Chi Tiết)</span>
+                </div>*@
+
+
+            </div>
+            
+
+
+        </div>
+    </div>
+    <div class="panel-body">
+        <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
+        <div class="listXNT">
+
+
+        </div>
+    </div>
+    <div class="panel-footer">
+
+        <div class="row">
+            <div class="col-md-8">
+                <span class="TongSanPham"></span>
+            </div>
+            <div class="col-md-4" style="text-align: right">
+                <span class="TongSanPham"></span>
+            </div>
+        </div>
+
+
+        <ul class="pager">
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+            </ul>
+
+    </div>
+</div>
+<h5>***Nếu Chưa đẩy lên Tek thì cho "update", đẩy rồi thì phải "yêu cầu Thu Hồi"</h5>
+<h5>**Tổng tiền: Soluong*gianhap + shipper + VAT - ChietKhau% - ChietKhautienmat</h5>
+<script>
+    
+    LoadPage();
+    function LoadPage() {
+        $.ajax({
+            url: "/Admin/XuatNhap/GetListKyXNTeK",
+            data: { },
+            success: function (respone) {
+                $(".listXNT").html(respone);
+                //var pagesp = pageNo + 1;
+                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+    };
+</script>

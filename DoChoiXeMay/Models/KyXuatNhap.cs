@@ -40,7 +40,7 @@ namespace DoChoiXeMay.Models
 
         public bool AdminXNPUSH { get; set; }
 
-        public bool UYeuCauXoa { get; set; }
+        public bool UYeuCauThuHoi { get; set; }
 
         public double TongTienAuto { get; set; }
 
