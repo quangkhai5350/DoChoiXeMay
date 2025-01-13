@@ -26,7 +26,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var uid = int.Parse(Session["UserId"].ToString());
             if(Session["quyen"].ToString() == "Admin")
             {
-                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.UPush == false)
+                ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.UPush == false
+                        ||(kh.UserId != uid && kh.Id>1 && kh.UPush ==true && kh.AdminXNPUSH ==false))
                     .OrderByDescending(kh => kh.Id)
                     .ToList();
             }
@@ -75,6 +76,34 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             
             return RedirectToAction("ListXuatNhapUser");
         }
+        public ActionResult XacNhanXuatNhapTek(int id)
+        {
+            var XN = dbc.KyXuatNhaps.Find(id);
+            if (XN != null)
+            {
+                if (XN.UPush == true && XN.AdminXNPUSH ==false)
+                {
+                    XN.AdminXNPUSH = true;
+                    dbc.Entry(XN).State = EntityState.Modified;
+                    var update = dbc.SaveChanges();
+                    //Insert Nhật Ký
+                    var uid = int.Parse(Session["UserId"].ToString());
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "XacNhanXuatNhapTek - Đẩy File Xuất nhập- "+XN.TenKy+"- của user: " + XN.UserTek.UserName, "");
+                    Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
+                }
+                else
+                {
+                    Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek không thành công: User chưa yêu cầu đẩy!!!";
+                }
+                
+            }
+            else
+            {
+                Session["ThongBaoXuatNhapUser"] = "Kỳ Xuất nhập không tồn tại !!!";
+            }
+            return RedirectToAction("ListXuatNhapUser");
+        }
         [HttpPost]
         public ActionResult UpdateKyXNUser(KyXuatNhap XN)
         {
@@ -110,7 +139,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     var userid = int.Parse(Session["UserId"].ToString());
                     
-                    Session["ThongBaoXuatNhapUser"] = "Update thanh cong kỳ xuất nhập ngay: " + NgayXuatNhap;
+                    Session["ThongBaoXuatNhapUser"] = "Update thành công kỳ xuất nhập ngay: " + NgayXuatNhap;
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "UpdateKyXNUser-" + NgayXuatNhap, "");
                     return RedirectToAction("ListXuatNhapUser");
@@ -126,7 +155,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 string loi = ex.ToString();
-                ModelState.AddModelError("", "Update Xuat Nhập Thất Bại !!!! Có Lỗi hệ thống.");
+                ModelState.AddModelError("", "Update Xuất Nhập Thất Bại !!!! Có Lỗi hệ thống.");
                 var model = dbc.ChiTietTCs.Find(XN.Id);
                 ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
                 return View(model);
