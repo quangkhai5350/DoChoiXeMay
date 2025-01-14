@@ -69,5 +69,20 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return tr;
         }
+        public static bool CopyFile(string source, string destination)
+        {
+            try
+            {
+                System.IO.File.Copy(source, destination);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var ms=ex.ToString();
+                return false;
+            }
+            
+            
+        }
     }
 }

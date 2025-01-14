@@ -98,6 +98,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult XacNhanXuatNhapTek(int id)
         {
+            var uid = int.Parse(Session["UserId"].ToString());
             var XN = dbc.KyXuatNhaps.Find(id);
             if (XN != null)
             {
@@ -106,10 +107,52 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     XN.AdminXNPUSH = true;
                     dbc.Entry(XN).State = EntityState.Modified;
                     var update = dbc.SaveChanges();
+                    //Insert ThuChiTeK auto
+                    ChiTietTC cttc = new ChiTietTC();
+                    cttc.Id = Guid.NewGuid();
+                    cttc.IdMa=XN.IdMaTC;
+                    cttc.IdHT = 1;
+                    cttc.IdKyxuatnhap = id;
+                    var xuatnhap = XN.XuatNhap == true ? "Xuất" : "Nhập";
+                    cttc.Noidung = "Auto từ kỳ " + xuatnhap + " Ngày:" + XN.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                    cttc.SoTien=XN.TongTienAuto;
+                    cttc.ThuChi = XN.XuatNhap;  //ThuChi = false= chira=nhaphang
+                    //coppy hinh
+                    if(XN.HoaDon !=null &&XN.HoaDon != "")
+                    {
+                        string path = "~/Areas/Admin/Content/imgxuatnhap/"+XN.HoaDon;
+                        string destina= "~/Areas/Admin/Content/imgthuchi/" + XN.HoaDon;
+                        if (System.IO.File.Exists(path))
+                        {
+                            var coppy1 = Xstring.CopyFile(path, destina);
+                            cttc.HoaDon = coppy1 == true ? XN.HoaDon : "";
+                        }
+                    }
+                    if (XN.Filesave2 != null && XN.Filesave2 != "")
+                    {
+                        string path = "~/Areas/Admin/Content/imgxuatnhap/" + XN.Filesave2;
+                        string destina = "~/Areas/Admin/Content/imgthuchi/" + XN.Filesave2;
+                        if (System.IO.File.Exists(path))
+                        {
+                            var coppy1 = Xstring.CopyFile(path, destina);
+                            cttc.Filesave1 = coppy1 == true ? XN.Filesave2 : "";
+                        }
+                    }
+                    if (XN.Filesave3 != null && XN.Filesave3 != "")
+                    {
+                        string path = "~/Areas/Admin/Content/imgxuatnhap/" + XN.Filesave3;
+                        string destina = "~/Areas/Admin/Content/imgthuchi/" + XN.Filesave3;
+                        if (System.IO.File.Exists(path))
+                        {
+                            var coppy1 = Xstring.CopyFile(path, destina);
+                            cttc.Filesave2 = coppy1 == true ? XN.Filesave3 : "";
+                        }
+                    }
+                    cttc.NgayTC = XN.NgayXuatNhap;
+                    var kqinsert = new Data.ThuChiData().InsertThuChiTeK(cttc, uid, Session["quyen"].ToString(),Session["UserName"].ToString());
                     //Insert Nhật Ký
-                    var uid = int.Parse(Session["UserId"].ToString());
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                            , Session["UserName"].ToString(), "XacNhanXuatNhapTek - Đẩy File Xuất nhập- "+XN.TenKy+"- của user: " + XN.UserTek.UserName, "");
+                            , Session["UserName"].ToString(), "XacNhanXuatNhapTek va THUCHI - Đẩy File Xuất nhập- "+XN.TenKy+"- của user: " + XN.UserTek.UserName, "");
                     Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
                     Session["ThongBaoXuatNhapTeK"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
                 }

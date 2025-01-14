@@ -146,5 +146,42 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public bool InsertThuChiTeK(ChiTietTC TC, int UID, string quyen,string UserName)
+        {
+            try
+            {
+                ChiTietTC p = new ChiTietTC();
+                p = TC;
+                p.Id = Guid.NewGuid();
+                p.NgayAuto = DateTime.Now;
+                p.UserId = UID;
+                if (quyen == "Admin")
+                {
+                    // nếu Session["quyen"]=="Admin" thì đẩy thẳng lên Tek
+                    p.YeuCauDay = true;
+                    p.AdminXacNhan = true;
+                }
+                else
+                {
+                    p.YeuCauDay = false;
+                    p.AdminXacNhan = false;
+                }
+                _context.ChiTietTCs.Add(p);
+                int kt = _context.SaveChanges();
+                if (kt > 0)
+                {
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(_context, p.UserId, quyen
+                        , UserName, "InsertThuChi-" + p.NgayTC, "");
+                    return true;
+                }
+                return false;
+                    
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
     }
 }

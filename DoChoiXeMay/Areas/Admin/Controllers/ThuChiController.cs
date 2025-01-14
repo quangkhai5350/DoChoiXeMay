@@ -103,46 +103,27 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult InsertThuChikh(ChiTietTC TC)
         {
+            var uid = int.Parse(Session["UserId"].ToString());
+            var quyen = Session["quyen"].ToString();
+            var username = Session["UserName"].ToString();
             ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT");
             ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "TenMa");
             try
             {
-                ChiTietTC p = new ChiTietTC();
-                p = TC;
-                p.Id = Guid.NewGuid();
-                
                 var file1 = Request.Files["Filesave1"];
                 var file2 = Request.Files["Filesave2"];
                 var file3 = Request.Files["HoaDon"];
                 var ten1 = Xstring.saveFile(file1, "imgthuchi/");
                 var ten2 = Xstring.saveFile(file2, "imgthuchi/");
                 var ten3 = Xstring.saveFile(file3, "imgthuchi/");
+                TC.Filesave1 = ten1;
+                TC.Filesave2 = ten2;
+                TC.HoaDon = ten3;
 
-                p.Filesave1 = ten1;
-                p.Filesave2 = ten2;
-                p.HoaDon = ten3;
-
-                p.NgayAuto = DateTime.Now;
-                p.UserId = int.Parse(Session["UserId"].ToString());
-                if (Session["quyen"].ToString() == "Admin")
+                var kq = new Data.ThuChiData().InsertThuChiTeK(TC, uid, quyen, username);
+                if (kq == true)
                 {
-                    // nếu Session["quyen"]=="Admin" thì đẩy thẳng lên Tek
-                    p.YeuCauDay = true;
-                    p.AdminXacNhan = true;
-                }
-                else
-                {
-                    p.YeuCauDay = false;
-                    p.AdminXacNhan = false;
-                }
-                dbc.ChiTietTCs.Add(p);
-                int kt = dbc.SaveChanges();
-                if (kt > 0)
-                {
-                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, p.UserId, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "InsertThuChi-" + p.NgayTC, "");
-                    
-                    Session["ThongBaoThuChiTEK"] = "Admin Insert thanh cong Thu Chi ngay: " + p.NgayTC.ToString("{dd/MM/yyyy}");
+                    Session["ThongBaoThuChiTEK"] = "Admin Insert thanh cong Thu Chi ngay: " + TC.NgayTC.ToString("{dd/MM/yyyy}");
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
                     if (requestUri != null)
