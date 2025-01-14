@@ -36,9 +36,13 @@
                                 <p>Hình Thức Thu Chi</p>
                                 @Html.DropDownList("IdHT", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                             </div>
-                            <div class="col-sm-6" style="text-align:center">
+                            <div class="col-sm-3" style="text-align:center">
                                 <p>Thu vào</p>
                                 @Html.CheckBoxFor(m => m.ThuChi, new { @style = "height:20px;margin-left: 10%" })
+                            </div>
+                            <div class="col-sm-3" style="text-align:center">
+                                <p>Nợ Tiền</p>
+                                @Html.CheckBoxFor(m => m.Indebted, new { @style = "height:20px;margin-left: 10%" })
                             </div>
                         </div>
                         <div class="form-group">

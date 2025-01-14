@@ -17,7 +17,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             _context = new Model1();
         }
-        public static List<ChiTietTC> ChiTietTCDBTEK(Model1 db, string strTK, string TC, string tu, string den)
+        public static List<ChiTietTC> ChiTietTCDBTEK(Model1 db, string strTK, string TC,string TNO, string tu, string den)
         {
             var tungay = DateTime.Now;
             var denngay = DateTime.Now;
@@ -27,7 +27,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 denngay = DateTime.Parse(den);
             }
             List<ChiTietTC> model = new List<ChiTietTC>();
-            if (TC == "0" && tu == "" && den == "")
+            if (TC == "0" && TNO =="0" && tu == "" && den == "")
             {
                 model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
                         && (kh.Noidung.ToLower().Contains(strTK)
@@ -37,7 +37,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
                         .ToList();
             }
-            else if (TC == "0" && tu != "" && den != "")
+            else if (TC == "0" && TNO== "0" && tu != "" && den != "")
             {
                 model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
                 && kh.NgayTC >= tungay && kh.NgayTC <= denngay
@@ -48,10 +48,62 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
                         .ToList();
             }
-            else if (TC == "1" && tu == "" && den == "")
+            else if (int.Parse(TC) > 0 && TNO == "0" && tu != "" && den != "")
             {
+                bool kqtc = int.Parse(TC) == 1 ? true : false;
                 model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi == true
+                && kh.ThuChi == kqtc
+                && kh.NgayTC >= tungay && kh.NgayTC <= denngay
+                && (kh.Noidung.ToLower().Contains(strTK)
+                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
+                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
+                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
+                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
+                        .ToList();
+            }
+            else if (int.Parse(TC) > 0 && TNO == "0" && tu == "" && den == "")
+            {
+                bool kqtc = int.Parse(TC) == 1 ? true : false;
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                && kh.ThuChi == kqtc
+                && (kh.Noidung.ToLower().Contains(strTK)
+                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
+                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
+                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
+                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
+                        .ToList();
+            }
+            else if (TC == "0" && int.Parse(TNO) > 0 && tu != "" && den != "")
+            {
+                bool kqtno = int.Parse(TNO) == 1 ? true : false;
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                && kh.Indebted == kqtno
+                && kh.NgayTC >= tungay && kh.NgayTC <= denngay
+                && (kh.Noidung.ToLower().Contains(strTK)
+                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
+                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
+                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
+                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
+                        .ToList();
+            }
+            else if (TC == "0" && int.Parse(TNO) > 0 && tu == "" && den == "")
+            {
+                bool kqtno = int.Parse(TNO) == 1 ? true : false;
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                && kh.Indebted == kqtno
+                && (kh.Noidung.ToLower().Contains(strTK)
+                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
+                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
+                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
+                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
+                        .ToList();
+            }
+            else if (int.Parse(TC)>0 && int.Parse(TNO)>0 && tu == "" && den == "")
+            {
+                bool kqtc = int.Parse(TC)==1?true:false;
+                bool kqtno = int.Parse(TNO)==1?true:false;
+                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
+                        && kh.ThuChi == kqtc && kh.Indebted == kqtno
                         && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
@@ -59,10 +111,13 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
                         .ToList();
             }
-            else if (TC == "1" && tu != "" && den != "")
+            else if (int.Parse(TC) > 0 && int.Parse(TNO) > 0 && tu != "" && den != "")
             {
+                bool kqtc = int.Parse(TC) == 1 ? true : false;
+                bool kqtno = int.Parse(TNO) == 1 ? true : false;
                 model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi == true && kh.NgayTC >= tungay && kh.NgayTC <= denngay
+                        && kh.ThuChi == kqtc && kh.Indebted == kqtno
+                        && kh.NgayTC >= tungay && kh.NgayTC <= denngay
                         && (kh.Noidung.ToLower().Contains(strTK)
                             || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
                             || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
@@ -70,33 +125,12 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             || kh.UserTek.UserName.ToLower().Contains(strTK)))
                         .ToList();
             }
-            else if (TC == "2" && tu == "" && den == "")
-            {
-                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi == false
-                        && (kh.Noidung.ToLower().Contains(strTK)
-                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
-                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
-                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
-                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .ToList();
-            }
-            else if (TC == "2" && tu != "" && den != "")
-            {
-                model = db.ChiTietTCs.Where(kh => kh.AdminXacNhan == true && kh.YeuCauDay == true
-                        && kh.ThuChi == false && kh.NgayTC >= tungay && kh.NgayTC <= denngay
-                        && (kh.Noidung.ToLower().Contains(strTK)
-                            || kh.HinhThucTC.TenHT.ToLower().Contains(strTK)
-                            || kh.KyXuatNhap.TenKy.ToLower().Contains(strTK)
-                            || kh.MaTC.TenMa.ToLower().Contains(strTK)
-                            || kh.UserTek.UserName.ToLower().Contains(strTK)))
-                        .ToList();
-            }
+            
             return model;
         }
-        public List<ChiTietTC> getThuChiTek(int Sec, int pageSize, string strTK, string TC, string tu, string den)
+        public List<ChiTietTC> getThuChiTek(int Sec, int pageSize, string strTK, string TC,string TNO, string tu, string den)
         {
-            var model1 = ChiTietTCDBTEK(_context, strTK, TC, tu, den)
+            var model1 = ChiTietTCDBTEK(_context, strTK, TC,TNO, tu, den)
                             .OrderBy(kh => kh.NgayAuto).ToList();
 
 
@@ -113,16 +147,29 @@ namespace DoChoiXeMay.Areas.Admin.Data
 
             return model1;
         }
-        public int GetPageCountThuChiTek(string strTK, string TC, string tu, string den)
+        public int GetPageCountThuChiTek(string strTK, string TC,string TNO, string tu, string den)
         {
-            var model1 = ChiTietTCDBTEK(_context, strTK, TC, tu, den).Count();
+            var model1 = ChiTietTCDBTEK(_context, strTK, TC,TNO, tu, den).Count();
 
             return model1;
         }
         public Double TongbyHTvaThuChi(List<ChiTietTC> model, int IdHT, bool thuchi)
         {
             double kq = 0;
-            var list = model.Where(kh => kh.IdHT == IdHT && kh.ThuChi == thuchi).ToList();
+            var list = model.Where(kh => kh.IdHT == IdHT && kh.ThuChi == thuchi && kh.Indebted==false).ToList();
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count(); i++)
+                {
+                    kq = kq + list[i].SoTien;
+                }
+            }
+            return kq;
+        }
+        public Double TongbyIndebtedvaThuChi(List<ChiTietTC> model, bool Indeb, bool thuchi)
+        {
+            double kq = 0;
+            var list = model.Where(kh => kh.ThuChi == thuchi && kh.Indebted == Indeb).ToList();
             if (list != null)
             {
                 for (int i = 0; i < list.Count(); i++)
