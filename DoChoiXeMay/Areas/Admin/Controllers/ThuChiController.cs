@@ -47,12 +47,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/ThuChi/ListThuChiTeK";
             return View();
         }
-        public ActionResult GetListThuChiTek(string tu, string den,string TC,string strk, int PageNo = 0, int PageSize = 8)
+        public ActionResult GetListThuChiTek(string tu, string den,string TC,string TNO,string strk, int PageNo = 0, int PageSize = 8)
         {
             strk = strk.ToLower().Trim();
             List<ChiTietTC> modelTong = new List<ChiTietTC>();
-            modelTong = Data.ThuChiData.ChiTietTCDBTEK(dbc, strk, TC, tu, den);
-            var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk, TC, tu, den);
+            modelTong = Data.ThuChiData.ChiTietTCDBTEK(dbc, strk, TC,TNO, tu, den);
+            var model = new Data.ThuChiData().getThuChiTek(PageNo, PageSize, strk, TC,TNO, tu, den);
 
             //var uid = int.Parse(Session["UserId"].ToString());
             ViewBag.ChitietTCTEK = model;
@@ -71,6 +71,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.ThuTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ThuTKVCB);
             double ChiTKVCB = new Data.ThuChiData().TongbyHTvaThuChi(modelTong, 4, false);
             ViewBag.ChiTKVCB = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", ChiTKVCB);
+            double NoPhaiThu = new Data.ThuChiData().TongbyIndebtedvaThuChi(modelTong, true, true);
+            ViewBag.NoPhaiThu = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", NoPhaiThu);
+            double NoPhaiTra = new Data.ThuChiData().TongbyIndebtedvaThuChi(modelTong, true, false);
+            ViewBag.NoPhaiTra = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", NoPhaiTra);
 
             double conlaiTK = ThuTK - ChiTK;
             ViewBag.conlaiTK = String.Format(new CultureInfo("vi-VN"), "{0:#,##0}", conlaiTK);
@@ -83,9 +87,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             return PartialView();
         }
-        public ActionResult GetPageCountThuChiTek(string tu,string den,string TC,string Keyword, int PageSize = 8)
+        public ActionResult GetPageCountThuChiTek(string tu,string den,string TC,string TNO,string Keyword, int PageSize = 8)
         {
-            var num = new Data.ThuChiData().GetPageCountThuChiTek(Keyword,TC,tu,den);
+            var num = new Data.ThuChiData().GetPageCountThuChiTek(Keyword,TC,TNO,tu,den);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
@@ -293,6 +297,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
             }
             return RedirectToAction("ListThuChiTeK");
+        }
+        public ActionResult LoadOneXuatNhap(int Id)
+        {
+            ViewBag.OneXN = dbc.KyXuatNhaps.Where(kh=>kh.Id==Id).ToList();
+            ViewBag.ListctxnbyOne = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == Id).ToList();
+            return PartialView();
         }
     }
 }
