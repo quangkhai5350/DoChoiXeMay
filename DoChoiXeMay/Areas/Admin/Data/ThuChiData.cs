@@ -146,7 +146,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        public bool InsertThuChiTeK(ChiTietTC TC, int UID, string quyen,string UserName)
+        public bool InsertThuChiTeK(ChiTietTC TC, string quyen,string UserName)
         {
             try
             {
@@ -154,7 +154,6 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 p = TC;
                 p.Id = Guid.NewGuid();
                 p.NgayAuto = DateTime.Now;
-                p.UserId = UID;
                 if (quyen == "Admin")
                 {
                     // nếu Session["quyen"]=="Admin" thì đẩy thẳng lên Tek

@@ -120,7 +120,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 TC.Filesave2 = ten2;
                 TC.HoaDon = ten3;
 
-                var kq = new Data.ThuChiData().InsertThuChiTeK(TC, uid, quyen, username);
+                var kq = new Data.ThuChiData().InsertThuChiTeK(TC, quyen, username);
                 if (kq == true)
                 {
                     Session["ThongBaoThuChiTEK"] = "Admin Insert thanh cong Thu Chi ngay: " + TC.NgayTC.ToString("{dd/MM/yyyy}");
