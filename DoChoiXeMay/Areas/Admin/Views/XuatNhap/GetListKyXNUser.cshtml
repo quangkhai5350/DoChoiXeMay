@@ -46,6 +46,11 @@
                     </td>
                     <td style="font-size:15px">
                         <p style="color:red">@tenky</p>
+                        @if (Item.LuuKho != null && Item.LuuKho != "")
+                        {
+                            <hr />
+                            <p>Lưu: @Item.LuuKho</p>
+                        }
                         <hr />
                         <p>
                             @if (Item.UPush == false)

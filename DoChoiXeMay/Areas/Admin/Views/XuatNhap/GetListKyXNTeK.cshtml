@@ -1,6 +1,4 @@
 ﻿@using DoChoiXeMay.Areas.Admin.Data;
-<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
-
 <div class="table-responsive">
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
@@ -34,7 +32,7 @@
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
                 var tenky = Xstring.Truncate(Item.TenKy, 40);
-                <tr class="canhgiua" style="border: 2px solid black !important">
+                <tr class="canhgiua" style="border-bottom: 2px solid black !important">
 
                     <td>
                         @if (Session["quyen"].ToString() == "Admin")
@@ -91,8 +89,12 @@
 
                     <td>
                         <p style="font-size: 20px; color: red">@tenky</p>
+                        @if (Item.LuuKho != null && Item.LuuKho != "")
+                        {
+                            <hr />
+                            <p>Lưu: @Item.LuuKho</p>
+                        }
                         <hr />
-
                         <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
                     </td>
 
@@ -232,6 +234,7 @@
     </table>
 
 </div>
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <script>
 
 </script>

@@ -25,7 +25,6 @@
                             <th class="canhgiua" style="width: 15px">Hình 1</th>
                             <th class="canhgiua" style="width: 15px">Hình 2</th>
                             <th class="canhgiua" style="width: 15px">Hình 3</th>
-                            <th class="canhgiua" style="width:15px">STT</th>
 
                         </tr>
                     </thead>
@@ -59,6 +58,11 @@
 
                             <td>
                                 <p style="font-size: 20px; color: red">@Item.TenKy</p>
+                                @if (Item.LuuKho != null && Item.LuuKho != "")
+                                {
+                                    <hr />
+                                    <p>Lưu: @Item.LuuKho</p>
+                                }
                                 <hr />
 
                                 <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
@@ -183,15 +187,7 @@
                                 }
 
                             </td>
-                            <td>
-                                @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in ViewBag.ListctxnbyOne)
-                                {
-                                    <p style="height:40px">
-                                        @ct.GhiChu
-                                    </p>
-                                    <hr />
-                                }
-                            </td>
+                            
                         </tr>
 
                         

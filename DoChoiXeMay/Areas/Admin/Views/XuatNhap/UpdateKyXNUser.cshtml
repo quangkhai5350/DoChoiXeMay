@@ -67,6 +67,11 @@
 
                         </div>
                         <div class="form-group">
+                            <p>Lưu Kho</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-saved"></i></span>
+                            @Html.TextBoxFor(m => m.LuuKho, new { @class = "form-control", style = "width: 75%; height: 40px"})
+                        </div>
+                        <div class="form-group">
                             <p>Loại Hàng Xuất/Nhập</p>
                             <span class="icon-case"><i class="glyphicon glyphicon-subtitles"></i></span>
                             @Html.DropDownList("IdMaTC", null, new { style = "width: 100%; height: 40px" })
