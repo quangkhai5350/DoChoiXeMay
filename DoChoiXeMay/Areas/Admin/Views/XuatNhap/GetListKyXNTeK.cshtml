@@ -5,6 +5,7 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua" style="width:20px">STT</th>
                 @if (Session["quyen"].ToString() == "Admin")
                 {
                     <th class="canhgiua" style="width:30px">Update / Xóa</th>
@@ -35,7 +36,7 @@
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
                 var tenky = Xstring.Truncate(Item.TenKy, 40);
                 <tr class="canhgiua" style="border: 2px solid black !important">
-
+                    <td>@Item.STT</td>
                     <td>
                         @if (Session["quyen"].ToString() == "Admin")
                         {

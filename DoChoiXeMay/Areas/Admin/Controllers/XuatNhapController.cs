@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Tokenizer.Symbols;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -47,12 +48,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapTeK";
             return View();
         }
-        public ActionResult GetListKyXNTeK()
+        public ActionResult GetListKyXNTeK(int PageNo = 0, int PageSize = 8)
         {
-            ViewBag.KyXNTeK = dbc.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true && kh.UPush==true)
-                    .OrderByDescending(kh => kh.NgayXuatNhap)
-                    .ToList();
+            //ViewBag.KyXNTeK = dbc.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true && kh.UPush==true)
+            //        .OrderByDescending(kh => kh.NgayXuatNhap)
+            //        .ToList();
+            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(PageNo, PageSize);
             return PartialView();
+        }
+        public ActionResult GetPageCountXNTek(int PageSize = 8)
+        {
+            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek();
+            var pageCount = Math.Ceiling(1.0 * num / PageSize);
+            return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult UpdateKyXNUser(int id)
@@ -86,6 +94,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var uid = int.Parse(Session["UserId"].ToString());
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXuatNhapTek - Đẩy= " + XN.UPush, "");
+                    //Thoong bao Msg cho SubAd
+                    if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
+                    {
+                        var sms = Session["UserName"].ToString().ToUpper()+" đã yêu cầu đẩy -"+ XN.TenKy +"- của mình lên Tek."+ XN.NgayAuto.ToString("{dd/MM/yyyy}");
+                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
+                    }
+                    if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
+                    {
+                        var sms = Session["UserName"].ToString().ToUpper() + " đã Hủy yêu cầu đẩy -"+ XN.TenKy +"- lên Tek của mình." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
+                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
+                    }
                     Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXuatNhapTek thành công.";
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
@@ -167,12 +186,22 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     XN.AdminXNPUSH = true;
                     dbc.Entry(XN).State = EntityState.Modified;
                     var update = dbc.SaveChanges();
-                    var kqaotu = InsertThuChiTeKauto(id);
-                    //Insert Nhật Ký
-                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                            , Session["UserName"].ToString(), "XacNhanXuatNhapTek va THUCHI - Đẩy File Xuất nhập- "+XN.TenKy+"- của user: " + XN.UserTek.UserName, "");
-                    Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
-                    Session["ThongBaoXuatNhapTeK"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
+                    if (update>0)
+                    {
+                        var kqaotu = InsertThuChiTeKauto(id);
+                        //Insert Nhật Ký
+                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "XacNhanXuatNhapTek va THUCHI - Đẩy File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName, "");
+                        Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
+                        Session["ThongBaoXuatNhapTeK"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
+                        //Thoong bao Msg cho SubAd
+                        if (Session["quyen"].ToString() == "Admin")
+                        {
+                            var sms = "Yêu cầu đẩy -" + XN.TenKy + "- của -"+XN.UserTek.UserName.ToUpper()+"- được chấp nhận." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, XN.UserId, sms, false, false, false, false, false);
+                        }
+                    }
+                    
                 }
                 else
                 {
@@ -442,8 +471,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var ngayky = model.NgayXuatNhap;
                 var nhapxuat = model.XuatNhap == true ? "Xuất" : "Nhập";
                 var XoaChitietXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM [TechZone].[dbo].[ChitietXuatNhap] where IdKy=" + id);
+                var kqct = ThuChiData.DeleteThuChibyKy(dbc, id);
                 var XoaKyXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM [TechZone].[dbo].[KyXuatNhap] where Id=" + id);
-                Session["ThongBaoXuatNhapUser"] = "Xóa thành công kỳ " + nhapxuat + " " + tenky.ToString()+".";
+                Session["ThongBaoXuatNhapUser"] = "Xóa thành công kỳ " + nhapxuat + " " + tenky.ToString()+
+                    ". Nếu Thu Chi TeK có Dl cũng bị thu hồi.";
                 //Nhật ký
                 var uid = int.Parse(Session["UserId"].ToString());
                 var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
