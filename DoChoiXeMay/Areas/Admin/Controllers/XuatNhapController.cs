@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Razor.Tokenizer.Symbols;
+using System.Web.UI.WebControls.Expressions;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -481,6 +482,61 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         , Session["UserName"].ToString(), "DeleteKyXNUser-" + tenky + " " + ngayky, "");
             }
             return RedirectToAction("ListXuatNhapUser");
+        }
+        public ActionResult ThuHoi(int id)
+        {
+            var model = dbc.KyXuatNhaps.Find(id);
+            if(model != null)
+            {
+                if(model.UYeuCauThuHoi == false)
+                {
+                    model.UYeuCauThuHoi = true;
+                }
+                else
+                {
+                    model.UYeuCauThuHoi = false;
+                }
+                
+                model.NgayAuto=DateTime.Now;
+                dbc.Entry(model).State = EntityState.Modified;
+                var th = dbc.SaveChanges();
+                if (th > 0)
+                {
+                    if (model.UYeuCauThuHoi)
+                    {
+                        Session["ThongBaoXuatNhapTeK"] = "Bạn Đã Yêu Cầu Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                        //Nhật ký
+                        var uid = int.Parse(Session["UserId"].ToString());
+                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Yêu Cầu ThuHoi kỳ XN-" + model.TenKy, "");
+                        //Thoong bao Msg cho SubAd
+                        var sms = model.UserTek.UserName.ToUpper() + " đã Yêu Thu Hồi kỳ XN-" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, model.UserId, sms, false, false, false, false, false);
+
+                    }
+                    else
+                    {
+                        Session["ThongBaoXuatNhapTeK"] = "Bạn Đã Hủy Yêu Cầu Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                        //Nhật ký
+                        var uid = int.Parse(Session["UserId"].ToString());
+                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Hủy Yêu Cầu ThuHoi kỳ XN-" + model.TenKy, "");
+                        //Thoong bao Msg cho SubAd
+                        var sms = model.UserTek.UserName.ToUpper() + " đã Hủy Yêu Thu Hồi kỳ XN-" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, model.UserId, sms, false, false, false, false, false);
+
+                    }
+
+                    return RedirectToAction("ListXuatNhapTeK");
+                }
+                Session["ThongBaoXuatNhapTeK"] = "Yêu Cầu/Hủy Yêu cầu Thu Hồi thất bại !!! Có Lỗi Dữ Liệu.";
+                return RedirectToAction("ListXuatNhapTeK");
+            }
+            else
+            {
+                Session["ThongBaoXuatNhapTeK"] = "Yêu Cầu/Hủy Yêu Thu Hồi thất bại !!! Kỳ XN không tồn tại.";
+                return RedirectToAction("ListXuatNhapTeK");
+            }
         }
         public double TinhTongtienKy(int id , int VAT, double ship, double CKtienmat, int CKphantram)
         {

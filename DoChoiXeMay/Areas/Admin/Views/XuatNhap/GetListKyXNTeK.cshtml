@@ -33,13 +33,8 @@
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
                 var tenky = Xstring.Truncate(Item.TenKy, 40);
-<<<<<<< HEAD
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-
-=======
-                <tr class="canhgiua" style="border: 2px solid black !important">
                     <td>@Item.STT</td>
->>>>>>> 5cbd0095ebeefb6d7080ebcff14af3728343061e
                     <td>
                         @if (Session["quyen"].ToString() == "Admin")
                         {
@@ -52,13 +47,28 @@
                         }
                         else if (Session["quyen"].ToString() != "Admin" && Item.UserId == int.Parse(Session["UserId"].ToString()))
                         {
-
-
-                            <p>
-                                <a class="btn btn-default" style="font-size:small" onclick="return confirm('Bạn muốn Thu Hồi.!!!')">
-                                    Yêu Cầu Thu Hồi
-                                </a>
-                            </p>
+                            if (Item.UYeuCauThuHoi == false)
+                            {
+                                <p>
+                                    <a href="/Admin/XuatNhap/ThuHoi/@Item.Id" class="btn btn-default" style="font-size:small" onclick="return confirm('Bạn muốn Thu Hồi.!!!')">
+                                        Yêu Cầu Thu Hồi
+                                    </a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    <a class="btn notika-btn-blue">
+                                        Bạn yêu cầu "Thu Hồi Xuất Nhập TEK"
+                                        <hr />
+                                        <span>Đang chờ Admin Xác Nhận</span>
+                                    </a>
+                                    <hr />
+                                    <a class="btn btn-danger" href="/Admin/XuatNhap/ThuHoi/@Item.Id" onclick="return confirm('Bạn muốn Hủy yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
+                                        click: Hủy Yêu Cầu Thu Hồi
+                                    </a>
+                                </p>
+                            }
 
                         }
                         else

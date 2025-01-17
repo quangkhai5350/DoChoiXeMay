@@ -56,13 +56,10 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string Filesave3 { get; set; }
-<<<<<<< HEAD
         [StringLength(500)]
         public string LuuKho {  get; set; }
-=======
         [StringLength(50)]
         public string STT { get; set; }
->>>>>>> 5cbd0095ebeefb6d7080ebcff14af3728343061e
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
