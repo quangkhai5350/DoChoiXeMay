@@ -72,17 +72,37 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult DayXuatNhapTek(int id)
         {
+            var uid = int.Parse(Session["UserId"].ToString());
             var XN = dbc.KyXuatNhaps.Find(id);
             if(XN != null)
             {
-                if (XN.UPush == false)
+                if (Session["quyen"].ToString() == "Admin")
                 {
-                    XN.UPush = true;
+                    //Admin thì đẩy lên luôn
+                    if (XN.UPush == false)
+                    {
+                        XN.UPush = true;
+                        XN.AdminXNPUSH = true;
+                    }
+                    else
+                    {
+                        XN.UPush = false;
+                        XN.AdminXNPUSH = true;
+                    }
                 }
                 else
                 {
-                    XN.UPush = false;
+                    //Sub thì phải xin, Nếu lên rồi thì phải "Thu Hồi"
+                    if(XN.UPush == false && XN.AdminXNPUSH == false)
+                    {
+                        XN.UPush = true;
+                    }
+                    else if(XN.UPush==true && XN.AdminXNPUSH == false)
+                    {
+                        XN.UPush = false;
+                    }
                 }
+                
                 dbc.Entry(XN).State = EntityState.Modified;
                 var update = dbc.SaveChanges();
                 if (update > 0)
@@ -92,13 +112,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         var kqins= InsertThuChiTeKauto(id);
                     }
                     //Insert Nhật Ký
-                    var uid = int.Parse(Session["UserId"].ToString());
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXuatNhapTek - Đẩy= " + XN.UPush, "");
                     //Thoong bao Msg cho SubAd
                     if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
                     {
-                        var sms = Session["UserName"].ToString().ToUpper()+" đã yêu cầu đẩy -"+ XN.TenKy +"- của mình lên Tek."+ XN.NgayAuto.ToString("{dd/MM/yyyy}");
+                        var sms = Session["UserName"].ToString().ToUpper()+" đã yêu cầu đẩy -"+ XN.TenKy +"- của mình lên Tek."+ XN.NgayAuto.ToString("{dd/MM/yyyy}")+
+                            "-ADMIN vào Bảng XN của mình để xác nhận.";
                         var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
                     }
                     if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
@@ -198,7 +218,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         //Thoong bao Msg cho SubAd
                         if (Session["quyen"].ToString() == "Admin")
                         {
-                            var sms = "Yêu cầu đẩy -" + XN.TenKy + "- của -"+XN.UserTek.UserName.ToUpper()+"- được chấp nhận." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
+                            var sms = "Yêu cầu đẩy -" + XN.TenKy + "- của -"+XN.UserTek.UserName.ToUpper()+"- được chấp nhận." + XN.NgayAuto.ToString("{dd/MM/yyyy}")
+                                + "-"+XN.UserTek.UserName.ToUpper()+" vào Bảng XN TeK và Bảng TC Tek để kiểm tra.";
                             var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, XN.UserId, sms, false, false, false, false, false);
                         }
                     }
@@ -483,58 +504,113 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("ListXuatNhapUser");
         }
-        public ActionResult ThuHoi(int id)
+        public ActionResult YeuCauThuHoi(int id)
         {
             var model = dbc.KyXuatNhaps.Find(id);
             if(model != null)
             {
-                if(model.UYeuCauThuHoi == false)
+                //Đã ở trên Tek 
+                if(model.UPush == true && model.AdminXNPUSH == true)
                 {
-                    model.UYeuCauThuHoi = true;
-                }
-                else
-                {
-                    model.UYeuCauThuHoi = false;
-                }
-                
-                model.NgayAuto=DateTime.Now;
-                dbc.Entry(model).State = EntityState.Modified;
-                var th = dbc.SaveChanges();
-                if (th > 0)
-                {
-                    if (model.UYeuCauThuHoi)
+                    if (model.UYeuCauThuHoi == false)
                     {
-                        Session["ThongBaoXuatNhapTeK"] = "Bạn Đã Yêu Cầu Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
-                        //Nhật ký
-                        var uid = int.Parse(Session["UserId"].ToString());
-                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "Yêu Cầu ThuHoi kỳ XN-" + model.TenKy, "");
-                        //Thoong bao Msg cho SubAd
-                        var sms = model.UserTek.UserName.ToUpper() + " đã Yêu Thu Hồi kỳ XN-" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
-                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, model.UserId, sms, false, false, false, false, false);
-
+                        model.UYeuCauThuHoi = true;
                     }
                     else
                     {
-                        Session["ThongBaoXuatNhapTeK"] = "Bạn Đã Hủy Yêu Cầu Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
-                        //Nhật ký
-                        var uid = int.Parse(Session["UserId"].ToString());
-                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "Hủy Yêu Cầu ThuHoi kỳ XN-" + model.TenKy, "");
-                        //Thoong bao Msg cho SubAd
-                        var sms = model.UserTek.UserName.ToUpper() + " đã Hủy Yêu Thu Hồi kỳ XN-" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
-                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, model.UserId, sms, false, false, false, false, false);
-
+                        model.UYeuCauThuHoi = false;
                     }
 
+                    model.NgayAuto = DateTime.Now;
+                    dbc.Entry(model).State = EntityState.Modified;
+                    var th = dbc.SaveChanges();
+                    if (th > 0)
+                    {
+                        if (model.UYeuCauThuHoi)
+                        {
+                            Session["ThongBaoXuatNhapTeK"] = "Bạn Đã Yêu Cầu Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                            //Nhật ký
+                            var uid = int.Parse(Session["UserId"].ToString());
+                            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                    , Session["UserName"].ToString(), "Yêu Cầu ThuHoi kỳ XN-" + model.TenKy, "");
+                            //Thoong bao Msg cho SubAd
+                            var sms = model.UserTek.UserName.ToUpper() + " đã Yêu Cầu Thu Hồi kỳ XN-" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}")+
+                                    "-ADMIN vào Bảng XN TeK để xác nhận.";
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, model.UserId, sms, false, false, false, false, false);
+
+                        }
+                        else
+                        {
+                            Session["ThongBaoXuatNhapTeK"] = "Bạn Đã Hủy Yêu Cầu Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                            //Nhật ký
+                            var uid = int.Parse(Session["UserId"].ToString());
+                            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                    , Session["UserName"].ToString(), "Hủy Yêu Cầu ThuHoi kỳ XN-" + model.TenKy, "");
+                            //Thoong bao Msg cho SubAd
+                            var sms = model.UserTek.UserName.ToUpper() + " đã Hủy Yêu Cầu Thu Hồi kỳ XN-" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}");
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, model.UserId, sms, false, false, false, false, false);
+
+                        }
+
+                        return RedirectToAction("ListXuatNhapTeK");
+                    }
+                    Session["ThongBaoXuatNhapTeK"] = "Yêu Cầu/Hủy Yêu cầu Thu Hồi thất bại !!! Có Lỗi Dữ Liệu.";
                     return RedirectToAction("ListXuatNhapTeK");
                 }
-                Session["ThongBaoXuatNhapTeK"] = "Yêu Cầu/Hủy Yêu cầu Thu Hồi thất bại !!! Có Lỗi Dữ Liệu.";
-                return RedirectToAction("ListXuatNhapTeK");
+                else
+                {
+                    Session["ThongBaoXuatNhapTeK"] = "Yêu Cầu/Hủy Yêu cầu Thu Hồi thất bại !!! Kỳ XN Chưa đưa lên TeK.";
+                    return RedirectToAction("ListXuatNhapTeK");
+                }
+                
             }
             else
             {
                 Session["ThongBaoXuatNhapTeK"] = "Yêu Cầu/Hủy Yêu Thu Hồi thất bại !!! Kỳ XN không tồn tại.";
+                return RedirectToAction("ListXuatNhapTeK");
+            }
+        }
+        public ActionResult XacNhanThuHoi(int id)
+        {
+            var model = dbc.KyXuatNhaps.Find(id);
+            if(model != null)
+            {
+                if(model.UPush==true && model.AdminXNPUSH==true && model.UYeuCauThuHoi == true)
+                {
+                    var kqct = ThuChiData.DeleteThuChibyKy(dbc, id);
+                    if (kqct)
+                    {
+                        model.UPush = false;
+                        model.AdminXNPUSH = false;
+                        model.UYeuCauThuHoi = false;
+                        model.NgayAuto = DateTime.Now;
+                        dbc.Entry(model).State = EntityState.Modified;
+                        var kq = dbc.SaveChanges();
+                        if (kq > 0)
+                        {
+                            Session["ThongBaoXuatNhapTeK"] = "Xác nhận Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}")+"-Thành Công.";
+                            //Nhật ký
+                            var uid = int.Parse(Session["UserId"].ToString());
+                            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                    , Session["UserName"].ToString(), "Xác Nhận ThuHoi kỳ XN-" + model.TenKy+"-Thành Công.", "");
+                            //Thoong bao Msg cho SubAd
+                            var sms =  "Yêu Cầu Thu Hồi kỳ XN-" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}")+"-của "+ model.UserTek.UserName.ToUpper() +
+                                    " được chấp nhận-" + model.UserTek.UserName.ToUpper() + " vào Bảng XN của mình để kiểm tra.";
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, model.UserId, sms, false, false, false, false, false);
+
+                        }
+                    }
+                    return RedirectToAction("ListXuatNhapTeK");
+                }
+                else
+                {
+                    Session["ThongBaoXuatNhapTeK"] = "Thu Hồi thất bại !!! Kỳ XN không đủ ĐK thu hồi.";
+                    return RedirectToAction("ListXuatNhapTeK");
+                }
+            }
+            else
+            {
+                Session["ThongBaoXuatNhapTeK"] = "Thu Hồi thất bại !!! Kỳ XN không tồn tại.";
                 return RedirectToAction("ListXuatNhapTeK");
             }
         }

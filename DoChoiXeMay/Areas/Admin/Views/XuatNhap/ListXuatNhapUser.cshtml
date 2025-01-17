@@ -10,16 +10,17 @@
     .canhgiua {
         text-align: center !important;
     }
-    .marginbutonkh{
-        margin-top:50%;
+
+    .marginbutonkh {
+        margin-top: 50%;
     }
 </style>
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                @Session["ThongBaoXuatNhapUser"] 
-                
+                @Session["ThongBaoXuatNhapUser"]
+
             </div>
 
             <div class="row">
@@ -27,8 +28,8 @@
                     <a class="btn btn-warning" style="margin-left:20px" onclick="uwngtuyen()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Xuất Nhập"</a>
                     <span>(Số tiền được tự động tính sau khi bạn nhập Chi Tiết)</span>
                 </div>
-                
-                
+
+
             </div>
             <div id="myModal" class="modal fade" role="dialog" style="opacity: 1">
                 <div class="modal-dialog modal-lg" style="left:0; width: 500px; height: 600px; margin-top: 10% !important; background-position: center center; background-repeat: no-repeat; background-size: cover;box-sizing:border-box ">
@@ -99,10 +100,10 @@
                                         </div>
                                         <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
                                             <button id="btnLuu" class="btn btn-primary" type="submit">Lưu Kỳ Xuất Nhập</button>
-                                            
+
                                         </div>
                                         <div class="col-md-6" style="margin-top:10px;font-size:larger;text-align:center">
-                                            
+
                                             <button id="btnLuu" class="btn btn-default" onclick="closemodal()">Đóng(Không Lưu)</button>
                                         </div>
 
@@ -138,16 +139,18 @@
 
 
         @*<ul class="pager">
-            <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-        </ul>*@
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+            </ul>*@
 
     </div>
 </div>
-<h5>***Nếu Chưa đẩy lên Tek thì cho "update", đẩy rồi thì phải "yêu cầu Thu Hồi"</h5>
-
+<h2>__Hướng Dẫn__</h2>
+<h5>***Mỗi User tự tạo Kỳ(đợt) Xuất nhập hàng => Đẩy lên bảng xài chung(TeK)</h5>
+<h5>***Bảng Thu Chi sẽ được tự động thêm vào "Xuất Hàng = Thu Vào", "Nhập Hàng = Chi Ra"</h5>
+<h3>***<span>Bước 1:"Thêm mới kỳ xuất nhập"</span>=><span>Bước 2:"Thêm hàng hóa"</span>=><span>Bước 3:"Đẩy Xuất nhập lên TeK"</span></h3>
 <h5>**Tổng tiền: Soluong*gianhap + shipper + VAT - ChietKhau% - ChietKhautienmat</h5>
 <script>
     function uwngtuyen() {
@@ -160,7 +163,7 @@
     function LoadPage() {
         $.ajax({
             url: "/Admin/XuatNhap/GetListKyXNUser",
-            data: { },
+            data: {},
             success: function (respone) {
                 $(".listXNU").html(respone);
                 //var pagesp = pageNo + 1;

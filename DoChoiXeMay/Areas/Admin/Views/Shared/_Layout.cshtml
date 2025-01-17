@@ -98,11 +98,11 @@
                         <li class="nav-item nc-al">
                             @if (CountMsg() > 0)
                             {
-                                <a onclick="daxemMsg()" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-alarm"></i></span><div class="spinner4 spinner-4"></div><div class="ntd-ctn"><span id="countsms">@CountMsg()</span></div></a>
+                                <a title="Thông báo hệ thống." onclick="daxemMsg()" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-alarm"></i></span><div class="spinner4 spinner-4"></div><div class="ntd-ctn"><span id="countsms">@CountMsg()</span></div></a>
                             }
                             else
                             {
-                                <a data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-alarm"></i></span><div class=""></div><div class="ntd-ctn"><span id="countsms">@CountMsg()</span></div></a>
+                                <a title="Thông báo hệ thống." data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-alarm"></i></span><div class=""></div><div class="ntd-ctn"><span id="countsms">@CountMsg()</span></div></a>
                             }
 
                             <div role="menu" class="dropdown-menu message-dd notification-dd animated zoomIn">
