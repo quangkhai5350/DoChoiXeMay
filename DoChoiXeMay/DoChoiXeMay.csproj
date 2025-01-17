@@ -154,6 +154,7 @@
     <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\MaTC.cs" />
     <Compile Include="Models\Model1.cs" />
+    <Compile Include="Models\MsgAotu.cs" />
     <Compile Include="Models\NhatKyUTek.cs" />
     <Compile Include="Models\NoteKythuat.cs" />
     <Compile Include="Models\Size.cs" />
@@ -380,6 +381,7 @@
     <Content Include="Areas\Admin\Views\XuatNhap\ListXuatNhapTeK.cshtml" />
     <Content Include="Areas\Admin\Views\XuatNhap\GetListKyXNTeK.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\LoadOneXuatNhap.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\EditUser.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

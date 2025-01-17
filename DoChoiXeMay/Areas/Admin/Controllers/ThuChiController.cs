@@ -270,6 +270,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             
         }
+        
         public ActionResult DeleteThuChi(string Id)
         {
             var iiii = new Guid(Id);
@@ -303,6 +304,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.OneXN = dbc.KyXuatNhaps.Where(kh=>kh.Id==Id).ToList();
             ViewBag.ListctxnbyOne = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == Id).ToList();
             return PartialView();
+        }
+        
+        public ActionResult updatedaxemMsg()
+        {
+            var uid = int.Parse(Session["UserId"].ToString());
+            var ten = "";
+            if(uid == 1) ten = "AdminDaxem";
+            if (uid == 2) ten = "Sub2Daxem";
+            if (uid == 4) ten = "Sub4Daxem";
+            if (uid == 5) ten = "Sub5Daxem";
+            //if (uid == 6) ten = "AdminDaxem";
+            var kq = dbc.Database.ExecuteSqlCommand("Update [TechZone].[dbo].[MsgAotu] set "+ ten+ "=1 where " + ten+"=0");
+            return Json(kq, JsonRequestBehavior.AllowGet);
         }
     }
 }

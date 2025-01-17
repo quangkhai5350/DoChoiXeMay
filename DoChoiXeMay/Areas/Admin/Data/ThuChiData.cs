@@ -229,5 +229,34 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public static bool DeleteThuChibyKy(Model1 dbc, int idKy)
+        {
+            var model = dbc.ChiTietTCs.FirstOrDefault(kh => kh.IdKyxuatnhap == idKy);
+            if (model != null)
+            {
+                try
+                {
+                    //Xóa hình thu chi củ
+                    var file1 = model.Filesave1;
+                    var file2 = model.Filesave2;
+                    var file3 = model.HoaDon;
+                    bool xoa1 = Xstring.Xoahinhcu("imgthuchi/", file1);
+                    bool xoa2 = Xstring.Xoahinhcu("imgthuchi/", file2);
+                    bool xoa3 = Xstring.Xoahinhcu("imgthuchi/", file3);
+                    //Xóa hình thu chi củ
+                    var ngay = model.NgayTC;
+                    dbc.ChiTietTCs.Remove(model);
+                    dbc.SaveChanges();
+                    //Session["ThongBaoThuChiTEK"] = "Delete thành công file thu chi ngày: " + ngay.ToString("{dd/MM/yyyy}");
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    var loi = ex.Message;
+                    return false;
+                }
+            }
+            return false;
+        }
     }
 }
