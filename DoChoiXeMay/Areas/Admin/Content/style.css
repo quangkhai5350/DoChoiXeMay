@@ -232,7 +232,7 @@ body {}
     position: absolute;
     top: 100%;
     left: -100px;
-    width: 300px;
+    width: 400px;
     border: none;
     padding: 20px 0px;
 	z-index:9999;
@@ -289,11 +289,11 @@ body {}
     white-space: nowrap;
 }
 .hd-message-img {
-    width: 100px;
+    /*width: 100px;*/
 	margin-right: 15px;
 }
 .hd-mg-ctn {
-    width: 210px;
+    /*width: 210px;*/
     margin-top: 5px;
 }
 .hd-message-info a:hover{
@@ -363,7 +363,7 @@ body {}
 .ntd-ctn {
 	position: absolute;
     top: 8px;
-    left: -8px;
+    left: 45px;
     font-size: 10px;
     background: #e46a76;
     height: 18px;
@@ -380,7 +380,7 @@ body {}
     position: absolute;
     display: inline-block;
     top: 3px;
-    left: -14px;
+    left: 39px;
 }
 .spinner4:after, .spinner4:before {
   content: "";

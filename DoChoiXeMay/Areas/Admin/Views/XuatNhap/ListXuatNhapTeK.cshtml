@@ -67,16 +67,61 @@
 <h5>***Nếu Chưa đẩy lên Tek thì cho "update", đẩy rồi thì phải "yêu cầu Thu Hồi"</h5>
 <h5>**Tổng tiền: Soluong*gianhap + shipper + VAT - ChietKhau% - ChietKhautienmat</h5>
 <script>
+    $(function () {
+        pageNo = 0;
+        pageSize = 10;
+        TongSP = 0;
+        getTongSanPham(pageSize, pageNo)
+        $(".pager a:eq(0)").click(function () {
+            if (pageNo > 0) {
+                pageNo = 0;
+                LoadPage(pageNo, pageSize);
+            }
+            return false;
+        });
+        $(".pager a:eq(1)").click(function () {
+            if (pageNo > 0) {
+                pageNo--;
+                LoadPage(pageNo, pageSize);
+            }
+            return false;
+        });
+        $(".pager a:eq(2)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo++
+                LoadPage( pageNo, pageSize);
+            }
+            return false;
+        });
+
+        $(".pager a:eq(3)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo = pageCount - 1;
+                LoadPage(pageNo, pageSize);
+            }
+            return false
+        });
+    });
     
-    LoadPage();
-    function LoadPage() {
+    function LoadPage(pageNo, pageSize) {
         $.ajax({
             url: "/Admin/XuatNhap/GetListKyXNTeK",
-            data: { },
+            data: { PageNo: pageNo, PageSize: pageSize },
             success: function (respone) {
                 $(".listXNT").html(respone);
-                //var pagesp = pageNo + 1;
-                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                var pagesp = pageNo + 1;
+                $('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+    };
+    function getTongSanPham(pageSize, pageNo) {
+        $.ajax({
+            url: "/Admin/XuatNhap/GetPageCountXNTek",
+            data: { PageSize: pageSize },
+            success: function (respone) {
+                pageCount = respone;
+                TongSP = respone;
+                LoadPage(pageNo, pageSize);
             }
         });
     };

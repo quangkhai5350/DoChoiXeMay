@@ -11,7 +11,7 @@ namespace DoChoiXeMay.Models
             : base("name=Model1")
         {
         }
-
+        public virtual DbSet<MsgAotu> MsgAotus { get; set; }
         public virtual DbSet<ChiTietTC> ChiTietTCs { get; set; }
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
         public virtual DbSet<Color> Colors { get; set; }

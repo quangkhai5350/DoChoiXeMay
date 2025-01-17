@@ -1,0 +1,90 @@
+﻿@model DoChoiXeMay.Models.UserTek
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+<div class="container">
+    <h2>EditUser</h2>
+    @using (Html.BeginForm("Home", "EditUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset class="info_form" style="margin-top:0">
+            <div class="container">
+                @Html.HiddenFor(kh => kh.Id)
+                @Html.HiddenFor(kh => kh.Password)
+                @Html.HiddenFor(kh => kh.PasswordSalt)
+                @Html.HiddenFor(kh => kh.IdLoai)
+                @Html.HiddenFor(kh => kh.LoaiConnection)
+                @Html.HiddenFor(kh => kh.Islocked)
+                @Html.HiddenFor(kh => kh.lastPasswordChangedate)
+                @Html.HiddenFor(kh => kh.LastLokedChangedate)
+                @Html.HiddenFor(kh => kh.Createdate)
+                @Html.HiddenFor(kh => kh.CountFailedPassword)
+                @Html.HiddenFor(kh => kh.GhiChu)
+                @Html.HiddenFor(kh => kh.Createdate)
+                <h1 class="info_header">
+                    <span style="color:black">Update user @Session["UserName"].ToString().ToUpper()</span>
+                    <span class="pull-right label label-warning" style="color:white;font-family:monospace">
+                        @Html.ValidationSummary()
+                    </span>
+                </h1>
+                <div class="contentform">
+                    <div class="form-group">
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Tên Đăng Nhập</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", style = "height: 40px", @required = true })
+
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>PassWord củ</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="text" name="PW" required />
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>PassWord mới</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="text" name="PWM" required />
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Xác nhận PassWord mới</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="text" name="PWMM" required />
+                        </div>
+                        <div class="row" style="width:95%;padding-left:15px">
+                            <p>Email</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
+                            @Html.TextBoxFor(m => m.EmailConnection, new { @class = "form-control", style = "height: 40px", @required = true })
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-12">
+                                <div class="text-center btn-crud">
+                                    <button id="btnLuu" class="btn btn-warning" data-action="EditUser"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update User</button>
+                                    <a class="btn btn-primary" href="/Admin/ThuChi/ListThuChiTeK" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                                </div>
+                                <script>
+                                    $(function () {
+                                        $("button[data-action]").click(function () {
+                                            if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                                                return false;
+                                            } else {
+                                                var action = $(this).attr("data-action");
+                                                this.form.action = "/Admin/Home/" + action;
+                                            }
+
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
