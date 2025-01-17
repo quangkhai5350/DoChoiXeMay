@@ -12,11 +12,6 @@
     }
 </style>
 
-@*<div style="text-align:right">
-        <span style="color:brown;margin-left:10px;font-display:inherit">
-            @Session["ThongBaoThuChiTEK"]
-        </span>
-    </div>*@
 <h2>Bảng Thu Chi TeK</h2>
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
@@ -93,11 +88,14 @@
     </div>
 </div>
 
-<h5>***Kỳ XuấtN: Thêm mới + Xóa(KyXN +ChiTietXN) nếu chưa add bảng ChitietTC</h5>
-<h5>***ChiTietXN(SubAdmin):Thêm Mới + Xóa</h5>
-<h5>***XuatNhap = False : nhập vào</h5>
+@*<h5>***XuatNhap = False : Thu vào</h5>*@
+<h2>__Hướng Dẫn__</h2>
+<h5>***Mỗi User tự tạo Kỳ(đợt) Xuất nhập hàng => Đẩy lên bảng xài chung(TeK)</h5>
+<h5>***Bảng Thu Chi sẽ được tự động thêm vào "Xuất Hàng = Thu Vào", "Nhập Hàng = Chi Ra"</h5>
+
 <h5>**Thu + Nợ = Khách hàng nợ mình (Không tính vào "Tổng Tiền")</h5>
 <h5>**Chi + Nợ = cty mình nợ khách  (Không tính vào "Tổng Tiền")</h5>
+
 <script>
     $(function () {
         pageNo = 0;
