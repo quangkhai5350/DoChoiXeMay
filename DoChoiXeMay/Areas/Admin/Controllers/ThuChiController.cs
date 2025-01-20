@@ -6,6 +6,7 @@ using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/ThuChi
         Model1 dbc = new Model1();
+        string DBname = ConfigurationManager.AppSettings["DBname"];
         public ActionResult Index()
         {
             return View();
@@ -268,7 +270,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             if (uid == 4) ten = "Sub4Daxem";
             if (uid == 5) ten = "Sub5Daxem";
             //if (uid == 6) ten = "AdminDaxem";
-            var kq = dbc.Database.ExecuteSqlCommand("Update [TechZone].[dbo].[MsgAotu] set "+ ten+ "=1 where " + ten+"=0");
+            var kq = dbc.Database.ExecuteSqlCommand("Update ["+DBname+"TechZone].[dbo].[MsgAotu] set "+ ten+ "=1 where " + ten+"=0");
             return Json(kq, JsonRequestBehavior.AllowGet);
         }
     }

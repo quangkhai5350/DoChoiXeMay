@@ -3,6 +3,7 @@ using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/XuatNhap
         Model1 dbc=new Model1();
+        string DBname = ConfigurationManager.AppSettings["DBname"];
         public ActionResult ListXuatNhapUser()
         {
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu");
@@ -476,9 +478,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var tenky=model.TenKy;
                 var ngayky = model.NgayXuatNhap;
                 var nhapxuat = model.XuatNhap == true ? "Xuất" : "Nhập";
-                var XoaChitietXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM [TechZone].[dbo].[ChitietXuatNhap] where IdKy=" + id);
+                var XoaChitietXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM ["+DBname+"TechZone].[dbo].[ChitietXuatNhap] where IdKy=" + id);
                 var kqct = ThuChiData.DeleteThuChibyKy(dbc, id);
-                var XoaKyXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM [TechZone].[dbo].[KyXuatNhap] where Id=" + id);
+                var XoaKyXN = dbc.Database.ExecuteSqlCommand("DELETE  FROM ["+DBname+"TechZone].[dbo].[KyXuatNhap] where Id=" + id);
                 Session["ThongBaoXuatNhapUser"] = "Xóa thành công kỳ " + nhapxuat + " " + tenky.ToString()+
                     ". Nếu Thu Chi TeK có Dl cũng bị thu hồi.";
                 //Nhật ký
