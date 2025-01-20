@@ -136,7 +136,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
 
             for (int i = 0; i < model1.Count(); i++)
             {
-                model1[i].STT = i.ToString();
+                model1[i].STT = (i+1).ToString();
             }
 
             model1 = model1
@@ -209,8 +209,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 }
                 else
                 {
-                    p.YeuCauDay = false;
-                    p.AdminXacNhan = false;
+                    return false;
                 }
                 _context.ChiTietTCs.Add(p);
                 int kt = _context.SaveChanges();
@@ -221,7 +220,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     return true;
                 }
                 return false;
-                    
+
             }
             catch (Exception ex)
             {

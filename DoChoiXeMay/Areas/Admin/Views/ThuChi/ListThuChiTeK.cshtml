@@ -11,8 +11,20 @@
         text-align: center !important;
     }
 </style>
+<div class="row">
+    @if (Session["quyen"].ToString() == "Admin")
+    {
+        <div class="col-md-6">
+            <a class="btn btn-warning" style="margin-left:20px" href="/Admin/ThuChi/InsertThuChi" onclick="return confirm('Bạn muốn Thêm Mới Thu Chi TeK ??')">
+                <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Thu Chi TeK"
+            </a>
+        </div>
+    }
+        <div class="col-md-6">
+            <h2>Bảng Thu Chi TeK</h2>
+        </div>
+    </div>
 
-<h2>Bảng Thu Chi TeK</h2>
 <div class="panel panel-default" style="margin-top:10px">
     <div class="panel-heading">
         <div class="row">
@@ -50,13 +62,6 @@
 
                 </div>
             </div>
-            @*<div class="col-lg-6">
-            <a href="/Admin/AddNewProduct" class="btn btn-success pull-right">
-                <span class="fa fa-plus"></span>&nbsp;Thêm Mới
-            </a>
-        </div>*@
-
-
         </div>
     </div>
     <div class="panel-body">

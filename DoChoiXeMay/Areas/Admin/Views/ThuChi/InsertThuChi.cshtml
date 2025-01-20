@@ -42,11 +42,11 @@
                                 <span class="icon-case"><i class="glyphicon glyphicon-file"></i></span>
                                 @Html.DropDownList("IdMa", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <p>Kỳ Xuất Nhập</p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-file"></i></span>
                                 @Html.DropDownList("IdKyxuatnhap", new SelectList(string.Empty, "Value", "Text"), new { style = "width: 75%; height: 40px" })
-                            </div>
+                            </div>*@
 
                             <div class="form-group">
                                 <p>Số Tiền</p>
@@ -54,11 +54,11 @@
                                 @Html.TextBoxFor(m => m.SoTien, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
 
                             </div>
-                            @*<div class="form-group">
-            <p>Ghi Chú</p>
-            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-            <input type="text" name="Ghichu" id="Ghichu" />
-        </div>*@
+                            <div class="form-group">
+                                <p>Ngày Thu Chi</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-time"></i></span>
+                                @Html.TextBoxFor(kh => kh.NgayTC, "{0:dd/MM/yyyy}", new { @class = "form-control", @type = "date", style = "height: 40px" })
+                            </div>
                         </div>
                     <div class="rightcontact">
                         <div class="form-group">
@@ -79,11 +79,7 @@
                             <input type="file" name="HoaDon" id="HoaDon" />
                             <p id="thongbaosite3" style="color:red; display:none">File quá lớn !!!</p>
                         </div>
-                        <div class="form-group">
-                            <p>Ngày Thu Chi</p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-time"></i></span>
-                            @Html.TextBoxFor(kh => kh.NgayTC, "{0:dd/MM/yyyy}", new { @class = "form-control", @type = "date", style = "height: 40px" })
-                        </div>
+                        
                         <script>
                             var kt1 = true;
                             var kt2 = true;
@@ -175,26 +171,26 @@
 
 <script>
     $(function () {
-        $.ajax({
-            url: "/Admin/ThuChi/LoadKyXuatNhap",
-            data: {},
-            success: function (response) {
-                $("#IdKyxuatnhap").append(
-                    $('<option/>')
-                        .attr('value', 1)
-                        .text('Không có Xuất Nhập _ Defaule')
-                );
-                $(response).each(function (i, e) {
-                    $("#IdKyxuatnhap").append(
-                        $('<option/>')
-                            .attr('value', e.Id)
-                            .text(e.TenKy)
-                    );
-                });
-            }, error: function (ex) {
-                alert('Lỗi load ngành nghề: ' + ex);
-            }
-        });
+        //$.ajax({
+        //    url: "/Admin/ThuChi/LoadKyXuatNhap",
+        //    data: {},
+        //    success: function (response) {
+        //        $("#IdKyxuatnhap").append(
+        //            $('<option/>')
+        //                .attr('value', 1)
+        //                .text('Không có Xuất Nhập _ Defaule')
+        //        );
+        //        $(response).each(function (i, e) {
+        //            $("#IdKyxuatnhap").append(
+        //                $('<option/>')
+        //                    .attr('value', e.Id)
+        //                    .text(e.TenKy)
+        //            );
+        //        });
+        //    }, error: function (ex) {
+        //        alert('Lỗi load ngành nghề: ' + ex);
+        //    }
+        //});
         $('#IdKyxuatnhap').change(function () {
             var ma = $('#IdKyxuatnhap').val();
             $.ajax({
