@@ -158,37 +158,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             cttc.Noidung = "Auto từ kỳ " + xuatnhap + " Ngày:" + XN.NgayXuatNhap.ToString("{dd/MM/yyyy}");
             cttc.SoTien = XN.TongTienAuto;
             cttc.ThuChi = XN.XuatNhap;  //ThuChi = false= chira=nhaphang
-            //coppy hinh
-            if (XN.HoaDon != null && XN.HoaDon != "")
-            {
-                string path = Server.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + XN.HoaDon);
-                string destina = Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + XN.HoaDon);
-                if (System.IO.File.Exists(path))
-                {
-                    var coppy1 = Xstring.CopyFile(path, destina);
-                    cttc.HoaDon = coppy1 == true ? XN.HoaDon : "";
-                }
-            }
-            if (XN.Filesave2 != null && XN.Filesave2 != "")
-            {
-                string path = Server.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + XN.Filesave2);
-                string destina = Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + XN.Filesave2);
-                if (System.IO.File.Exists(path))
-                {
-                    var coppy1 = Xstring.CopyFile(path, destina);
-                    cttc.Filesave1 = coppy1 == true ? XN.Filesave2 : "";
-                }
-            }
-            if (XN.Filesave3 != null && XN.Filesave3 != "")
-            {
-                string path = Server.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + XN.Filesave3);
-                string destina = Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + XN.Filesave3);
-                if (System.IO.File.Exists(path))
-                {
-                    var coppy1 = Xstring.CopyFile(path, destina);
-                    cttc.Filesave2 = coppy1 == true ? XN.Filesave3 : "";
-                }
-            }
+            cttc.HoaDon = XN.HoaDon;
+            cttc.Filesave1 = XN.Filesave2;
+            cttc.Filesave2 = XN.Filesave3;
+            ////coppy hinh
+            //if (XN.HoaDon != null && XN.HoaDon != "")
+            //{
+            //    string path = Server.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + XN.HoaDon);
+            //    string destina = Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + XN.HoaDon);
+            //    if (System.IO.File.Exists(path))
+            //    {
+            //        var coppy1 = Xstring.CopyFile(path, destina);
+            //        cttc.HoaDon = coppy1 == true ? XN.HoaDon : "";
+            //    }
+            //}
+            
             cttc.NgayTC = XN.NgayXuatNhap;
             cttc.UserId = XN.UserId;
             var kqinsert = new Data.ThuChiData().InsertThuChiTeK(cttc, Session["quyen"].ToString(), Session["UserName"].ToString());
@@ -252,19 +236,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file1 = Request.Files["Dinhkem1"];
                 var file2 = Request.Files["Dinhkem2"];
                 var file3 = Request.Files["Dinhkem3"];
-                if (file1 != null)
+                if (file1.ContentLength>0)
                 {
                     //Xoa hinh cu
                     bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.HoaDon);
                     XN.HoaDon = Xstring.saveFile(file1, "imgxuatnhap/");
                 }
-                if (file2 != null)
+                if (file2.ContentLength > 0)
                 {
                     //Xoa hinh cu
                     bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.Filesave2);
                     XN.Filesave2 = Xstring.saveFile(file2, "imgxuatnhap/");
                 }
-                if (file3 != null)
+                if (file3.ContentLength > 0)
                 {
                     //Xoa hinh cu
                     bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.Filesave3);

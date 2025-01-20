@@ -1,10 +1,10 @@
 ﻿@foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.OneXN)
 {
     <div class="modal-header">
-        <button type="button" class="close" onclick="closemodal()">&times;</button>
+        <button type="button" class="close" onclick="closemodal()" style="border: 2px solid black !important;border-radius:12px;width:25px">&times;</button>
         <h4 class="modal-title text-center" style="font-weight:bold;font-size:24px">@Item.TenKy</h4>
     </div>
-    <div class="modal-body" style="box-shadow: 1px 0 3px #8ba6c5">
+    <div class="modal-body" style="box-shadow: 1px 0 3px #8ba6c5; overflow: auto; height: 650px">
         <div style="padding:0 !important">
 
 
@@ -25,7 +25,7 @@
                             <th class="canhgiua" style="width: 15px">Hình 1</th>
                             <th class="canhgiua" style="width: 15px">Hình 2</th>
                             <th class="canhgiua" style="width: 15px">Hình 3</th>
-
+                            <th class="canhgiua" style="width:15px">STT</th>
                         </tr>
                     </thead>
                     <tbody style="border: 2px solid black !important">
@@ -34,7 +34,7 @@
 
 
                             <td>
-                                <p style="font-size:20px">@Item.UserTek.UserName</p>
+                                <p style="font-size: 20px; line-height: 57px">@Item.UserTek.UserName</p>
                                 <hr />
                                 <p>
                                     @if (Item.VAT > 0)
@@ -57,7 +57,7 @@
                             </td>
 
                             <td>
-                                <p style="font-size: 20px; color: red">@Item.TenKy</p>
+                                <p style="font-size: 20px; color: red; height: 57px">@Item.TenKy</p>
                                 @if (Item.LuuKho != null && Item.LuuKho != "")
                                 {
                                     <hr />
@@ -69,7 +69,7 @@
                             </td>
 
                             <td>
-                                <p style="font-size:20px">
+                                <p style="font-size: 20px; line-height: 57px">
                                     @if (Item.XuatNhap == true)
                                     {
                                         <span style="background-color:burlywood">Xuất Hàng</span>
@@ -187,7 +187,15 @@
                                 }
 
                             </td>
-                            
+                            <td>
+                                @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in ViewBag.ListctxnbyOne)
+                                {
+                                    <p style="height:40px">
+                                        @ct.GhiChu
+                                    </p>
+                                    <hr />
+                                }
+                            </td>
                         </tr>
 
                         

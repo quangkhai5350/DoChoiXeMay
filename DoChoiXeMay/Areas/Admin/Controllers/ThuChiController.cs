@@ -24,24 +24,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult ListThuChiUser()
-        {
-            var uid = int.Parse(Session["UserId"].ToString());
-            if (Session["quyen"].ToString() == "Admin")
-            {
-                //AdminXacNhan chưa xác nhận và User có yêu cầu đẩy
-                ViewBag.ChitietTCUser = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == false
-            && kh.YeuCauDay == true).OrderByDescending(kh => kh.NgayAuto);
-            }
-            else if (Session["quyen"].ToString() == "SubAdmin")
-            {
-                //AdminXacNhan chưa xác nhận
-                ViewBag.ChitietTCUser = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == false
-            && kh.UserId == uid).OrderByDescending(kh => kh.NgayAuto);
-            }
-            Session["requestUri"] = "/Admin/ThuChi/ListThuChiUser";
-            return View();
-        }
         public ActionResult ListThuChiTeK()
         {
             Session["requestUri"] = "/Admin/ThuChi/ListThuChiTeK";
@@ -123,7 +105,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 TC.Filesave1 = ten1;
                 TC.Filesave2 = ten2;
                 TC.HoaDon = ten3;
-
+                TC.UserId = uid;
+                TC.IdKyxuatnhap = 1;
                 var kq = new Data.ThuChiData().InsertThuChiTeK(TC, quyen, username);
                 if (kq == true)
                 {
@@ -145,57 +128,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-        public ActionResult LoadKyXuatNhap()
-        {
-            var Kyxuatnhap = dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.Id > 1
-                 && dbc.ChiTietTCs.FirstOrDefault(nn => nn.IdKyxuatnhap == kh.Id) == null)
-                     .OrderByDescending(kh => kh.NgayAuto).Select(kh => new
-                     {
-                         Id = kh.Id,
-                         TenKy = kh.TenKy
-                     });
-            return Json(Kyxuatnhap, JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult LoadKyXuatNhap()
+        //{
+        //    var Kyxuatnhap = dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.Id > 1
+        //         && dbc.ChiTietTCs.FirstOrDefault(nn => nn.IdKyxuatnhap == kh.Id) == null)
+        //             .OrderByDescending(kh => kh.NgayAuto).Select(kh => new
+        //             {
+        //                 Id = kh.Id,
+        //                 TenKy = kh.TenKy
+        //             });
+        //    return Json(Kyxuatnhap, JsonRequestBehavior.AllowGet);
+        //}
         public ActionResult getTongTien(int Id)
         {
             var tong = new XuatNhapData().getTongTienAuto(Id);
             return Json(tong, JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult DayThuChiTek(string Id, int key)
-        {
-            var iiii = new Guid(Id.ToString());
-            var ThuChi = dbc.ChiTietTCs.Find(iiii);
-            if (ThuChi != null)
-            {
-                if (key == 1)
-                {
-                    if (ThuChi.YeuCauDay == true)
-                    {
-                        ThuChi.YeuCauDay = false;
-                    }
-                    else ThuChi.YeuCauDay = true;
-                }
-                else if (key == 2)
-                {
-                    if (ThuChi.AdminXacNhan == true)
-                    {
-                        ThuChi.AdminXacNhan = false;
-                    }
-                    else
-                    {
-                        ThuChi.AdminXacNhan = true;
-                    }
-                }
-
-                dbc.Entry(ThuChi).State = EntityState.Modified;
-                dbc.SaveChanges();
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
-
         }
         [HttpGet]
         public ActionResult UpdateCTthuchi(string Id)
@@ -217,18 +164,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file1 = Request.Files["Dinhkem1"];
                 var file2 = Request.Files["Dinhkem2"];
                 var file3 = Request.Files["Dinhkem3"];
-                if (file1 != null) { 
+                if (file1.ContentLength > 0) { 
                     //Xoa hinh cu
                     bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave1);
                     TC.Filesave1 = Xstring.saveFile(file1, "imgthuchi/");
                 }
-                if (file2 != null)
+                if (file2.ContentLength > 0)
                 {
                     //Xoa hinh cu
                     bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave2);
                     TC.Filesave2 = Xstring.saveFile(file2, "imgthuchi/");
                 }
-                if (file3 != null)
+                if (file3.ContentLength > 0)
                 {
                     //Xoa hinh cu
                     bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.HoaDon);
@@ -302,7 +249,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult LoadOneXuatNhap(int Id)
         {
             ViewBag.OneXN = dbc.KyXuatNhaps.Where(kh=>kh.Id==Id).ToList();
-            ViewBag.ListctxnbyOne = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == Id).ToList();
+            var model = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == Id)
+                .OrderByDescending(kh=>kh.NgayAuto).ToList();
+            for (int i = 0; i < model.Count(); i++)
+            {
+                model[i].GhiChu = (i + 1).ToString();
+            }
+            ViewBag.ListctxnbyOne = model;
             return PartialView();
         }
         

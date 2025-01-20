@@ -172,20 +172,20 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            var tenHH = Xstring.Truncate(ct.Ten, 15);
+                            var tenHH = Xstring.Truncate(ct.Ten, 40);
                             <p style="height:40px">
                                 <span style="float:left">
                                     @if (Item.UPush == true)
                                     {
-                                        <a disabled title="Xóa @ct.SoLuong @ct.Ten" class="btn btn-danger"
-                                           onclick="return confirm('Bạn Không thể Xóa @ct.SoLuong @ct.Ten khi đã yêu cầu đẩy')">
+                                        <a disabled title="Xóa @ct.SoLuong @tenHH" class="btn btn-danger"
+                                           onclick="return confirm('Bạn Không thể Xóa @ct.SoLuong @tenHH khi đã yêu cầu đẩy')">
                                             <span class="glyphicon glyphicon-trash" style="font-size:10px"></span>
                                         </a>
 
                                     }
                                     else
                                     {
-                                        <a title="Xóa @ct.SoLuong @ct.Ten" class="btn btn-danger" onclick="return confirm('Bạn muốn Xóa @ct.SoLuong @ct.Ten ??')"
+                                        <a title="Xóa @ct.SoLuong @tenHH" class="btn btn-danger" onclick="return confirm('Bạn muốn Xóa @ct.SoLuong @ct.Ten ??')"
                                            href="/Admin/XuatNhap/XoaChiTietXNbyID/@ct.Id"><span class="glyphicon glyphicon-trash" style="font-size:10px"></span></a>
 
                                     }

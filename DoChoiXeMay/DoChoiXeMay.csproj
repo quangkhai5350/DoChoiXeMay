@@ -368,7 +368,6 @@
     <Content Include="Areas\Admin\Content\fonts\notika-icon.ttf" />
     <Content Include="Areas\Admin\Content\fonts\notika-icon.woff" />
     <Content Include="Areas\Admin\Views\ThuChi\InsertThuChi.cshtml" />
-    <Content Include="Areas\Admin\Views\ThuChi\ListThuChiUser.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutList.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\ListThuChiTeK.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\Index.cshtml" />

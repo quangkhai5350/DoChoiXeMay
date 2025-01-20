@@ -287,12 +287,7 @@
                         <li>
                             <a data-toggle="tab" href="#Interface" class="color-tile-tek"><i class="notika-icon notika-edit"></i> Note Tek</a>
                         </li>
-                        @if (Session["quyen"].ToString() == "Admin")
-                        {
-                            <li id="ChartsCharts">
-                                <a data-toggle="tab" href="#Charts"><i class="notika-icon notika-bar-chart"></i> Thu Chi @Session["UserName"].ToString().ToUpper()</a>
-                            </li>
-                        }
+                        
                         <li>
                             <a data-toggle="tab" href="#Tables"><i class="notika-icon notika-form"></i> Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
                         </li>
@@ -337,20 +332,7 @@
 
                                 </ul>*@
                         </div>
-                        <div id="Charts" class="tab-pane notika-tab-menu-bg animated flipInX">
-                            <ul class="notika-main-menu-dropdown">
-                                <li>
-                                    <a href="/Admin/ThuChi/InsertThuChi">Thêm Mới Thu Chi</a>
-                                </li>
-                                <li>
-                                    <a href="/Admin/ThuChi/ListThuChiUser">Bảng Thu Chi @Session["UserName"].ToString().ToUpper()</a>
-                                </li>
-                                @*<li>
-                                        <a href="index-3.html">Mã Thu Chi</a>
-                                    </li>*@
-
-                            </ul>
-                        </div>
+                        
                         <div id="Tables" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 <li>
