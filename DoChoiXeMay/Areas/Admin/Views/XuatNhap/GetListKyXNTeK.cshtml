@@ -3,7 +3,7 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
-                <th class="canhgiua" style="width:20px">STT</th>
+                <th class="canhgiua" style="max-width: 15px">STT</th>
                 @if (Session["quyen"].ToString() == "Admin")
                 {
                     <th class="canhgiua" style="width:30px">Update / Xóa</th>
@@ -15,16 +15,16 @@
                 <th class="canhgiua" style="width:150px">UserName</th>
                 <th class="canhgiua" style="width:300px">Tên Kỳ</th>
                 <th class="canhgiua" style="width:230px">Xuất Nhập/Số tiền </th>
-                <th class="canhgiua" style="width: 15px">Hóa Đơn</th>
-                <th class="canhgiua" style="width: 15px">File 2</th>
-                <th class="canhgiua" style="width: 15px">File 3</th>
+                <th class="canhgiua" style="max-width: 15px">Hóa Đơn</th>
+                <th class="canhgiua" style="max-width: 15px">File 2</th>
+                <th class="canhgiua" style="max-width: 15px">File 3</th>
 
                 <th class="canhgiua">Soluong/Tên Hàng/ThôngSố/Hãng</th>
                 <th class="canhgiua">Giá Nhập</th>
-                <th class="canhgiua" style="width: 15px">Hình 1</th>
-                <th class="canhgiua" style="width: 15px">Hình 2</th>
-                <th class="canhgiua" style="width: 15px">Hình 3</th>
-                <th class="canhgiua" style="width:15px">STT</th>
+                <th class="canhgiua" style="max-width: 15px">Hình 1</th>
+                <th class="canhgiua" style="max-width: 15px">Hình 2</th>
+                <th class="canhgiua" style="max-width: 15px">Hình 3</th>
+                <th class="canhgiua" style="max-width: 15px">STT</th>
 
             </tr>
         </thead>
@@ -33,6 +33,7 @@
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
                 var tenky = Xstring.Truncate(Item.TenKy, 40);
+                var tenct = "";
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.STT</td>
                     <td>
@@ -172,8 +173,8 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            var tenHH = Xstring.Truncate(ct.Ten, 70);
-                            <p style="height:40px">
+                            var tenHH = Xstring.Truncate(ct.Ten, 20);
+                            <p style="height:40px" title="@ct.Ten">
 
                                 <span>@ct.SoLuong&nbsp;</span>
                                 <span>@tenHH</span>

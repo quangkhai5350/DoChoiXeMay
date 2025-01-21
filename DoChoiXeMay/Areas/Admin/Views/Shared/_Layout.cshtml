@@ -9,7 +9,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <!-- favicon
     ============================================ -->
-    
+
     <link rel="shortcut icon" type="image/x-icon" href="~/Areas/Admin/Content/img/favicon.ico">
     <!-- Google Fonts
         ============================================ -->
@@ -69,6 +69,20 @@
         .color-tile-tek {
             color: mediumblue !important;
         }
+
+        .Topmn {
+            margin-right: 10%;
+        }
+
+        .titlemobile {
+            margin-left: 25%;
+        }
+
+        @@media screen and (max-width:767px) {
+            .Topmn {
+                margin-right: -11%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -76,7 +90,7 @@
     <div class="header-top-area">
 
         <div class="row" style="margin-right:0 !important">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="text-align:center">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2 col-2" style="text-align:center">
                 <div class="logo-Tek">
                     <p>
                         <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:34px" />
@@ -84,15 +98,13 @@
                         {
                             <span>@Session["UserName"].ToString().ToUpper()</span>
                         }
-
-
                     </p>
 
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-10 col-10">
 
-                <div class="header-top-menu" style="margin-right:10%">
+                <div class="header-top-menu Topmn">
                     <ul class="nav navbar-nav notika-top-nav">
 
                         <li class="nav-item nc-al">
@@ -154,51 +166,44 @@
                             <ul class="mobile-menu-nav">
                                 <li>
                                     <a data-toggle="collapse" data-target="#Charts" href="#">Thu Chi Tek</a>
-                                    <ul class="collapse dropdown-header-top">
-                                        <li><a href="index.html">Dashboard One</a></li>
-                                        <li><a href="index-2.html">Dashboard Two</a></li>
-                                        <li><a href="index-3.html">Dashboard Three</a></li>
-                                        <li><a href="index-4.html">Dashboard Four</a></li>
-                                        <li><a href="analytics.html">Analytics</a></li>
-                                        <li><a href="widgets.html">Widgets</a></li>
+                                    <ul id="Charts" class="collapse dropdown-header-top titlemobile">
+                                        <li><a href="/Admin/ThuChi/ListThuChiTeK">Bảng Thu Chi TeK</a></li>
+                                        <li><a href="">Mã Thu Chi</a></li>
+
                                     </ul>
                                 </li>
                                 <li>
                                     <a data-toggle="collapse" data-target="#demoevent" href="#">Xuất Nhập Tek</a>
-                                    <ul id="demoevent" class="collapse dropdown-header-top">
-                                        <li><a href="inbox.html">Inbox</a></li>
-                                        <li><a href="view-email.html">View Email</a></li>
-                                        <li><a href="compose-email.html">Compose Email</a></li>
+                                    <ul id="demoevent" class="collapse dropdown-header-top titlemobile">
+                                        <li>
+                                            <a href="/Admin/XuatNhap/ListXuatNhapTeK">Bảng Xuất Nhập TeK</a>
+                                        </li>
+                                        <li>
+                                            <a href="">Hàng Hóa TeK</a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a data-toggle="collapse" data-target="#democrou" href="#">Note Tek</a>
-                                    <ul id="democrou" class="collapse dropdown-header-top">
-                                        <li><a href="animations.html">Animations</a></li>
-                                        <li><a href="google-map.html">Google Map</a></li>
-                                        <li><a href="data-map.html">Data Maps</a></li>
-                                        <li><a href="code-editor.html">Code Editor</a></li>
-                                        <li><a href="image-cropper.html">Images Cropper</a></li>
-                                        <li><a href="wizard.html">Wizard</a></li>
+                                    <ul id="democrou" class="collapse dropdown-header-top titlemobile">
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a data-toggle="collapse" data-target="#demolibra" href="#">Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
+                                    <ul id="demolibra" class="collapse dropdown-header-top titlemobile">
+                                        <li>
+                                            <a href="/Admin/XuatNhap/ListXuatNhapUser">Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a data-toggle="collapse" data-target="#demodepart" href="#">Note @Session["UserName"].ToString().ToUpper()</a>
+                                    <ul id="demodepart" class="collapse dropdown-header-top titlemobile">
                                     </ul>
                                 </li>
                                 @*<li>
-                                        <a data-toggle="collapse" data-target="#demolibra" href="#">Charts</a>
-                                        <ul id="demolibra" class="collapse dropdown-header-top">
-                                            <li><a href="flot-charts.html">Flot Charts</a></li>
-                                            <li><a href="bar-charts.html">Bar Charts</a></li>
-                                            <li><a href="line-charts.html">Line Charts</a></li>
-                                            <li><a href="area-charts.html">Area Charts</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a data-toggle="collapse" data-target="#demodepart" href="#">Tables</a>
-                                        <ul id="demodepart" class="collapse dropdown-header-top">
-                                            <li><a href="normal-table.html">Normal Table</a></li>
-                                            <li><a href="data-table.html">Data Table</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
                                         <a data-toggle="collapse" data-target="#demo" href="#">Forms</a>
                                         <ul id="demo" class="collapse dropdown-header-top">
                                             <li><a href="form-elements.html">Form Elements</a></li>
@@ -264,6 +269,12 @@
                                             </li>
                                         </ul>
                                     </li>*@
+
+
+
+
+
+
                             </ul>
                         </nav>
                     </div>
@@ -282,12 +293,12 @@
                             <a data-toggle="tab" href="#Home" class="color-tile-tek"><i class="notika-icon notika-bar-chart"></i> Thu Chi Tek</a>
                         </li>
                         <li>
-                            <a data-toggle="tab" href="#mailbox" class="color-tile-tek"><i class="notika-icon notika-form"></i> Xuất Nhập Tek</a>
+                            <a data-toggle="tab" href="#mailbox" class="color-tile-tek"><i class="notika-icon notika-form"></i>Xuất Nhập Tek</a>
                         </li>
                         <li>
                             <a data-toggle="tab" href="#Interface" class="color-tile-tek"><i class="notika-icon notika-edit"></i> Note Tek</a>
                         </li>
-                        
+
                         <li>
                             <a data-toggle="tab" href="#Tables"><i class="notika-icon notika-form"></i> Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
                         </li>
@@ -303,7 +314,7 @@
                                     <a href="/Admin/ThuChi/ListThuChiTeK">Bảng Thu Chi TeK</a>
                                 </li>
                                 <li>
-                                    <a href="index-3.html">Mã Thu Chi</a>
+                                    <a href="">Mã Thu Chi</a>
                                 </li>
 
                             </ul>
@@ -317,11 +328,11 @@
                                     <a href="">Hàng Hóa TeK</a>
                                 </li>
                                 @*<li>
-            <a href="view-email.html">View Email</a>
-        </li>
-        <li>
-            <a href="compose-email.html">Compose Email</a>
-        </li>*@
+                                        <a href="view-email.html">View Email</a>
+                                    </li>
+                                    <li>
+                                        <a href="compose-email.html">Compose Email</a>
+                                    </li>*@
                             </ul>
                         </div>
                         <div id="Interface" class="tab-pane notika-tab-menu-bg animated flipInX">
@@ -335,7 +346,7 @@
 
                                 </ul>*@
                         </div>
-                        
+
                         <div id="Tables" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 <li>
@@ -403,7 +414,7 @@
                     }
                 });
             }
-            
+
         }
 
     </script>
@@ -487,7 +498,7 @@
         var uid = int.Parse(Session["UserId"].ToString());
         if (uid == 1)
         {
-            return db.MsgAotus.Where(kh=>kh.AdminDaxem==false).Count();
+            return db.MsgAotus.Where(kh => kh.AdminDaxem == false).Count();
         }
         if (uid == 2)
         {
@@ -506,7 +517,7 @@
     public List<DoChoiXeMay.Models.MsgAotu> ListMsg()
     {
         return db.MsgAotus
-            .OrderByDescending(kh=>kh.NgayTao)
+            .OrderByDescending(kh => kh.NgayTao)
             .Skip(0)
             .Take(15)
             .ToList();
@@ -516,15 +527,15 @@
         var uid = int.Parse(Session["UserId"].ToString());
         var lists = ListMsg();
         string[] ListOr = new string[lists.Count()];
-        if (lists.Count() >0)
+        if (lists.Count() > 0)
         {
-            for(int i = 0; i < lists.Count(); i++)
+            for (int i = 0; i < lists.Count(); i++)
             {
-                if(uid == 1 && lists[i].AdminDaxem == false)
+                if (uid == 1 && lists[i].AdminDaxem == false)
                 {
-                    ListOr[i] = lists[i].MsgHeThong +"***";
+                    ListOr[i] = lists[i].MsgHeThong + "***";
                 }
-                else if(uid == 2 && lists[i].Sub2Daxem == false)
+                else if (uid == 2 && lists[i].Sub2Daxem == false)
                 {
                     ListOr[i] = lists[i].MsgHeThong + "***";
                 }
