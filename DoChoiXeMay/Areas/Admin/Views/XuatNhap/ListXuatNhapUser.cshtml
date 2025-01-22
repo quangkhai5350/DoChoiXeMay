@@ -1,4 +1,4 @@
-﻿
+﻿@model DoChoiXeMay.Models.KyXuatNhap
 @{
     ViewBag.Title = "ListXuatNhapUser";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -78,7 +78,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <span>Kỳ Xuất</span>
-                                                <input type="checkbox" id="XuatNhap" name="XuatNhap" />
+                                                @Html.CheckBoxFor(m => m.XuatNhap, new { @style = "height:20px;margin-left: 10%" })
                                                 <p style="font-size:small">Chiết khấu thì (-), Ship và VAT thì (+)</p>
                                             </div>
                                         </div>

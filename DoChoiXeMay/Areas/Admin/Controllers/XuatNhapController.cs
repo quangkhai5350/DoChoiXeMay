@@ -294,6 +294,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             
         }
+        [HttpPost]
         public ActionResult InsertKyXuatNhap(KyXuatNhap XN)
         {
             try
@@ -358,11 +359,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var ky = dbc.KyXuatNhaps.Find(id);
             Session["TenKy"]=ky.TenKy;
             Session["IDKy"] = id;
+            Session["xuatnhap"] = ky.XuatNhap==true?"Xuat":"Nhap";
             Session["CKphantram"] = ky.CKphantram;
             Session["CKtienmat"] = ky.CKtienmat;
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
             ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor");
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize");
+            ViewBag.NameSP = dbc.HangHoas.ToList();
             return View();
         }
         [HttpPost]

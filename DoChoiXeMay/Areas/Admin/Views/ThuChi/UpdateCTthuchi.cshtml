@@ -5,7 +5,6 @@
 }
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
-
 <div class="container">
     <h2>Update CT Thu Chi</h2>
     @using (Html.BeginForm("ThuChi", "UpdateCTthuchi", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -35,6 +34,7 @@
                                 <p>Hình Thức Thu Chi</p>
                                 @Html.DropDownList("IdHT", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                             </div>
+
                             <div class="col-sm-3" style="text-align:center">
                                 <p>Thu vào</p>
                                 @Html.CheckBoxFor(m => m.ThuChi, new { @style = "height:20px;margin-left: 10%" })
@@ -209,37 +209,37 @@
 </div>
 
 @*<script>
-    $(function () {
-        $.ajax({
-            url: "/Admin/ThuChi/LoadKyXuatNhap",
-            data: {},
-            success: function (response) {
-                $("#IdKyxuatnhap").append(
-                    $('<option/>')
-                        .attr('value', 1)
-                        .text('Không có Xuất Nhập _ Defaule')
-                );
-                $(response).each(function (i, e) {
+        $(function () {
+            $.ajax({
+                url: "/Admin/ThuChi/LoadKyXuatNhap",
+                data: {},
+                success: function (response) {
                     $("#IdKyxuatnhap").append(
                         $('<option/>')
-                            .attr('value', e.Id)
-                            .text(e.TenKy)
+                            .attr('value', 1)
+                            .text('Không có Xuất Nhập _ Defaule')
                     );
-                });
-            }, error: function (ex) {
-                alert('Lỗi load ngành nghề: ' + ex);
-            }
-        });
-        $('#IdKyxuatnhap').change(function () {
-            var ma = $('#IdKyxuatnhap').val();
-            $.ajax({
-                url: "/Admin/ThuChi/getTongTien",
-                data: { Id: ma },
-                success: function (response) {
-                    document.getElementById("SoTien").value = response + "";
+                    $(response).each(function (i, e) {
+                        $("#IdKyxuatnhap").append(
+                            $('<option/>')
+                                .attr('value', e.Id)
+                                .text(e.TenKy)
+                        );
+                    });
+                }, error: function (ex) {
+                    alert('Lỗi load ngành nghề: ' + ex);
                 }
             });
+            $('#IdKyxuatnhap').change(function () {
+                var ma = $('#IdKyxuatnhap').val();
+                $.ajax({
+                    url: "/Admin/ThuChi/getTongTien",
+                    data: { Id: ma },
+                    success: function (response) {
+                        document.getElementById("SoTien").value = response + "";
+                    }
+                });
+            });
         });
-    });
-</script>*@
+    </script>*@
 

@@ -13,6 +13,7 @@ namespace DoChoiXeMay.Models
         public Manufacturer()
         {
             ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
+            HangHoas = new HashSet<HangHoa>();
         }
 
         public int Id { get; set; }
@@ -30,5 +31,6 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
+        public virtual ICollection<HangHoa> HangHoas { get; set; }
     }
 }
