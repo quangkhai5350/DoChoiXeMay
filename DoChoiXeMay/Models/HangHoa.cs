@@ -13,8 +13,10 @@ namespace DoChoiXeMay.Models
 
         [Required]
         [StringLength(500)]
-        public string TenHH { get; set; }
-
+        public string Ten { get; set; }
+        public int IDKy { get; set; }
+        public int SoLuong {  get; set; }
+        public double GiaNhap {  get; set; }
         public DateTime NgayAuto { get; set; }
 
         [StringLength(100)]
@@ -25,5 +27,10 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string Hinh3 { get; set; }
+        public int IDMF { get; set; }
+        public int IDColor {  get; set; }
+        public int IDSize {  get; set; }
+        [StringLength(200)]
+        public string GhiChu { get; set; }
     }
 }

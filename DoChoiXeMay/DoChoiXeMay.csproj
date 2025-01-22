@@ -381,6 +381,8 @@
     <Content Include="Areas\Admin\Views\XuatNhap\GetListKyXNTeK.cshtml" />
     <Content Include="Areas\Admin\Views\ThuChi\LoadOneXuatNhap.cshtml" />
     <Content Include="Areas\Admin\Views\Home\EditUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ListHangHoaTek.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\GetListHHTEK.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

@@ -12,6 +12,7 @@ using System.Data.Entity;
 using MaHoa_GiaiMa_TaiKhoan;
 using Microsoft.Ajax.Utilities;
 using System.Security.Cryptography;
+using System.Reflection;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -90,6 +91,26 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return Redirect(requestUri);
             }
             return RedirectToAction("ListThuChiTeK","ThuChi");
+        }
+        public ActionResult ListHangHoaTek()
+        {
+            Session["requestUri"] = "/Admin/Home/ListHangHoaTek";
+            return View();
+        }
+        public ActionResult GetListHHTEK()
+        {
+            var model = dbc.HangHoas
+                .OrderBy(h => h.Id)
+                .ToList();
+            for (int i = 0; i < model.Count(); i++)
+            {
+                model[i].GhiChu = (i + 1).ToString();
+            }
+            ViewBag.HHTEK=model.OrderByDescending(h => h.Id).ToList();
+            ViewBag.Tongsp = model.Sum(kh => kh.SoLuong);
+            ViewBag.TongLoai = model.Count();
+            //ViewBag.TongTien = model.Sum(kh=>kh.GiaNhap);
+            return PartialView();
         }
     }
 }

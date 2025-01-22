@@ -3,12 +3,11 @@
     ViewBag.Title = "UpdateCTthuchi";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-<h2>UpdateCTthuchi</h2>
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 
 <div class="container">
+    <h2>Update CT Thu Chi</h2>
     @using (Html.BeginForm("ThuChi", "UpdateCTthuchi", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset class="info_form" style="margin-top:0">
