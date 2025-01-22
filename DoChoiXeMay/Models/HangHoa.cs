@@ -32,5 +32,11 @@ namespace DoChoiXeMay.Models
         public int IDSize {  get; set; }
         [StringLength(200)]
         public string GhiChu { get; set; }
+        [ForeignKey("IDColor")]
+        public virtual Color Color { get; set; }
+        [ForeignKey("IDMF")]
+        public virtual Manufacturer Manufacturer { get; set; }
+        [ForeignKey("IDSize")]
+        public virtual Size Size { get; set; }
     }
 }

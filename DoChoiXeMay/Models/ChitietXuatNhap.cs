@@ -39,7 +39,7 @@ namespace DoChoiXeMay.Models
         public int IDSize { get; set; }
         [StringLength(200)]
         public string GhiChu { get; set; }
-
+        
         public virtual Color Color { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }
