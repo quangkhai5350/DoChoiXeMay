@@ -166,8 +166,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ////coppy hinh
             //if (XN.HoaDon != null && XN.HoaDon != "")
             //{
-            //    string path = Server.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + XN.HoaDon);
-            //    string destina = Server.MapPath("~/Areas/Admin/Content/imgthuchi/" + XN.HoaDon);
+            //    string path = Server.MapPath("~/Content/imgxuatnhap/" + XN.HoaDon);
+            //    string destina = Server.MapPath("~/Content/imgthuchi/" + XN.HoaDon);
             //    if (System.IO.File.Exists(path))
             //    {
             //        var coppy1 = Xstring.CopyFile(path, destina);

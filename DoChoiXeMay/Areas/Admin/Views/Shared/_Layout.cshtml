@@ -144,7 +144,17 @@
                                 </div>
                             </div>
                         </li>
-                        <li><a href="/Admin/Home/EditUser/@int.Parse(Session["UserId"].ToString())" class="title_user">Update User</a></li>
+                        <li>
+                            @if (Session["quyen"].ToString() == "Admin")
+                            {
+                                <a href="/Admin/Home/ListUserTeK" class="title_user">UserManager</a>
+                            }
+                            else
+                            {
+                                <a href="/Admin/Home/EditUser/@int.Parse(Session["UserId"].ToString())" class="title_user">Update User</a>
+                            }
+
+                        </li>
                         <li><a href="/Admin/Home/LogOut" class="title_user">LogOut</a></li>
                     </ul>
                 </div>

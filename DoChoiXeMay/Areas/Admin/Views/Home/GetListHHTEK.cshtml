@@ -34,25 +34,25 @@
                     <td>@Item.SoLuong</td>
                     <td>@Html.FormatValue(Item.GiaNhap, "{0:#,###,###}")</td>
                     <td>
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Hinh1)))
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh1)))
                         {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Hinh1">
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh1">
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }
                     </td>
                     <td>
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Hinh2)))
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh2)))
                         {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Hinh2">
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh2">
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }
                     </td>
                     <td style="border-right: 2px solid black !important">
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Hinh3)))
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh3)))
                         {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Hinh3">
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Hinh3">
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }

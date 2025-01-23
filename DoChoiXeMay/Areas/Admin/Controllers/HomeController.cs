@@ -21,6 +21,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/Home
         Model1 dbc = new Model1();
+        TaiKhoanInfo tk = new TaiKhoanInfo();
         public ActionResult Index()
         {
             ViewBag.ChiTietTC = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true);
@@ -36,12 +37,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult EditUser(int id)
         {
             var model = dbc.UserTeks.Find(id);
+            string check_pass = tk.DeCryptDotNetNukePassword(model.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", model.PasswordSalt);//pass ma hoa
+            if (Session["quyen"].ToString() == "Admin")
+            {
+                ViewBag.passcu = check_pass;
+            }
+            else
+            {
+                ViewBag.passcu = "";
+            }
             return View(model);
         }
         [HttpPost]
         public ActionResult EditUser(UserTek model, string PW, string PWM, string PWMM)
         {
-            TaiKhoanInfo tk = new TaiKhoanInfo();
+            
             string check_pass = tk.DeCryptDotNetNukePassword(model.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", model.PasswordSalt);//pass ma hoa
             if (PW == check_pass)
             {
@@ -59,11 +69,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         dbc.Entry(model).State = EntityState.Modified;
                         dbc.SaveChanges();
                         var uid = int.Parse(Session["UserId"].ToString());
-                        var sms = Session["UserName"].ToString().ToUpper() + " đã tự update user của mình Thành Công." + model.Createdate.ToString("{dd/MM/yyyy}");
+                        var sms = "";
+                        if(Session["quyen"].ToString() == "Admin")
+                        {
+                            sms = Session["UserName"].ToString().ToUpper() + " đã update user: "+model.UserName+" .Thành Công." + DateTime.Now.ToString("{dd/MM/yyyy}");
+                        }
+                        else
+                        {
+                            sms = Session["UserName"].ToString().ToUpper() + " đã tự update user của mình Thành Công." + DateTime.Now.ToString("{dd/MM/yyyy}");
+                        }
+                        
                         var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
                         //Insert Nhật Ký
                         var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                                 , Session["UserName"].ToString(), "Update user của mình Thành Công ", "");
+                        @Session["ThongBaoUserTEK"] = sms;
                     }
                     else
                     {
@@ -91,6 +111,22 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return Redirect(requestUri);
             }
             return RedirectToAction("ListThuChiTeK","ThuChi");
+        }
+        public ActionResult ListUserTeK()
+        {
+            Session["requestUri"] = "/Admin/Home/ListUserTeK";
+            return View();
+        }
+        public ActionResult GetListUserTeK() {
+            //model.GhiChu dùng lưu hình đai dien
+            var model = dbc.UserTeks.OrderByDescending(kh=>kh.Createdate).ToList();
+            for (int i = 0; i < model.Count(); i++)
+            {
+                string check_pass = tk.DeCryptDotNetNukePassword(model[i].Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", model[i].PasswordSalt);//pass ma hoa
+                model[i].Password = check_pass;
+            }
+            ViewBag.UserTeK = model;
+            return PartialView();
         }
         public ActionResult ListHangHoaTek()
         {

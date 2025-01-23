@@ -15,7 +15,7 @@
 
 
                 <h1 class="info_header">
-                    <span style="color:black">@Session["UserName"]</span>  Thêm mới Xuất/Nhập kỳ: @Session["TenKy"]
+                    <span style="color:black">@Session["UserName"]</span>  Thêm mới kỳ <span style="color:black;text-decoration:underline double black ">@Session["xuatnhap"].ToString()</span>: @Session["TenKy"]
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
                         @Html.ValidationSummary()
                     </span>
@@ -56,7 +56,7 @@
                                         {
                                             size = "-" + Item.Size.TenSize;
                                         }
-                                        <option value="@Item.Ten @mau @hang @size"></option>
+                                        <option value="@Item.Ten"></option>
                                     }
                                 </datalist>
                             }
