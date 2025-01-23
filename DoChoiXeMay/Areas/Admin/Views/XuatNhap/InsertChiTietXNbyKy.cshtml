@@ -5,8 +5,8 @@
 }
 
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-@*<h2>Insert Chi tiết Xuất/Nhập</h2>*@
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="container">
     @using (Html.BeginForm("XuatNhap", "InsertChiTietXNbyKy", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -15,7 +15,7 @@
 
 
                 <h1 class="info_header">
-                    <span style="color:black">@Session["UserName"]</span>  Thêm mới kỳ <span style="color:black;text-decoration:underline double black ">@Session["xuatnhap"].ToString()</span>: @Session["TenKy"]
+                    <span style="color:black">@Session["UserName"]</span>  Thêm mới hàng hóa cho kỳ <span style="color:black;text-decoration:underline double black ">@Session["xuatnhap"].ToString()</span>: @Session["TenKy"]
                     <span class="pull-right label label-warning" style="color:white;font-family:monospace">
                         @Html.ValidationSummary()
                     </span>
@@ -27,7 +27,7 @@
                             <p>Tên Hàng Hóa</p>
                             @if (Session["xuatnhap"].ToString() == "Nhap")
                             {
-                                <input name="Ten" id="Ten" list="listname" style="width: 100%; height: 40px" required />
+                                <input name="Ten" id="Ten" onchange="CheckspTek()" list="listname" style="width: 100%; height: 40px" required />
                                 <datalist id="listname">
                                     @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.NameSP)
                                     {
@@ -43,10 +43,10 @@
                                 <datalist id="listname" style="width:200px!important;height:30px">
                                     @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.NameSP)
                                     {
-                                        var mau = "";var size = "";var hang = "";
+                                        var mau = ""; var size = ""; var hang = "";
                                         if (Item.IDColor > 1)
                                         {
-                                            mau = "-"+ Item.Color.TenColor;
+                                            mau = "-" + Item.Color.TenColor;
                                         }
                                         if (Item.IDMF != 3)
                                         {
@@ -61,6 +61,36 @@
                                 </datalist>
                             }
                         </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <p>Hãng Sản Xuất</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-subtitles"></i></span>
+                                @Html.DropDownList("IDMF", null, new { style = "width: 100%; height: 40px" })
+                            </div>
+                            <div class="col-sm-6">
+                                <p>Size</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-text-size"></i></span>
+                                @Html.DropDownList("IDSize", null, new { style = "width: 100%; height: 40px" })
+                                
+                            </div>
+                        </div>
+                        <div class="form-group" style="padding-left:10px">
+                            <p>Màu</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-text-background"></i></span>
+                            @Html.DropDownList("IDColor", null, new { style = "width: 100%; height: 40px" })
+                        </div>
+                        <div class="form-group" style="padding:10px;font-size:medium;display:none" id="TBHHTeK">
+                            <p id="dong0">Trong kho hiện có:</p>
+                            <p id="dong1"></p>
+                            <p id="dong2"></p>
+                            <p id="dong3"></p>
+                            <p id="dong4"></p>
+                            <p id="dong5"></p>
+                            <p id="dong6"></p>
+                        </div>
+                    </div>
+                    <div class="rightcontact">
                         <div class="form-group">
                             <div class="col-sm-6">
                                 <p>Số Lượng</p>
@@ -72,28 +102,6 @@
                                 <span class="icon-case"><i class="glyphicon glyphicon-usd"></i></span>
                                 @Html.TextBoxFor(m => m.Gianhap, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
                             </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <p>Hãng Sản Xuất</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-subtitles"></i></span>
-                                @Html.DropDownList("IDMF", null, new { style = "width: 100%; height: 40px" })
-                            </div>
-                            <div class="col-sm-6">
-                                <p>Màu</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-text-background"></i></span>
-                                @Html.DropDownList("IDColor", null, new { style = "width: 100%; height: 40px" })
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="rightcontact">
-                        <div class="form-group">
-                            <p>Size</p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-text-size"></i></span>
-                            @Html.DropDownList("IDSize", null, new { style = "width: 100%; height: 40px" })
                         </div>
                         <div class="form-group">
                             <p>Hình sản phẩm 1 (giới hạn 7MB) <span></span></p>
@@ -197,5 +205,78 @@
     }
 
 </div>
+<script>
+    function CheckspTek() {
+        var Ten = $('#Ten').val();
+        var IDMF = $('#IDMF').val();
+        var IDColor = $('#IDColor').val();
+        var IDSize = $('#IDSize').val();
+        if (Ten != "") {
+            ShowThongBao(Ten, IDMF, IDColor, IDSize)
+        }
+    };
+    $("#IDMF").change(function () {
+        var Ten = $('#Ten').val();
+        var IDMF = $('#IDMF').val();
+        var IDColor = $('#IDColor').val();
+        var IDSize = $('#IDSize').val();
+        if (Ten != "") {
+            ShowThongBao(Ten, IDMF, IDColor, IDSize)
+        }
+    });
+    $("#IDColor").change(function () {
+        var Ten = $('#Ten').val();
+        var IDMF = $('#IDMF').val();
+        var IDColor = $('#IDColor').val();
+        var IDSize = $('#IDSize').val();
+        if (Ten != "") {
+            ShowThongBao(Ten, IDMF, IDColor, IDSize)
+        }
+    });
+    $("#IDSize").change(function () {
+        var Ten = $('#Ten').val();
+        var IDMF = $('#IDMF').val();
+        var IDColor = $('#IDColor').val();
+        var IDSize = $('#IDSize').val();
+        if (Ten != "") {
+            ShowThongBao(Ten, IDMF, IDColor, IDSize)
+        }
+    });
+    
+    function ShowThongBao(Ten, IDMF, IDColor, IDSize) {
+        $('#TBHHTeK').css("display", "block");
+            $.ajax({
+                url: "/Admin/XuatNhap/CheckHHTEK",
+                type: 'POST',
+                datatype: 'JSON',
+                contentType: 'application/json;charset=utf-8;',
+                data: JSON.stringify({ Tenhh: Ten, Hangsx: IDMF, Mau: IDColor, Size: IDSize }),
+                async: true,
+                success: function (res) {
+                        LoadThongBaoChek(res);
+                }, error: function (err) {
+                    console.log(err, ':Loi Check Hang Hóa');
+                }
+            });
+
+    }
+    function LoadThongBaoChek(DetailS) {
+        $('#dong0').html('');
+        $('#dong1').html('');
+        $('#dong2').html('');
+        $('#dong3').html('');
+        $('#dong4').html('');
+        $('#dong5').html('');
+        $('#dong6').html('');
+        if (DetailS != null) {
+            for (var i = 0; i < DetailS.length; i++) {
+                $('#dong' + i).html(DetailS[i]);
+            }
+        } else {
+            var tt = 'Trong Kho hiện không có sp trùng tên.';
+            $('#dong0').html(tt);
+        }
+    }
+</script>
 
 

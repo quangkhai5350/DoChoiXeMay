@@ -603,6 +603,45 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("ListXuatNhapTeK");
             }
         }
+        public ActionResult CheckHHTEK(string Tenhh, int Hangsx=0, int Mau = 0, int Size = 0)
+        {
+            var araylistHH = Data.XuatNhapData.CheckHHTEKaotu(dbc,Tenhh, Hangsx, Mau, Size);
+            //var model = dbc.HangHoas.Where(kh => kh.Ten.ToLower().Trim() == Tenhh.ToLower().Trim()).ToList();
+            //if (model.Count() > 0)
+            //{
+            //    string[] ThongbLog = new string[model.Count()];
+            //    for (int i = 0; i < model.Count(); i++)
+            //    {
+            //        ThongbLog[i] = "Kho có "+ model[i].SoLuong.ToString()+" sản phẩm cùng Tên";
+            //        if (model[i].IDMF == Hangsx)
+            //        {
+            //            ThongbLog[i] = ThongbLog[i] + " - cùng Hãng";
+            //        }
+            //        if (model[i].IDColor == Mau)
+            //        {
+            //            ThongbLog[i] = ThongbLog[i] + " - cùng Màu";
+            //        }
+            //        if (model[i].IDSize == Size)
+            //        {
+            //            ThongbLog[i] = ThongbLog[i] + " - cùng Size";
+            //        }
+            //        if (model[i].IDMF != Hangsx)
+            //        {
+            //            ThongbLog[i] = ThongbLog[i] + " , Khác Hãng(" + model[i].Manufacturer.Name + ")";
+            //        }
+            //        if (model[i].IDColor != Mau)
+            //        {
+            //            ThongbLog[i] = ThongbLog[i] + " , Khác Màu(màu " + model[i].Color.TenColor +")";
+            //        }
+            //        if (model[i].IDSize != Size)
+            //        {
+            //            ThongbLog[i] = ThongbLog[i] + " , Khác Size(size " + model[i].Size.TenSize + ")";
+            //        }
+            //    }
+            //    return Json(ThongbLog, JsonRequestBehavior.AllowGet);
+            //}
+            return Json(araylistHH, JsonRequestBehavior.AllowGet);
+        }
         public double TinhTongtienKy(int id , int VAT, double ship, double CKtienmat, int CKphantram)
         {
             //VAT và tiền ship được thay đổi 
