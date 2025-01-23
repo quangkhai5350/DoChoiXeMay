@@ -17,9 +17,9 @@ namespace DoChoiXeMay.Areas.Admin.Data
             {
                 if(img != null && img != "")
                 {
-                    if (File.Exists(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img)))
+                    if (File.Exists(HttpContext.Current.Server.MapPath("~/Content/" + foder + img)))
                     {
-                        File.Delete(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/" + foder + img));
+                        File.Delete(HttpContext.Current.Server.MapPath("~/Content/" + foder + img));
                     }
                 }
                 return true;
@@ -46,7 +46,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     ten = str[str.Count() - 2] + sub + "." + ext;
                     //Không thu nhỏ hình
                     //File.SaveAs(mapweb + foder+ten);
-                    File.SaveAs(HttpContext.Current.Server.MapPath("~/Areas/Admin/Content/"+ foder+ten));
+                    File.SaveAs(HttpContext.Current.Server.MapPath("~/Content/"+ foder+ten));
                 }
                 else ten = "";
                 return ten;

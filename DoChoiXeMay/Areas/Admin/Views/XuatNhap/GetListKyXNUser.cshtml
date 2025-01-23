@@ -133,25 +133,25 @@
                         </p>
                     </td>
                     <td>
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.HoaDon)))
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.HoaDon)))
                         {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.HoaDon">
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.HoaDon">
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }
                     </td>
                     <td>
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Filesave2)))
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Filesave2)))
                         {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Filesave2">
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Filesave2">
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }
                     </td>
                     <td style="border-right: 2px solid black !important">
-                        @if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + Item.Filesave3)))
+                        @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Filesave3)))
                         {
-                            <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@Item.Filesave3">
+                            <a target="_blank" href="~/Content/imgxuatnhap/@Item.Filesave3">
                                 <i class="glyphicon glyphicon-download-alt"></i>
                             </a>
                         }
@@ -221,10 +221,10 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh1)))
+                            if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh1)))
                             {
                                 <p style="height:40px">
-                                    <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh1">
+                                    <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh1">
                                         <i class="glyphicon glyphicon-download-alt"></i>
                                     </a>
                                 </p>
@@ -236,10 +236,10 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh2)))
+                            if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh2)))
                             {
                                 <p style="height:40px">
-                                    <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh2">
+                                    <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh2">
                                         <i class="glyphicon glyphicon-download-alt"></i>
                                     </a>
                                 </p>
@@ -251,10 +251,10 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            if (File.Exists(Request.MapPath("~/Areas/Admin/Content/imgxuatnhap/" + ct.Hinh3)))
+                            if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh3)))
                             {
                                 <p style="height:40px">
-                                    <a target="_blank" href="~/Areas/Admin/Content/imgxuatnhap/@ct.Hinh3">
+                                    <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh3">
                                         <i class="glyphicon glyphicon-download-alt"></i>
                                     </a>
                                 </p>

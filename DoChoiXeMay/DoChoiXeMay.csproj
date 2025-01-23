@@ -383,6 +383,8 @@
     <Content Include="Areas\Admin\Views\Home\EditUser.cshtml" />
     <Content Include="Areas\Admin\Views\Home\ListHangHoaTek.cshtml" />
     <Content Include="Areas\Admin\Views\Home\GetListHHTEK.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\ListUserTeK.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\GetListUserTeK.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -412,8 +414,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Content\imgthuchi\" />
-    <Folder Include="Areas\Admin\Content\imgxuatnhap\" />
+    <Folder Include="Content\imgthuchi\" />
+    <Folder Include="Content\imgxuatnhap\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
