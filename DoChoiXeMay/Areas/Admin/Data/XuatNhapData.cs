@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Reflection;
@@ -124,12 +125,47 @@ namespace DoChoiXeMay.Areas.Admin.Data
         public static string[] CheckHHTEKaotu(Model1 db,string Tenhh, int Hangsx = 0, int Mau = 0, int Size = 0)
         {
             var model = db.HangHoas.Where(kh => kh.Ten.ToLower().Trim() == Tenhh.ToLower().Trim()).ToList();
-            if (model.Count() > 0)
+            if (model.Count() > 1)
             {
+                //nhiều dòng
+                string[] ThongbLog = new string[model.Count()+1];
+                ThongbLog[0] = "Kho hiện có " + model.Sum(kh=>kh.SoLuong).ToString() + " sản phẩm cùng tên gồm:";
+                for (int i = 0; i < model.Count(); i++)
+                {
+                    ThongbLog[i+1] = "_Có " + model[i].SoLuong.ToString() + " sản phẩm cùng Tên";
+                    if (model[i].IDMF == Hangsx)
+                    {
+                        ThongbLog[i+1] = ThongbLog[i+1] + " - cùng Hãng";
+                    }
+                    if (model[i].IDColor == Mau)
+                    {
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " - cùng Màu";
+                    }
+                    if (model[i].IDSize == Size)
+                    {
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " - cùng Size";
+                    }
+                    if (model[i].IDMF != Hangsx)
+                    {
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Hãng(" + model[i].Manufacturer.Name + ")";
+                    }
+                    if (model[i].IDColor != Mau)
+                    {
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Màu(màu " + model[i].Color.TenColor + ")";
+                    }
+                    if (model[i].IDSize != Size)
+                    {
+                        ThongbLog[i + 1] = ThongbLog[i + 1] + " , Khác Size(size " + model[i].Size.TenSize + ")";
+                    }
+                }
+                return ThongbLog;
+            }else if(model.Count() == 1)
+            {
+                //1 dòng
                 string[] ThongbLog = new string[model.Count()];
                 for (int i = 0; i < model.Count(); i++)
                 {
-                    ThongbLog[i] = "Kho có " + model[i].SoLuong.ToString() + " sản phẩm cùng Tên";
+                    ThongbLog[i] = "Kho Có " + model[i].SoLuong.ToString() + " sản phẩm cùng Tên";
                     if (model[i].IDMF == Hangsx)
                     {
                         ThongbLog[i] = ThongbLog[i] + " - cùng Hãng";
@@ -156,7 +192,107 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     }
                 }
                 return ThongbLog;
-            }return null;
+            }   
+            return null;    
         }
-    }
+        public static bool GhibangHangHoa(Model1 db,string Ten, int Hangsx, int Mau, int Size, int soluong, double gianhap, string hinh1,string hinh2, string hinh3)
+        {
+            //dùng cho kỳ xuất (thu hồi)
+            try
+            {
+                var modelhh = db.HangHoas.FirstOrDefault(kh => kh.Ten.ToLower().Trim() == Ten.ToLower().Trim() && kh.IDMF == Hangsx
+                                                && kh.IDColor == Mau && kh.IDSize == Size);
+                if (modelhh != null)
+                {
+                    var model = db.HangHoas.Find(modelhh.Id);
+                    model.SoLuong = model.SoLuong + soluong;
+                    model.GiaNhap = gianhap;
+                    model.Hinh1 = hinh1 !=""?hinh1:model.Hinh1;
+                    model.Hinh2 = hinh2 !=""?hinh2:model.Hinh2;
+                    model.Hinh3 = hinh3 !=""?hinh3:model.Hinh3;
+                    db.Entry(model).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    HangHoa model = new HangHoa();
+                    model.Ten = Ten;
+                    model.IDKy = 1;//không xài
+                    model.SoLuong = soluong;
+                    model.GiaNhap = gianhap;
+                    model.NgayAuto = DateTime.Now;
+                    model.Hinh1 = hinh1;
+                    model.Hinh2 = hinh2;
+                    model.Hinh3 = hinh3;
+                    model.IDMF = Hangsx;
+                    model.IDColor = Mau;
+                    model.IDSize = Size;
+                    model.GhiChu = "";
+                    db.HangHoas.Add(model);
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                string msg = e.Message;
+                return false;
+            }
+        }
+        public static bool XuatHangHoa(Model1 db, string Ten, int Hangsx, int Mau, int Size, int soluong)
+        {
+            //dùng cho kỳ nhập (thu hồi)
+            try
+            {
+                var modelhh = db.HangHoas.FirstOrDefault(kh => kh.Ten.ToLower().Trim() == Ten.ToLower().Trim() && kh.IDMF == Hangsx
+                                                && kh.IDColor == Mau && kh.IDSize == Size);
+                if (modelhh != null)
+                {
+                    if(modelhh.SoLuong == soluong)//delete
+                    {
+                        var model = db.HangHoas.Find(modelhh.Id);
+                        //Xoa hinh cu
+                        bool xoahinhcu1 = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh1);
+                        bool xoahinhcu2 = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh2);
+                        bool xoahinhcu3 = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh3);
+                        db.HangHoas.Remove(modelhh);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    if(modelhh.SoLuong > soluong)//UPDATE SOLUONG
+                    {
+                        var model = db.HangHoas.Find(modelhh.Id);
+                        model.SoLuong = model.SoLuong - soluong;
+                        model.NgayAuto = DateTime.Now;
+                        db.Entry(model).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+                    return true;
+            }
+            catch (Exception e)
+            {
+                string msg = e.Message;
+                return false;
+            }
+            
+        }
+        public static bool kiemtrasoluongHH(Model1 db,int id)
+        {
+            var modelct = db.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
+            for (int i = 0; i < modelct.Count(); i++)
+            {
+                string tt = modelct[i].Ten.ToLower().Trim(); int IDMF = modelct[i].IDMF; int IDColor = modelct[i].IDColor; int IDSize = modelct[i].IDSize;
+                var listhhkt = db.HangHoas.FirstOrDefault(kh => kh.Ten.ToLower().Trim() == tt &&
+                        kh.IDMF == IDMF && kh.IDColor == IDColor && kh.IDSize == IDSize);
+                if (listhhkt == null || listhhkt.SoLuong < modelct[i].SoLuong)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        }
 }

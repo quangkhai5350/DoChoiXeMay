@@ -33,29 +33,17 @@
                                     {
                                         <option value="@Item.Ten"></option>
                                     }
+                                    
                                 </datalist>
                             }
                             else
                             {
                                 //Xuất hàng bằng dropdownlist
                                 @*@Html.TextBoxFor(m => m.Ten, new { @class = "form-control", style = "width: 100%; height: 40px", @required = true })*@
-                                <input name="Ten" id="Ten" list="listname" style="width: 100%; height: 40px" required />
+                                <input name="Ten" id="Ten" onchange="CheckspTek()" list="listname" style="width: 100%; height: 40px" required />
                                 <datalist id="listname" style="width:200px!important;height:30px">
                                     @foreach (DoChoiXeMay.Models.HangHoa Item in ViewBag.NameSP)
                                     {
-                                        var mau = ""; var size = ""; var hang = "";
-                                        if (Item.IDColor > 1)
-                                        {
-                                            mau = "-" + Item.Color.TenColor;
-                                        }
-                                        if (Item.IDMF != 3)
-                                        {
-                                            hang = "-" + Item.Manufacturer.Name;
-                                        }
-                                        if (Item.IDSize != 1)
-                                        {
-                                            size = "-" + Item.Size.TenSize;
-                                        }
                                         <option value="@Item.Ten"></option>
                                     }
                                 </datalist>
@@ -82,23 +70,39 @@
                         </div>
                         <div class="form-group" style="padding:10px;font-size:medium;display:none" id="TBHHTeK">
                             <p id="dong0">Trong kho hiện có:</p>
-                            <p id="dong1"></p>
-                            <p id="dong2"></p>
-                            <p id="dong3"></p>
-                            <p id="dong4"></p>
-                            <p id="dong5"></p>
-                            <p id="dong6"></p>
+                            <p id="dong1" style="margin-left:10px"></p>
+                            <p id="dong2" style="margin-left:10px"></p>
+                            <p id="dong3" style="margin-left:10px"></p>
+                            <p id="dong4" style="margin-left:10px"></p>
+                            <p id="dong5" style="margin-left:10px"></p>
+                            <p id="dong6" style="margin-left:10px"></p>
                         </div>
                     </div>
                     <div class="rightcontact">
                         <div class="form-group">
                             <div class="col-sm-6">
-                                <p>Số Lượng</p>
+                                @if (Session["xuatnhap"].ToString() == "Nhap")
+                                {
+                                    <p>Số Lượng</p>
+                                }
+                                else
+                                {
+                                   <p>Số Lượng Xuất</p>
+                                }
+                                    
                                 <span class="icon-case"><i class="glyphicon glyphicon-shopping-cart"></i></span>
                                 @Html.TextBoxFor(m => m.SoLuong, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
                             </div>
                             <div class="col-sm-6">
+                                @if (Session["xuatnhap"].ToString() == "Nhap")
+                                {
                                 <p>Giá Nhập</p>
+                                }
+                                else
+                                {
+                                   <p>Giá Xuất</p>
+                                }
+                                    
                                 <span class="icon-case"><i class="glyphicon glyphicon-usd"></i></span>
                                 @Html.TextBoxFor(m => m.Gianhap, new { @class = "form-control", @type = "number", style = "width: 75%; height: 40px", @required = true })
                             </div>
@@ -253,8 +257,14 @@
                 data: JSON.stringify({ Tenhh: Ten, Hangsx: IDMF, Mau: IDColor, Size: IDSize }),
                 async: true,
                 success: function (res) {
+                    if (res != null) {
+                        $('#TBHHTeK').css("display", "block");
                         LoadThongBaoChek(res);
+                    } else {
+                        $('#TBHHTeK').css("display", "none");
+                    }
                 }, error: function (err) {
+                    $('#TBHHTeK').css("display", "none");
                     console.log(err, ':Loi Check Hang Hóa');
                 }
             });
@@ -269,9 +279,17 @@
         $('#dong5').html('');
         $('#dong6').html('');
         if (DetailS != null) {
-            for (var i = 0; i < DetailS.length; i++) {
-                $('#dong' + i).html(DetailS[i]);
+            if (DetailS.length > 6) {
+                for (var i = 0; i < 5; i++) {
+                    $('#dong' + i).html(DetailS[i]);
+                }
+                $('#dong6').html('...');
+            } else {
+                for (var i = 0; i < DetailS.length; i++) {
+                    $('#dong' + i).html(DetailS[i]);
+                }
             }
+            
         } else {
             var tt = 'Trong Kho hiện không có sp trùng tên.';
             $('#dong0').html(tt);
