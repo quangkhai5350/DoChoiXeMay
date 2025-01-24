@@ -1,8 +1,10 @@
 ﻿using DoChoiXeMay.Areas.Admin.Data;
 using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data.Entity;
 using System.Drawing;
@@ -85,12 +87,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     {
                         XN.UPush = true;
                         XN.AdminXNPUSH = true;
+                        var modelct = dbc.ChitietXuatNhaps.Where(kh=>kh.IdKy==id).ToList();
+                        //add vao bang hang hoa
+                        for(int i = 0; i < modelct.Count(); i++)
+                        {
+                            var kq = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
+                                modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                        }
+
                     }
-                    else
-                    {
-                        XN.UPush = false;
-                        XN.AdminXNPUSH = true;
-                    }
+                    //else
+                    //{
+                    //    XN.UPush = false;
+                    //    XN.AdminXNPUSH = true;
+                    //}
                 }
                 else
                 {
@@ -190,26 +201,66 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 if (XN.UPush == true && XN.AdminXNPUSH ==false)
                 {
-                    XN.AdminXNPUSH = true;
-                    dbc.Entry(XN).State = EntityState.Modified;
-                    var update = dbc.SaveChanges();
-                    if (update>0)
+                    if (XN.XuatNhap)
                     {
-                        var kqaotu = InsertThuChiTeKauto(id);
-                        //Insert Nhật Ký
-                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "XacNhanXuatNhapTek va THUCHI - Đẩy File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName, "");
-                        Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
-                        Session["ThongBaoXuatNhapTeK"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
-                        //Thoong bao Msg cho SubAd
-                        if (Session["quyen"].ToString() == "Admin")
+                        //Kiểm tra số lượng bảng hh >= so luong thu hồi
+                        var kqktHH = Data.XuatNhapData.kiemtrasoluongHH(dbc, id);
+                        if (kqktHH == false)
                         {
-                            var sms = "Yêu cầu đẩy -" + XN.TenKy + "- của -"+XN.UserTek.UserName.ToUpper()+"- được chấp nhận." + XN.NgayAuto.ToString("{dd/MM/yyyy}")
-                                + "-"+XN.UserTek.UserName.ToUpper()+" vào Bảng XN TeK và Bảng TC Tek để kiểm tra.";
-                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, XN.UserId, sms, false, false, false, false, false);
+                            Session["ThongBaoXuatNhapTeK"] = "Xác nhận Xuất hàng thất bại !!! HH trong bảng HH không tồn tại hoặc không đủ số lượng.";
+                            return RedirectToAction("ListXuatNhapUser");
+                        }
+                            
+                        XN.AdminXNPUSH = true;
+                        dbc.Entry(XN).State = EntityState.Modified;
+                        var update = dbc.SaveChanges();
+                        if (update > 0)
+                        {
+                            var kqaotu = InsertThuChiTeKauto(id);
+                            //Trừ vao bang hang hoa
+                            var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
+                            for (int i = 0; i < modelct.Count(); i++)
+                            {
+                                var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                    modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                            }
+                            //Insert Nhật Ký
+                            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                    , Session["UserName"].ToString(), "XacNhanXuat HH Tek va THUCHI - Đẩy File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName, "");
+                            
                         }
                     }
-                    
+                    else //kỳ nhập
+                    {
+                        XN.AdminXNPUSH = true;
+                        dbc.Entry(XN).State = EntityState.Modified;
+                        var update = dbc.SaveChanges();
+                        if (update > 0)
+                        {
+                            var kqaotu = InsertThuChiTeKauto(id);
+                            //add vao bang hang hoa
+                            var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
+                            for (int i = 0; i < modelct.Count(); i++)
+                            {
+                                var kq = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                    modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
+                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                            }
+                            //Insert Nhật Ký
+                            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                    , Session["UserName"].ToString(), "XacNhanNhap HH Tek va THUCHI - Đẩy File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName, "");
+                            
+                        }
+                    }
+                    Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
+                    Session["ThongBaoXuatNhapTeK"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
+                    //Thoong bao Msg cho SubAd
+                    if (Session["quyen"].ToString() == "Admin")
+                    {
+                        var sms = "Yêu cầu đẩy -" + XN.TenKy + "- của -" + XN.UserTek.UserName.ToUpper() + "- được chấp nhận." + XN.NgayAuto.ToString("{dd/MM/yyyy}")
+                            + "-" + XN.UserTek.UserName.ToUpper() + " vào Bảng XN TeK và Bảng TC Tek để kiểm tra.";
+                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, XN.UserId, sms, false, false, false, false, false);
+                    }
                 }
                 else
                 {
@@ -365,49 +416,103 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
             ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor");
             ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize");
-            ViewBag.NameSP = dbc.HangHoas.ToList();
+            ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh=>kh.Ten);
+            
             return View();
         }
         [HttpPost]
         public ActionResult InsertChiTietXNbyKy(ChitietXuatNhap ctxn)
         {
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
+            ViewBag.IDColor = new SelectList(dbc.Colors.OrderByDescending(kh => kh.Id), "Id", "TenColor");
+            ViewBag.IDSize = new SelectList(dbc.Sizes.OrderBy(kh => kh.Id), "Id", "TenSize");
+            ViewBag.NameSP = dbc.HangHoas.DistinctBy(kh => kh.Ten);
+            //check trùng hàng cùng kỳ
+            var Checkctxn = dbc.ChitietXuatNhaps.FirstOrDefault(kh => kh.IdKy == ctxn.IdKy && kh.Ten.ToLower().Trim() == ctxn.Ten.ToLower().Trim() && kh.IDMF == ctxn.IDMF
+                                                && kh.IDColor == ctxn.IDColor && kh.IDSize == ctxn.IDSize);
+            if (Checkctxn == null)
+            {
+                ChitietXuatNhap model = new ChitietXuatNhap();
+                if (Session["xuatnhap"].ToString() == "Nhap")
+                {
+                    model = ctxn;
+                    model.Id = Guid.NewGuid();
+                    model.IdKy = int.Parse(Session["IDKy"].ToString());
+                    model.NgayAuto = DateTime.Now;
+                    var file1 = Request.Files["Hinh1"];
+                    var file2 = Request.Files["Hinh2"];
+                    var file3 = Request.Files["Hinh3"];
+                    var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
+                    var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                    var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                    model.Hinh1 = ten1;
+                    model.Hinh2 = ten2;
+                    model.Hinh3 = ten3;
+                }
+                else  /////Kỳ Xuất
+                {
+                    var checkhh = dbc.HangHoas.FirstOrDefault(kh => kh.Ten.ToLower().Trim() == ctxn.Ten.ToLower().Trim() && kh.IDMF == ctxn.IDMF
+                                                    && kh.IDColor == ctxn.IDColor && kh.IDSize == ctxn.IDSize);
+                    if (checkhh != null)
+                    {
+                        if (checkhh.SoLuong >= ctxn.SoLuong)
+                        {
+                            model = ctxn;
+                            model.Id = Guid.NewGuid();
+                            model.IdKy = int.Parse(Session["IDKy"].ToString());
+                            model.NgayAuto = DateTime.Now;
+                            var file1 = Request.Files["Hinh1"];
+                            var file2 = Request.Files["Hinh2"];
+                            var file3 = Request.Files["Hinh3"];
+                            var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
+                            var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                            var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                            model.Hinh1 = ten1;
+                            model.Hinh2 = ten2;
+                            model.Hinh3 = ten3;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Thêm hh xuất Thất Bại !!!! Trong kho không đủ hàng.");
+                            return View();
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Thêm hh xuất Thất Bại !!!! Không có hàng trong kho.");
+                        return View();
+                    }
+                }
 
-            ChitietXuatNhap model = new ChitietXuatNhap();
-            model = ctxn;
-            model.Id = Guid.NewGuid();
-            model.IdKy = int.Parse(Session["IDKy"].ToString());
-            model.NgayAuto = DateTime.Now;
-            var file1 = Request.Files["Hinh1"];
-            var file2 = Request.Files["Hinh2"];
-            var file3 = Request.Files["Hinh3"];
-            var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
-            var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
-            var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
-            model.Hinh1 = ten1;
-            model.Hinh2 = ten2;
-            model.Hinh3 = ten3;
-            dbc.ChitietXuatNhaps.Add(model);
-            int kq= dbc.SaveChanges();
-            if (kq > 0)
-            {
-                //Update tổng tiền
-                KyXuatNhap XN = dbc.KyXuatNhaps.Find(model.IdKy);
-                var tt = TinhTongtienKy(model.IdKy, XN.VAT, XN.Shipper, XN.CKtienmat, XN.CKphantram);
-                XN.TongTienAuto = tt;
-                dbc.Entry(XN).State = EntityState.Modified;
-                var update=dbc.SaveChanges();
-                var uid = int.Parse(Session["UserId"].ToString());
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "InsertChiTietXNbyKy-" + model.SoLuong +" "+model.Ten, "");
-                Session["ThongBaoXuatNhapUser"] = "Thêm mới thành công " + model.SoLuong+" "+model.Ten+".";
+                dbc.ChitietXuatNhaps.Add(model);
+                int kq = dbc.SaveChanges();
+                if (kq > 0)
+                {
+                    //Update tổng tiền
+                    KyXuatNhap XN = dbc.KyXuatNhaps.Find(model.IdKy);
+                    var tt = TinhTongtienKy(model.IdKy, XN.VAT, XN.Shipper, XN.CKtienmat, XN.CKphantram);
+                    XN.TongTienAuto = tt;
+                    dbc.Entry(XN).State = EntityState.Modified;
+                    var update = dbc.SaveChanges();
+                    var uid = int.Parse(Session["UserId"].ToString());
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "InsertChiTietXNbyKy-" + model.SoLuong + " " + model.Ten, "");
+                    Session["ThongBaoXuatNhapUser"] = "Thêm mới thành công " + model.SoLuong + " " + model.Ten + ".";
+                }
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ListXuatNhapUser");
             }
-            //tro lai trang truoc do 
-            var requestUri = Session["requestUri"] as string;
-            if (requestUri != null)
+            else
             {
-                return Redirect(requestUri);
+                ModelState.AddModelError("", "Thêm hh Thất Bại !!!! đã có hàng trong kỳ.");
+                return View();
             }
-            return RedirectToAction("ListXuatNhapUser");
+            
         }
         public ActionResult XoaChiTietXNbyID(string id)
         {
@@ -566,6 +671,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 if(model.UPush==true && model.AdminXNPUSH==true && model.UYeuCauThuHoi == true)
                 {
+                    if (model.XuatNhap == false)
+                    {
+                        //Kiểm tra số lượng bảng hh >= so luong thu hồi
+                        //ky Xuat khi thu hồi sẽ + vào, không cần kiểm tra
+                        var kqktHH = Data.XuatNhapData.kiemtrasoluongHH(dbc, id);
+                        if (kqktHH == false)
+                        {
+                            Session["ThongBaoXuatNhapTeK"] = "Thu Hồi thất bại !!! HH trong bảng HH không tồn tại hoặc không đủ số lượng.";
+                            return RedirectToAction("ListXuatNhapTeK");
+                        }
+                    }
+                    //delete bảng thu chi trước
                     var kqct = ThuChiData.DeleteThuChibyKy(dbc, id);
                     if (kqct)
                     {
@@ -577,6 +694,26 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         var kq = dbc.SaveChanges();
                         if (kq > 0)
                         {
+                            //update bang HH
+                            var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
+                            if (model.XuatNhap == false)
+                            {
+                                for (int i = 0; i < modelct.Count(); i++)
+                                {
+                                    var kqthuhoi = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                }
+                            }
+                            else //kỳ xuất
+                            {
+                                for (int i = 0; i < modelct.Count(); i++)
+                                {
+                                    var kqthuhoi = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
+                                    modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                                }
+                            }
+                            
                             Session["ThongBaoXuatNhapTeK"] = "Xác nhận Thu Hồi Kỳ XN:" + model.TenKy + "-" + model.NgayXuatNhap.ToString("{dd/MM/yyyy}")+"-Thành Công.";
                             //Nhật ký
                             var uid = int.Parse(Session["UserId"].ToString());
@@ -606,40 +743,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult CheckHHTEK(string Tenhh, int Hangsx=0, int Mau = 0, int Size = 0)
         {
             var araylistHH = Data.XuatNhapData.CheckHHTEKaotu(dbc,Tenhh, Hangsx, Mau, Size);
-            //var model = dbc.HangHoas.Where(kh => kh.Ten.ToLower().Trim() == Tenhh.ToLower().Trim()).ToList();
-            //if (model.Count() > 0)
-            //{
-            //    string[] ThongbLog = new string[model.Count()];
-            //    for (int i = 0; i < model.Count(); i++)
-            //    {
-            //        ThongbLog[i] = "Kho có "+ model[i].SoLuong.ToString()+" sản phẩm cùng Tên";
-            //        if (model[i].IDMF == Hangsx)
-            //        {
-            //            ThongbLog[i] = ThongbLog[i] + " - cùng Hãng";
-            //        }
-            //        if (model[i].IDColor == Mau)
-            //        {
-            //            ThongbLog[i] = ThongbLog[i] + " - cùng Màu";
-            //        }
-            //        if (model[i].IDSize == Size)
-            //        {
-            //            ThongbLog[i] = ThongbLog[i] + " - cùng Size";
-            //        }
-            //        if (model[i].IDMF != Hangsx)
-            //        {
-            //            ThongbLog[i] = ThongbLog[i] + " , Khác Hãng(" + model[i].Manufacturer.Name + ")";
-            //        }
-            //        if (model[i].IDColor != Mau)
-            //        {
-            //            ThongbLog[i] = ThongbLog[i] + " , Khác Màu(màu " + model[i].Color.TenColor +")";
-            //        }
-            //        if (model[i].IDSize != Size)
-            //        {
-            //            ThongbLog[i] = ThongbLog[i] + " , Khác Size(size " + model[i].Size.TenSize + ")";
-            //        }
-            //    }
-            //    return Json(ThongbLog, JsonRequestBehavior.AllowGet);
-            //}
             return Json(araylistHH, JsonRequestBehavior.AllowGet);
         }
         public double TinhTongtienKy(int id , int VAT, double ship, double CKtienmat, int CKphantram)

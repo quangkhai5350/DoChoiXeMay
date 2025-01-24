@@ -103,7 +103,7 @@
 
 
                         </p>
-                        @if (Item.UYeuCauThuHoi)
+                        @if (Item.UYeuCauThuHoi && Session["quyen"].ToString() == "Admin")
                         {
                             <hr />
                             <p>

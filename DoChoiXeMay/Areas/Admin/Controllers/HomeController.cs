@@ -139,13 +139,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.HangHoas
                 .OrderBy(h => h.Id)
                 .ToList();
+            ViewBag.Tongsp = model.Sum(kh => kh.SoLuong);
             for (int i = 0; i < model.Count(); i++)
             {
                 model[i].GhiChu = (i + 1).ToString();
                 tong=tong+ model[i].SoLuong * model[i].GiaNhap;
             }
             ViewBag.HHTEK=model.OrderByDescending(h => h.Id).ToList();
-            ViewBag.Tongsp = model.Sum(kh => kh.SoLuong);
+            
             ViewBag.TongLoai = model.Count();
             ViewBag.TongTien = tong;
             return PartialView();
