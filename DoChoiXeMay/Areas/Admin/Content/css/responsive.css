@@ -326,7 +326,9 @@
  
 /* small mobile :320px. */
 @media (max-width: 767px) {
-	.container {width:300px}
+	.container {
+		/*width:300px*/
+	}
 	.main-menu-area{
 		display:none;
 	}
@@ -608,7 +610,7 @@
 		left: 28px;
 	}
 	.spinner4 {
-		left: -30px;
+		left: 22px;
 	}
 	.floating-numner p {
 		line-height: 24px;
@@ -640,7 +642,9 @@
  
 /* Large Mobile :480px. */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-	.container {width:450px}
+	.container {
+		/*width:450px*/
+	}
 	.main-menu-area{
 		display:none;
 	}
@@ -685,4 +689,5 @@
 	}
 	
 }
+
  

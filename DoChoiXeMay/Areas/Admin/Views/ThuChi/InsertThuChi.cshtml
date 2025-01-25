@@ -23,16 +23,16 @@
                 <div class="contentform">
                     <div class="leftcontact">
 
-                        <div class="row" style="border: 1px dashed #423333; padding: 5px;margin-bottom:15px">
-                            <div class="col-sm-6">
+                        <div class="row form-group" style="border: 1px dashed #423333; padding: 5px;margin-bottom:15px">
+                            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-sx-12 col-12">
                                 <p>Hình Thức Thu Chi</p>
                                 @Html.DropDownList("IdHT", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                             </div>
-                            <div class="col-sm-3" style="text-align:center">
+                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3 col-sx-6 col-6" style="text-align:center">
                                 <p>Thu vào</p>
-                                @Html.CheckBoxFor(m => m.ThuChi, new { @style = "height:20px;margin-left: 10%" })
+                                @Html.CheckBoxFor(m => m.ThuChi, new {@style = "height:20px;margin-left: 10%" })
                             </div>
-                            <div class="col-sm-3" style="text-align:center">
+                            <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3 col-sx-5 col-5 mobilekhai" style="text-align:center">
                                 <p>Nợ Tiền</p>
                                 @Html.CheckBoxFor(m => m.Indebted, new { @style = "height:20px;margin-left: 10%" })
                             </div>
