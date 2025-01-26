@@ -17,47 +17,76 @@
                 <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                     @Session["ThongBaoHangHoaTEK"]
                 </div>
-            </div>
-        </div>
-        <div class="panel-body">
-            <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-            <div class="listHH">
-
-
-            </div>
-        </div>
-        <!--<div class="panel-footer">
-
-            <div class="row">
-                <div class="col-md-8">
-                    <span class="TongSanPham"></span>
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <input type="text" class="form-control input-sm pull-right" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo Tên SP." />
+                    </div>
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12" style="text-align:center">
+                        @Html.DropDownList("IDMF", null, new { style = "width: 70%; height: 40px" })
+                    </div>
                 </div>
-                <div class="col-md-4" style="text-align: right">
-                    <span class="TongSanPham"></span>
+            </div>
                 </div>
-            </div>-->
-        @*<ul class="pager">
-                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-            </ul>*@
+                <div class="panel-body">
+                    <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
+                    <div class="listHH">
 
-        <!--</div>-->
-    </div>
+
+                    </div>
+                </div>
+            </div>
 </div>
 <script>
     LoadPage();
     function LoadPage() {
+        $('#IDMF').empty();
+        $.ajax({
+            url: "/Admin/Home/HangSanXuat", // we are calling json method
+            data: { },
+            success: function (response) {
+                $("#IDMF").append(
+                    $('<option/>')
+                        .attr('value', 0)
+                        .text("Chọn Hãng")
+                );
+                $(response).each(function (i, e) {
+                    
+                    $("#IDMF").append(
+                        $('<option/>')
+                            .attr('value', e.Id)
+                            .text(e.ten)
+                    );
+                    // here we are adding option for Hãng
+                });
+            },
+            error: function (ex) {
+                alert('Lỗi load Hãng Sản Xuất: ' + ex);
+            }
+        });
+        GetListHH(0,"");
+    };
+    $("#IDMF").change(function () {
+        var IDMF = $('#IDMF').val();
+        var KeywordsTTT = $('#KeywordsTT').val();
+        GetListHH(IDMF, KeywordsTTT);
+    });
+    function GetListHH(id, Keyword) {
         $.ajax({
             url: "/Admin/Home/GetListHHTEK",
-            data: {  },
+            data: { id: id, Key: Keyword },
             success: function (respone) {
                 $(".listHH").html(respone);
                 //var pagesp = pageNo + 1;
                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }
         });
+    }
+    function TimKiemsp() {
+        var KeywordsTTT = $('#KeywordsTT').val();
+        var IDMF = $('#IDMF').val();
+        GetListHH(IDMF, KeywordsTTT);
+        //$(".list").css('display', 'none');
+
     };
 </script>
 

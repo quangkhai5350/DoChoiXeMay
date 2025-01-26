@@ -1,8 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "ListUserTeK";
+    ViewBag.Title = "ListHangSanXuat";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <style>
     .canhgiua {
@@ -10,27 +11,27 @@
     }
 </style>
 <div class="container">
-    <h2>List User Tek</h2>
+    <h2>List Hãng Sản Xuất</h2>
     <div class="panel panel-default" style="margin-top:10px">
         <div class="panel-heading">
             <div class="row">
                 @if (Session["quyen"].ToString() == "Admin")
                 {
                     <div class="col-md-6">
-                        <a class="btn btn-warning" style="margin-left:20px"  href="/Admin/Home/InsertUser" onclick="return confirm('Bạn muốn Thêm Mới User TeK ??')">
-                            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "User TeK"
+                        <a class="btn btn-warning" style="margin-left:20px" href="/Admin/DanhMuc/InsertHangSX" onclick="return confirm('Bạn muốn Thêm Mới Hãng Sản Xuất ??')">
+                            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Hãng SX"
                         </a>
                     </div>
                 }
                 <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                    @Session["ThongBaoUserTEK"]
+                    @Session["ThongBaoHangSX"]
                 </div>
             </div>
-            
+
         </div>
         <div class="panel-body">
             <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-            <div class="listUser">
+            <div class="listHangSX">
 
 
             </div>
@@ -41,10 +42,10 @@
     LoadPage();
     function LoadPage() {
         $.ajax({
-            url: "/Admin/Home/GetListUserTeK",
+            url: "/Admin/DanhMuc/GetListHangSanXuat",
             data: {  },
             success: function (respone) {
-                $(".listUser").html(respone);
+                $(".listHangSX").html(respone);
                 //var pagesp = pageNo + 1;
                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }
