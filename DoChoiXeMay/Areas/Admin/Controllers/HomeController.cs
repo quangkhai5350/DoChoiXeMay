@@ -128,17 +128,41 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.UserTeK = model;
             return PartialView();
         }
+        public ActionResult HangSanXuat()
+        {
+            var IDMF = dbc.Manufacturers.Where(kh => kh.Sudung == true).
+                            Select(kh => new { Id = kh.Id, ten = kh.Name });
+
+            return Json(IDMF, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ListHangHoaTek()
         {
             Session["requestUri"] = "/Admin/Home/ListHangHoaTek";
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name");
             return View();
         }
-        public ActionResult GetListHHTEK()
+        public ActionResult GetListHHTEK(int id=0, string Key="")
         {
             double tong = 0;
-            var model = dbc.HangHoas
-                .OrderBy(h => h.Id)
-                .ToList();
+            List<HangHoa> model = new List<HangHoa>();
+            if (id == 0 && Key=="")
+            {
+                model = dbc.HangHoas.OrderBy(h => h.Id).ToList();
+            }
+            else if(id==0 && Key !="")
+            {
+                model = dbc.HangHoas.Where(h => h.Ten.ToLower().Trim()
+                            .Contains(Key.ToLower().Trim())).OrderBy(h => h.Id).ToList();
+            }
+            else if (id >0 && Key == "")
+            {
+                model = dbc.HangHoas.Where(h => h.IDMF == id).OrderBy(h => h.Id).ToList();
+            }else if(id >0 && Key != "")
+            {
+                model = dbc.HangHoas.Where(h => h.IDMF == id && h.Ten.ToLower().Trim()
+                            .Contains(Key.ToLower().Trim())).OrderBy(h => h.Id).ToList();
+            }
+
             ViewBag.Tongsp = model.Sum(kh => kh.SoLuong);
             for (int i = 0; i < model.Count(); i++)
             {
@@ -150,6 +174,31 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TongLoai = model.Count();
             ViewBag.TongTien = tong;
             return PartialView();
+        }
+        public ActionResult InsertUser()
+        {
+            UserTek model = new UserTek();
+            model.UserName = "Newusertek"+DateTime.Now.ToString();
+            model.Password = "4+szJJPdHNwGTpohvWoq5W0FS0TGKrNhny2zvF6cf64fgvm9EvAuew==";
+            model.PasswordSalt = "cwYRNpQl/Jissz6PZo/oUjHBEsYJw8w=";
+            model.IdLoai = 2;
+            model.LoaiConnection = "";
+            model.EmailConnection = "email@gmail.com";
+            model.Islocked = true;
+            model.lastPasswordChangedate = DateTime.Now;
+            model.LastLokedChangedate = DateTime.Now;
+            model.Createdate = DateTime.Now;
+            model.CountFailedPassword = 0;
+            model.GhiChu = "";
+            dbc.UserTeks.Add(model);
+            dbc.SaveChanges();
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("ListThuChiTeK");
         }
     }
 }
