@@ -144,6 +144,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\aspnet_getVisitors.cs" />
     <Compile Include="Models\ChiTietTC.cs" />
     <Compile Include="Models\ChitietXuatNhap.cs" />
     <Compile Include="Models\Color.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Utils\XString.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SoTruyCap.txt" />
     <Content Include="Areas\Admin\Content\css\animate.css" />
     <Content Include="Areas\Admin\Content\css\animation\animation-custom.css" />
     <Content Include="Areas\Admin\Content\css\bootstrap-select\bootstrap-select.css" />
@@ -392,6 +394,9 @@
     <Content Include="Areas\Admin\Views\DanhMuc\ListMauSanPham.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\GetListMauSanPham.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\UpdateMauSP.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\ListMaThuChi.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\GetListMaThuChi.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\UpdateMaThuChi.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -420,7 +425,6 @@
     <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\imgTeK\" />
     <Folder Include="Content\imgthuchi\" />
     <Folder Include="Content\imgxuatnhap\" />
