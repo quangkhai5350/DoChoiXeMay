@@ -11,6 +11,7 @@ namespace DoChoiXeMay.Models
             : base("name=Model1")
         {
         }
+        public virtual DbSet<aspnet_getVisitors> Aspnet_GetVisitors { get; set; }
         public virtual DbSet<MsgAotu> MsgAotus { get; set; }
         public virtual DbSet<ChiTietTC> ChiTietTCs { get; set; }
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }

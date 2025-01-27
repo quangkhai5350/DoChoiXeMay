@@ -15,9 +15,76 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/DanhMuc
         Model1 dbc = new Model1();
+        public ActionResult ListMaThuChi()
+        {
+            Session["requestUri"] = "/Admin/DanhMuc/ListMaThuChi";
+            return View();
+        }
+        public ActionResult GetListMaThuChi()
+        {
+            var model = dbc.MaTCs.OrderByDescending(kh => kh.Id).ToList();
+            ViewBag.GetListMaThuChi = model;
+            return PartialView();
+        }
+        public ActionResult InsertMaThuChi()
+        {
+            MaTC model = new MaTC();
+            model.TenMa = "Ma moi TeK";
+            model.GhiChu = "Cần update trước khi sử dụng.";
+            model.NgayAuto = DateTime.Now;
+            model.SuDung = false;
+            model.XuatNhap = false;
+            dbc.MaTCs.Add(model);
+            dbc.SaveChanges();
+            Session["ThongBaoMaThuChi"] = "Insert mã thu-chi thành công. Cần Update để sử dụng.";
+            var userid = int.Parse(Session["UserId"].ToString());
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Insert Mã Thu Chi-" + model.TenMa + "-" + DateTime.Now.ToString(), "");
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("ListThuChiTeK");
+        }
+        public ActionResult UpdateMaThuChi(int id)
+        {
+            var model = dbc.MaTCs.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateMaThuChi(MaTC Ma)
+        {
+            try
+            {
+                Ma.NgayAuto = DateTime.Now;
+                Ma.XuatNhap = false ;
+                dbc.Entry(Ma).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoMaThuChi"] = "Update mã thu-chi "+Ma.TenMa+" thành công.";
+                var userid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Update mã thu chi -" + Ma.TenMa + "-" + DateTime.Now.ToString(), "");
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ListThuChiTeK");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+
+                return View(Ma);
+            }
+        }
         public ActionResult ListMauSanPham()
         {
-            Session["requestUri"] = "/Admin/DanhMuc/ListMauSanPham";
+            Session["requestUri"] = "/Admin/DanhMuc/ListMaThuChi";
             return View();
         }
         public ActionResult GetListMauSanPham()
@@ -34,6 +101,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             model.Ghichu = "Cần update trước khi sử dụng.";
             dbc.Colors.Add(model);
             dbc.SaveChanges();
+            Session["ThongBaoMauSP"] = "Insert màu sp thành công. Cần Update để sử dụng.";
+            var userid = int.Parse(Session["UserId"].ToString());
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Insert màu sp-" + model.TenColor + "-" + DateTime.Now.ToString(), "");
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;
             if (requestUri != null)
@@ -52,9 +123,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             try
             {
-                Ma.TenColor = Ma.TenColor;
                 Ma.Ngay = DateTime.Now;
-                Ma.Ghichu = Ma.Ghichu;
                 dbc.Entry(Ma).State = EntityState.Modified;
                 dbc.SaveChanges();
                 Session["ThongBaoMauSP"] = "Update màu sp thành công.";
