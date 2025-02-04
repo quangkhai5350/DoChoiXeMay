@@ -14,6 +14,7 @@ namespace DoChoiXeMay.Models
         {
             ChiTietTCs = new HashSet<ChiTietTC>();
             KyXuatNhaps = new HashSet<KyXuatNhap>();
+            MailTeKDetails = new HashSet<MailTeKDetail>();
             NoteKythuats = new HashSet<NoteKythuat>();
         }
 
@@ -60,6 +61,9 @@ namespace DoChoiXeMay.Models
         public virtual ICollection<KyXuatNhap> KyXuatNhaps { get; set; }
 
         public virtual LoaiUserTek LoaiUserTek { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MailTeKDetail> MailTeKDetails { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NoteKythuat> NoteKythuats { get; set; }

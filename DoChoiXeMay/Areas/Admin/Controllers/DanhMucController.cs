@@ -84,7 +84,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult ListMauSanPham()
         {
-            Session["requestUri"] = "/Admin/DanhMuc/ListMaThuChi";
+            Session["requestUri"] = "/Admin/DanhMuc/ListMauSanPham";
             return View();
         }
         public ActionResult GetListMauSanPham()
