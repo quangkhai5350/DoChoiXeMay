@@ -11,8 +11,8 @@ namespace DoChoiXeMay.Models
             : base("name=Model1")
         {
         }
-        public virtual DbSet<aspnet_getVisitors> Aspnet_GetVisitors { get; set; }
-        public virtual DbSet<MsgAotu> MsgAotus { get; set; }
+
+        public virtual DbSet<aspnet_getVisitors> aspnet_getVisitors { get; set; }
         public virtual DbSet<ChiTietTC> ChiTietTCs { get; set; }
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
@@ -21,13 +21,16 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<HinhThucTC> HinhThucTCs { get; set; }
         public virtual DbSet<KyXuatNhap> KyXuatNhaps { get; set; }
         public virtual DbSet<LoaiUserTek> LoaiUserTeks { get; set; }
+        public virtual DbSet<MailTeK> MailTeKs { get; set; }
+        public virtual DbSet<MailTeKDetail> MailTeKDetails { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
         public virtual DbSet<MaTC> MaTCs { get; set; }
+        public virtual DbSet<MsgAotu> MsgAotus { get; set; }
         public virtual DbSet<NhatKyUTek> NhatKyUTeks { get; set; }
         public virtual DbSet<NoteKythuat> NoteKythuats { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UserTek> UserTeks { get; set; }
-        public virtual DbSet<ThuChi> ThuChis { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -50,6 +53,10 @@ namespace DoChoiXeMay.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<KyXuatNhap>()
+                .Property(e => e.LuuKho)
+                .IsFixedLength();
+
+            modelBuilder.Entity<KyXuatNhap>()
                 .HasMany(e => e.ChiTietTCs)
                 .WithRequired(e => e.KyXuatNhap)
                 .HasForeignKey(e => e.IdKyxuatnhap)
@@ -65,6 +72,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.UserTeks)
                 .WithRequired(e => e.LoaiUserTek)
                 .HasForeignKey(e => e.IdLoai)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MailTeK>()
+                .HasMany(e => e.MailTeKDetails)
+                .WithRequired(e => e.MailTeK)
+                .HasForeignKey(e => e.FromIdmail)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Manufacturer>()
@@ -95,6 +108,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.KyXuatNhaps)
                 .WithRequired(e => e.UserTek)
                 .HasForeignKey(e => e.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTek>()
+                .HasMany(e => e.MailTeKDetails)
+                .WithRequired(e => e.UserTek)
+                .HasForeignKey(e => e.toUserId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserTek>()

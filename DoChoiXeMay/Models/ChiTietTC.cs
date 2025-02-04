@@ -24,7 +24,8 @@ namespace DoChoiXeMay.Models
         public double SoTien { get; set; }
 
         public bool ThuChi { get; set; }
-        public bool Indebted {  get; set; }
+
+        public bool Indebted { get; set; }
 
         [StringLength(50)]
         public string STT { get; set; }

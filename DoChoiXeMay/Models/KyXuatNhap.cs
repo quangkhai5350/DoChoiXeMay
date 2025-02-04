@@ -56,8 +56,10 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string Filesave3 { get; set; }
+
         [StringLength(500)]
-        public string LuuKho {  get; set; }
+        public string LuuKho { get; set; }
+
         [StringLength(50)]
         public string STT { get; set; }
 

@@ -13,7 +13,7 @@ namespace DoChoiXeMay.Models
         public Size()
         {
             ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
-            HangHoas = new HashSet<HangHoa>();
+            HangHoas    = new HashSet<HangHoa>();
         }
 
         public int Id { get; set; }
