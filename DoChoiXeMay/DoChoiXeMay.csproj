@@ -134,8 +134,10 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DanhMucController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NoteKyThuatController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
+    <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
     <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
     <Compile Include="Areas\Admin\Data\Xstring.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
@@ -399,6 +401,9 @@
     <Content Include="Areas\Admin\Views\DanhMuc\ListMaThuChi.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\GetListMaThuChi.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\UpdateMaThuChi.cshtml" />
+    <Content Include="Areas\Admin\Views\NoteKyThuat\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NoteKyThuat\EditVideo.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\UpdateHinhSP.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

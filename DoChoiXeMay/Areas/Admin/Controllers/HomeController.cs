@@ -175,6 +175,62 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TongTien = tong;
             return PartialView();
         }
+        public ActionResult UpdateHinhSP(int id)
+        {
+            var model = dbc.HangHoas.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateHinhSP(HangHoa model)
+        {
+            try
+            {
+                var file1 = Request.Files["Dinhkem1"];
+                var file2 = Request.Files["Dinhkem2"];
+                var file3 = Request.Files["Dinhkem3"];
+                if (file1.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh1);
+                    model.Hinh1 = Xstring.saveFile(file1, "imgxuatnhap/");
+                }
+                if (file2.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh2);
+                    model.Hinh2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                }
+                if (file3.ContentLength > 0)
+                {
+                    //Xoa hinh cu
+                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh3);
+                    model.Hinh3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                }
+                model.NgayAuto = DateTime.Now;
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                var uid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Update hình sp: "+model.Ten+ " bảng HH Thành Công. ", "");
+                @Session["TBHinhSPTEK"] = "Update hình sp: "+model.Ten+" Thành Công.";
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ListThuChiTeK");
+            }
+            catch (Exception ex)
+            {
+
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Update hình sp Thất Bại !!!!");
+                var model1 = dbc.ChiTietTCs.Find(model.Id);
+                return View(model1);
+            }
+            
+        }
         public ActionResult InsertUser()
         {
             UserTek model = new UserTek();

@@ -11,6 +11,21 @@ namespace DoChoiXeMay.Areas.Admin.Data
 {
     public static class Xstring
     {
+        public static String Cutstring_getLastString(this String nn)
+        {
+            if (nn != null && nn != "")
+            {
+                string[] str1 = nn.Split('/');
+                if (str1.Count() > 1)
+                {
+                    string tt = str1[str1.Count() - 1];
+                    return str1[str1.Count() - 1];
+                }
+                else { return str1[0]; }
+
+            }
+            else return nn;
+        }
         public static bool Xoahinhcu(string foder, string img)
         {
             try
