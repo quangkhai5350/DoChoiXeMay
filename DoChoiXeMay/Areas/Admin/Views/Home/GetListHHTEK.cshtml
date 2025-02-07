@@ -6,10 +6,11 @@
                 <th class="canhgiua">Tên Sản Phẩm</th>
                 <th class="canhgiua">Số Lượng</th>
                 <th class="canhgiua" style="width:230px">Giá Nhập Cuối</th>
-                <th class="canhgiua" style="min-width: 30px">Hãng</th>
-                <th class="canhgiua" style="max-width: 20px">Hình 1</th>
-                <th class="canhgiua" style="max-width: 20px">Hình 2</th>
-                <th class="canhgiua" style="max-width: 20px">Hình 3</th>
+
+                <th class="canhgiua" style="max-width: 40px;padding:0">Img 1</th>
+                <th class="canhgiua" style="max-width: 40px; padding: 0">Img 2</th>
+                <th class="canhgiua" style="max-width: 40px; padding: 0">Img 3</th>
+                <th class="canhgiua" style="min-width: 30px">Update</th>
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
@@ -34,7 +35,7 @@
                     </td>
                     <td>@Item.SoLuong</td>
                     <td>@Html.FormatValue(Item.GiaNhap, "{0:#,###,###}")</td>
-                    <td>@Item.Manufacturer.Name</td>
+
                     <td>
                         @if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + Item.Hinh1)))
                         {
@@ -59,7 +60,9 @@
                             </a>
                         }
                     </td>
-
+                    <td>
+                        <a class="btn btn-danger" href="/Admin/Home/UpdateHinhSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                    </td>
                 </tr>
 
             }
