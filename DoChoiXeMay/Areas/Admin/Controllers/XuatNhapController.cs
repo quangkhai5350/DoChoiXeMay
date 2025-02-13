@@ -23,6 +23,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         // GET: Admin/XuatNhap
         Model1 dbc=new Model1();
         string DBname = ConfigurationManager.AppSettings["DBname"];
+        public ActionResult LocUserName()
+        {
+            var UserId = dbc.UserTeks.Where(kh => kh.IdLoai <3).
+                            Select(kh => new { id = kh.Id, ten = kh.UserName });
+
+            return Json(UserId, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ListXuatNhapUser()
         {
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap==true), "Id", "GhiChu");
@@ -51,19 +58,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult ListXuatNhapTeK()
         {
             Session["requestUri"] = "/Admin/XuatNhap/ListXuatNhapTeK";
+            ViewBag.UserId = new SelectList(dbc.UserTeks.Where(kh => kh.IdLoai < 3), "Id", "UserName");
             return View();
         }
-        public ActionResult GetListKyXNTeK(int PageNo = 0, int PageSize = 8)
+        public ActionResult GetListKyXNTeK(int PageNo = 0, int PageSize = 8,int UserId = 0)
         {
-            //ViewBag.KyXNTeK = dbc.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true && kh.UPush==true)
-            //        .OrderByDescending(kh => kh.NgayXuatNhap)
-            //        .ToList();
-            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(PageNo, PageSize);
+            ViewBag.KyXNTeK = new Data.XuatNhapData().getXuatNhapTek(PageNo, PageSize,UserId);
             return PartialView();
         }
-        public ActionResult GetPageCountXNTek(int PageSize = 8)
+        public ActionResult GetPageCountXNTek(int PageSize = 8,int UserId=0)
         {
-            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek();
+            var num = new Data.XuatNhapData().GetPageCountXuatNhapTek(UserId);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }

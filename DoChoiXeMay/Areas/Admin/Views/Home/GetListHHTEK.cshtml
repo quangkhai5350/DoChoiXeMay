@@ -61,7 +61,10 @@
                         }
                     </td>
                     <td>
-                        <a class="btn btn-danger" href="/Admin/Home/UpdateHinhSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        @if (Session["quyen"].ToString() != "Guest")
+                        {
+                            <a class="btn btn-danger" href="/Admin/Home/UpdateHinhSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        }
                     </td>
                 </tr>
 
@@ -73,7 +76,7 @@
                 <td style="color:chocolate">@ViewBag.TongLoai Loại</td>
                 <td style="color:chocolate">Gồm @ViewBag.Tongsp sản phẩm</td>
                 <td style="color:chocolate">Tổng Vốn: @Html.FormatValue(ViewBag.TongTien, "{0:#,###,###}") (vnd)</td>
-                
+
             </tr>
         </tfoot>
     </table>

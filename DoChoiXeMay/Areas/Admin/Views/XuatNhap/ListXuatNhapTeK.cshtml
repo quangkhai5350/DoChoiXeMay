@@ -24,12 +24,12 @@
             </div>
 
             <div class="row">
-                @*<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-                    <a class="btn btn-warning" style="margin-left:20px" onclick="uwngtuyen()"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Kỳ Xuất Nhập"</a>
-                    <span>(Số tiền được tự động tính sau khi bạn nhập Chi Tiết)</span>
-                </div>*@
-
-
+                    @*<div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <input type="text" class="form-control input-sm pull-right" style="margin-top: 5px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo Tên SP." />
+                    </div>*@
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12" style="text-align:center">
+                        @Html.DropDownList("UserId", null, new { style = "width: 70%; height: 40px" })
+                    </div>
             </div>
             
 
@@ -71,25 +71,27 @@
         pageNo = 0;
         pageSize = 5;
         TongSP = 0;
-        getTongSanPham(pageSize, pageNo)
+        UserId = $('#UserId').val();
+        LoadUserName()
+        getTongSanPham(pageSize, pageNo, 0)
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
-                LoadPage(pageNo, pageSize);
+                LoadPage(pageNo, pageSize, UserId);
             }
             return false;
         });
         $(".pager a:eq(1)").click(function () {
             if (pageNo > 0) {
                 pageNo--;
-                LoadPage(pageNo, pageSize);
+                LoadPage(pageNo, pageSize, UserId);
             }
             return false;
         });
         $(".pager a:eq(2)").click(function () {
             if (pageNo < pageCount - 1) {
                 pageNo++
-                LoadPage( pageNo, pageSize);
+                LoadPage(pageNo, pageSize, UserId);
             }
             return false;
         });
@@ -97,16 +99,21 @@
         $(".pager a:eq(3)").click(function () {
             if (pageNo < pageCount - 1) {
                 pageNo = pageCount - 1;
-                LoadPage(pageNo, pageSize);
+                LoadPage(pageNo, pageSize, UserId);
             }
             return false
         });
     });
-    
-    function LoadPage(pageNo, pageSize) {
+    $("#UserId").change(function () {
+        pageNo = 0;
+        pageSize = 5;
+        UserId = $('#UserId').val();
+        getTongSanPham(pageSize, pageNo, UserId)
+    });
+    function LoadPage(pageNo, pageSize,UserId) {
         $.ajax({
             url: "/Admin/XuatNhap/GetListKyXNTeK",
-            data: { PageNo: pageNo, PageSize: pageSize },
+            data: { PageNo: pageNo, PageSize: pageSize, UserId: UserId },
             success: function (respone) {
                 $(".listXNT").html(respone);
                 var pagesp = pageNo + 1;
@@ -114,15 +121,42 @@
             }
         });
     };
-    function getTongSanPham(pageSize, pageNo) {
+    function getTongSanPham(pageSize, pageNo, UserId) {
         $.ajax({
             url: "/Admin/XuatNhap/GetPageCountXNTek",
-            data: { PageSize: pageSize },
+            data: { PageSize: pageSize, UserId: UserId },
             success: function (respone) {
                 pageCount = respone;
                 TongSP = respone;
-                LoadPage(pageNo, pageSize);
+                LoadPage(pageNo, pageSize, UserId);
             }
         });
     };
+    function LoadUserName() {
+        $('#UserId').empty();
+        $.ajax({
+            url: "/Admin/XuatNhap/LocUserName", // we are calling json method
+            data: {},
+            success: function (response) {
+                $("#UserId").append(
+                    $('<option/>')
+                        .attr('value', 0)
+                        .text("Chọn User")
+                );
+                $(response).each(function (i, e) {
+                    $("#UserId").append(
+                        $('<option/>')
+                            .attr('value', e.id)
+                            .text(e.ten)
+                    );
+                    // here we are adding option for Hãng
+                });
+            },
+            error: function (ex) {
+                alert('Lỗi load User: ' + ex);
+            }
+        });
+        
+    }
+    
 </script>
