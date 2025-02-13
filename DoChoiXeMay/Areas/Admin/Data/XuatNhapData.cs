@@ -74,11 +74,24 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return model;
         }
-        public List<KyXuatNhap> getXuatNhapTek(int Sec, int pageSize)
+        public List<KyXuatNhap> getXuatNhapTek(int Sec, int pageSize,int UserId)
         {
-            var model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true && kh.UPush == true)
+            List<KyXuatNhap> model1 = new List<KyXuatNhap>();
+            if (UserId == 0)
+            {
+                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                    && kh.UPush == true)
                     .OrderBy(kh => kh.NgayAuto)
                     .ToList();
+            }
+            else
+            {
+                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                    && kh.UPush == true && kh.UserId == UserId)
+                    .OrderBy(kh => kh.NgayAuto)
+                    .ToList();
+            }
+            
             for (int i = 0; i < model1.Count(); i++)
             {
                 model1[i].STT = (i +1).ToString();
@@ -91,10 +104,19 @@ namespace DoChoiXeMay.Areas.Admin.Data
                             .ToList();
             return model1;
         }
-        public int GetPageCountXuatNhapTek()
+        public int GetPageCountXuatNhapTek(int UserId=0)
         {
-            var model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true && kh.UPush == true).Count();
-
+            var model1 = 0;
+            if (UserId == 0)
+            {
+                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                        && kh.UPush == true).Count();
+            }
+            else
+            {
+                model1 = _context.KyXuatNhaps.Where(kh => kh.Id > 1 && kh.AdminXNPUSH == true
+                        && kh.UPush == true && kh.UserId == UserId).Count();
+            }
             return model1;
         }
         public static bool InsertMsgAotu(Model1 dbc,int UserId, string MsgSys,bool AdminDaxem, bool Sub2Daxem,bool Sub4Daxem,bool Sub5Daxem,bool Sub6Daxem)

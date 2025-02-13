@@ -19,7 +19,10 @@
                         @Item.Ngay
                     </td>
                     <td>
-                        <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateMauSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        @if (Session["quyen"].ToString() != "Guest")
+                        {
+                            <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateMauSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                        }
                     </td>
                 </tr>
 
