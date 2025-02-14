@@ -71,9 +71,9 @@
         pageNo = 0;
         pageSize = 5;
         TongSP = 0;
-        UserId = $('#UserId').val();
         LoadUserName()
-        getTongSanPham(pageSize, pageNo, 0)
+        var UserId = $('#UserId').val();
+        getTongSanPham(pageSize, pageNo, UserId)
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
@@ -90,7 +90,7 @@
         });
         $(".pager a:eq(2)").click(function () {
             if (pageNo < pageCount - 1) {
-                pageNo++
+                pageNo++;
                 LoadPage(pageNo, pageSize, UserId);
             }
             return false;
@@ -107,7 +107,7 @@
     $("#UserId").change(function () {
         pageNo = 0;
         pageSize = 5;
-        UserId = $('#UserId').val();
+        var UserId = $('#UserId').val();
         getTongSanPham(pageSize, pageNo, UserId)
     });
     function LoadPage(pageNo, pageSize,UserId) {
@@ -158,5 +158,4 @@
         });
         
     }
-    
 </script>
