@@ -12,9 +12,9 @@
                 {
                     <th class="canhgiua" style="width:30px">Thu Hồi</th>
                 }
-                <th class="canhgiua" style="width:150px">UserName</th>
-                <th class="canhgiua" style="width:300px">Tên Kỳ</th>
-                <th class="canhgiua" style="width:230px">Xuất Nhập/Số tiền </th>
+                <th class="canhgiua" style="width:100px">UserName</th>
+                <th class="canhgiua" style="width:200px">Tên Kỳ</th>
+                <th class="canhgiua" style="width:200px">Xuất Nhập/Số tiền </th>
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">Hóa Đơn</th>
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">File 2</th>
                 <th class="canhgiua" style="max-width: 30px; padding-left: 0;padding-right:0">File 3</th>
@@ -32,7 +32,7 @@
             @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXNTeK)
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
-                var tenky = Xstring.Truncate(Item.TenKy, 40);
+                var tenky = Xstring.Truncate(Item.TenKy, 50);
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.STT</td>
                     <td>
@@ -81,7 +81,7 @@
                     </td>
 
                     <td>
-                        <p style="font-size:20px;line-height:57px">@Item.UserTek.UserName</p>
+                        <p style="font-size:20px;height:65px">@Item.UserTek.UserName</p>
                         <hr />
                         <p>
                             @if (Item.VAT > 0)
@@ -119,18 +119,21 @@
                     </td>
 
                     <td>
-                        <p style="font-size: 20px; color: red; height: 57px">@tenky</p>
-                        @if (Item.LuuKho != null && Item.LuuKho != "")
+                        <p style="font-size: 20px; color: red; height: 65px">@tenky</p>
+                        @if (Item.LuuKho != null)
                         {
-                            <hr />
-                            <p>Lưu: @Item.LuuKho</p>
+                            if (Item.LuuKho.Trim() != "")
+                            {
+                                <hr />
+                                <p>Lưu: @Item.LuuKho</p>
+                            }
                         }
                         <hr />
                         <p>(Ngày: @Html.FormatValue(Item.NgayXuatNhap, "{0:dd/MM/yyyy}"))</p>
                     </td>
 
                     <td>
-                        <p style="font-size: 20px; line-height: 57px">
+                        <p style="font-size: 20px; height: 65px">
                             @if (Item.XuatNhap == true)
                             {
                                 <span style="background-color:burlywood">Xuất Hàng</span>
@@ -172,7 +175,7 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            var tenHH = Xstring.Truncate(ct.Ten, 20);
+                            var tenHH = Xstring.Truncate(ct.Ten, 40);
                             <p style="height:40px" title="@ct.Ten">
 
                                 <span>@ct.SoLuong&nbsp;</span>

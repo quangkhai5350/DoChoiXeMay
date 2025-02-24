@@ -77,7 +77,11 @@
         .titlemobile {
             margin-left: 25%;
         }
-
+        .avatartek {
+            width: 34px;
+            height: 34px;
+            border-radius:50%;
+        }
         @@media screen and (max-width:767px) {
             .Topmn {
                 /*margin-right: -11%;*/
@@ -93,9 +97,18 @@
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2 col-2" style="text-align:center">
                 <div class="logo-Tek">
                     <p>
-                        <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:34px" />
+                        <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" class="avatartek" />
                         @if (Session["UserName"] != null)
                         {
+                            if (Session["avatar"] != null && Session["avatar"].ToString().Trim() != "")
+                            {
+                                var tt = Session["avatar"].ToString();
+                                <img src="~/Content/imgTeK/@tt" alt="" class="avatartek" />
+                            }
+                            else
+                            {
+                                <img src="~/Content/imgTeK/Namn.png" alt="" style="width:34px" />
+                            }
                             <span>@Session["UserName"].ToString().ToUpper()</span>
                         }
                     </p>

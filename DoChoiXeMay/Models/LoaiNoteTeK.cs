@@ -6,28 +6,22 @@ namespace DoChoiXeMay.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Size")]
-    public partial class Size
+    [Table("LoaiNoteTeK")]
+    public partial class LoaiNoteTeK
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Size()
+        public LoaiNoteTeK()
         {
-            ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
-            HangHoas = new HashSet<HangHoa>();
+            NoteKythuats = new HashSet<NoteKythuat>();
         }
 
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string TenSize { get; set; }
-
-        public DateTime Ngay { get; set; }
+        [StringLength(200)]
+        public string Loai { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HangHoa> HangHoas { get; set; }
+        public virtual ICollection<NoteKythuat> NoteKythuats { get; set; }
     }
 }

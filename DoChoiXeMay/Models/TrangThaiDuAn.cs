@@ -6,28 +6,24 @@ namespace DoChoiXeMay.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Size")]
-    public partial class Size
+    [Table("TrangThaiDuAn")]
+    public partial class TrangThaiDuAn
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Size()
+        public TrangThaiDuAn()
         {
-            ChitietXuatNhaps = new HashSet<ChitietXuatNhap>();
-            HangHoas = new HashSet<HangHoa>();
+            ProjectTeKs = new HashSet<ProjectTeK>();
         }
 
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string TenSize { get; set; }
+        [StringLength(500)]
+        public string Name { get; set; }
 
         public DateTime Ngay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HangHoa> HangHoas { get; set; }
+        public virtual ICollection<ProjectTeK> ProjectTeKs { get; set; }
     }
 }
