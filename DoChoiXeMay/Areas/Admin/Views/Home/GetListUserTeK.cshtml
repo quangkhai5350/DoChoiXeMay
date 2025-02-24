@@ -7,6 +7,7 @@
                 <th class="canhgiua">Pass</th>
                 <th class="canhgiua">Email</th>
                 <th class="canhgiua">Loại</th>
+                <th class="canhgiua">Avatar</th>
                 <th class="canhgiua">Update</th>
             </tr>
         </thead>
@@ -19,6 +20,14 @@
                     <td>@Item.Password</td>
                     <td>@Item.EmailConnection</td>
                     <td>@Item.LoaiUserTek.LoaiUser</td>
+                    @if (Item.Avatar != null && Item.Avatar != "")
+                    {
+                        <td><img src="~/Content/imgTeK/@Item.Avatar" alt="" class="avatartek" /></td>
+                    }
+                    else
+                    {
+                        <td><img src="~/Content/imgTeK/Namn.png" alt="" class="avatartek" /></td>
+                    }
                     <td>
                         @if (Session["quyen"].ToString() != "Guest")
                         {

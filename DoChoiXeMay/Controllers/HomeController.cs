@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DoChoiXeMay.Controllers
 {
@@ -123,11 +125,11 @@ namespace DoChoiXeMay.Controllers
                             if (user.IdLoai == 1 || user.IdLoai == 2)
                             {
                                 Session["quyen"] = user.LoaiUserTek.LoaiUser;
+                                Session["avatar"] = user.Avatar;
                                 var uID = UserFirt;
                                 var model_uid = dbc.UserTeks.Find(UserFirt);
                                 bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "LoginWeb", "");
-
                                 //tro lai trang truoc do 
                                 if (requestUri != null)
                                 {

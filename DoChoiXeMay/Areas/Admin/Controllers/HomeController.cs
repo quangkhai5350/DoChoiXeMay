@@ -51,7 +51,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditUser(UserTek model, string PW, string PWM, string PWMM)
         {
-            
             string check_pass = tk.DeCryptDotNetNukePassword(model.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", model.PasswordSalt);//pass ma hoa
             if (PW == check_pass)
             {
@@ -60,6 +59,16 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var checkname = dbc.UserTeks.Where(kh => kh.UserName == model.UserName && kh.Id!=model.Id);
                     if (checkname.Count() == 0)
                     {
+                        var file1 = Request.Files["Dinhkem1"];
+                        if (file1.ContentLength > 0)
+                        {
+                            if(model.Avatar != "Namn.png")
+                            {
+                                //Xoa hinh cu
+                                bool xoahinhcu = Xstring.Xoahinhcu("imgTeK/", model.Avatar);
+                            }
+                            model.Avatar = Xstring.saveFile(file1, "imgTeK/");
+                        }
                         string PasswordSalt = Convert.ToBase64String(tk.GenerateSalt()); //tạo chuổi salt ngẫu nhiên
                         string cipherPass = tk.EnCryptDotNetNukePassword(PWM, "", PasswordSalt);
 

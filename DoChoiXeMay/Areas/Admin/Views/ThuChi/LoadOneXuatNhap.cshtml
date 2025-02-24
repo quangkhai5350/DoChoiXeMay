@@ -13,9 +13,9 @@
                     <thead>
                         <tr class="canhgiua" style="background-color: #00bcd4">
 
-                            <th class="canhgiua" style="width:150px">UserName</th>
-                            <th class="canhgiua" style="width:300px">Tên Kỳ</th>
-                            <th class="canhgiua" style="width:230px">Xuất Nhập/Số tiền </th>
+                            <th class="canhgiua" style="width:100px">UserName</th>
+                            <th class="canhgiua" style="width:200px">Tên Kỳ</th>
+                            <th class="canhgiua" style="width:200px">Xuất Nhập/Số tiền </th>
                             <th class="canhgiua" style="width: 15px">Hóa Đơn</th>
                             <th class="canhgiua" style="width: 15px">File 2</th>
                             <th class="canhgiua" style="width: 15px">File 3</th>
@@ -34,7 +34,7 @@
 
 
                             <td>
-                                <p style="font-size: 20px; line-height: 57px">@Item.UserTek.UserName</p>
+                                <p style="font-size: 20px; height: 65px">@Item.UserTek.UserName</p>
                                 <hr />
                                 <p>
                                     @if (Item.VAT > 0)
@@ -57,11 +57,14 @@
                             </td>
 
                             <td>
-                                <p style="font-size: 20px; color: red; height: 57px">@Item.TenKy</p>
-                                @if (Item.LuuKho != null && Item.LuuKho != "")
+                                <p style="font-size: 20px; color: red; height: 65px">@Item.TenKy</p>
+                                @if (Item.LuuKho != null)
                                 {
-                                    <hr />
-                                    <p>Lưu: @Item.LuuKho</p>
+                                    if (Item.LuuKho.Trim() != "")
+                                    {
+                                        <hr />
+                                        <p>Lưu: @Item.LuuKho</p>
+                                    }
                                 }
                                 <hr />
 
@@ -69,7 +72,7 @@
                             </td>
 
                             <td>
-                                <p style="font-size: 20px; line-height: 57px">
+                                <p style="font-size: 20px; height: 65px">
                                     @if (Item.XuatNhap == true)
                                     {
                                         <span style="background-color:burlywood">Xuất Hàng</span>
@@ -112,7 +115,7 @@
                                 @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in ViewBag.ListctxnbyOne)
                                 {
                                     var tenHH = ct.Ten;
-                                    <p style="height:40px">
+                                    <p style="height:60px">
 
                                         <span>@ct.SoLuong&nbsp;</span>
                                         <span>@tenHH</span>
@@ -136,7 +139,7 @@
                             <td>
                                 @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in ViewBag.ListctxnbyOne)
                                 {
-                                    <p style="height:40px">
+                                    <p style="height:60px">
                                         @Html.FormatValue(ct.Gianhap, "{0:#,###,###}")
                                     </p>
                                     <hr />
@@ -147,7 +150,7 @@
                                 {
                                     if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh1)))
                                     {
-                                        <p style="height:40px">
+                                        <p style="height:60px">
                                             <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh1">
                                                 <i class="glyphicon glyphicon-download-alt"></i>
                                             </a>
@@ -162,7 +165,7 @@
                                 {
                                     if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh2)))
                                     {
-                                        <p style="height:40px">
+                                        <p style="height:60px">
                                             <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh2">
                                                 <i class="glyphicon glyphicon-download-alt"></i>
                                             </a>
@@ -177,7 +180,7 @@
                                 {
                                     if (File.Exists(Request.MapPath("~/Content/imgxuatnhap/" + ct.Hinh3)))
                                     {
-                                        <p style="height:40px">
+                                        <p style="height:60px">
                                             <a target="_blank" href="~/Content/imgxuatnhap/@ct.Hinh3">
                                                 <i class="glyphicon glyphicon-download-alt"></i>
                                             </a>
@@ -190,7 +193,7 @@
                             <td>
                                 @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in ViewBag.ListctxnbyOne)
                                 {
-                                    <p style="height:40px">
+                                    <p style="height:60px">
                                         @ct.GhiChu
                                     </p>
                                     <hr />

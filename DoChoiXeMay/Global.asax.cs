@@ -53,7 +53,7 @@ namespace DoChoiXeMay
             var visitors = (int)Application["Visitors"];
 
             Application["Visitors"] = visitors + 1;
-            Application["TotalOnlineUsers"] = (int)Application["TotalOnlineUsers"] + 1;
+            Application["TotalOnlineUsers"] = ((int)Application["TotalOnlineUsers"]) + 1;
             Application.UnLock();
 
             var text = Application["Visitors"].ToString();
@@ -107,7 +107,7 @@ namespace DoChoiXeMay
         {
             //Xảy ra khi phiên làm việc không có gởi yêu cầu hoặc làm tươi trang aspx của ứng dụng web trong một khoảng thời gian (mặc định là 20 phút)
             Application.Lock();
-            Application["TotalOnlineUsers"] = (int)Application["TotalOnlineUsers"] - 1;
+            Application["TotalOnlineUsers"] = ((int)Application["TotalOnlineUsers"]) - 1;
             Application.UnLock();
         }
     }

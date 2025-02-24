@@ -16,6 +16,7 @@ namespace DoChoiXeMay.Models
             KyXuatNhaps = new HashSet<KyXuatNhap>();
             MailTeKDetails = new HashSet<MailTeKDetail>();
             NoteKythuats = new HashSet<NoteKythuat>();
+            ProjectDetails = new HashSet<ProjectDetail>();
         }
 
         public int Id { get; set; }
@@ -54,6 +55,9 @@ namespace DoChoiXeMay.Models
         [StringLength(500)]
         public string GhiChu { get; set; }
 
+        [StringLength(500)]
+        public string Avatar { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
 
@@ -67,5 +71,8 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NoteKythuat> NoteKythuats { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectDetail> ProjectDetails { get; set; }
     }
 }
