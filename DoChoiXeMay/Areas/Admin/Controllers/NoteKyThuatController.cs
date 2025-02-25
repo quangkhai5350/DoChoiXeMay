@@ -17,11 +17,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult Index()
         {
             Session["requestUri"] = "/Admin/NoteKyThuat/Index";
-            ViewBag.ViDeo = new Data.NoteKyThuatData().GetListNotebyHD(0);
-            ViewBag.ViDeo1 = new Data.NoteKyThuatData().Get1ListNotebyHD(0);
+            ViewBag.ViDeo = new Data.NoteKyThuatData().GetListNotebyHD(0, 1);
+            ViewBag.ViDeo1 = new Data.NoteKyThuatData().Get1ListNotebyHD(0, 1);
             return View();
         }
-        public ActionResult InsertVD() {
+        public ActionResult VDTEK()
+        {
+            Session["requestUri"] = "/Admin/NoteKyThuat/VDTEK";
+            ViewBag.ViDeo = new Data.NoteKyThuatData().GetListNotebyHD(0, 2);
+            ViewBag.ViDeo1 = new Data.NoteKyThuatData().Get1ListNotebyHD(0, 2);
+            return View();
+        }
+        public ActionResult InsertVD(int loai) {
             var Max = 1;
             if (dbc.NoteKythuats.Count() > 0)
             {
@@ -38,6 +45,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             model.PushtoNoteId = 1;
             model.AdminXacNhan = true;
             model.IdHanhDong = 0; // video=0
+            model.LoaiNoteId = loai;
             dbc.NoteKythuats.Add(model);
             dbc.SaveChanges();
             Session["ThongBaoVDTEK"] = "Insert Video thành công. Cần Update để sử dụng.";
