@@ -9,36 +9,37 @@
     }
 </style>
 <div class="container">
-    <div class="" style="margin-bottom:20px">
-        @foreach (DoChoiXeMay.Models.NoteKythuat VD1 in ViewBag.ViDeo1)
-        {
-            <div id="">
-                <iframe id="iframe_video" style="width: 100%; height: 500px; box-shadow: 0 2px 5px 1px rgba(0,0,0,0.25)" src="@VD1.NoiDung" title="@VD1.NoteName" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" allowfullscreen></iframe>
-            </div>
-        }
-    </div>
-    <div class="" style="height: 500px;overflow-y:scroll; text-align:center; box-shadow: 0 2px 5px 1px rgba(0,0,0,0.25)">
-        
+    
         <div class="row" style="padding:20px">
-            <h4>Danh sách Video Hướng Dẫn</h4>
+            <h4>Danh sách Dự Án TeK</h4>
             <div class="row" style="margin-bottom:10px">
-                    <div class="col-md-4">
-                        <a class="btn btn-warning" href="/Admin/NoteKyThuat/InsertVD?loai=1" onclick="return confirm('Bạn muốn Thêm Mới Video Hướng Dẫn ??')">
-                            <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Video Hướng Dẫn"
-                        </a>
-                    </div>
+                <div class="col-md-4">
+                    <a class="btn btn-warning" href="/Admin/ProjectTeK/InsertProJectTeK" onclick="return confirm('Bạn muốn Thêm Mới Dự Án TeK ??')">
+                        <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Thêm mới "Dự Án TeK"
+                    </a>
+                </div>
                 <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
-                    @Session["ThongBaoVDTEK"]
+                    @Session["ThongBaoProject"]
                 </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-hover table-striped" style="margin-bottom:0">
+                    <thead>
+                        <tr class="canhgiua" style="background-color: #00bcd4">
+                            <th class="canhgiua" style="width:100px">STT</th>
+                            <th class="canhgiua" style="width:200px">Tên Dự Án</th>
+                            <th class="canhgiua" style="width:200px">Ưu Tiên</th>
+                            <th class="canhgiua" style="width: 15px">Trạng thái</th>
+                            <th class="canhgiua" style="width: 15px">Phần trăm</th>
+                            <th class="canhgiua" style="width: 15px">User</th>
+                        </tr>
+                    </thead>
                     <tbody style="border: 2px solid black !important">
-                        @foreach (DoChoiXeMay.Models.NoteKythuat Item in ViewBag.ViDeo)
+                        @foreach (DoChoiXeMay.Models.ProjectTeK Item in ViewBag.ListProJect)
                         {
-                            var str = DoChoiXeMay.Areas.Admin.Data.Xstring.Cutstring_getLastString(Item.NoiDung);
+                            //var str = DoChoiXeMay.Areas.Admin.Data.Xstring.Cutstring_getLastString(Item.NoiDung);
                             <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                                <td>@Item.SavenhieuFile</td>
+                                <td>@Item.NameProject</td>
                                 <td>
                                     <a href="" onclick="chose_view(this.id);return false" id="@str">
                                         @Item.NoteName
@@ -64,10 +65,4 @@
         </div>
     </div>
 </div>
-<script>
-    function chose_view(e) {
-        $('#iframe_video').attr('src', 'https://www.youtube.com/embed/' + e + "?rel=0&autoplay=1");
-
-    };
-</script>
 

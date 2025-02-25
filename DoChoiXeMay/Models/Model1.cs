@@ -86,8 +86,9 @@ namespace DoChoiXeMay.Models
 
             modelBuilder.Entity<LoaiNoteTeK>()
                 .HasMany(e => e.NoteKythuats)
-                .WithOptional(e => e.LoaiNoteTeK)
-                .HasForeignKey(e => e.LoaiNoteId);
+                .WithRequired(e => e.LoaiNoteTeK)
+                .HasForeignKey(e => e.LoaiNoteId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<LoaiUserTek>()
                 .HasMany(e => e.UserTeks)

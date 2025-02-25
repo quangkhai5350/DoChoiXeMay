@@ -18,6 +18,7 @@
             @Html.HiddenFor(kh => kh.PushtoNoteId)
             @Html.HiddenFor(kh => kh.AdminXacNhan)
             @Html.HiddenFor(kh => kh.IdHanhDong)
+            @Html.HiddenFor(kh => kh.LoaiNoteId)
             <h1 class="info_header">
                 <span style="color:black">Update @Model.NoteName</span>
                 <span class="pull-right label label-warning" style="color:white;font-family:monospace">
@@ -38,7 +39,7 @@
                         @Html.TextBoxFor(m => m.NoiDung, new { @class = "form-control", style = "height: 40px", @required = true })
 
                     </div>
-                    
+
                     <div class="row">
                         <div class="form-group col-sm-12">
                             <div class="text-center btn-crud">

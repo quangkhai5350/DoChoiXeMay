@@ -31,7 +31,7 @@ namespace DoChoiXeMay.Models
 
         public int IdHanhDong { get; set; }
 
-        public int? LoaiNoteId { get; set; }
+        public int LoaiNoteId { get; set; }
 
         public virtual HanhDong HanhDong { get; set; }
 
