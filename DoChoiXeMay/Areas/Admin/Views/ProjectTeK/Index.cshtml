@@ -8,9 +8,8 @@
         text-align: center !important;
     }
 </style>
-<div class="container">
         <div class="row" style="padding:20px">
-            <h4>Danh sách Dự Án TeK</h4>
+            <h2 class="canhgiua">Danh sách Dự Án TeK</h2>
             <div class="row" style="margin-bottom:10px">
                 <div class="col-md-4">
                     <a class="btn btn-warning" href="/Admin/ProjectTeK/InsertProJectTeK" onclick="return confirm('Bạn muốn Thêm Mới Dự Án TeK ??')">
@@ -22,16 +21,18 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover table-striped" style="margin-bottom:0">
-                    <thead>
+                <table class="table table-hover table-striped" style="margin-bottom: 0">
+                    <thead style="max-width: 300px">
                         <tr class="canhgiua" style="background-color: #00bcd4">
-                            <th class="canhgiua" style="width:100px">STT</th>
+                            <th class="canhgiua" style="">STT</th>
                             <th class="canhgiua" style="width:200px">Tên Dự Án</th>
-                            <th class="canhgiua" style="width: 15px">Người tạo</th>
-                            <th class="canhgiua" style="width:200px">Ưu Tiên</th>
-                            <th class="canhgiua" style="width: 15px">Trạng thái</th>
-                            <th class="canhgiua" style="width: 15px">User thamgia</th>
-                            <th class="canhgiua" style="width: 15px">Phần trăm</th>
+                            <th class="canhgiua">Người tạo</th>
+                            <th class="canhgiua" style="">Chú Thích</th>
+                            <th class="canhgiua" style="">Ưu Tiên</th>
+                            <th class="canhgiua" style="">Trạng thái</th>
+                            <th class="canhgiua" style="">Ngày kết thúc</th>
+                            <th class="canhgiua">User thamgia</th>
+                            <th class="canhgiua">Phần trăm</th>
                             <th class="canhgiua" style="width:120px">Sửa/Xóa</th>
 
                         </tr>
@@ -48,16 +49,19 @@
                                     @*<a href="" onclick="chose_view(this.id);return false" id="@str"></a>*@
                                 </td>
                                 <td>@Item.UserTek.UserName</td>
+                                <td>@Item.Giaithich</td>
+
                                 <td>@ut</td>
                                 <td>@Item.TrangThaiDuAn.Name</td>
+                                <td>@Html.FormatValue(Item.DateEnd, "{0:dd/MM/yyyy}")</td>
                                 <td></td>
-                                <td>@Item.PhantramHoanThanh +"%"</td>
+                                <td>@Item.PhantramHoanThanh <span>%</span></td>
 
                                 <td>
-                                    @if (Session["UserId"].ToString() == Item.UserId)
+                                    @if (Session["UserId"].ToString() == Item.UserId.ToString())
                                     {
                                         <a class="btn btn-danger" href="/Admin/ProjectTeK/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                                        <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Dự Án: @Item.NameProject ??')" href="/Admin/ProjectTeK/DeleteProject/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a @*style="display:none"*@ class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Dự Án: @Item.NameProject ??')" href="/Admin/ProjectTeK/DeleteProject/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                                     }
 
                                 </td>
@@ -69,5 +73,4 @@
 
             </div>
         </div>
-</div>
 
