@@ -17,6 +17,7 @@ namespace DoChoiXeMay.Models
             MailTeKDetails = new HashSet<MailTeKDetail>();
             NoteKythuats = new HashSet<NoteKythuat>();
             ProjectDetails = new HashSet<ProjectDetail>();
+            ProjectTeKs = new HashSet<ProjectTeK>();
         }
 
         public int Id { get; set; }
@@ -74,5 +75,6 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectDetail> ProjectDetails { get; set; }
+        public virtual ICollection<ProjectTeK> ProjectTeKs { get; set; }
     }
 }

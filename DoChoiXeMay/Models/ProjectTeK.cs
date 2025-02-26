@@ -40,7 +40,9 @@ namespace DoChoiXeMay.Models
 
         [StringLength(100)]
         public string GhiChu { get; set; }
-
+        public string UserId {  get; set; }
+        [ForeignKey("UserId")]
+        public virtual UserTek UserTek { get; set; }
         public virtual GroupDuAn GroupDuAn { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

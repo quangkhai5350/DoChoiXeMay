@@ -9,7 +9,6 @@
     }
 </style>
 <div class="container">
-    
         <div class="row" style="padding:20px">
             <h4>Danh sách Dự Án TeK</h4>
             <div class="row" style="margin-bottom:10px">
@@ -28,32 +27,39 @@
                         <tr class="canhgiua" style="background-color: #00bcd4">
                             <th class="canhgiua" style="width:100px">STT</th>
                             <th class="canhgiua" style="width:200px">Tên Dự Án</th>
+                            <th class="canhgiua" style="width: 15px">Người tạo</th>
                             <th class="canhgiua" style="width:200px">Ưu Tiên</th>
                             <th class="canhgiua" style="width: 15px">Trạng thái</th>
+                            <th class="canhgiua" style="width: 15px">User thamgia</th>
                             <th class="canhgiua" style="width: 15px">Phần trăm</th>
-                            <th class="canhgiua" style="width: 15px">User</th>
+                            <th class="canhgiua" style="width:120px">Sửa/Xóa</th>
+
                         </tr>
                     </thead>
                     <tbody style="border: 2px solid black !important">
                         @foreach (DoChoiXeMay.Models.ProjectTeK Item in ViewBag.ListProJect)
                         {
+                            var ut = Item.Uutien == true ? "Quan trọng" : "Bình thường";
                             //var str = DoChoiXeMay.Areas.Admin.Data.Xstring.Cutstring_getLastString(Item.NoiDung);
                             <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                                <td>@Item.NameProject</td>
+                                <td>@Item.GhiChu</td>
                                 <td>
-                                    <a href="" onclick="chose_view(this.id);return false" id="@str">
-                                        @Item.NoteName
-                                    </a>
+                                    @Item.NameProject
+                                    @*<a href="" onclick="chose_view(this.id);return false" id="@str"></a>*@
                                 </td>
+                                <td>@Item.UserTek.UserName</td>
+                                <td>@ut</td>
+                                <td>@Item.TrangThaiDuAn.Name</td>
+                                <td></td>
+                                <td>@Item.PhantramHoanThanh +"%"</td>
+
                                 <td>
-                                    <a>@Item.UserTek.UserName</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" href="/Admin/NoteKyThuat/EditVideo/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                                    @if (Session["quyen"].ToString() == "Admin")
+                                    @if (Session["UserId"].ToString() == Item.UserId)
                                     {
-                                        <a class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Video: @Item.NoteName ??')" href="/Admin/NoteKyThuat/DeleteVideo/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a class="btn btn-danger" href="/Admin/ProjectTeK/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Dự Án: @Item.NameProject ??')" href="/Admin/ProjectTeK/DeleteProject/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                                     }
+
                                 </td>
                             </tr>
                         }
@@ -63,6 +69,5 @@
 
             </div>
         </div>
-    </div>
 </div>
 
