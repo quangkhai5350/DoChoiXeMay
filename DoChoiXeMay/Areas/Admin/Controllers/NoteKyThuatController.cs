@@ -75,7 +75,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 return Redirect(requestUri);
             }
-            return RedirectToAction("ListThuChiTeK");
+            return RedirectToAction("Index");
         }
         public ActionResult EditVideo(int id)
         {
@@ -100,7 +100,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     return Redirect(requestUri);
                 }
-                return RedirectToAction("ListThuChiTeK");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {

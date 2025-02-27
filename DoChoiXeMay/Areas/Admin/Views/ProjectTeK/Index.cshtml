@@ -30,9 +30,10 @@
                             <th class="canhgiua" style="">Chú Thích</th>
                             <th class="canhgiua" style="">Ưu Tiên</th>
                             <th class="canhgiua" style="">Trạng thái</th>
+                            <th class="canhgiua" style="">Ngày bắt đầu</th>
                             <th class="canhgiua" style="">Ngày kết thúc</th>
                             <th class="canhgiua">User thamgia</th>
-                            <th class="canhgiua">Phần trăm</th>
+                            <th class="canhgiua" style="width:200px">% hoàn thành</th>
                             <th class="canhgiua" style="width:120px">Sửa/Xóa</th>
 
                         </tr>
@@ -41,6 +42,7 @@
                         @foreach (DoChoiXeMay.Models.ProjectTeK Item in ViewBag.ListProJect)
                         {
                             var ut = Item.Uutien == true ? "Quan trọng" : "Bình thường";
+                            var ht = Item.PhantramHoanThanh+"%";
                             //var str = DoChoiXeMay.Areas.Admin.Data.Xstring.Cutstring_getLastString(Item.NoiDung);
                             <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                                 <td>@Item.GhiChu</td>
@@ -53,14 +55,22 @@
 
                                 <td>@ut</td>
                                 <td>@Item.TrangThaiDuAn.Name</td>
+                                <td>@Html.FormatValue(Item.DateBegin, "{0:dd/MM/yyyy}")</td>
                                 <td>@Html.FormatValue(Item.DateEnd, "{0:dd/MM/yyyy}")</td>
                                 <td></td>
-                                <td>@Item.PhantramHoanThanh <span>%</span></td>
+                                <td>
+                                    <div class="progress" style="background-color: #e3cece">
+                                                            
+                                        <div class="progress-bar wow fadeInLeft" data-progress="@ht" style="width: @ht;" data-wow-duration="1.5s" data-wow-delay="1.2s">
+                                            <span>@ht</span>
+                                        </div>
+                                    </div>
+                                </td>
 
                                 <td>
                                     @if (Session["UserId"].ToString() == Item.UserId.ToString())
                                     {
-                                        <a class="btn btn-danger" href="/Admin/ProjectTeK/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-danger" href="/Admin/ProjectTeK/UpdateProjectTeK/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
                                         <a @*style="display:none"*@ class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Dự Án: @Item.NameProject ??')" href="/Admin/ProjectTeK/DeleteProject/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                                     }
 

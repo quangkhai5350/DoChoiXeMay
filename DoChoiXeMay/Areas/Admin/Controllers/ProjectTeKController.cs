@@ -70,5 +70,35 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult UpdateProjectTeK(int id)
+        {
+
+            var model = dbc.ProjectTeKs.Find(id);
+            ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", model.TrangthaiId);
+            ViewBag.User = dbc.UserTeks.OrderBy(kh=>kh.Id).ToList();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateProjectTeK(ProjectTeK teK)
+        {
+            try
+            {
+
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                return View(teK);
+            }
+            
+        }
     }
 }

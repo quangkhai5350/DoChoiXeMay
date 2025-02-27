@@ -1,0 +1,95 @@
+﻿@model DoChoiXeMay.Models.ProjectTeK
+@{
+    ViewBag.Title = "UpdateProjectTeK";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+
+<div class="container">
+    <h2>Update Dự Án TeK</h2>
+    @using (Html.BeginForm("ProjectTeK", "UpdateProjectTeK", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset class="info_form" style="margin-top:0">
+            <h1 class="info_header">
+                <span style="color:black">@Session["UserName"]</span>  Update Dự Án: @Model.NameProject
+                <span class="pull-right label label-warning" style="color:white;font-family:monospace">
+                    @Html.ValidationSummary()
+                </span>
+            </h1>
+            <div class="contentform">
+                @Html.HiddenFor(kh => kh.Id)
+                @Html.HiddenFor(kh => kh.GroupId)
+                @Html.HiddenFor(kh => kh.PhantramHoanThanh)
+                @Html.HiddenFor(kh => kh.NgayCapNhat)
+                @Html.HiddenFor(kh => kh.UserId)
+                <div class="leftcontact">
+                    <div class="form-group">
+                        <p>Tên Dự Án</p>
+                        <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
+                        @Html.TextBoxFor(m => m.NameProject, new { @class = "form-control", style = "width: 75%; height: 40px" })
+                    </div>
+                    <div class="form-group">
+                        <p>Giải thích ngắn</p>
+                        <span class="icon-case"><i class="glyphicon glyphicon-alert"></i></span>
+                        @Html.TextBoxFor(m => m.Giaithich, new { @class = "form-control", style = "width: 100%; height: 40px" })
+                    </div>
+                    <div class="form-group">
+                        <p>Ngày bắt đầu</p>
+                        <span class="icon-case"><i class="glyphicon glyphicon-time"></i></span>
+                        @Html.TextBoxFor(kh => kh.DateBegin, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px" })
+                    </div>
+                    <div class="form-group">
+                        <p>Ngày kết thúc</p>
+                        <span class="icon-case"><i class="glyphicon glyphicon-time"></i></span>
+                        @Html.TextBoxFor(kh => kh.DateEnd, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", style = "height: 40px" })
+                    </div>
+                    <div class="row" style="border: 1px dashed #423333; padding: 5px;margin-bottom:15px">
+                        <div class="col-sm-6">
+                            <p>Dự Án quan trọng</p>
+                            @Html.CheckBoxFor(m => m.Uutien, new { @style = "height:20px" })
+                        </div>
+                        <div class="col-sm-6" style="text-align:center">
+                            <p>Trạng thái</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-subtitles"></i></span>
+                            @Html.DropDownList("TrangthaiId", null, new { style = "width: 90%; height: 40px" })
+                        </div>
+                    </div>
+                </div>
+                <div class="rightcontact">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <p>User tham gia</p>
+                        </div>
+                        <div class="col-sm-5">
+                            <p>Leader(Chọn 1)</p>
+                        </div>
+                    </div>
+                    <div class="row" style="border: 1px dashed #423333; padding-left: 20px;padding-top:15px">
+                        <div class="col-sm-7">
+                            @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
+                            {
+                                <p style="height:40px">
+                                    <input style="height:20px;width:40px" type="checkbox" id="@Item.Id" value="@ViewBag.duoi10tr" name="@Item.Id" />
+                                    <span class="span_chbx">@Item.UserName</span>
+                                </p>
+                            }
+                        </div>
+                        <div class="col-sm-5">
+                            @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
+                            {
+                                var lead = "lead" + Item.Id;
+                                <p style="height:40px">
+                                    <input style="height:20px;width:40px" type="checkbox" id="@lead" value="@ViewBag.duoi10tr" name="@lead" />
+                                </p>
+                            }
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+    }
+</div>
+
