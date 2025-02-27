@@ -413,6 +413,7 @@
     <Content Include="Areas\Admin\Views\Home\UpdateHinhSP.cshtml" />
     <Content Include="Areas\Admin\Views\NoteKyThuat\VDTEK.cshtml" />
     <Content Include="Areas\Admin\Views\ProjectTeK\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ProjectTeK\UpdateProjectTeK.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
