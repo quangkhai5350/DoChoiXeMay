@@ -4,12 +4,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
-<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+@*<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>*@
 
 <div class="container">
     <h2>Update Dự Án TeK</h2>
-    @using (Html.BeginForm("ProjectTeK", "UpdateProjectTeK", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
+    
         <fieldset class="info_form" style="margin-top:0">
             <h1 class="info_header">
                 <span style="color:black">@Session["UserName"]</span>  Update Dự Án: @Model.NameProject
@@ -51,7 +50,6 @@
                         </div>
                         <div class="col-sm-6" style="text-align:center">
                             <p>Trạng thái</p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-subtitles"></i></span>
                             @Html.DropDownList("TrangthaiId", null, new { style = "width: 90%; height: 40px" })
                         </div>
                     </div>
@@ -69,36 +67,86 @@
                         <div class="col-sm-7">
                             @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
                             {
+                                var user = "User" + Item.Id;
                                 <p style="height:40px">
-                                    <input style="height:20px;width:40px" type="checkbox" id="@Item.Id" value="@ViewBag.duoi10tr" name="@Item.Id" />
+                                    <input style="height:20px;width:40px" type="checkbox" id="@user" value="@Item.Id" name="@user" />
                                     <span class="span_chbx">@Item.UserName</span>
                                 </p>
                             }
                         </div>
                         <div class="col-sm-5">
+                            @*<input type="text" value="@ViewBag.UserC" id="UserC" hidden/>*@
                             @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
                             {
-                                var lead = "lead" + Item.Id;
+                                var lead = "Lead" + Item.Id;
                                 <p style="height:40px">
-                                    <input style="height:20px;width:40px" type="checkbox" id="@lead" value="@Item.Id" name="fooby[1][]" />
+                                    <input style="height:20px;width:40px" type="checkbox" id="@lead" value="@lead" name="fooby[1][]" />
                                 </p>
                             }
                         </div>
+                        @*<script>
+                            //
+                        </script>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        <div class="text-center btn-crud">
+                            <button id="btnLuu" class="btn btn-warning" data-action="UpdateProjectTeK"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Dự Án</button>
+                            <a class="btn btn-primary" href="/Admin/ProjectTeK/Index" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                        </div>
+                        @*<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>*@
+                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
                         <script>
-                            $("input:checkbox").on('click', function () {
-                                // in the handler, 'this' refers to the box clicked on
-                                var $box = $(this);
-                                if ($box.is(":checked")) {
-                                    // the name of the box is retrieved using the .attr() method
-                                    // as it is assumed and expected to be immutable
-                                    var group = "input:checkbox[name='" + $box.attr("name") + "']";
-                                    // the checked state of the group/box on the other hand will change
-                                    // and the current value is retrieved using .prop() method
-                                    $(group).prop("checked", false);
-                                    $box.prop("checked", true);
-                                } else {
-                                    $box.prop("checked", false);
-                                }
+                            $(function () {
+                                var stringArray = new Array();
+                                $("input:checkbox").on('click', function () {
+                                    // in the handler, 'this' refers to the box clicked on
+                                    var $box = $(this);
+                                    if ($box.is(":checked")) {
+                                        var group = "input:checkbox[name='" + $box.attr("name") + "']";
+                                        $(group).prop("checked", false);
+                                        $box.prop("checked", true);
+                                        //Xóa leader không chọn
+                                        let tt = $box.val() + "";
+                                        stringArray.push(tt);
+                                        for (let i = 0; i < stringArray.length; i++) {
+                                            if (stringArray[i].length > 4 && stringArray[i] != tt) {
+                                                stringArray.splice(i, 1);
+                                            }
+                                        }
+                                    } else {
+                                        $box.prop("checked", false);
+                                        //Xóa User không chọn
+                                        for (let i = 0; i < stringArray.length; i++) {
+                                            if (stringArray[i] == $box.val()) {
+                                                stringArray.splice(i, 1);
+                                            }
+                                        }
+                                    }
+                                });
+                                $("button[data-action]").click(function () {
+                                    if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
+                                        return false;
+                                    } else {
+                                        var postData = { Id: stringArray };
+                                        alert(stringArray);
+                                        $.ajax({
+                                            url: "/Admin/ProjectTeK/setSession",
+                                            dataType: 'json',
+                                            type: 'POST',
+                                            data: postData,
+                                            success: function (response) {
+                                                alert(response);
+                                                //var action = $(this).attr("data-action");
+                                                //this.form.action = "/Admin/ProjectTeK/" + action;
+                                            }
+                                            //dataType: "json",
+                                            //traditional: true
+                                        });
+                                    }
+
+                                });
                             });
                         </script>
                     </div>
@@ -106,6 +154,5 @@
             </div>
 
         </fieldset>
-    }
 </div>
 
