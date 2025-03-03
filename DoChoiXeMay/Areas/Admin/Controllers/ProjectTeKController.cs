@@ -1,4 +1,5 @@
-﻿using DoChoiXeMay.Filters;
+﻿using DoChoiXeMay.Areas.Admin.Data;
+using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.ProjectTeKs.Find(id);
             ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", model.TrangthaiId);
             ViewBag.User = dbc.UserTeks.OrderBy(kh=>kh.Id).ToList();
+            ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
             return View(model);
         }
         [HttpPost]
@@ -99,6 +101,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return View(teK);
             }
             
+        }
+        public ActionResult setSession(ReceiveModel Id)
+        {
+            Session["ProjectTeK"] = Id;
+            return Json("ok", JsonRequestBehavior.AllowGet);
         }
     }
 }
