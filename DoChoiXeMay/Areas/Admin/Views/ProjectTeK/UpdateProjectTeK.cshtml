@@ -8,7 +8,8 @@
 
 <div class="container">
     <h2>Update Dự Án TeK</h2>
-    
+    @using (Html.BeginForm("UpdateProjectTeK", "ProjectTeK", FormMethod.Post, new { enctype = "multipart/form-data", id = "NTV_form" }))
+    {
         <fieldset class="info_form" style="margin-top:0">
             <h1 class="info_header">
                 <span style="color:black">@Session["UserName"]</span>  Update Dự Án: @Model.NameProject
@@ -85,8 +86,8 @@
                             }
                         </div>
                         @*<script>
-                            //
-                        </script>*@
+                                //
+                            </script>*@
                     </div>
                 </div>
                 <div class="row">
@@ -110,11 +111,14 @@
                                         //Xóa leader không chọn
                                         let tt = $box.val() + "";
                                         stringArray.push(tt);
-                                        for (let i = 0; i < stringArray.length; i++) {
-                                            if (stringArray[i].length > 4 && stringArray[i] != tt) {
-                                                stringArray.splice(i, 1);
+                                        if (tt.length > 4) {
+                                            for (let i = 0; i < stringArray.length; i++) {
+                                                if (stringArray[i].length > 4 && stringArray[i] != tt) {
+                                                    stringArray.splice(i, 1);
+                                                }
                                             }
                                         }
+
                                     } else {
                                         $box.prop("checked", false);
                                         //Xóa User không chọn
@@ -129,23 +133,24 @@
                                     if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
                                         return false;
                                     } else {
-                                        var postData = { Id: stringArray };
-                                        alert(stringArray);
+                                        var postData = JSON.stringify({ Id: stringArray });
                                         $.ajax({
+                                            contentType: "application/json; charset=utf-8",
                                             url: "/Admin/ProjectTeK/setSession",
+
                                             dataType: 'json',
                                             type: 'POST',
                                             data: postData,
                                             success: function (response) {
-                                                alert(response);
-                                                //var action = $(this).attr("data-action");
-                                                //this.form.action = "/Admin/ProjectTeK/" + action;
+                                                var action = $(this).attr("data-action");
+                                                this.form.action = "/Admin/ProjectTeK/" + action;
+                                                //document.getElementById("btnLuu").setAttribute("href", "/Admin/ProjectTeK/" + action);
                                             }
                                             //dataType: "json",
                                             //traditional: true
                                         });
-                                    }
 
+                                    }
                                 });
                             });
                         </script>
@@ -154,5 +159,7 @@
             </div>
 
         </fieldset>
+    }
+
 </div>
 
