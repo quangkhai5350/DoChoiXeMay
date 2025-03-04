@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,51 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 .OrderByDescending(kh => kh.Id)
                 .ToList();
             return model;
+        }
+        public bool UPdateProjectTeK(ProjectTeK p)
+        {
+            try
+            {
+                _context.Entry(p).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
+        public bool InsertProjecDetail(int Usertao, string quyen, string UserName, int Userthamgia, int ProjectId, bool Leader)
+        {
+            try
+            {
+                ProjectDetail p = new ProjectDetail();
+                p.Id = Guid.NewGuid();
+                p.UserId = Userthamgia;
+                p.CongViec = "Chưa update.";
+                p.TrangThaiId = 1;
+                p.NgayBatDau = DateTime.Now;
+                p.NgayUpdate = DateTime.Now;
+                p.ProjectId = ProjectId;
+                p.Ghichu = "Chưa update.";
+                p.Leader = Leader;
+                _context.ProjectDetails.Add(p);
+                int kt = _context.SaveChanges();
+                if (kt > 0)
+                {
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(_context, Usertao, quyen
+                        , UserName, "InsertProjecDetail-thêm user :" + Userthamgia, "");
+                    return true;
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
         }
     }
 }
