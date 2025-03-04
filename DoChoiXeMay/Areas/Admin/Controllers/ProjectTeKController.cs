@@ -102,7 +102,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             
         }
-        public ActionResult setSession(ReceiveModel Id)
+        [HttpPost]
+        public ActionResult setSession(string[] Id)
         {
             Session["ProjectTeK"] = Id;
             return Json("ok", JsonRequestBehavior.AllowGet);
