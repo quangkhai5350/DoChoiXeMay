@@ -42,6 +42,20 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public bool UPdateProjectDetail(ProjectDetail p)
+        {
+            try
+            {
+                _context.Entry(p).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
         public bool InsertProjecDetail(int Userthamgia, int ProjectId, bool Leader)
         {
             try
