@@ -1,7 +1,8 @@
-﻿
+﻿@using DoChoiXeMay.Areas.Admin.Data
+@using DoChoiXeMay.Models
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
 <style>
     .canhgiua {
@@ -42,8 +43,8 @@
                         @foreach (DoChoiXeMay.Models.ProjectTeK Item in ViewBag.ListProJect)
                         {
                             var ut = Item.Uutien == true ? "Quan trọng" : "Bình thường";
-                            var ht = Item.PhantramHoanThanh+"%";
-                            //var str = DoChoiXeMay.Areas.Admin.Data.Xstring.Cutstring_getLastString(Item.NoiDung);
+                            var ht = Item.PhantramHoanThanh + "%";
+                            var ProjectDetail = new ProjectTeKData().getlistProjectDetail(Item.Id);
                             <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                                 <td>@Item.GhiChu</td>
                                 <td>
@@ -60,7 +61,7 @@
                                 <td></td>
                                 <td>
                                     <div class="progress" style="background-color: #e3cece">
-                                                            
+
                                         <div class="progress-bar wow fadeInLeft" data-progress="@ht" style="width: @ht;" data-wow-duration="1.5s" data-wow-delay="1.2s">
                                             <span>@ht</span>
                                         </div>
@@ -74,8 +75,20 @@
                                         <a @*style="display:none"*@ class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Dự Án: @Item.NameProject ??')" href="/Admin/ProjectTeK/DeleteProject/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                                     }
 
+
+
                                 </td>
                             </tr>
+                            if (ProjectDetail.Count() > 0)
+                            {
+                                foreach (ProjectDetail Pj in ProjectDetail)
+                                {
+                                    <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+
                         }
                     </tbody>
 

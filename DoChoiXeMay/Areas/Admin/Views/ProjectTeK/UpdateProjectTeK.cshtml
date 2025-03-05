@@ -1,7 +1,7 @@
 ﻿@model DoChoiXeMay.Models.ProjectTeK
 @{
     ViewBag.Title = "UpdateProjectTeK";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
 @*<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>*@
@@ -101,6 +101,7 @@
                         <script>
                             $(function () {
                                 var stringArray = new Array();
+                                var arrayLead = new Array();
                                 $("input:checkbox").on('click', function () {
                                     // in the handler, 'this' refers to the box clicked on
                                     var $box = $(this);
@@ -109,14 +110,17 @@
                                         $(group).prop("checked", false);
                                         $box.prop("checked", true);
                                         //Xóa leader không chọn
+
                                         let tt = $box.val() + "";
-                                        stringArray.push(tt);
                                         if (tt.length > 4) {
-                                            for (let i = 0; i < stringArray.length; i++) {
-                                                if (stringArray[i].length > 4 && stringArray[i] != tt) {
-                                                    stringArray.splice(i, 1);
+                                            arrayLead.push(tt);
+                                            for (let i = 0; i < arrayLead.length; i++) {
+                                                if (arrayLead[i].length > 4 && arrayLead[i] != tt) {
+                                                    arrayLead.splice(i, 1);
                                                 }
                                             }
+                                        } else {
+                                            stringArray.push(tt);
                                         }
 
                                     } else {
@@ -133,7 +137,7 @@
                                     if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
                                         return false;
                                     } else {
-                                        var postData = JSON.stringify({ Id: stringArray });
+                                        var postData = JSON.stringify({ Id: stringArray, lead: arrayLead });
                                         $.ajax({
                                             contentType: "application/json; charset=utf-8",
                                             url: "/Admin/ProjectTeK/setSession",
