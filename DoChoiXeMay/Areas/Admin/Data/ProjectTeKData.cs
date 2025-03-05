@@ -42,7 +42,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        public bool InsertProjecDetail(int Usertao, string quyen, string UserName, int Userthamgia, int ProjectId, bool Leader)
+        public bool InsertProjecDetail(int Userthamgia, int ProjectId, bool Leader)
         {
             try
             {
@@ -60,8 +60,6 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 int kt = _context.SaveChanges();
                 if (kt > 0)
                 {
-                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(_context, Usertao, quyen
-                        , UserName, "InsertProjecDetail-thêm user :" + Userthamgia, "");
                     return true;
                 }
                 return false;
@@ -72,6 +70,11 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 string loi = ex.ToString();
                 return false;
             }
+        }
+        public List<ProjectDetail> getlistProjectDetail(int Id)
+        {
+            var model = _context.ProjectDetails.Where(kh => kh.ProjectId == Id).ToList();
+            return model;
         }
     }
 }

@@ -85,12 +85,48 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             try
             {
-
-                //tro lai trang truoc do 
-                var requestUri = Session["requestUri"] as string;
-                if (requestUri != null)
+                var leadid = "";
+                var userid = int.Parse(Session["UserId"].ToString());
+                string[] ProjectDetail = (string[])Session["ProjectTeK"];
+                string[] lead = (string[])Session["Projectlead"];
+                if (Session["ProjectTeK"] != null)
                 {
-                    return Redirect(requestUri);
+                    bool project= new Data.ProjectTeKData().UPdateProjectTeK(teK);
+                    if (project) {
+                        for (int i = 0; i < lead.Count(); i++) {//get leadId
+                            if (lead[i].Length > 4) { 
+                                leadid = Data.Xstring.Cutstring_getID(lead[i]);
+                            }
+                        }
+                        for (int i = 0; i < ProjectDetail.Count(); i++) { 
+                            if(leadid == ProjectDetail[i])//Leader
+                            {
+                                new Data.ProjectTeKData().InsertProjecDetail(int.Parse(ProjectDetail[i]),teK.Id,true);
+                            }
+                            else
+                            {
+                                new Data.ProjectTeKData().InsertProjecDetail(int.Parse(ProjectDetail[i]), teK.Id, false);
+                            }
+                        }
+                        @Session["ThongBaoProject"] = "Update thành công Project: " + teK.NameProject;
+                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Update thành công Project: " + teK.NameProject, "");
+                        //tro lai trang truoc do 
+                        var requestUri = Session["requestUri"] as string;
+                        if (requestUri != null)
+                        {
+                            return Redirect(requestUri);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Update Project Thất Bại !!!!");
+                        ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", teK.TrangthaiId);
+                        ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
+                        ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
+                        return View(teK);
+                    }
+                    
                 }
                 return RedirectToAction("Index");
             }
@@ -98,14 +134,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 string message = ex.Message;
                 ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", teK.TrangthaiId);
+                ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
+                ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
                 return View(teK);
             }
             
         }
         [HttpPost]
-        public ActionResult setSession(string[] Id)
+        public ActionResult setSession(string[] Id,string[] lead)
         {
             Session["ProjectTeK"] = Id;
+            Session["Projectlead"] = lead;
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
     }
