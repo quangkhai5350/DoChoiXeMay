@@ -76,5 +76,11 @@ namespace DoChoiXeMay.Areas.Admin.Data
             var model = _context.ProjectDetails.Where(kh => kh.ProjectId == Id).ToList();
             return model;
         }
+        public ProjectDetail getProjectDetail(int project,int user)
+        {
+            var model = _context.ProjectDetails.FirstOrDefault(kh => kh.ProjectId == project 
+                        && kh.UserId==user);
+            return model;
+        }
     }
 }

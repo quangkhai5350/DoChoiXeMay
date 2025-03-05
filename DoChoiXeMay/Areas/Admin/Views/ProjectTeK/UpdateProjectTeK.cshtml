@@ -1,4 +1,5 @@
 ﻿@model DoChoiXeMay.Models.ProjectTeK
+@using DoChoiXeMay.Areas.Admin.Data
 @{
     ViewBag.Title = "UpdateProjectTeK";
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
@@ -69,10 +70,35 @@
                             @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
                             {
                                 var user = "User" + Item.Id;
-                                <p style="height:40px">
-                                    <input style="height:20px;width:40px" type="checkbox" id="@user" value="@Item.Id" name="@user" />
-                                    <span class="span_chbx">@Item.UserName</span>
-                                </p>
+                                var pd = new ProjectTeKData().getProjectDetail(Model.Id, Item.Id);
+                                if (ViewBag.CountProjectDetail > 0)
+                                {
+                                    foreach (DoChoiXeMay.Models.ProjectDetail detail in ViewBag.ProjectDetail)
+                                    {
+                                        if (detail.UserId == Item.Id)
+                                        {
+                                            <p style="height:40px">
+                                                <input style="height:20px;width:40px" type="checkbox" checked id="@user" value="@Item.Id" name="@user" />
+                                                <span class="span_chbx">@Item.UserName</span>
+                                            </p>
+                                        }
+                                        else
+                                        {
+                                            <p style="height:40px">
+                                                <input style="height:20px;width:40px" type="checkbox" id="@user" value="@Item.Id" name="@user" />
+                                                <span class="span_chbx">@Item.UserName</span>
+                                            </p>
+                                        }
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    <p style="height:40px">
+                                        <input style="height:20px;width:40px" type="checkbox" id="@user" value="@Item.Id" name="@user" />
+                                        <span class="span_chbx">@Item.UserName</span>
+                                    </p>
+                                }
                             }
                         </div>
                         <div class="col-sm-5">

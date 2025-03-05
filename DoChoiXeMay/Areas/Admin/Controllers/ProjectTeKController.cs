@@ -3,6 +3,7 @@ using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,6 +15,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/ProjectTeK
         Model1 dbc = new Model1();
+        string DBname = ConfigurationManager.AppSettings["DBname"];
         public ActionResult Index()
         {
             Session["requestUri"] = "/Admin/ProjectTeK/Index";
@@ -78,6 +80,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", model.TrangthaiId);
             ViewBag.User = dbc.UserTeks.OrderBy(kh=>kh.Id).ToList();
             ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
+            ViewBag.ProjectDetail=dbc.ProjectDetails.Where(kh=>kh.ProjectId==id).OrderBy(kh => kh.Id).ToList();
+            ViewBag.CountProjectDetail = dbc.ProjectDetails.Where(kh => kh.ProjectId == id).OrderBy(kh => kh.Id).Count();
             return View(model);
         }
         [HttpPost]
@@ -85,14 +89,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             try
             {
+                
                 var leadid = "";
                 var userid = int.Parse(Session["UserId"].ToString());
                 string[] ProjectDetail = (string[])Session["ProjectTeK"];
                 string[] lead = (string[])Session["Projectlead"];
-                if (Session["ProjectTeK"] != null)
+                bool project = new Data.ProjectTeKData().UPdateProjectTeK(teK);
+                if (project)
                 {
-                    bool project= new Data.ProjectTeKData().UPdateProjectTeK(teK);
-                    if (project) {
+                    if (Session["ProjectTeK"] != null)
+                    {
+                        //Xóa ProjectTeK detail
+                        var XoaProdetail = dbc.Database.ExecuteSqlCommand
+                            ("DELETE  FROM [" + DBname + "TechZone].[dbo].[ProjectDetail] where ProjectId=" + teK.Id);
+                        //Thêm mới ProjectTeK detail
                         for (int i = 0; i < lead.Count(); i++) {//get leadId
                             if (lead[i].Length > 4) { 
                                 leadid = Data.Xstring.Cutstring_getID(lead[i]);
@@ -118,15 +128,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             return Redirect(requestUri);
                         }
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Update Project Thất Bại !!!!");
-                        ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", teK.TrangthaiId);
-                        ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
-                        ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
-                        return View(teK);
-                    }
-                    
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Update Project Thất Bại !!!!");
+                    ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", teK.TrangthaiId);
+                    ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
+                    ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
+                    return View(teK);
                 }
                 return RedirectToAction("Index");
             }
