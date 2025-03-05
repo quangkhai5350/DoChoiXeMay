@@ -22,7 +22,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.ListProJect = new Data.ProjectTeKData().GetListProjectTeK();
             return View();
         }
-        public ActionResult InsertProJectTeK() {
+        public ActionResult InsertProJectTeK()
+        {
             var userid = int.Parse(Session["UserId"].ToString());
             ProjectTeK model = new ProjectTeK();
             model.NameProject = "New ProjectTek " + DateTime.Now;
@@ -62,7 +63,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.ProjectTeKs.Find(id);
             dbc.ProjectTeKs.Remove(model);
             dbc.SaveChanges();
-            Session["ThongBaoProject"] = "Delete Dự Án "+ model.NameProject +" thành công.";
+            Session["ThongBaoProject"] = "Delete Dự Án " + model.NameProject + " thành công.";
             var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "Delete Dự Án -" + model.NameProject + "-" + DateTime.Now.ToString(), "");
             //tro lai trang truoc do 
@@ -78,9 +79,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
             var model = dbc.ProjectTeKs.Find(id);
             ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", model.TrangthaiId);
-            ViewBag.User = dbc.UserTeks.OrderBy(kh=>kh.Id).ToList();
+            ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
             ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
-            ViewBag.ProjectDetail=dbc.ProjectDetails.Where(kh=>kh.ProjectId==id).OrderBy(kh => kh.Id).ToList();
+            ViewBag.ProjectDetail = dbc.ProjectDetails.Where(kh => kh.ProjectId == id).OrderBy(kh => kh.Id).ToList();
             ViewBag.CountProjectDetail = dbc.ProjectDetails.Where(kh => kh.ProjectId == id).OrderBy(kh => kh.Id).Count();
             return View(model);
         }
@@ -89,7 +90,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             try
             {
-                
+
                 var leadid = "";
                 var userid = int.Parse(Session["UserId"].ToString());
                 string[] ProjectDetail = (string[])Session["ProjectTeK"];
@@ -99,23 +100,53 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     if (Session["ProjectTeK"] != null)
                     {
-                        //Xóa ProjectTeK detail
-                        var XoaProdetail = dbc.Database.ExecuteSqlCommand
-                            ("DELETE  FROM [" + DBname + "TechZone].[dbo].[ProjectDetail] where ProjectId=" + teK.Id);
-                        //Thêm mới ProjectTeK detail
-                        for (int i = 0; i < lead.Count(); i++) {//get leadId
-                            if (lead[i].Length > 4) { 
-                                leadid = Data.Xstring.Cutstring_getID(lead[i]);
+                        //Xóa ProjectTeK detail không được chọn
+                        var listpd = new Data.ProjectTeKData().getlistProjectDetail(teK.Id);
+                        for (int i = 0; i < listpd.Count; i++)//duyệt ds củ
+                        {
+                            int dem = 0;
+                            for (int j = 0; j < ProjectDetail.Count(); j++)
+                            {
+                                if (listpd[i].UserId == int.Parse(ProjectDetail[j]))
+                                {
+                                    dem = dem + 1;//nếu trùng ds mới thì ++
+                                    break;
+                                }
+                            }
+                            if (dem == 0)//nếu không trùng ds mới thì xóa
+                            {
+                                var XoaProdetail = dbc.Database.ExecuteSqlCommand
+                                     ("DELETE  FROM [" + DBname + "TechZone].[dbo].[ProjectDetail] where Id='" + listpd[i].Id.ToString() + "'");
                             }
                         }
-                        for (int i = 0; i < ProjectDetail.Count(); i++) { 
-                            if(leadid == ProjectDetail[i])//Leader
+                        //duyệt ds mới, //Thêm mới ProjectTeK detail
+                        for (int j = 0; j < ProjectDetail.Count(); j++)
+                        {
+                            var pd = new ProjectTeKData().getProjectDetail(teK.Id, int.Parse(ProjectDetail[j]));
+                            if (pd != null)//đã tồn tại
                             {
-                                new Data.ProjectTeKData().InsertProjecDetail(int.Parse(ProjectDetail[i]),teK.Id,true);
+                                var p = dbc.ProjectDetails.Find(pd.Id);
+                                if (p.Leader == true)
+                                {
+                                    p.Leader = false;
+                                    var updatep = new ProjectTeKData().UPdateProjectDetail(p);
+                                }
                             }
                             else
                             {
-                                new Data.ProjectTeKData().InsertProjecDetail(int.Parse(ProjectDetail[i]), teK.Id, false);
+                                //Chọn lại Leader
+                                if (lead != null && lead[0].Length > 4)
+                                {
+                                    leadid = Data.Xstring.Cutstring_getID(lead[0]);
+                                }
+                                if (leadid == ProjectDetail[j])//Leader
+                                {
+                                    new Data.ProjectTeKData().InsertProjecDetail(int.Parse(ProjectDetail[j]), teK.Id, true);
+                                }
+                                else
+                                {
+                                    new Data.ProjectTeKData().InsertProjecDetail(int.Parse(ProjectDetail[j]), teK.Id, false);
+                                }
                             }
                         }
                         @Session["ThongBaoProject"] = "Update thành công Project: " + teK.NameProject;
@@ -146,12 +177,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", teK.TrangthaiId);
                 ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
                 ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
+                ViewBag.ProjectDetail = dbc.ProjectDetails.Where(kh => kh.ProjectId == teK.Id).OrderBy(kh => kh.Id).ToList();
+                ViewBag.CountProjectDetail = dbc.ProjectDetails.Where(kh => kh.ProjectId == teK.Id).OrderBy(kh => kh.Id).Count();
                 return View(teK);
             }
-            
+
         }
         [HttpPost]
-        public ActionResult setSession(string[] Id,string[] lead)
+        public ActionResult setSession(string[] Id, string[] lead)
         {
             Session["ProjectTeK"] = Id;
             Session["Projectlead"] = lead;

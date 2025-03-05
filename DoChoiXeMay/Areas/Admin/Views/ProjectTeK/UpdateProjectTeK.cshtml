@@ -57,52 +57,81 @@
                     </div>
                 </div>
                 <div class="rightcontact">
+                    @if (ViewBag.CountProjectDetail > 0)
+                    {
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <p>User tham gia</p>
+                            </div>
+                            <div class="col-sm-5">
+                                <p>Leader</p>
+                            </div>
+                        </div>
+                        <div class="row" style="border: 1px dashed #423333; padding-left: 20px;padding-top:15px;margin-bottom:10px">
+                            <div class="col-sm-7">
+                                @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
+                                {
+                                    var user = "User" + Item.Id;
+                                    var pd = new ProjectTeKData().getProjectDetail(Model.Id, Item.Id);
+
+                                    if (pd != null)
+                                    {
+                                        <p style="height:20px">
+                                            <input disabled style="height:20px;width:40px" type="radio" checked value="@Item.Id" name="@user" />
+                                            <span class="span_chbx">@Item.UserName</span>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p style="height:20px">
+                                            <input disabled style="height:20px;width:40px" type="radio" value="@Item.Id" name="@user" />
+                                            <span class="span_chbx">@Item.UserName</span>
+                                        </p>
+                                    }
+                                }
+                            </div>
+                            <div class="col-sm-5">
+                                @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
+                                {
+                                    var pd = new ProjectTeKData().getProjectDetail(Model.Id, Item.Id);
+                                    var lead = "Lead" + Item.Id;
+
+                                    if (pd != null && pd.Leader == true)
+                                    {
+                                        <p style="height:20px">
+                                            <input disabled style="height:20px;width:40px" checked type="checkbox" value="@lead" />
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p style="height:20px">
+                                            <input disabled style="height:20px;width:40px" type="checkbox" value="@lead" />
+                                        </p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
                     <div class="row">
                         <div class="col-sm-7">
-                            <p>User tham gia</p>
+                            <p>Chọn lại User (nếu muốn)</p>
                         </div>
                         <div class="col-sm-5">
-                            <p>Leader(Chọn 1)</p>
+                            <p>Chọn lại Leader</p>
                         </div>
                     </div>
-                    <div class="row" style="border: 1px dashed #423333; padding-left: 20px;padding-top:15px">
+                    <div class="row" style="border: 1px dashed #423333; padding-left: 20px;padding-top:15px;margin-bottom:10px">
                         <div class="col-sm-7">
                             @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
                             {
                                 var user = "User" + Item.Id;
-                                var pd = new ProjectTeKData().getProjectDetail(Model.Id, Item.Id);
-                                if (ViewBag.CountProjectDetail > 0)
-                                {
-                                    foreach (DoChoiXeMay.Models.ProjectDetail detail in ViewBag.ProjectDetail)
-                                    {
-                                        if (detail.UserId == Item.Id)
-                                        {
-                                            <p style="height:40px">
-                                                <input style="height:20px;width:40px" type="checkbox" checked id="@user" value="@Item.Id" name="@user" />
-                                                <span class="span_chbx">@Item.UserName</span>
-                                            </p>
-                                        }
-                                        else
-                                        {
-                                            <p style="height:40px">
-                                                <input style="height:20px;width:40px" type="checkbox" id="@user" value="@Item.Id" name="@user" />
-                                                <span class="span_chbx">@Item.UserName</span>
-                                            </p>
-                                        }
-                                        break;
-                                    }
-                                }
-                                else
-                                {
-                                    <p style="height:40px">
-                                        <input style="height:20px;width:40px" type="checkbox" id="@user" value="@Item.Id" name="@user" />
-                                        <span class="span_chbx">@Item.UserName</span>
-                                    </p>
-                                }
+                                <p style="height:40px">
+                                    <input style="height:20px;width:40px" type="checkbox" id="@user" value="@Item.Id" name="@user" />
+                                    <span class="span_chbx">@Item.UserName</span>
+                                </p>
                             }
                         </div>
                         <div class="col-sm-5">
-                            @*<input type="text" value="@ViewBag.UserC" id="UserC" hidden/>*@
                             @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.User)
                             {
                                 var lead = "Lead" + Item.Id;
@@ -111,9 +140,6 @@
                                 </p>
                             }
                         </div>
-                        @*<script>
-                                //
-                            </script>*@
                     </div>
                 </div>
                 <div class="row">
