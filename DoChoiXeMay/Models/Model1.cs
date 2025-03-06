@@ -32,6 +32,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<NoteKythuat> NoteKythuats { get; set; }
         public virtual DbSet<ProjectDetail> ProjectDetails { get; set; }
         public virtual DbSet<ProjectTeK> ProjectTeKs { get; set; }
+        public virtual DbSet<ProjectUserDetail> ProjectUserDetails { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
         public virtual DbSet<TrangThaiDuAn> TrangThaiDuAns { get; set; }
         public virtual DbSet<UserTek> UserTeks { get; set; }
@@ -120,6 +121,11 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdMa)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<ProjectDetail>()
+                .HasMany(e => e.ProjectUserDetails)
+                .WithRequired(e => e.ProjectDetail)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<ProjectTeK>()
                 .HasMany(e => e.ProjectDetails)
                 .WithRequired(e => e.ProjectTeK)
@@ -139,7 +145,19 @@ namespace DoChoiXeMay.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<TrangThaiDuAn>()
+                .HasMany(e => e.ProjectDetails)
+                .WithRequired(e => e.TrangThaiDuAn)
+                .HasForeignKey(e => e.TrangthaiId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<TrangThaiDuAn>()
                 .HasMany(e => e.ProjectTeKs)
+                .WithRequired(e => e.TrangThaiDuAn)
+                .HasForeignKey(e => e.TrangthaiId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<TrangThaiDuAn>()
+                .HasMany(e => e.ProjectUserDetails)
                 .WithRequired(e => e.TrangThaiDuAn)
                 .HasForeignKey(e => e.TrangthaiId)
                 .WillCascadeOnDelete(false);
@@ -170,6 +188,12 @@ namespace DoChoiXeMay.Models
 
             modelBuilder.Entity<UserTek>()
                 .HasMany(e => e.ProjectDetails)
+                .WithRequired(e => e.UserTek)
+                .HasForeignKey(e => e.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTek>()
+                .HasMany(e => e.ProjectTeKs)
                 .WithRequired(e => e.UserTek)
                 .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(false);
