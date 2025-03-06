@@ -12,8 +12,9 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TrangThaiDuAn()
         {
-            ProjectTeKs = new HashSet<ProjectTeK>();
             ProjectDetails = new HashSet<ProjectDetail>();
+            ProjectTeKs = new HashSet<ProjectTeK>();
+            ProjectUserDetails = new HashSet<ProjectUserDetail>();
         }
 
         public int Id { get; set; }
@@ -25,7 +26,12 @@ namespace DoChoiXeMay.Models
         public DateTime Ngay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectTeK> ProjectTeKs { get; set; }
         public virtual ICollection<ProjectDetail> ProjectDetails { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectTeK> ProjectTeKs { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectUserDetail> ProjectUserDetails { get; set; }
     }
 }

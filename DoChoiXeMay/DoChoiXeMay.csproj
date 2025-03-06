@@ -170,6 +170,7 @@
     <Compile Include="Models\NoteKythuat.cs" />
     <Compile Include="Models\ProjectDetail.cs" />
     <Compile Include="Models\ProjectTeK.cs" />
+    <Compile Include="Models\ProjectUserDetail.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\TrangThaiDuAn.cs" />
     <Compile Include="Models\UserTek.cs" />
