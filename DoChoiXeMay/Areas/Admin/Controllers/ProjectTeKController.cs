@@ -90,7 +90,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             try
             {
-
+                //Nếu User đã có thì giữ lại, user mới thì thêm vào, User không được chọn thì xóa
                 var leadid = "";
                 var userid = int.Parse(Session["UserId"].ToString());
                 string[] ProjectDetail = (string[])Session["ProjectTeK"];
@@ -129,6 +129,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                                 if (p.Leader == true)
                                 {
                                     p.Leader = false;
+                                    p.NgayUpdate=DateTime.Now;
                                     var updatep = new ProjectTeKData().UPdateProjectDetail(p);
                                 }
                             }
@@ -173,7 +174,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 string message = ex.Message;
-                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                ModelState.AddModelError("", "Update Thất Bại !!!! " + message);
                 ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", teK.TrangthaiId);
                 ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
                 ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();

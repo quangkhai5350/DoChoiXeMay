@@ -13,6 +13,7 @@ namespace DoChoiXeMay.Models
         public TrangThaiDuAn()
         {
             ProjectTeKs = new HashSet<ProjectTeK>();
+            ProjectDetails = new HashSet<ProjectDetail>();
         }
 
         public int Id { get; set; }
@@ -25,5 +26,6 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectTeK> ProjectTeKs { get; set; }
+        public virtual ICollection<ProjectDetail> ProjectDetails { get; set; }
     }
 }

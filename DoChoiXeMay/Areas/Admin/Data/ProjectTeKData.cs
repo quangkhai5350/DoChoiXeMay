@@ -63,7 +63,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 ProjectDetail p = new ProjectDetail();
                 p.Id = Guid.NewGuid();
                 p.UserId = Userthamgia;
-                p.CongViec = "Chưa update.";
+                p.CongViec = "Chưa update công việc.";
                 p.TrangThaiId = 1;
                 p.NgayBatDau = DateTime.Now;
                 p.NgayUpdate = DateTime.Now;

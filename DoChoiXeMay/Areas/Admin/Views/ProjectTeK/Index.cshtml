@@ -26,11 +26,12 @@
                     <thead style="max-width: 300px">
                         <tr class="canhgiua" style="background-color: #00bcd4">
                             <th class="canhgiua" style="">STT</th>
-                            <th class="canhgiua" style="width:200px">Tên Dự Án</th>
                             <th class="canhgiua">Người tạo</th>
+                            <th class="canhgiua" style="width:200px">Tên Dự Án</th>
+
                             <th class="canhgiua" style="">Chú Thích</th>
                             <th class="canhgiua" style="">Ưu Tiên</th>
-                            <th class="canhgiua" style="">Trạng thái</th>
+                            <th class="canhgiua" style="width:100px">Trạng thái</th>
                             <th class="canhgiua" style="">Ngày bắt đầu</th>
                             <th class="canhgiua" style="">Ngày kết thúc</th>
                             <th class="canhgiua">User thamgia</th>
@@ -47,11 +48,12 @@
                             var ProjectDetail = new ProjectTeKData().getlistProjectDetail(Item.Id);
                             <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                                 <td>@Item.GhiChu</td>
+                                <td>@Item.UserTek.UserName</td>
                                 <td>
                                     @Item.NameProject
                                     @*<a href="" onclick="chose_view(this.id);return false" id="@str"></a>*@
                                 </td>
-                                <td>@Item.UserTek.UserName</td>
+
                                 <td>@Item.Giaithich</td>
 
                                 <td>@ut</td>
@@ -83,9 +85,45 @@
                             {
                                 foreach (ProjectDetail Pj in ProjectDetail)
                                 {
-                                    <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                                        <td></td>
-                                    </tr>
+                                    var leader = Pj.Leader ? "(**Leader**)" : "";
+                    <tr class="canhgiua" style="border-bottom: 2px solid black !important;background-color:aquamarine">
+                        <td colspan="2">@Pj.UserTek.UserName@leader</td>
+                        <td colspan="3"><input id="TenKy" value="@Pj.CongViec" placeholder="Thêm công việc ..." name="TenKy" style="margin-right:10px;width:100%" /></td>
+                        <td>@Pj.TrangThaiDuAn.Name</td>
+                        <td colspan="2">Tham gia:@Html.FormatValue(Pj.NgayBatDau, "{0:dd/MM/yyyy}")</td>
+                        <td>
+                            <a id="batdau" class="btn btn-warning" href="/Admin/ProjectTeK/Index" onclick="return confirm('Bạn muốn update công việc ??')">Update CV</a>
+                        </td>
+                        <td>
+                            @if (Pj.TrangThaiId != 2 || Pj.TrangThaiId != 5)
+                            {
+                                <a id="batdau" class="btn btn-warning" href="/Admin/ProjectTeK/Index" onclick="return confirm('Bạn muốn bắt đầu công việc ??')">Bắt Đầu</a>
+                            }
+                            else
+                            {
+                                <a id="batdau" class="btn btn-warning" onclick="return confirm('Công việc đang diễn ra !!!')">Bắt Đầu</a>
+                            }
+                            @if (Pj.TrangThaiId == 2 || Pj.TrangThaiId == 3)
+                            {
+                                <a id="tamdung" class="btn btn-warning" href="/Admin/ProjectTeK/Index" onclick="return confirm('Bạn muốn tạm dừng công việc ??')">Tạm Dừng</a>
+                            }
+                            else
+                            {
+                                <a id="tamdung" class="btn btn-warning" href="/Admin/ProjectTeK/Index" onclick="return confirm('Công việc hiện không thể Tạm Dừng !!!')">Tạm Dừng</a>
+                            }
+                        </td>
+                        <td>
+                            @if (Pj.TrangThaiId == 2)
+                            {
+                                <a id="hoanthanh" class="btn btn-warning" href="/Admin/ProjectTeK/Index" onclick="return confirm('Bạn muốn thông báo Hoàn Thành ??')">Hoàn Thành</a>
+                            }
+                            else
+                            {
+                                <a id="hoanthanh" class="btn btn-warning" href="/Admin/ProjectTeK/Index" onclick="return confirm('Công việc hiện không thể Hoàn Thành !!!')">Hoàn Thành</a>
+                            }
+
+                        </td>
+                    </tr>
                                 }
                             }
 

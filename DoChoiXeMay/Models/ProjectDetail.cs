@@ -33,5 +33,7 @@ namespace DoChoiXeMay.Models
         public virtual ProjectTeK ProjectTeK { get; set; }
 
         public virtual UserTek UserTek { get; set; }
+        [ForeignKey("TrangThaiId")]
+        public virtual TrangThaiDuAn TrangThaiDuAn { get; set; }
     }
 }
