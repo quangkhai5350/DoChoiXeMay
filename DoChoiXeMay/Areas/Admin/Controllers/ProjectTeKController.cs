@@ -130,10 +130,16 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             if (pd != null)//đã tồn tại
                             {
                                 var p = dbc.ProjectDetails.Find(pd.Id);
-                                if (p.Leader == true)
+                                if (leadid == ProjectDetail[j] && p.Leader==false)
+                                {
+                                    p.Leader = true;
+                                    p.NgayUpdate = DateTime.Now;
+                                    var updatep = new ProjectTeKData().UPdateProjectDetail(p);
+                                }
+                                if(p.Leader==true && leadid != ProjectDetail[j])
                                 {
                                     p.Leader = false;
-                                    p.NgayUpdate=DateTime.Now;
+                                    p.NgayUpdate = DateTime.Now;
                                     var updatep = new ProjectTeKData().UPdateProjectDetail(p);
                                 }
                             }
@@ -186,28 +192,44 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult InsertProjectUserDetail(string Id)
         {
-            var detailId = new Guid(Id);
+            Session["PDid"] = Id;
+            var detailId = new Guid(Session["PDid"].ToString());
+            var uid = dbc.ProjectDetails.Find(detailId).UserId;
+            ViewBag.UserName = dbc.UserTeks.Find(uid).UserName;
+            //thiết kế giao diện
+            return View();
+        }
+        [HttpPost]
+        public ActionResult InsertProjectUserDetail(string CV1, string CV2, string CV3)
+        {
+            var detailId = new Guid(Session["PDid"].ToString());
             var ProjectDetail=dbc.ProjectDetails.Find(detailId);
             try
             {
+                if(CV1.Trim() != "")
+                {
+                    var kq1 = new Data.ProjectTeKData().InsertProjecUserDetail(CV1, Session["PDid"].ToString());
+                }
+                if(CV2.Trim() != "")
+                {
+                    var kq2 = new Data.ProjectTeKData().InsertProjecUserDetail(CV2, Session["PDid"].ToString());
+                }
+                if (CV3.Trim() != "")
+                {
+                    var kq3 = new Data.ProjectTeKData().InsertProjecUserDetail(CV3, Session["PDid"].ToString());
+                }
                 var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
-                ProjectUserDetail model = new ProjectUserDetail();
-                model.Id = Guid.NewGuid();
-                model.ProjectDetailId = detailId;
-                model.CongViec = " New Job need update to used.";
-                model.TrangthaiId = 1;
-                model.NgayUpdate = DateTime.Now;
-                dbc.ProjectUserDetails.Add(model);
-                var kq = dbc.SaveChanges();
                 @Session["ThongBaoProject"] = "Insert công việc cho " + usertek.UserName + " thành công.";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
                 string message = ex.Message;
-                @Session["ThongBaoProject"] = "Có Lỗi Insert công việc cho: " + usertek.UserName +","+message;
-                return RedirectToAction("Index");
+                ModelState.AddModelError("", "Thêm CV Thất Bại !!!! " + message);
+                var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
+                var uid = dbc.ProjectDetails.Find(detailId).UserId;
+                ViewBag.UserName = dbc.UserTeks.Find(uid).UserName;
+                return RedirectToAction("InsertProjectUserDetail");
             }
         }
         [HttpPost]

@@ -84,9 +84,39 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public bool InsertProjecUserDetail(string CV, string DetailId)
+        {
+            try
+            {
+                var detailId = new Guid(DetailId);
+                var ProjectDetail = _context.ProjectDetails.Find(detailId);
+                ProjectUserDetail model = new ProjectUserDetail();
+                model.Id = Guid.NewGuid();
+                model.ProjectDetailId = detailId;
+                model.CongViec = CV;
+                model.TrangthaiId = 1;
+                model.NgayUpdate = DateTime.Now;
+                _context.ProjectUserDetails.Add(model);
+                var kq = _context.SaveChanges();
+                if (kq > 0) {
+                    return true;
+                }return false;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
         public List<ProjectDetail> getlistProjectDetail(int Id)
         {
             var model = _context.ProjectDetails.Where(kh => kh.ProjectId == Id).ToList();
+            return model;
+        }
+        public List<ProjectUserDetail> getlistProjectUserDetail(string Id)
+        {
+            var PUD = new Guid(Id);
+            var model = _context.ProjectUserDetails.Where(kh => kh.ProjectDetailId == PUD).ToList();
             return model;
         }
         public ProjectDetail getProjectDetail(int project,int user)
