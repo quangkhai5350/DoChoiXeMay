@@ -120,6 +120,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             }
                         }
                         //duyệt ds mới, //Thêm mới ProjectTeK detail
+                        if (lead != null && lead[0].Length > 4)
+                        {
+                            leadid = Data.Xstring.Cutstring_getID(lead[0]);
+                        }
                         for (int j = 0; j < ProjectDetail.Count(); j++)
                         {
                             var pd = new ProjectTeKData().getProjectDetail(teK.Id, int.Parse(ProjectDetail[j]));
@@ -136,10 +140,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             else
                             {
                                 //Chọn lại Leader
-                                if (lead != null && lead[0].Length > 4)
-                                {
-                                    leadid = Data.Xstring.Cutstring_getID(lead[0]);
-                                }
                                 if (leadid == ProjectDetail[j])//Leader
                                 {
                                     new Data.ProjectTeKData().InsertProjecDetail(int.Parse(ProjectDetail[j]), teK.Id, true);
@@ -183,6 +183,32 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return View(teK);
             }
 
+        }
+        public ActionResult InsertProjectUserDetail(string Id)
+        {
+            var detailId = new Guid(Id);
+            var ProjectDetail=dbc.ProjectDetails.Find(detailId);
+            try
+            {
+                var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
+                ProjectUserDetail model = new ProjectUserDetail();
+                model.Id = Guid.NewGuid();
+                model.ProjectDetailId = detailId;
+                model.CongViec = " New Job need update to used.";
+                model.TrangthaiId = 1;
+                model.NgayUpdate = DateTime.Now;
+                dbc.ProjectUserDetails.Add(model);
+                var kq = dbc.SaveChanges();
+                @Session["ThongBaoProject"] = "Insert công việc cho " + usertek.UserName + " thành công.";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
+                string message = ex.Message;
+                @Session["ThongBaoProject"] = "Có Lỗi Insert công việc cho: " + usertek.UserName +","+message;
+                return RedirectToAction("Index");
+            }
         }
         [HttpPost]
         public ActionResult setSession(string[] Id, string[] lead)

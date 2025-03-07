@@ -92,7 +92,7 @@
                         <td colspan="2">Ngày Update:@Html.FormatValue(Pj.NgayUpdate, "{0:dd/MM/yyyy}")</td>
                         <td>@Pj.TrangThaiDuAn.Name</td>
                         <td colspan="2">
-                            <a id="update" class="btn btn-primary" href="/Admin/ProjectTeK/Index" onclick="return confirm('Bạn muốn update công việc ??')">Update CV @Pj.UserTek.UserName</a>
+                            <a id="update" class="btn btn-primary" href="/Admin/ProjectTeK/InsertProjectUserDetail/@Pj.Id" onclick="return confirm('Bạn muốn thêm công việc cho @Pj.UserTek.UserName ???')">Update CV @Pj.UserTek.UserName</a>
                         </td>
                         <td colspan="2">
                             @*@if (Pj.TrangThaiId != 2 || Pj.TrangThaiId != 5)
@@ -109,7 +109,7 @@
                             }
                             else
                             {
-                                <a id="tamdung" class="btn btn-warning" href="/Admin/ProjectTeK/Index" onclick="return confirm('Công việc hiện không thể Tạm Dừng !!!')">Tạm Dừng</a>
+                                <a id="tamdung" class="btn btn-warning" onclick="return confirm('Công việc hiện không thể Tạm Dừng !!!')">Tạm Dừng</a>
                             }
                         </td>
                         <td style="background-color: antiquewhite !important"></td>
