@@ -95,8 +95,6 @@ namespace DoChoiXeMay.Controllers
                                 dbc.Entry(user).State = EntityState.Modified;
                                 dbc.SaveChanges();
                             }
-
-
                             string[] user_log = new string[2];
                             user_log[0] = UserName;
                             user_log[1] = Password;
