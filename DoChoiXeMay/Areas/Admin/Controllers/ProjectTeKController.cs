@@ -4,6 +4,7 @@ using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -61,22 +62,68 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var userid = int.Parse(Session["UserId"].ToString());
             var model = dbc.ProjectTeKs.Find(id);
-            dbc.ProjectTeKs.Remove(model);
-            dbc.SaveChanges();
-            Session["ThongBaoProject"] = "Delete Dự Án " + model.NameProject + " thành công.";
-            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "Delete Dự Án -" + model.NameProject + "-" + DateTime.Now.ToString(), "");
-            //tro lai trang truoc do 
-            var requestUri = Session["requestUri"] as string;
-            if (requestUri != null)
+            try
             {
-                return Redirect(requestUri);
+                dbc.ProjectTeKs.Remove(model);
+                dbc.SaveChanges();
+                Session["ThongBaoProject"] = "Delete Dự Án " + model.NameProject + " thành công.";
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Delete Dự Án -" + model.NameProject + "-" + DateTime.Now.ToString(), "");
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                var mess = ex.Message;
+                Session["ThongBaoProject"] = "(đã có thành viên tham gia)Delete Dự Án " + model.NameProject + " không thành công !!!.";
+                return RedirectToAction("Index");
+            }
+        }
+        public ActionResult DeleteProjectUserDetail(string id)
+        {
+            var userid = int.Parse(Session["UserId"].ToString());
+            //
+            var Deid = new Guid(id);
+            var model = dbc.ProjectUserDetails.Find(Deid);
+            var prodetail = dbc.ProjectDetails.Find(model.ProjectDetailId);
+            var user = dbc.UserTeks.Find(prodetail.UserId);
+            try
+            {
+                if (model.TrangthaiId != 5)
+                {
+                    dbc.ProjectUserDetails.Remove(model);
+                    dbc.SaveChanges();
+                    Session["ThongBaoProject"] = "Xóa công việc: '" + model.CongViec+"- của "+user.UserName + "' thành công.";
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Delete Công Việc -" + model.CongViec + " cho User: " + user.UserName + "-" + DateTime.Now.ToString(), "");
+                    //tro lai trang truoc do 
+                    var requestUri = Session["requestUri"] as string;
+                    if (requestUri != null)
+                    {
+                        return Redirect(requestUri);
+                    }
+                    return RedirectToAction("Index");
+                }
+                else {
+                    Session["ThongBaoProject"] = "(Công Việc đã hoàn thành) Không thể xóa!!!.";
+                    return RedirectToAction("Index");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                var mess = ex.Message;
+                Session["ThongBaoProject"] = "(Có lỗi)Xóa Công Việc cho: " + user.UserName + " không thành công !!!.";
+                return RedirectToAction("Index");
+            }
         }
         public ActionResult UpdateProjectTeK(int id)
         {
-
             var model = dbc.ProjectTeKs.Find(id);
             ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", model.TrangthaiId);
             ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
@@ -159,11 +206,28 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         @Session["ThongBaoProject"] = "Update thành công Project: " + teK.NameProject;
                         var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "Update thành công Project: " + teK.NameProject, "");
+                        
                         //tro lai trang truoc do 
                         var requestUri = Session["requestUri"] as string;
                         if (requestUri != null)
                         {
                             return Redirect(requestUri);
+                        }
+                    }
+                    //update projectDetail trạng thái
+                    var ProjectDetailss = dbc.ProjectDetails.Where(kh => kh.ProjectId == teK.Id).ToList();
+                    if (ProjectDetailss.Count() > 0)
+                    {
+                        for (int i = 0; i < ProjectDetailss.Count(); i++)
+                        {
+                            var pjd = dbc.ProjectDetails.Find(ProjectDetailss[i].Id);
+                            if (pjd.TrangthaiId != teK.TrangthaiId)
+                            {
+                                pjd.TrangthaiId = teK.TrangthaiId;
+                                pjd.NgayUpdate = DateTime.Now;
+                                dbc.Entry(pjd).State = EntityState.Modified;
+                                dbc.SaveChanges();
+                            }
                         }
                     }
                 }
@@ -180,7 +244,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 string message = ex.Message;
-                ModelState.AddModelError("", "Update Thất Bại !!!! " + message);
+                ModelState.AddModelError("", "(User đã có công việc, không thể thay đổi)-Update Thất Bại !!!! ");
                 ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", teK.TrangthaiId);
                 ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
                 ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
@@ -231,6 +295,75 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ViewBag.UserName = dbc.UserTeks.Find(uid).UserName;
                 return RedirectToAction("InsertProjectUserDetail");
             }
+        }
+        public ActionResult UpdateProjectUserDetail(string Id,int TrangthaiId,int hoanthanh)
+        {
+            try
+            {
+                var model = dbc.ProjectUserDetails.Find(new Guid(Id));
+                var ProjectDetail = dbc.ProjectDetails.Find(model.ProjectDetailId);
+                var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
+                if (ProjectDetail.TrangthaiId == 2) {
+                    if (hoanthanh == 5)
+                    {
+                        model.TrangthaiId = 5;
+                    }
+                    else
+                    {
+                        model.TrangthaiId = TrangthaiId;
+                    }
+                    model.NgayUpdate = DateTime.Now;
+                    dbc.Entry(model).State = EntityState.Modified;
+                    dbc.SaveChanges();
+                    @Session["ThongBaoProject"] = "Update trạng thái công việc cho " + usertek.UserName + " thành công.";
+                    //tro lai trang truoc do 
+                    var requestUri = Session["requestUri"] as string;
+                    if (requestUri != null)
+                    {
+                        return Redirect(requestUri);
+                    }
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    @Session["ThongBaoProject"] = "(CV của "+usertek.UserName+" không ở trạng thái 'Đang diễn ra')Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
+                    return RedirectToAction("Index");
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                var message = ex.Message;
+                var model = dbc.ProjectUserDetails.Find(new Guid(Id));
+                var ProjectDetail = dbc.ProjectDetails.Find(model.ProjectDetailId);
+                var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
+                @Session["ThongBaoProject"] = "(Có Lỗi)Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
+                return RedirectToAction("Index");
+            }
+        }
+        public ActionResult UpdateProjectDetail(string Id) {
+            
+            var ProjectDetail = dbc.ProjectDetails.Find(new Guid(Id));
+            var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
+            
+            if (ProjectDetail.TrangthaiId != 4)
+            {
+                ProjectDetail.TrangthaiId = 4;
+            }else ProjectDetail.TrangthaiId = 2;
+            ProjectDetail.NgayUpdate = DateTime.Now;
+            dbc.Entry(ProjectDetail).State = EntityState.Modified;
+            var kq=dbc.SaveChanges();
+            if (kq>0)
+            {
+                @Session["ThongBaoProject"] = "Update trạng thái công việc cho " + usertek.UserName + " thành công.";
+            }
+            else
+            {
+                @Session["ThongBaoProject"] = "(Có Lỗi)Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
+            }
+                
+            
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public ActionResult setSession(string[] Id, string[] lead)
