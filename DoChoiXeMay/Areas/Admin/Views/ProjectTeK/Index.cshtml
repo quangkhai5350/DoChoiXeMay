@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <style>
     .canhgiua {
         text-align: center !important;
@@ -31,6 +32,43 @@
     .colortamdung {
         background-color: cadetblue;
         color: white !important;
+    }
+    .avatar-xs {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.75rem;
+    }
+    .avatar {
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        border-radius: 0.75rem;
+        height: 48px;
+        width: 48px;
+        transition: all 0.2sease-in-out;
+    }
+    .mt-2 {
+        margin-top: 0.5rem !important;
+    }
+    .avatar-group .avatar + .avatar {
+        margin-left: -1rem;
+    }
+    .avatar-group .avatar {
+        position: relative;
+        z-index: 2;
+        border: 2px solid #fff;
+    }
+    .rounded-circle, .avatar.rounded-circle img {
+        border-radius: 50% !important;
+    }
+    a:hover {
+        --bs-link-color-rgb: var(--bs-link-hover-color-rgb);
+        text-decoration: none;
+    }
+    .avatar-group .avatar:hover {
+        z-index: 3;
     }
 </style>
 <div class="row" style="padding:20px;width:98%;margin:0 auto">
@@ -70,8 +108,12 @@
                     var ut = Item.Uutien == true ? "Quan trọng" : "Bình thường";
                     var ht = Item.PhantramHoanThanh + "%";
                     var ProjectDetail = new ProjectTeKData().getlistProjectDetail(Item.Id);
+                    var Pname = "22" + Item.Id;
+                    var Cname = "11" + Item.Id;
                     <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                        <td>@Item.GhiChu</td>
+                        <td>
+                            @Item.GhiChu
+                        </td>
                         <td>@Item.UserTek.UserName</td>
                         <td>
                             @Item.NameProject
@@ -103,10 +145,29 @@
                         }
                         <td>@Html.FormatValue(Item.DateBegin, "{0:dd/MM/yyyy}")</td>
                         <td>@Html.FormatValue(Item.DateEnd, "{0:dd/MM/yyyy}")</td>
-                        <td></td>
                         <td>
-                            <div class="progress" style="background-color: #e3cece">
 
+                            <div class="avatar-group mt-2">
+                                <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
+                                    <img src="/Content/img/team-1.jpg" alt="team1">
+                                </a>
+                                <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Romina Hadid">
+                                    <img src="/Content/img/team-2.jpg" alt="team2">
+                                </a>
+                                <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Alexander Smith">
+                                    <img src="/Content/img/team-3.jpg" alt="team3">
+                                </a>
+                                <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jessica Doe">
+                                    <img src="/Content/img/team-4.jpg" alt="team4">
+                                </a>
+                                <a style="background-color:black;cursor:pointer" onclick="showdetail(@Cname,@Pname)" class="avatar avatar-xs rounded-circle @Cname khai" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem Chi Tiết">
+                                    +
+                                </a>
+                            </div>
+
+                        </td>
+                        <td>
+                            <div class="progress mt-2" style="background-color: #e3cece">
                                 <div class="progress-bar wow fadeInLeft" data-progress="@ht" style="width: @ht;" data-wow-duration="1.5s" data-wow-delay="1.2s">
                                     <span>@ht</span>
                                 </div>
@@ -127,7 +188,7 @@
                         {
                             var ProjectUserDetail = new ProjectTeKData().getlistProjectUserDetail(Pj.Id.ToString());
                             var leader = Pj.Leader ? "(**Leader**)" : "(Member)";
-                            <tr class="canhgiua" style="border-bottom: 2px solid black !important;background-color:aquamarine">
+                            <tr class="@Pname canhgiua" hidden style="border-bottom: 2px solid black !important;background-color:aquamarine">
                                 <td style="background-color: antiquewhite !important"></td>
                                 <td>@Pj.UserTek.UserName@leader</td>
                                 <td>Tham gia:@Html.FormatValue(Pj.NgayBatDau, "{0:dd/MM/yyyy}")</td>
@@ -176,12 +237,13 @@
                                 </td>
                                 <td style="background-color: antiquewhite !important"></td>
                             </tr>
+
                             if (ProjectUserDetail.Count() > 0)
                             {
                                 foreach (ProjectUserDetail PUD in ProjectUserDetail)
                                 {
                                     var PUDId = PUD.Id.ToString();
-                                    <tr class="canhgiua" style="border-bottom: 2px solid black !important;background-color:darkorange">
+                                    <tr class="@Pname canhgiua" hidden style="border-bottom: 2px solid black !important;background-color:darkorange">
                                         <td colspan="2" style="padding: 2px; background-color: antiquewhite !important">
                                             @if (Item.UserId == int.Parse(Session["UserId"].ToString()) || Pj.UserId == int.Parse(Session["UserId"].ToString()))
                                             {
@@ -260,5 +322,19 @@
         </table>
 
     </div>
+    <p style="margin-top:10px">***Công việc(CV) "đang diễn ra", thì có thể "hoàn thành"</p>
+    <p style="margin-top:10px">***Công việc(CV) Chưa hoàn thành, thì có thể xóa</p>
+    <p style="margin-top:10px">***Trạng thái của thành viên là "Tạm Dừng", thì công việc(CV) không thể tiếp tục</p>
 </div>
-
+<script>
+    function showdetail(Cname,Pname) {
+        if ($("." + Cname).hasClass('khai')) {
+            $("." + Pname).show("fast");
+            $("." + Cname).removeClass('khai');
+        } else {
+            $('.' + Pname).hide("fast", function () {
+                $("." + Cname).addClass('khai');
+            });
+        }
+    };
+</script>

@@ -326,7 +326,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
                 else
                 {
-                    @Session["ThongBaoProject"] = "(CV của "+usertek.UserName+" không ở trạng thái 'Đang diễn ra')Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
+                    @Session["ThongBaoProject"] = "(Thành viên "+usertek.UserName+" không ở trạng thái 'Đang diễn ra')Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
                     return RedirectToAction("Index");
                 }
                 
