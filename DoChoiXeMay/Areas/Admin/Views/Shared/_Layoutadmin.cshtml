@@ -149,7 +149,6 @@
                                                     <img style="width:40px" src="~/Areas/Admin/Content/img/logo/Teklogo.png" alt="" />
                                                 </div>
                                                 <div class="hd-mg-ctn">
-                                                    @*<h3>David Belle</h3>*@
                                                     <span style="font-size:medium">@liststringMsg()[i]</span>
                                                 </div>
                                             </div>
@@ -163,33 +162,31 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-menus"></i></span><div class="spinner4 spinner-4"></div><div class="ntd-ctn"><span>2</span></div></a>
+                        <li class="nav-item" title="Dự án TeK">
+                            <a data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span><i class="notika-icon notika-menus"></i></span><div class="spinner4 spinner-4"></div><div class="ntd-ctn"><span>@CountProject()</span></div></a>
                             <div role="menu" class="dropdown-menu message-dd task-dd animated zoomIn">
                                 <div class="hd-mg-tt">
-                                    <h2>Dự Án Đang Làm</h2>
+                                    <h2>Dự Án Đã và Đang Làm</h2>
                                 </div>
-                                <div class="hd-message-info hd-task-info">
+                                <div class="hd-message-info hd-task-info" style="height:200px;overflow:auto">
                                     <div class="skill">
-                                        <div class="progress">
-                                            <div class="lead-content">
-                                                <p>HTML5 Validation Report</p>
+                                        @for(int i=0;i< ListProject().Count(); i++)
+                                        {
+                                            var pt = ListProject()[i].PhantramHoanThanh;
+                                            var ptht = ListProject()[i].PhantramHoanThanh + "%";
+                                            <div class="progress">
+                                                <div class="lead-content">
+                                                    <p>@ListProject()[i].NameProject</p>
+                                                </div>
+                                                <div class="progress-bar wow fadeInLeft" data-progress="@pt" style="width: @ptht" data-wow-duration="1.5s" data-wow-delay="1.2s">
+                                                    <span>@pt</span>
+                                                </div>
                                             </div>
-                                            <div class="progress-bar wow fadeInLeft" data-progress="95%" style="width: 95%;" data-wow-duration="1.5s" data-wow-delay="1.2s">
-                                                <span>95%</span>
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="lead-content">
-                                                <p>Google Chrome Extension</p>
-                                            </div>
-                                            <div class="progress-bar wow fadeInLeft" data-progress="85%" style="width: 85%;" data-wow-duration="1.5s" data-wow-delay="1.2s"><span>85%</span> </div>
-                                        </div>
-                                        
+                                        }
                                     </div>
                                 </div>
                                 <div class="hd-mg-va">
-                                    <a href="#">View All</a>
+                                    <a href="/Admin/ProjectTeK/Index">View All</a>
                                 </div>
                             </div>
                         </li>
@@ -603,6 +600,22 @@
 </html>
 @functions{
     DoChoiXeMay.Models.Model1 db = new DoChoiXeMay.Models.Model1();
+    public int CountProject()
+    {
+        int kqp = db.ProjectTeKs.OrderByDescending(kh => kh.Id)
+                    .Skip(0)
+                    .Take(7)
+                    .Count();
+        return kqp;
+    }
+    public List<DoChoiXeMay.Models.ProjectTeK> ListProject()
+    {
+        return db.ProjectTeKs
+            .OrderByDescending(kh => kh.Id)
+            .Skip(0)
+            .Take(8)
+            .ToList();
+    }
     public int CountMsg()
     {
         var uid = int.Parse(Session["UserId"].ToString());

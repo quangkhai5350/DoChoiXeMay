@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web;
 
@@ -99,6 +100,14 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 _context.ProjectUserDetails.Add(model);
                 var kq = _context.SaveChanges();
                 if (kq > 0) {
+                    var project = _context.ProjectTeKs.Find(ProjectDetail.ProjectId);
+                    if (project != null && project.TrangthaiId==5) {
+                        project.TrangthaiId = 2;
+                        project.NgayCapNhat = DateTime.Now;
+                        _context.Entry(project).State = EntityState.Modified;
+                        _context.SaveChanges();
+                        var kqp = UpdatetrangthaiProDetail(project.Id);
+                    }
                     return true;
                 }return false;
             }
@@ -124,6 +133,69 @@ namespace DoChoiXeMay.Areas.Admin.Data
             var model = _context.ProjectDetails.FirstOrDefault(kh => kh.ProjectId == project 
                         && kh.UserId==user);
             return model;
+        }
+        public int getCountCVProject(int project) {
+            int count = 0;
+            var getProjectDetail = _context.ProjectDetails.Where(kh => kh.ProjectId == project).ToList();
+            if (getProjectDetail.Count() > 0)
+            {
+                foreach (var item in getProjectDetail)
+                {
+                    var getCount1User = _context.ProjectUserDetails.Where(kh => kh.ProjectDetailId == item.Id).ToList();
+                    count += getCount1User.Count();
+                }
+            }
+            return count;
+        }
+        public int getCountCVProjectHoanThanh(int project)
+        {
+            int count = 0;
+            var getProjectDetail = _context.ProjectDetails.Where(kh => kh.ProjectId == project).ToList();
+            if (getProjectDetail.Count() > 0)
+            {
+                foreach (var item in getProjectDetail)
+                {
+                    var getCount1User = _context.ProjectUserDetails.Where(kh => kh.ProjectDetailId == item.Id && kh.TrangthaiId == 5).ToList();
+                    count += getCount1User.Count();
+                }
+            }
+            return count;
+        }
+        public bool UpdatetrangthaiProDetail(int pro)
+        {
+            var project = _context.ProjectTeKs.Find(pro);
+            var ProjectDetailss = _context.ProjectDetails.Where(kh => kh.ProjectId == pro).ToList();
+            if (ProjectDetailss.Count() > 0)
+            {
+                foreach (var item in ProjectDetailss)
+                {
+                    var pjd = _context.ProjectDetails.Find(item.Id);
+                    if (pjd.TrangthaiId != project.TrangthaiId)
+                    {
+                        pjd.TrangthaiId = project.TrangthaiId;
+                        pjd.NgayUpdate = DateTime.Now;
+                        _context.Entry(pjd).State = EntityState.Modified;
+                        _context.SaveChanges();
+                    }
+                }
+            }
+            return true;
+        }
+        public int updatephantramht(int pro)
+        {
+            int count = 0;
+            var teK = _context.ProjectTeKs.Find(pro);
+            int getCVTeK = new Data.ProjectTeKData().getCountCVProject(teK.Id);
+            int getCVTeKOK = new Data.ProjectTeKData().getCountCVProjectHoanThanh(teK.Id);
+            teK.PhantramHoanThanh = int.Parse(Math.Ceiling((1.0 * getCVTeKOK / getCVTeK) * 100).ToString());
+            if (teK.PhantramHoanThanh == 100)
+            {
+                teK.TrangthaiId = 5;
+            }
+            _context.Entry(teK).State = EntityState.Modified;
+            _context.SaveChanges();
+            count = teK.PhantramHoanThanh;
+            return count;
         }
     }
 }

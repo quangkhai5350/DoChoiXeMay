@@ -154,19 +154,19 @@
                                     {
                                         if (Pj.UserTek.Avatar != null && Pj.UserTek.Avatar.Trim() != "")
                                         {
-                                            <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
+                                            <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@Pj.UserTek.UserName">
                                                 <img src="~/Content/imgTeK/@Pj.UserTek.Avatar" style="width: 20px; height: 20px;" alt="team1">
                                             </a>
                                         }
                                         else
                                         {
-                                            <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Tompson">
+                                            <a class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@Pj.UserTek.UserName">
                                                 <img src="~/Content/imgTeK/Namn.png" alt="team1">
                                             </a>
                                         }
                                     }
                                     <a style="background-color:black;cursor:pointer" onclick="showdetail(@Cname,@Pname)" class="avatar avatar-xs rounded-circle @Cname khai" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Xem Chi Tiết">
-                                        +
+                                        <span class="icon-case"><i class="glyphicon glyphicon-arrow-down"></i></span>
                                     </a>
                                 }
 
@@ -253,6 +253,7 @@
                                     var PUDId = PUD.Id.ToString();
                                     <tr class="@Pname canhgiua" hidden style="border-bottom: 2px solid black !important;background-color:darkorange">
                                         <td colspan="2" style="padding: 2px; background-color: antiquewhite !important">
+                                            <a id="Delete" style="display:none" class="btn btn-danger btn-userdetail" href="/Admin/ProjectTeK/AdminDeleteProjectUserDetail/@PUD.Id.ToString()" onclick="return confirm('Bạn muốn xóa (cưỡng bức) công việc này ???')">Xóa CV</a>
                                             @if (Item.UserId == int.Parse(Session["UserId"].ToString()) || Pj.UserId == int.Parse(Session["UserId"].ToString()))
                                             {
                                                 if (PUD.TrangthaiId != 5)

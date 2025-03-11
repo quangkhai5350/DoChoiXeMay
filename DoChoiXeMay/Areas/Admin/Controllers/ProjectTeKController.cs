@@ -84,6 +84,37 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public ActionResult AdminDeleteProjectUserDetail(string id)
+        {
+            var userid = int.Parse(Session["UserId"].ToString());
+            //
+            var Deid = new Guid(id);
+            var model = dbc.ProjectUserDetails.Find(Deid);
+            var prodetail = dbc.ProjectDetails.Find(model.ProjectDetailId);
+            var user = dbc.UserTeks.Find(prodetail.UserId);
+            try
+            {
+                dbc.ProjectUserDetails.Remove(model);
+                dbc.SaveChanges();
+                Session["ThongBaoProject"] = "Xóa (cưỡng bức) công việc: '" + model.CongViec + "- của " + user.UserName + "' thành công.";
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Delete (cưỡng bức) Công Việc -" + model.CongViec + " cho User: " + user.UserName + "-" + DateTime.Now.ToString(), "");
+                var kq = new Data.ProjectTeKData().updatephantramht(prodetail.ProjectId);
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                var mess = ex.Message;
+                Session["ThongBaoProject"] = "(Có lỗi)Xóa Công Việc cho: " + user.UserName + " không thành công !!!.";
+                return RedirectToAction("Index");
+            }
+        }
         public ActionResult DeleteProjectUserDetail(string id)
         {
             var userid = int.Parse(Session["UserId"].ToString());
@@ -98,9 +129,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     dbc.ProjectUserDetails.Remove(model);
                     dbc.SaveChanges();
-                    Session["ThongBaoProject"] = "Xóa công việc: '" + model.CongViec+"- của "+user.UserName + "' thành công.";
+                    Session["ThongBaoProject"] = "Xóa công việc: '" + model.CongViec + "- của " + user.UserName + "' thành công.";
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                                 , Session["UserName"].ToString(), "Delete Công Việc -" + model.CongViec + " cho User: " + user.UserName + "-" + DateTime.Now.ToString(), "");
+                    var kq = new Data.ProjectTeKData().updatephantramht(prodetail.ProjectId);
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
                     if (requestUri != null)
@@ -109,11 +141,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-                else {
+                else
+                {
                     Session["ThongBaoProject"] = "(Công Việc đã hoàn thành) Không thể xóa!!!.";
                     return RedirectToAction("Index");
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -177,13 +210,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             if (pd != null)//đã tồn tại
                             {
                                 var p = dbc.ProjectDetails.Find(pd.Id);
-                                if (leadid == ProjectDetail[j] && p.Leader==false)
+                                if (leadid == ProjectDetail[j] && p.Leader == false)
                                 {
                                     p.Leader = true;
                                     p.NgayUpdate = DateTime.Now;
                                     var updatep = new ProjectTeKData().UPdateProjectDetail(p);
                                 }
-                                if(p.Leader==true && leadid != ProjectDetail[j])
+                                if (p.Leader == true && leadid != ProjectDetail[j])
                                 {
                                     p.Leader = false;
                                     p.NgayUpdate = DateTime.Now;
@@ -206,7 +239,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         @Session["ThongBaoProject"] = "Update thành công Project: " + teK.NameProject;
                         var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "Update thành công Project: " + teK.NameProject, "");
-                        
+
                         //tro lai trang truoc do 
                         var requestUri = Session["requestUri"] as string;
                         if (requestUri != null)
@@ -215,21 +248,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         }
                     }
                     //update projectDetail trạng thái
-                    var ProjectDetailss = dbc.ProjectDetails.Where(kh => kh.ProjectId == teK.Id).ToList();
-                    if (ProjectDetailss.Count() > 0)
-                    {
-                        for (int i = 0; i < ProjectDetailss.Count(); i++)
-                        {
-                            var pjd = dbc.ProjectDetails.Find(ProjectDetailss[i].Id);
-                            if (pjd.TrangthaiId != teK.TrangthaiId)
-                            {
-                                pjd.TrangthaiId = teK.TrangthaiId;
-                                pjd.NgayUpdate = DateTime.Now;
-                                dbc.Entry(pjd).State = EntityState.Modified;
-                                dbc.SaveChanges();
-                            }
-                        }
-                    }
+                    var kqp = new Data.ProjectTeKData().UpdatetrangthaiProDetail(teK.Id);
+
                 }
                 else
                 {
@@ -267,14 +287,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult InsertProjectUserDetail(string CV1, string CV2, string CV3)
         {
             var detailId = new Guid(Session["PDid"].ToString());
-            var ProjectDetail=dbc.ProjectDetails.Find(detailId);
+            var ProjectDetail = dbc.ProjectDetails.Find(detailId);
+            var project = dbc.ProjectTeKs.Find(ProjectDetail.ProjectId);
             try
             {
-                if(CV1.Trim() != "")
+                if (CV1.Trim() != "")
                 {
                     var kq1 = new Data.ProjectTeKData().InsertProjecUserDetail(CV1, Session["PDid"].ToString());
                 }
-                if(CV2.Trim() != "")
+                if (CV2.Trim() != "")
                 {
                     var kq2 = new Data.ProjectTeKData().InsertProjecUserDetail(CV2, Session["PDid"].ToString());
                 }
@@ -283,7 +304,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var kq3 = new Data.ProjectTeKData().InsertProjecUserDetail(CV3, Session["PDid"].ToString());
                 }
                 var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
-                @Session["ThongBaoProject"] = "Insert công việc cho " + usertek.UserName + " thành công.";
+                var userid = int.Parse(Session["UserId"].ToString());
+                @Session["ThongBaoProject"] = "Insert công việc cho " + usertek.UserName + "-Dự Án :"+project.NameProject+"- thành công.";
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Insert Cong Viec cho : " + ProjectDetail.UserTek.UserName + "-Dự Án :" + project.NameProject, "");
+                var kq = new Data.ProjectTeKData().updatephantramht(project.Id);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -296,14 +321,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("InsertProjectUserDetail");
             }
         }
-        public ActionResult UpdateProjectUserDetail(string Id,int TrangthaiId,int hoanthanh)
+        public ActionResult UpdateProjectUserDetail(string Id, int TrangthaiId, int hoanthanh)
         {
             try
             {
                 var model = dbc.ProjectUserDetails.Find(new Guid(Id));
                 var ProjectDetail = dbc.ProjectDetails.Find(model.ProjectDetailId);
                 var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
-                if (ProjectDetail.TrangthaiId == 2) {
+                if (ProjectDetail.TrangthaiId == 2)
+                {
                     if (hoanthanh == 5)
                     {
                         model.TrangthaiId = 5;
@@ -318,12 +344,24 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     //if hoàn thành công việc, update % hoàn thành cho projectTeK
                     if (hoanthanh == 5)
                     {
-                        var teK= dbc.ProjectTeKs.Find(ProjectDetail.ProjectId);
-                        teK.PhantramHoanThanh = 111;
-                        dbc.Entry(teK).State = EntityState.Modified;
-                        dbc.SaveChanges();
+                        var kq= new Data.ProjectTeKData().updatephantramht(ProjectDetail.ProjectId);
+                        var teK = dbc.ProjectTeKs.Find(ProjectDetail.ProjectId);
+                        var kqp = new Data.ProjectTeKData().UpdatetrangthaiProDetail(teK.Id);
+                        //int getCVTeK = new Data.ProjectTeKData().getCountCVProject(teK.Id);
+                        //int getCVTeKOK = new Data.ProjectTeKData().getCountCVProjectHoanThanh(teK.Id);
+                        //teK.PhantramHoanThanh = int.Parse(Math.Ceiling((1.0 * getCVTeKOK / getCVTeK) * 100).ToString());
+                        //if (teK.PhantramHoanThanh == 100)
+                        //{
+                        //    teK.TrangthaiId = 5;
+                        //}
+                        //dbc.Entry(teK).State = EntityState.Modified;
+                        //dbc.SaveChanges();
+                        
                     }
                     @Session["ThongBaoProject"] = "Update trạng thái công việc cho " + usertek.UserName + " thành công.";
+                    var userid = int.Parse(Session["UserId"].ToString());
+                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Update thành công trang thai Cong Viec cho : " + ProjectDetail.UserTek.UserName, "");
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
                     if (requestUri != null)
@@ -334,12 +372,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
                 else
                 {
-                    @Session["ThongBaoProject"] = "(Thành viên "+usertek.UserName+" không ở trạng thái 'Đang diễn ra')Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
+                    @Session["ThongBaoProject"] = "(Thành viên " + usertek.UserName + " không ở trạng thái 'Đang diễn ra')Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
                     return RedirectToAction("Index");
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var message = ex.Message;
                 var model = dbc.ProjectUserDetails.Find(new Guid(Id));
@@ -349,19 +387,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult UpdateProjectDetail(string Id) {
-            
+        public ActionResult UpdateProjectDetail(string Id)
+        {
+
             var ProjectDetail = dbc.ProjectDetails.Find(new Guid(Id));
             var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
-            
+
             if (ProjectDetail.TrangthaiId != 4)
             {
                 ProjectDetail.TrangthaiId = 4;
-            }else ProjectDetail.TrangthaiId = 2;
+            }
+            else ProjectDetail.TrangthaiId = 2;
             ProjectDetail.NgayUpdate = DateTime.Now;
             dbc.Entry(ProjectDetail).State = EntityState.Modified;
-            var kq=dbc.SaveChanges();
-            if (kq>0)
+            var kq = dbc.SaveChanges();
+            if (kq > 0)
             {
                 @Session["ThongBaoProject"] = "Update trạng thái công việc cho " + usertek.UserName + " thành công.";
             }
@@ -369,8 +409,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 @Session["ThongBaoProject"] = "(Có Lỗi)Update trạng thái công việc cho " + usertek.UserName + " thất bại !!!.";
             }
-                
-            
+
+
             return RedirectToAction("Index");
         }
         [HttpPost]

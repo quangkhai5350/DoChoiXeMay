@@ -130,17 +130,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-        //public ActionResult LoadKyXuatNhap()
-        //{
-        //    var Kyxuatnhap = dbc.KyXuatNhaps.Where(kh => kh.AdminXNPUSH == true && kh.Id > 1
-        //         && dbc.ChiTietTCs.FirstOrDefault(nn => nn.IdKyxuatnhap == kh.Id) == null)
-        //             .OrderByDescending(kh => kh.NgayAuto).Select(kh => new
-        //             {
-        //                 Id = kh.Id,
-        //                 TenKy = kh.TenKy
-        //             });
-        //    return Json(Kyxuatnhap, JsonRequestBehavior.AllowGet);
-        //}
         public ActionResult getTongTien(int Id)
         {
             var tong = new XuatNhapData().getTongTienAuto(Id);
