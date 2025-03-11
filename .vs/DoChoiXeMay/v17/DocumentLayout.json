@@ -1,30 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\GitHubDestop\\DoChoiXeMay\\",
+  "WorkspaceRootPath": "D:\\Git pm\\DoChoiXeMay\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\areas\\admin\\views\\projecttek\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\projecttek\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\controllers\\projecttekcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|D:\\Git pm\\DoChoiXeMay\\dochoixemay\\areas\\admin\\controllers\\projecttekcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\controllers\\projecttekcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|d:\\git pm\\dochoixemay\\dochoixemay\\areas\\admin\\views\\projecttek\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\projecttek\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|D:\\Git pm\\DoChoiXeMay\\dochoixemay\\areas\\admin\\data\\projecttekdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\data\\projecttekdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|D:\\Git pm\\DoChoiXeMay\\dochoixemay\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\views\\projecttek\\updateprojecttek.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\projecttek\\updateprojecttek.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|d:\\git pm\\dochoixemay\\dochoixemay\\areas\\admin\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\views\\thuchi\\getlistthuchitek.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\thuchi\\getlistthuchitek.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\data\\projecttekdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\data\\projecttekdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|d:\\git pm\\dochoixemay\\dochoixemay\\areas\\admin\\views\\home\\getlistusertek.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\home\\getlistusertek.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,80 +34,82 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UpdateProjectTeK.cshtml",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\UpdateProjectTeK.cshtml",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\UpdateProjectTeK.cshtml",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\UpdateProjectTeK.cshtml",
-              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\UpdateProjectTeK.cshtml",
-              "ViewState": "AgIAAI0AAAAAAAAAAAAAAJwAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-10T08:58:33.143Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "GetListThuChiTek.cshtml",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ThuChi\\GetListThuChiTek.cshtml",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\ThuChi\\GetListThuChiTek.cshtml",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ThuChi\\GetListThuChiTek.cshtml",
-              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\ThuChi\\GetListThuChiTek.cshtml",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAAANMAAAAZAAAAAAAAAA==",
+              "Title": "_Layoutadmin.cshtml",
+              "DocumentMoniker": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Shared\\_Layoutadmin.cshtml",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Shared\\_Layoutadmin.cshtml",
+              "ToolTip": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Shared\\_Layoutadmin.cshtml",
+              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\Shared\\_Layoutadmin.cshtml",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAAAFYAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-10T08:46:05.939Z"
+              "WhenOpened": "2025-03-11T03:21:25.495Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
+              "Title": "GetListUserTeK.cshtml",
+              "DocumentMoniker": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Home\\GetListUserTeK.cshtml",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Home\\GetListUserTeK.cshtml",
+              "ToolTip": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Home\\GetListUserTeK.cshtml",
+              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\Home\\GetListUserTeK.cshtml",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-11T03:09:59.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ProjectTeKData.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
+              "DocumentMoniker": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
+              "ToolTip": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAArwCwAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAAAC0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-08T09:26:34.736Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ProjectTeKController.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\ProjectTeKController.cs",
+              "DocumentMoniker": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\ProjectTeKController.cs",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\ProjectTeKController.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\ProjectTeKController.cs",
+              "ToolTip": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\ProjectTeKController.cs",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\ProjectTeKController.cs",
-              "ViewState": "AgIAADkBAAAAAAAAAAAAAEgBAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAADgBAAAAAAAAAAAYwEIBAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T03:10:25.379Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\Index.cshtml",
+              "DocumentMoniker": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\Index.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\Index.cshtml",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\Index.cshtml",
+              "ToolTip": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\Index.cshtml",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\ProjectTeK\\Index.cshtml",
-              "ViewState": "AgIAAC8BAAAAAAAAAAAAAD0BAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABQBAAAAAAAAAAAAACQBAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-06T02:52:27.071Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "HomeController.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\HomeController.cs",
+              "DocumentMoniker": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Controllers\\HomeController.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\HomeController.cs",
               "RelativeToolTip": "DoChoiXeMay\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAqwGAAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAYwGAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T03:18:11.703Z",
               "EditorCaption": ""

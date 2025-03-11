@@ -28,7 +28,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var userid = int.Parse(Session["UserId"].ToString());
             ProjectTeK model = new ProjectTeK();
             model.NameProject = "New ProjectTek " + DateTime.Now;
-            model.Giaithich = "Giải thích là kiểu bài tập làm văn có nhiệm vụ trình bày, giảng giải, cắt nghĩa về nội dung, lí do, quy luật, ý nghĩa của các hiện tượng, sự vật và lời nói của con người.";
+            model.Giaithich = "Giải thích là kiểu bài tập làm văn có nhiệm vụ trình bày, giảng giải, cắt nghĩa về nội dung, sự vật và lời nói của con người.";
             model.DateBegin = DateTime.Now;
             model.DateEnd = DateTime.Now.AddMonths(3);
             model.Uutien = true;
@@ -315,6 +315,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     model.NgayUpdate = DateTime.Now;
                     dbc.Entry(model).State = EntityState.Modified;
                     dbc.SaveChanges();
+                    //if hoàn thành công việc, update % hoàn thành cho projectTeK
+                    if (hoanthanh == 5)
+                    {
+                        var teK= dbc.ProjectTeKs.Find(ProjectDetail.ProjectId);
+                        teK.PhantramHoanThanh = 111;
+                        dbc.Entry(teK).State = EntityState.Modified;
+                        dbc.SaveChanges();
+                    }
                     @Session["ThongBaoProject"] = "Update trạng thái công việc cho " + usertek.UserName + " thành công.";
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
