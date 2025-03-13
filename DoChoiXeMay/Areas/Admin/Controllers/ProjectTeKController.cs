@@ -84,7 +84,30 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult AdminDeleteProjectUserDetail(string id)
+        public ActionResult AdminDeleteProjectDetail(string id)
+        {
+            var userid = int.Parse(Session["UserId"].ToString());
+            //
+            var Deid = new Guid(id);
+            var model = dbc.ProjectDetails.Find(Deid);
+            var modeltek = dbc.ProjectTeKs.Find(model.ProjectId);
+            var user = dbc.UserTeks.Find(model.UserId);
+            try
+            {
+                dbc.ProjectDetails.Remove(model);
+                dbc.SaveChanges();
+                Session["ThongBaoProject"] = "Xóa (cưỡng bức) User cho project: '" + modeltek.NameProject +"' thành công.";
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Xóa (cưỡng bức) User cho project: '" + modeltek.NameProject + "-" + DateTime.Now.ToString(), "");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex) {
+                var mess = ex.Message;
+                Session["ThongBaoProject"] = "(Có lỗi)Xóa User tham gia của Project: " + modeltek.NameProject + " không thành công !!!.";
+                return RedirectToAction("Index");
+            }
+        }
+            public ActionResult AdminDeleteProjectUserDetail(string id)
         {
             var userid = int.Parse(Session["UserId"].ToString());
             //
@@ -100,6 +123,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "Delete (cưỡng bức) Công Việc -" + model.CongViec + " cho User: " + user.UserName + "-" + DateTime.Now.ToString(), "");
                 var kq = new Data.ProjectTeKData().updatephantramht(prodetail.ProjectId);
+                if (kq == 100)
+                {
+                    var kqp = new Data.ProjectTeKData().UpdatetrangthaiProDetail(prodetail.ProjectId);
+                }
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
                 if (requestUri != null)
@@ -133,6 +160,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                                 , Session["UserName"].ToString(), "Delete Công Việc -" + model.CongViec + " cho User: " + user.UserName + "-" + DateTime.Now.ToString(), "");
                     var kq = new Data.ProjectTeKData().updatephantramht(prodetail.ProjectId);
+                    if (kq == 100)
+                    {
+                        var kqp = new Data.ProjectTeKData().UpdatetrangthaiProDetail(prodetail.ProjectId);
+                    }
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
                     if (requestUri != null)
