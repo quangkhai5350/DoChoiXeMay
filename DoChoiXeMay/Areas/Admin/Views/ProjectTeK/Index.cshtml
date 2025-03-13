@@ -197,7 +197,9 @@
                             var ProjectUserDetail = new ProjectTeKData().getlistProjectUserDetail(Pj.Id.ToString());
                             var leader = Pj.Leader ? "(**Leader**)" : "(Member)";
                             <tr class="@Pname canhgiua" hidden style="border-bottom: 2px solid black !important;background-color:aquamarine">
-                                <td style="background-color: antiquewhite !important"></td>
+                                <td style="background-color: antiquewhite !important">
+                                    <a id="Delete" style="display:none" class="btn btn-danger btn-userdetail" href="/Admin/ProjectTeK/AdminDeleteProjectDetail/@Pj.Id.ToString()" onclick="return confirm('Bạn muốn xóa (cưỡng bức) user này ???')">Xóa User</a>
+                                </td>
                                 <td>@Pj.UserTek.UserName@leader</td>
                                 <td>Tham gia:@Html.FormatValue(Pj.NgayBatDau, "{0:dd/MM/yyyy}")</td>
 
