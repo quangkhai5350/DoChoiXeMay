@@ -239,7 +239,7 @@
                                         {
                                             <a id="tamdung" class="btn btn-warning" href="/Admin/ProjectTeK/UpdateProjectDetail/@Pj.Id.ToString()" onclick="return confirm('Bạn muốn tạm dừng tất cả công việc của @Pj.UserTek.UserName ??')">Tạm Dừng CV</a>
                                         }
-                                        else
+                                        if (Pj.TrangthaiId == 4)
                                         {
                                             <a id="tieptuc" class="btn btn-warning" href="/Admin/ProjectTeK/UpdateProjectDetail/@Pj.Id.ToString()" onclick="return confirm('Bạn muốn @Pj.UserTek.UserName quay lại với công việc !!!')">Tiếp Tục CV</a>
                                         }

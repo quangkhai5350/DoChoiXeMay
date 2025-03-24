@@ -60,14 +60,22 @@
                             {
                                 if (Chitiet.Count() > 0)
                                 {
-                                    <a class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek/@Item.Id" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
-                                        Đẩy Xuất Nhập Đến TEK
+                                    <a title="Sản phẩm thông thường" class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek/@Item.Id" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
+                                        Đẩy Đến XN TEK và TC TEK
+                                    </a>
+                                    <hr />
+                                    <a style="background-color:burlywood" title="Nhập sản phẩm do TeK tạo ra, hoặc Xuất(tặng)" class="btn btn-default" href="/Admin/XuatNhap/DayXNTek/@Item.Id" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK(Không có TC) ??')">
+                                        Đẩy Đến XN TEK(Không có TC)
                                     </a>
                                 }
                                 else
                                 {
-                                    <a class="btn btn-default" onclick="return confirm('Bạn Chưa Có Hàng Hóa để đẩy lên Tek.!!!')">
-                                        Đẩy Xuất Nhập Đến TEK
+                                    <a title="Sản phẩm thông thường" class="btn btn-default" onclick="return confirm('Bạn Chưa Có Hàng Hóa để đẩy lên Tek.!!!')">
+                                        Đẩy Đến XN TEK và TC TEK
+                                    </a>
+                                    <hr />
+                                    <a style="background-color:burlywood" title="Nhập sản phẩm do TeK tạo ra, hoặc Xuất(tặng)" class="btn btn-default" onclick="return confirm('Bạn Chưa Có Hàng Hóa để đẩy lên Tek.!!!')">
+                                        Đẩy Đến XN TEK(Không có TC)
                                     </a>
                                 }
 
@@ -184,7 +192,6 @@
                                            onclick="return confirm('Bạn Không thể Xóa @ct.SoLuong @tenHH khi đã yêu cầu đẩy')">
                                             <span class="glyphicon glyphicon-trash" style="font-size:10px"></span>
                                         </a>
-
                                     }
                                     else
                                     {
@@ -210,7 +217,6 @@
                             </p>
                             <hr />
                         }
-
                     </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
@@ -234,7 +240,6 @@
                                 <hr />
                             }
                         }
-
                     </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
@@ -249,7 +254,6 @@
                                 <hr />
                             }
                         }
-
                     </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
@@ -264,7 +268,6 @@
 
                             }
                         }
-
                     </td>
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
@@ -276,10 +279,8 @@
                         }
                     </td>
                 </tr>
-
             }
         </tbody>
-
     </table>
 
 </div>

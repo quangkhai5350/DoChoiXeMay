@@ -104,7 +104,7 @@
 <script>
     $(function () {
         pageNo = 0;
-        pageSize = 10;
+        pageSize = 15;
         TongSP = 0;
         var tungay = $("#tungay").val();
         var denngay = $("#denngay").val();
@@ -159,7 +159,7 @@
         });
         $("#SelectTC").change(function () {
             pageNo = 0;
-            pageSize = 9;
+            pageSize = 15;
             TongSP = 0;
             TCC = $("#SelectTC").val();
             TNO = $('#SelectNo').val();
@@ -170,7 +170,7 @@
         });
         $("#SelectNo").change(function () {
             pageNo = 0;
-            pageSize = 9;
+            pageSize = 15;
             TongSP = 0;
             TCC = $("#SelectTC").val();
             TNO = $('#SelectNo').val();
@@ -182,7 +182,7 @@
         $("#tungay").change(function () {
             if ($("#tungay").val() != "" && $("#denngay").val() != "" && $("#tungay").val() <= $("#denngay").val()) {
                 pageNo = 0;
-                pageSize = 9;
+                pageSize = 15;
                 TongSP = 0;
                 TCC = $("#SelectTC").val();
                 TNO = $('#SelectNo').val();
@@ -195,7 +195,7 @@
         $("#denngay").change(function () {
             if ($("#tungay").val() != "" && $("#denngay").val() != "" && $("#tungay").val() <= $("#denngay").val()) {
                 pageNo = 0;
-                pageSize = 9;
+                pageSize = 15;
                 TongSP = 0;
                 TCC = $("#SelectTC").val();
                 TNO = $('#SelectNo').val();
@@ -233,7 +233,7 @@
     };
     function TimKiemsp() {
         pageNo = 0;
-        pageSize = 9;
+        pageSize = 15;
         TongSP = 0;
         TCC = $('#SelectTC').val();
         TNO = $('#SelectNo').val();
