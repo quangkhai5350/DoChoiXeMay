@@ -60,11 +60,11 @@
                             {
                                 if (Chitiet.Count() > 0)
                                 {
-                                    <a title="Sản phẩm thông thường" class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek/@Item.Id" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
+                                    <a title="Sản phẩm thông thường" class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek?id=@Item.Id&thuchi=0" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
                                         Đẩy Đến XN TEK và TC TEK
                                     </a>
                                     <hr />
-                                    <a style="background-color:burlywood" title="Nhập sản phẩm do TeK tạo ra, hoặc Xuất(tặng)" class="btn btn-default" href="/Admin/XuatNhap/DayXNTek/@Item.Id" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK(Không có TC) ??')">
+                                    <a style="background-color:burlywood" title="Nhập sản phẩm do TeK tạo ra, hoặc Xuất tặng, cho mượn,..." class="btn btn-default" href="/Admin/XuatNhap/DayXuatNhapTek?id=@Item.Id&thuchi=1" onclick="return confirm('Bạn yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK(Không có TC) ??')">
                                         Đẩy Đến XN TEK(Không có TC)
                                     </a>
                                 }
@@ -74,7 +74,7 @@
                                         Đẩy Đến XN TEK và TC TEK
                                     </a>
                                     <hr />
-                                    <a style="background-color:burlywood" title="Nhập sản phẩm do TeK tạo ra, hoặc Xuất(tặng)" class="btn btn-default" onclick="return confirm('Bạn Chưa Có Hàng Hóa để đẩy lên Tek.!!!')">
+                                    <a style="background-color:burlywood" title="Nhập sản phẩm do TeK tạo ra, hoặc Xuất tặng, cho mượn,..." class="btn btn-default" onclick="return confirm('Bạn Chưa Có Hàng Hóa để đẩy lên Tek.!!!')">
                                         Đẩy Đến XN TEK(Không có TC)
                                     </a>
                                 }
@@ -90,7 +90,7 @@
                                         <span>Đang chờ Admin Xác Nhận</span>
                                     </a>
                                     <hr />
-                                    <a class="btn btn-danger" href="/Admin/XuatNhap/DayXuatNhapTek/@Item.Id" onclick="return confirm('Bạn muốn ngưng yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
+                                    <a class="btn btn-danger" href="/Admin/XuatNhap/DayXuatNhapTek?id=@Item.Id&thuchi=1" onclick="return confirm('Bạn muốn ngưng yêu cầu Đẩy Kỳ-@Item.TenKy- đến TEK ??')">
                                         click: Hủy Yêu Cầu Đẩy
                                     </a>
                                 }

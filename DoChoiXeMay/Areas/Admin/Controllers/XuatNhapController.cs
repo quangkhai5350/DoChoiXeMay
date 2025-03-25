@@ -79,8 +79,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu",model.IdMaTC);
             return View(model);
         }
-        public ActionResult DayXuatNhapTek(int id)
+        public ActionResult DayXuatNhapTek(int id,int thuchi)
         {
+            //có thuchi => thuchi=0
             var uid = int.Parse(Session["UserId"].ToString());
             var XN = dbc.KyXuatNhaps.Find(id);
             if(XN != null)
@@ -102,11 +103,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         }
 
                     }
-                    //else
-                    //{
-                    //    XN.UPush = false;
-                    //    XN.AdminXNPUSH = true;
-                    //}
                 }
                 else
                 {
@@ -119,106 +115,56 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     {
                         XN.UPush = false;
                     }
+                    XN.STT = thuchi.ToString();//mới 25/3/2025
                 }
-                
                 dbc.Entry(XN).State = EntityState.Modified;
                 var update = dbc.SaveChanges();
                 if (update > 0)
                 {
-                    if(XN.UPush==true && XN.AdminXNPUSH == true)
+                    if (thuchi == 0)//Có thuchi
                     {
-                        var kqins= InsertThuChiTeKauto(id);
-                    }
-                    //Insert Nhật Ký
-                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                            , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXuatNhapTek - Đẩy= " + XN.UPush, "");
-                    //Thoong bao Msg cho SubAd
-                    if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
-                    {
-                        var sms = Session["UserName"].ToString().ToUpper()+" đã yêu cầu đẩy -"+ XN.TenKy +"- của mình lên Tek."+ XN.NgayAuto.ToString("{dd/MM/yyyy}")+
-                            "-ADMIN vào Bảng XN của mình để xác nhận.";
-                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
-                    }
-                    if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
-                    {
-                        var sms = Session["UserName"].ToString().ToUpper() + " đã Hủy yêu cầu đẩy -"+ XN.TenKy +"- lên Tek của mình." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
-                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
-                    }
-                    Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXuatNhapTek thành công.";
-                    //tro lai trang truoc do 
-                    var requestUri = Session["requestUri"] as string;
-                    if (requestUri != null)
-                    {
-                        return Redirect(requestUri);
-                    }
-                }
-                
-            }
-            else
-            {
-                Session["ThongBaoXuatNhapUser"] = "Kỳ Xuất nhập không tồn tại !!!";
-            }
-            
-            
-            return RedirectToAction("ListXuatNhapUser");
-        }
-        public ActionResult DayXNTek(int id)
-        {
-            var uid = int.Parse(Session["UserId"].ToString());
-            var XN = dbc.KyXuatNhaps.Find(id);
-            if (XN != null)
-            {
-                if (Session["quyen"].ToString() == "Admin")
-                {
-                    //Admin thì đẩy lên luôn
-                    if (XN.UPush == false)
-                    {
-                        XN.UPush = true;
-                        XN.AdminXNPUSH = true;
-                        var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
-                        //add vao bang hang hoa
-                        for (int i = 0; i < modelct.Count(); i++)
+                        if (XN.UPush == true && XN.AdminXNPUSH == true)
                         {
-                            var kq = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
-                                modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong, modelct[i].Gianhap,
-                                modelct[i].Hinh1, modelct[i].Hinh2, modelct[i].Hinh3);
+                            var kqins = InsertThuChiTeKauto(id);
                         }
+                        //Insert Nhật Ký
+                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXuatNhapTek - Đẩy= " + XN.UPush, "");
+                        //Thoong bao Msg cho SubAd
+                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
+                        {
+                            var sms = Session["UserName"].ToString().ToUpper() + " đã yêu cầu đẩy -" + XN.TenKy + "- của mình lên Tek." + XN.NgayAuto.ToString("{dd/MM/yyyy}") +
+                                "-ADMIN vào Bảng XN của mình để xác nhận.";
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
+                        }
+                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
+                        {
+                            var sms = Session["UserName"].ToString().ToUpper() + " đã Hủy yêu cầu đẩy -" + XN.TenKy + "- lên Tek của mình." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
+                        }
+                        Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXuatNhapTek thành công.";
                     }
-                }
-                else
-                {
-                    //Sub thì phải xin, Nếu lên rồi thì phải "Thu Hồi"
-                    if (XN.UPush == false && XN.AdminXNPUSH == false)
+                    else
                     {
-                        XN.UPush = true;
+                        //Nhập Sản phẩm do TeK tạo ra, hoặc xuất tặng, cho mượn,...
+                        //Không có InsertThuChiTeKauto(id)
+                        //Insert Nhật Ký
+                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXNTek(Không có TC) - Đẩy= " + XN.UPush, "");
+                        //Thoong bao Msg cho SubAd
+                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
+                        {
+                            var sms = Session["UserName"].ToString().ToUpper() + " đã yêu cầu đẩy -" + XN.TenKy + "- của mình lên Tek(Không có TC)." + XN.NgayAuto.ToString("{dd/MM/yyyy}") +
+                                "-ADMIN vào Bảng XN của mình để xác nhận.";
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
+                        }
+                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
+                        {
+                            var sms = Session["UserName"].ToString().ToUpper() + " đã Hủy yêu cầu đẩy -" + XN.TenKy + "- lên Tek(Không có TC) của mình." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
+                            var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
+                        }
+                        Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXNTek(Không có TC) thành công.";
                     }
-                    else if (XN.UPush == true && XN.AdminXNPUSH == false)
-                    {
-                        XN.UPush = false;
-                    }
-                }
-
-                dbc.Entry(XN).State = EntityState.Modified;
-                var update = dbc.SaveChanges();
-                if (update > 0)
-                {
-                    //Không có InsertThuChiTeKauto(id)
-                    //Insert Nhật Ký
-                    var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                            , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXNTek(Không có TC) - Đẩy= " + XN.UPush, "");
-                    //Thoong bao Msg cho SubAd
-                    if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
-                    {
-                        var sms = Session["UserName"].ToString().ToUpper() + " đã yêu cầu đẩy -" + XN.TenKy + "- của mình lên Tek(Không có TC)." + XN.NgayAuto.ToString("{dd/MM/yyyy}") +
-                            "-ADMIN vào Bảng XN của mình để xác nhận.";
-                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
-                    }
-                    if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
-                    {
-                        var sms = Session["UserName"].ToString().ToUpper() + " đã Hủy yêu cầu đẩy -" + XN.TenKy + "- lên Tek(Không có TC) của mình." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
-                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
-                    }
-                    Session["ThongBaoXuatNhapUser"] = "Thay đổi yêu cầu DayXNTek(Không có TC) thành công.";
                     //tro lai trang truoc do 
                     var requestUri = Session["requestUri"] as string;
                     if (requestUri != null)
@@ -226,7 +172,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         return Redirect(requestUri);
                     }
                 }
-
+                
             }
             else
             {
@@ -251,18 +197,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             cttc.HoaDon = XN.HoaDon;
             cttc.Filesave1 = XN.Filesave2;
             cttc.Filesave2 = XN.Filesave3;
-            ////coppy hinh
-            //if (XN.HoaDon != null && XN.HoaDon != "")
-            //{
-            //    string path = Server.MapPath("~/Content/imgxuatnhap/" + XN.HoaDon);
-            //    string destina = Server.MapPath("~/Content/imgthuchi/" + XN.HoaDon);
-            //    if (System.IO.File.Exists(path))
-            //    {
-            //        var coppy1 = Xstring.CopyFile(path, destina);
-            //        cttc.HoaDon = coppy1 == true ? XN.HoaDon : "";
-            //    }
-            //}
-            
+            //***
             cttc.NgayTC = XN.NgayXuatNhap;
             cttc.UserId = XN.UserId;
             var kqinsert = new Data.ThuChiData().InsertThuChiTeK(cttc, Session["quyen"].ToString(), Session["UserName"].ToString());
@@ -293,7 +228,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         var update = dbc.SaveChanges();
                         if (update > 0)
                         {
-                            var kqaotu = InsertThuChiTeKauto(id);
+                            if (XN.STT == "0")//Sản phẩm có thu chi
+                            {
+                                var kqaotu = InsertThuChiTeKauto(id);
+                            }
                             //Trừ vao bang hang hoa
                             var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
                             for (int i = 0; i < modelct.Count(); i++)
@@ -314,7 +252,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         var update = dbc.SaveChanges();
                         if (update > 0)
                         {
-                            var kqaotu = InsertThuChiTeKauto(id);
+                            if(XN.STT == "0")//Sản phẩm có thu chi
+                            {
+                                var kqaotu = InsertThuChiTeKauto(id);
+                            }
                             //add vao bang hang hoa
                             var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
                             for (int i = 0; i < modelct.Count(); i++)
@@ -420,7 +361,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 ViewBag.IdMaTC = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true && kh.XuatNhap == true), "Id", "GhiChu", XN.IdMaTC);
                 return View(model);
             }
-            
         }
         [HttpPost]
         public ActionResult InsertKyXuatNhap(KyXuatNhap XN)
