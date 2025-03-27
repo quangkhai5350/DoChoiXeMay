@@ -143,6 +143,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdMa = new SelectList(dbc.MaTCs.Where(kh => kh.SuDung == true), "Id", "GhiChu",model.IdMa);
 
             ViewBag.IdHT = new SelectList(dbc.HinhThucTCs.Where(kh => kh.SuDung == true), "Id", "TenHT",model.IdHT);
+            ViewBag.IdKyxuatnhap = new SelectList(dbc.KyXuatNhaps.Where(kh=>kh.AdminXNPUSH==true && kh.UYeuCauThuHoi==false),"Id","TenKy",model.IdKyxuatnhap);
             return View(model);
         }
         [HttpPost]
