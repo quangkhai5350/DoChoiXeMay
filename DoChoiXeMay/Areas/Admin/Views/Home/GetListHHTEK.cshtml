@@ -4,6 +4,7 @@
             <tr class="canhgiua" style="background-color: #00bcd4">
                 <th class="canhgiua" style="max-width: 15px">STT</th>
                 <th class="canhgiua">Tên Sản Phẩm</th>
+                <th class="canhgiua">Loại</th>
                 <th class="canhgiua">Số Lượng</th>
                 <th class="canhgiua" style="width:230px">Giá Nhập Cuối</th>
 
@@ -31,6 +32,16 @@
                         @if (Item.IDSize != 1)
                         {
                             <span> <span>-</span>size @Item.Size.TenSize</span>
+                        }
+                    </td>
+                    <td>
+                        @if (Item.IDKy == 1)
+                        {
+                            <span>NVL</span>
+                        }
+                        else
+                        {
+                            <span>SP</span>
                         }
                     </td>
                     <td>@Item.SoLuong</td>
