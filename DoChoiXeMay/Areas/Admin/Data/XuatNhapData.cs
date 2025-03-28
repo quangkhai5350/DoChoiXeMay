@@ -240,7 +240,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 {
                     HangHoa model = new HangHoa();
                     model.Ten = Ten;
-                    model.IDKy = 1;//không xài
+                    model.IDKy = 1;//NVL = 1; SP=0
                     model.SoLuong = soluong;
                     model.GiaNhap = gianhap;
                     model.NgayAuto = DateTime.Now;

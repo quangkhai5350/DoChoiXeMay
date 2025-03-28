@@ -173,13 +173,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
 
             ViewBag.Tongsp = model.Sum(kh => kh.SoLuong);
-            for (int i = 0; i < model.Count(); i++)
+            var model1= model.OrderBy(h => h.IDKy)
+                                .OrderBy(h=>h.IDMF)
+                                .ThenByDescending(h => h.SoLuong)
+                                .ThenByDescending(h=>h.NgayAuto)
+                                .ToList();
+            ViewBag.HHTEK = model1;
+            for (int i = 0; i < model1.Count(); i++)
             {
-                model[i].GhiChu = (i + 1).ToString();
-                tong=tong+ model[i].SoLuong * model[i].GiaNhap;
+                model1[i].GhiChu = (i + 1).ToString();
+                tong = tong + model1[i].SoLuong * model1[i].GiaNhap;
             }
-            ViewBag.HHTEK=model.OrderByDescending(h => h.Id).ToList();
-            
             ViewBag.TongLoai = model.Count();
             ViewBag.TongTien = tong;
             return PartialView();
