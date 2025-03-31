@@ -101,7 +101,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             {
                                 var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
                                     modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                if (kq == false)
+                                {
+                                    Session["ThongBaoXuatNhapUser"] = "Có Lỗi xuất hàng: "+ modelct[i].Ten + " không đủ đk để xuất!!!.";
+                                    //tro lai trang truoc do 
+                                    var requestUri = Session["requestUri"] as string;
+                                    if (requestUri != null)
+                                    {
+                                        return Redirect(requestUri);
+                                    }
+                                }
                             }
+                            
                         }
                         else
                         {
@@ -250,6 +261,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             {
                                 var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
                                     modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                if (kq == false)
+                                {
+                                    Session["ThongBaoXuatNhapUser"] = "Có Lỗi xuất hàng: " + modelct[i].Ten + " không đủ đk để xuất!!!.";
+                                    //tro lai trang truoc do 
+                                    var requestUrikh = Session["requestUri"] as string;
+                                    if (requestUrikh != null)
+                                    {
+                                        return Redirect(requestUrikh);
+                                    }
+                                    return RedirectToAction("ListXuatNhapUser");
+                                }
                             }
                             //Insert Nhật Ký
                             var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()

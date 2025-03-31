@@ -291,6 +291,10 @@ namespace DoChoiXeMay.Areas.Admin.Data
                         db.SaveChanges();
                         return true;
                     }
+                    if(modelhh.SoLuong < soluong)
+                    {
+                        return false;
+                    }
                 }
                     return true;
             }
