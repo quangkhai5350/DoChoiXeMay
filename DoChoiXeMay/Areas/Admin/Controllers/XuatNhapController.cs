@@ -97,25 +97,30 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         //add vao bang hang hoa
                         if (XN.XuatNhap)
                         {
-                            for (int i = 0; i < modelct.Count(); i++)
+                            //Kiểm tra số lượng bảng hh >= so luong xuất
+                            var kqktHH = Data.XuatNhapData.kiemtrasoluongHH(dbc, id);
+                            if (kqktHH == false)
                             {
-                                var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
-                                    modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
-                                if (kq == false)
+                                Session["ThongBaoXuatNhapUser"] = "Có Lỗi xuất hàng !!! HH trong bảng HH không tồn tại hoặc không đủ số lượng.";
+                                //tro lai trang truoc do
+                                return RedirectToAction("ListXuatNhapUser");
+                            }
+                            else
+                            {
+                                for (int i = 0; i < modelct.Count(); i++)
                                 {
-                                    Session["ThongBaoXuatNhapUser"] = "Có Lỗi xuất hàng: "+ modelct[i].Ten + " không đủ đk để xuất!!!.";
-                                    //tro lai trang truoc do 
-                                    var requestUri = Session["requestUri"] as string;
-                                    if (requestUri != null)
+                                    var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                    if (kq == false)
                                     {
-                                        return Redirect(requestUri);
+                                        Session["ThongBaoXuatNhapUserct"] = "Có Lỗi xuất hàng: " + modelct[i].Ten + " không đủ đk để xuất!!!.";
                                     }
                                 }
                             }
-                            
                         }
                         else
                         {
+                            //ky nhập + vào, không cần kiểm tra
                             for (int i = 0; i < modelct.Count(); i++)
                             {
                                 var kq = Data.XuatNhapData.GhibangHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
@@ -238,45 +243,41 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 {
                     if (XN.XuatNhap)
                     {
-                        //Kiểm tra số lượng bảng hh >= so luong thu hồi
+                        //Kiểm tra số lượng bảng hh >= so luong xuat
                         var kqktHH = Data.XuatNhapData.kiemtrasoluongHH(dbc, id);
                         if (kqktHH == false)
                         {
                             Session["ThongBaoXuatNhapTeK"] = "Xác nhận Xuất hàng thất bại !!! HH trong bảng HH không tồn tại hoặc không đủ số lượng.";
                             return RedirectToAction("ListXuatNhapUser");
                         }
-                            
-                        XN.AdminXNPUSH = true;
-                        dbc.Entry(XN).State = EntityState.Modified;
-                        var update = dbc.SaveChanges();
-                        if (update > 0)
+                        else
                         {
-                            if (XN.STT == "0")//Sản phẩm có thu chi
+                            XN.AdminXNPUSH = true;
+                            dbc.Entry(XN).State = EntityState.Modified;
+                            var update = dbc.SaveChanges();
+                            if (update > 0)
                             {
-                                var kqaotu = InsertThuChiTeKauto(id);
-                            }
-                            //Trừ vao bang hang hoa
-                            var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
-                            for (int i = 0; i < modelct.Count(); i++)
-                            {
-                                var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
-                                    modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
-                                if (kq == false)
+                                if (XN.STT == "0")//Sản phẩm có thu chi
                                 {
-                                    Session["ThongBaoXuatNhapUser"] = "Có Lỗi xuất hàng: " + modelct[i].Ten + " không đủ đk để xuất!!!.";
-                                    //tro lai trang truoc do 
-                                    var requestUrikh = Session["requestUri"] as string;
-                                    if (requestUrikh != null)
-                                    {
-                                        return Redirect(requestUrikh);
-                                    }
-                                    return RedirectToAction("ListXuatNhapUser");
+                                    var kqaotu = InsertThuChiTeKauto(id);
                                 }
+                                //Trừ vao bang hang hoa
+                                var modelct = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
+                                for (int i = 0; i < modelct.Count(); i++)
+                                {
+                                    var kq = Data.XuatNhapData.XuatHangHoa(dbc, modelct[i].Ten, modelct[i].IDMF,
+                                        modelct[i].IDColor, modelct[i].IDSize, modelct[i].SoLuong);
+                                    if (kq == false)
+                                    {
+                                        Session["ThongBaoXuatNhapTeKct"] = "Có Lỗi xuất hàng: " + modelct[i].Ten + " không đủ đk để xuất!!!.";
+                                        Session["ThongBaoXuatNhapUserct"] = "Có Lỗi xuất hàng: " + modelct[i].Ten + " không đủ đk để xuất!!!.";
+                                    }
+                                }
+                                //Insert Nhật Ký
+                                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                        , Session["UserName"].ToString(), "XacNhanXuat HH Tek va THUCHI - Đẩy File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName, "");
+
                             }
-                            //Insert Nhật Ký
-                            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                    , Session["UserName"].ToString(), "XacNhanXuat HH Tek va THUCHI - Đẩy File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName, "");
-                            
                         }
                     }
                     else //kỳ nhập
