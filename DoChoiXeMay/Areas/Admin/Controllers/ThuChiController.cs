@@ -156,22 +156,44 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file1 = Request.Files["Dinhkem1"];
                 var file2 = Request.Files["Dinhkem2"];
                 var file3 = Request.Files["Dinhkem3"];
-                if (file1.ContentLength > 0) { 
-                    //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave1);
-                    TC.Filesave1 = Xstring.saveFile(file1, "imgthuchi/");
-                }
-                if (file2.ContentLength > 0)
+                if (TC.IdKyxuatnhap == 1)
                 {
-                    //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave2);
-                    TC.Filesave2 = Xstring.saveFile(file2, "imgthuchi/");
+                    if (file1.ContentLength > 0)
+                    {
+                        //Xoa hinh cu
+                        bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave1);
+                        TC.Filesave1 = Xstring.saveFile(file1, "imgthuchi/");
+                    }
+                    if (file2.ContentLength > 0)
+                    {
+                        //Xoa hinh cu
+                        bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave2);
+                        TC.Filesave2 = Xstring.saveFile(file2, "imgthuchi/");
+                    }
+                    if (file3.ContentLength > 0)
+                    {
+                        //Xoa hinh cu
+                        bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.HoaDon);
+                        TC.HoaDon = Xstring.saveFile(file3, "imgthuchi/");
+                    }
                 }
-                if (file3.ContentLength > 0)
+                else
                 {
-                    //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.HoaDon);
-                    TC.HoaDon = Xstring.saveFile(file3, "imgthuchi/");
+                    if (file1.ContentLength > 0)
+                    {
+                        //Không Xoa hinh cu
+                        TC.Filesave1 = Xstring.saveFile(file1, "imgxuatnhap/");
+                    }
+                    if (file2.ContentLength > 0)
+                    {
+                        //Không Xoa hinh cu
+                        TC.Filesave2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                    }
+                    if (file3.ContentLength > 0)
+                    {
+                        //Không Xoa hinh cu
+                        TC.HoaDon = Xstring.saveFile(file3, "imgxuatnhap/");
+                    }
                 }
                 TC.NgayAuto = DateTime.Now;
                 var kq=new Data.ThuChiData().UPdateChiTietTC(TC);
@@ -209,7 +231,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             
         }
-        
         public ActionResult DeleteThuChi(string Id)
         {
             var iiii = new Guid(Id);
