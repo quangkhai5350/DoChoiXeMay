@@ -20,23 +20,40 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 @*<ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>*@
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>*@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="container body-content" style="min-height:700px">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <div class="bg-dark">
+        <div class="container">
+            <div style="margin-top:10px;padding-top:15px;padding-bottom:30px;color:white">
+                <div class="row text-center">
+                    <h5>
+                        MST: 3703251330
+                    </h5>
+                </div>
+                <div class="row text-center">
+                    <h5>
+                        CÔNG TY TNHH THƯƠNG MẠI-DỊCH VỤ-SẢN XUẤT TRẦN NGUYỄN TECHZONE
+                    </h5>
+                </div>
+                <div class="row text-center">
+                    <h5>
+                        311 Đường Phạm Ngọc Thạch, Tổ 88, Khu Phố 6, Phường Hiệp Thành, Thành Phố Thủ Dầu Một, Tỉnh Bình Dương.
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

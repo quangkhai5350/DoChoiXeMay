@@ -24,7 +24,7 @@ namespace DoChoiXeMay.Controllers
             {
                 ViewBag.UserName = cookie.Values["User"];
                 ViewBag.Password = cookie.Values["Pw"];
-                ViewBag.reme = "kh";
+                ViewBag.reme = cookie.Values["Remem"];
             }
             else
             {
@@ -100,26 +100,47 @@ namespace DoChoiXeMay.Controllers
                             user_log[1] = Password;
                             Session["UserName"] = UserName;
                             Session["UserId"] = UserFirt;
-
-                            var cookie = new HttpCookie("user_log_new");
-                            if (remember != null)
+                            //
+                            if (Request.Cookies["user_log_new"] != null)
                             {
-                                if (remember == true)
+                                var cookie = Request.Cookies["user_log_new"];
+                                if (remember != null)
                                 {
-                                    cookie.Values["User"] = UserName;
-                                    cookie.Values["Pw"] = Password;
-                                    cookie.Expires = DateTime.Now.AddMonths(1);
+                                    if (remember == true)
+                                    {
+                                        cookie.Values["User"] = UserName;
+                                        cookie.Values["Pw"] = Password;
+                                        cookie.Values["Remem"] = "true";
+                                        cookie.Expires = DateTime.Now.AddMonths(1);
+                                    }
+                                    else
+                                    {
+                                        cookie.Expires = DateTime.Now.AddDays(-1);
+                                    }
                                 }
                                 else
                                 {
-                                    cookie.Expires = DateTime.Now;
+                                    cookie.Expires = DateTime.Now.AddDays(-1);
                                 }
+                                Response.Cookies.Add(cookie);
                             }
                             else
                             {
-                                cookie.Expires = DateTime.Now.AddDays(-1);
+                                var cookie = new HttpCookie("user_log_new");
+                                if (remember != null)
+                                {
+                                    if (remember == true)
+                                    {
+                                        cookie.Values["User"] = UserName;
+                                        cookie.Values["Pw"] = Password;
+                                        cookie.Values["Remem"] = "true";
+                                        cookie.Expires = DateTime.Now.AddMonths(1);
+                                    }
+                                }
+                                Response.Cookies.Add(cookie);
                             }
-                            Response.Cookies.Add(cookie);
+                            
+                            
                             if (user.IdLoai == 1 || user.IdLoai == 2)
                             {
                                 Session["quyen"] = user.LoaiUserTek.LoaiUser;

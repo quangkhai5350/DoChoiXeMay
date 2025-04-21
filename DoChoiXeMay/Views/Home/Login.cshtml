@@ -24,7 +24,7 @@
         <span class="help-block">@Session["ThongbaoLogin"]</span>
         @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            bool nho = @ViewBag.reme == "kh" ? true : false;
+            bool nho = @ViewBag.reme == "true" ? true : false;
             <div class="row omb_row-sm-offset-3">
                 <div class="col-xs-12 col-sm-6">
                     <form class="omb_loginForm" action="" autocomplete="off" method="post">
@@ -53,13 +53,15 @@
             <div class="row omb_row-sm-offset-3">
                 <div class="col-xs-12 col-sm-2">
                     <p class="omb_forgotPwd pull-left">
-                        <a href="/Account/_ForgotPass">Quên mật khẩu ?</a>
+                        @*<a href="/Account/_ForgotPass">Quên mật khẩu ?</a>*@
+                        <a href="">Quên mật khẩu ?</a>
                     </p>
                 </div>
 
                 <div class="col-xs-12 col-sm-4">
                     <p class="omb_forgotPwd">
-                        <a href="/Dang-Ky">Tạo tài khoản</a>
+                        @*<a href="/Dang-Ky">Tạo tài khoản</a>*@
+                        <a href="">Tạo tài khoản</a>
                     </p>
                 </div>
             </div>

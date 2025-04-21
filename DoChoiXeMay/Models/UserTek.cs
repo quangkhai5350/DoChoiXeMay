@@ -12,12 +12,13 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserTek()
         {
-            ChiTietTCs = new HashSet<ChiTietTC>();
             KyXuatNhaps = new HashSet<KyXuatNhap>();
+            MailTeKs = new HashSet<MailTeK>();
             MailTeKDetails = new HashSet<MailTeKDetail>();
             NoteKythuats = new HashSet<NoteKythuat>();
             ProjectDetails = new HashSet<ProjectDetail>();
             ProjectTeKs = new HashSet<ProjectTeK>();
+            ChiTietTCs = new HashSet<ChiTietTC>();
         }
 
         public int Id { get; set; }
@@ -60,12 +61,12 @@ namespace DoChoiXeMay.Models
         public string Avatar { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KyXuatNhap> KyXuatNhaps { get; set; }
 
         public virtual LoaiUserTek LoaiUserTek { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MailTeK> MailTeKs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MailTeKDetail> MailTeKDetails { get; set; }
@@ -78,5 +79,7 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectTeK> ProjectTeKs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
     }
 }
