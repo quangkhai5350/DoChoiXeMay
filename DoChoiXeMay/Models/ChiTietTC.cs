@@ -54,7 +54,7 @@ namespace DoChoiXeMay.Models
         public virtual KyXuatNhap KyXuatNhap { get; set; }
 
         public virtual MaTC MaTC { get; set; }
-
+        [ForeignKey("UserId")]
         public virtual UserTek UserTek { get; set; }
     }
 }
