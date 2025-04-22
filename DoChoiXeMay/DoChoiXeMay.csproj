@@ -136,6 +136,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\NoteKyThuatController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProjectTeKController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SerialController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
     <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
@@ -424,6 +425,7 @@
     <Content Include="Areas\Admin\Views\ProjectTeK\UpdateProjectTeK.cshtml" />
     <Content Include="Areas\Admin\Views\ProjectTeK\InsertProjectUserDetail.cshtml" />
     <Content Include="Areas\Admin\Content\css\soft-ui\soft-ui-dashboard.css.map" />
+    <Content Include="Areas\Admin\Views\Serial\ListSerialChuaIn.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

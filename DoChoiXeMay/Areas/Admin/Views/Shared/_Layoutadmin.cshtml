@@ -191,15 +191,17 @@
                                 </div>
                             </li>
                             <li>
-                                @if (Session["quyen"].ToString() == "Admin")
+                                @if (Session["quyen"] != null)
                                 {
-                                    <a href="/Admin/Home/ListUserTeK" class="title_user">UserManager</a>
+                                    if (Session["quyen"].ToString() == "Admin")
+                                    {
+                                        <a href="/Admin/Home/ListUserTeK" class="title_user">UserManager</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Admin/Home/EditUser/@int.Parse(Session["UserId"].ToString())" class="title_user">Update User</a>
+                                    }
                                 }
-                                else
-                                {
-                                    <a href="/Admin/Home/EditUser/@int.Parse(Session["UserId"].ToString())" class="title_user">Update User</a>
-                                }
-
                             </li>
                             <li><a href="/Admin/Home/LogOut" class="title_user">LogOut</a></li>
                         </ul>
@@ -259,23 +261,30 @@
 
 
                                 <li>
-                                    <a data-toggle="collapse" data-target="#demolibra" href="#">Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
-                                    <ul id="demolibra" class="collapse dropdown-header-top titlemobile">
-                                        <li>
-                                            <a href="/Admin/XuatNhap/ListXuatNhapUser">**Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/DanhMuc/ListHangSanXuat">Hãng Sản Xuất</a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/DanhMuc/ListMauSanPham" target="_blank">Màu sản phẩm</a>
-                                        </li>
-                                    </ul>
+                                    @if (Session["UserName"] != null)
+                                    {
+                                        <a data-toggle="collapse" data-target="#demolibra" href="#">Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
+                                        <ul id="demolibra" class="collapse dropdown-header-top titlemobile">
+                                            <li>
+                                                <a href="/Admin/XuatNhap/ListXuatNhapUser">**Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Admin/DanhMuc/ListHangSanXuat">Hãng Sản Xuất</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Admin/DanhMuc/ListMauSanPham" target="_blank">Màu sản phẩm</a>
+                                            </li>
+                                        </ul>
+                                    }
+
                                 </li>
                                 <li>
-                                    <a data-toggle="collapse" data-target="#demodepart" href="#">Note @Session["UserName"].ToString().ToUpper()</a>
-                                    <ul id="demodepart" class="collapse dropdown-header-top titlemobile">
-                                    </ul>
+                                    @if (Session["UserName"] != null)
+                                    {
+                                        <a data-toggle="collapse" data-target="#demodepart" href="#">Note @Session["UserName"].ToString().ToUpper()</a>
+                                        <ul id="demodepart" class="collapse dropdown-header-top titlemobile">
+                                        </ul>
+                                    }
                                 </li>
                                 @*<li>
             <a data-toggle="collapse" data-target="#demo" href="#">Forms</a>
@@ -373,18 +382,18 @@
                             <a data-toggle="tab" href="#Pagemob" class="color-tile-tek"><i class="notika-icon notika-form"></i>Dự Án Tek</a>
                         </li>
                         <li>
+                            <a data-toggle="tab" href="#Forms" class="color-tile-tek"><i class="notika-icon notika-print"></i>Serial TeK</a>
+                        </li>
+                        <li>
                             <a data-toggle="tab" href="#Interface" class="color-tile-tek"><i class="notika-icon notika-edit"></i> Note Tek</a>
                         </li>
 
                         <li>
-                            @if (Session["quyen"].ToString() != "Guest")
+                            @if (Session["quyen"]!=null && Session["quyen"].ToString() != "Guest")
                             {
                                 <a data-toggle="tab" href="#Tables"><i class="notika-icon notika-form"></i>(1) Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
                             }
 
-                        </li>
-                        <li>
-                            <a data-toggle="tab" href="#Forms"><i class="notika-icon notika-edit"></i> Note @Session["UserName"].ToString().ToUpper()</a>
                         </li>
 
                     </ul>
@@ -415,12 +424,19 @@
                                 <li>
                                     <a href="/Admin/ProjectTeK/Index">**Theo dõi dự án**</a>
                                 </li>
-                                @*<li>
-                                    <a href="form-components.html">Form Components</a>
+                            </ul>
+                        </div>
+                        <div id="Forms" class="tab-pane notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                <li>
+                                    <a href="/Admin/Serial/ListSerialChuaIn">Tạo mới Serial</a>
                                 </li>
                                 <li>
-                                    <a href="form-examples.html">Form Examples</a>
-                                </li>*@
+                                    <a href="/Admin/ProjectTeK/Index">*List Serial đã in*</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/ProjectTeK/Index">**List Serial đã kích hoạt**</a>
+                                </li>
                             </ul>
                         </div>
                         <div id="Interface" class="tab-pane notika-tab-menu-bg animated flipInX">
@@ -440,7 +456,10 @@
                         <div id="Tables" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 <li>
-                                    <a href="/Admin/XuatNhap/ListXuatNhapUser"> **Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
+                                    @if(Session["quyen"] != null)
+                                    {
+                                        <a href="/Admin/XuatNhap/ListXuatNhapUser"> **Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
+                                    }
                                 </li>
                                 <li>
                                     <a href="/Admin/DanhMuc/ListHangSanXuat"> Hãng Sản Xuất</a>
@@ -636,22 +655,26 @@
     }
     public int CountMsg()
     {
-        var uid = int.Parse(Session["UserId"].ToString());
-        if (uid == 1)
+        if(Session["UserId"] != null)
         {
-            return db.MsgAotus.Where(kh => kh.AdminDaxem == false).Count();
-        }
-        if (uid == 2)
-        {
-            return db.MsgAotus.Where(kh => kh.Sub2Daxem == false).Count();
-        }
-        if (uid == 4)
-        {
-            return db.MsgAotus.Where(kh => kh.Sub4Daxem == false).Count();
-        }
-        if (uid == 5)
-        {
-            return db.MsgAotus.Where(kh => kh.Sub5Daxem == false).Count();
+            var uid = int.Parse(Session["UserId"].ToString());
+            if (uid == 1)
+            {
+                return db.MsgAotus.Where(kh => kh.AdminDaxem == false).Count();
+            }
+            if (uid == 2)
+            {
+                return db.MsgAotus.Where(kh => kh.Sub2Daxem == false).Count();
+            }
+            if (uid == 4)
+            {
+                return db.MsgAotus.Where(kh => kh.Sub4Daxem == false).Count();
+            }
+            if (uid == 5)
+            {
+                return db.MsgAotus.Where(kh => kh.Sub5Daxem == false).Count();
+            }
+            return 0;
         }
         return 0;
     }
@@ -665,37 +688,46 @@
     }
     public List<string> liststringMsg()
     {
-        var uid = int.Parse(Session["UserId"].ToString());
-        var lists = ListMsg();
-        string[] ListOr = new string[lists.Count()];
-        if (lists.Count() > 0)
+        if (Session["UserId"] != null)
         {
-            for (int i = 0; i < lists.Count(); i++)
+            var uid = int.Parse(Session["UserId"].ToString());
+            var lists = ListMsg();
+            string[] ListOr = new string[lists.Count()];
+            if (lists.Count() > 0)
             {
-                if (uid == 1 && lists[i].AdminDaxem == false)
+                for (int i = 0; i < lists.Count(); i++)
                 {
-                    ListOr[i] = lists[i].MsgHeThong + "***";
-                }
-                else if (uid == 2 && lists[i].Sub2Daxem == false)
-                {
-                    ListOr[i] = lists[i].MsgHeThong + "***";
-                }
-                else if (uid == 4 && lists[i].Sub4Daxem == false)
-                {
-                    ListOr[i] = lists[i].MsgHeThong + "***";
-                }
-                else if (uid == 5 && lists[i].Sub5Daxem == false)
-                {
-                    ListOr[i] = lists[i].MsgHeThong + "***";
-                }
-                else
-                {
-                    ListOr[i] = lists[i].MsgHeThong;
-                }
+                    if (uid == 1 && lists[i].AdminDaxem == false)
+                    {
+                        ListOr[i] = lists[i].MsgHeThong + "***";
+                    }
+                    else if (uid == 2 && lists[i].Sub2Daxem == false)
+                    {
+                        ListOr[i] = lists[i].MsgHeThong + "***";
+                    }
+                    else if (uid == 4 && lists[i].Sub4Daxem == false)
+                    {
+                        ListOr[i] = lists[i].MsgHeThong + "***";
+                    }
+                    else if (uid == 5 && lists[i].Sub5Daxem == false)
+                    {
+                        ListOr[i] = lists[i].MsgHeThong + "***";
+                    }
+                    else
+                    {
+                        ListOr[i] = lists[i].MsgHeThong;
+                    }
 
+                }
+                return ListOr.ToList();
             }
             return ListOr.ToList();
         }
-        return null;
+        else
+        {
+            var lists = ListMsg();
+            string[] ListOr = new string[lists.Count()];
+            return ListOr.ToList();
+        }
     }
 }

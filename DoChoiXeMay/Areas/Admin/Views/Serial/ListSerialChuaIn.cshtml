@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "ListSerialChuaIn";
+    Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
+}
+
+<div class="row">
+    @if (Session["quyen"].ToString() == "Admin")
+    {
+        <div class="col-md-6">
+            <a class="btn btn-warning" style="margin-left:20px" href="/Admin/ThuChi/InsertThuChi" onclick="return confirm('Bạn muốn Thêm Mới Thu Chi TeK ??')">
+                <i class="fa fa-plus-circle"></i>&nbsp;&nbsp; Tạo mới "Serial number TeK"
+            </a>
+        </div>
+    }
+    <div class="col-md-6">
+        <h2>List Serial chưa In</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoSerialSPchuaIn"]
+            </div>
+        </div>
+        <div class="panel panel-default" style="margin-top:10px">
+            <div class="panel-heading">
+                <div class="row" style="text-align:center">
+                    <h5>List Serial Sản Phẩm</h5>
+                </div>
+
+            </div>
+            <div class="panel-body">
+                <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
+                <div class="listSerSP">
+
+
+                </div>
+            </div>
+            <div class="panel-footer">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <span class="TongSanPham"></span>
+                    </div>
+                    <div class="col-md-4" style="text-align: right">
+                        <span class="TongSanPham"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                @Session["ThongBaoSerialBoxchuaIn"]
+            </div>
+        </div>
+        <div class="panel panel-default" style="margin-top:10px">
+            <div class="panel-heading">
+                <div class="row" style="text-align:center">
+                    <h5>List Serial Box</h5>
+                </div>
+
+            </div>
+            <div class="panel-body">
+                <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
+                <div class="listSerBox">
+
+
+                </div>
+            </div>
+            <div class="panel-footer">
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <span class="TongSanPham"></span>
+                    </div>
+                    <div class="col-md-4" style="text-align: right">
+                        <span class="TongSanPham"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
