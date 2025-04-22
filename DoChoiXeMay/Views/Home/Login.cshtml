@@ -21,7 +21,10 @@
             </div>*@
 
         </div>
-        <span class="help-block">@Session["ThongbaoLogin"]</span>
+        <div class="row" style="text-align:center">
+            <span class="help-block">@Session["ThongbaoLogin"]</span>
+        </div>
+        
         @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             bool nho = @ViewBag.reme == "true" ? true : false;

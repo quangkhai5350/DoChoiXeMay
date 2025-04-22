@@ -111,7 +111,7 @@ namespace DoChoiXeMay.Controllers
                                         cookie.Values["User"] = UserName;
                                         cookie.Values["Pw"] = Password;
                                         cookie.Values["Remem"] = "true";
-                                        cookie.Expires = DateTime.Now.AddMonths(1);
+                                        cookie.Expires = DateTime.Now.AddDays(7);
                                     }
                                     else
                                     {
@@ -134,7 +134,7 @@ namespace DoChoiXeMay.Controllers
                                         cookie.Values["User"] = UserName;
                                         cookie.Values["Pw"] = Password;
                                         cookie.Values["Remem"] = "true";
-                                        cookie.Expires = DateTime.Now.AddMonths(1);
+                                        cookie.Expires = DateTime.Now.AddDays(7);
                                     }
                                 }
                                 Response.Cookies.Add(cookie);
