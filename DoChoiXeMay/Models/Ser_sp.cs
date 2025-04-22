@@ -17,7 +17,7 @@ namespace DoChoiXeMay.Models
         public Guid Id { get; set; }
 
         [StringLength(200)]
-        public string Name_ser { get; set; }
+        public string LoSanXuat { get; set; }
 
         [StringLength(500)]
         public string Name_sp { get; set; }
@@ -31,7 +31,8 @@ namespace DoChoiXeMay.Models
         [StringLength(50)]
         public string Stt { get; set; }
 
-        public DateTime Ngay { get; set; }
+        public DateTime NgayTao { get; set; }
+        public DateTime NgayUpdate { get; set; }
 
         public int IDMF { get; set; }
 

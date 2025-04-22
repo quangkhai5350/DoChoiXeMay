@@ -15,6 +15,10 @@ namespace DoChoiXeMay.Models
         public Guid IDSer_sp { get; set; }
 
         public DateTime NgayKichHoat { get; set; }
+        public DateTime NgayUpdate { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string EmailKichHoat { get; set; }
 
         public int TrangThaiId { get; set; }
 

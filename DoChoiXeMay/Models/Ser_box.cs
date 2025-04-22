@@ -18,7 +18,7 @@ namespace DoChoiXeMay.Models
 
         [Required]
         [StringLength(200)]
-        public string Name_ser { get; set; }
+        public string LoSanXuat { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -29,7 +29,8 @@ namespace DoChoiXeMay.Models
         [StringLength(50)]
         public string Stt { get; set; }
 
-        public DateTime Ngay { get; set; }
+        public DateTime NgayTao { get; set; }
+        public DateTime NgayUpdate { get; set; }
 
         [StringLength(200)]
         public string Ghichu { get; set; }
