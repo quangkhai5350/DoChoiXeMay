@@ -10,6 +10,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     public class SerialController : Controller
     {
         // GET: Admin/Serial
+        Model1 dbc = new Model1();
         public ActionResult Index()
         {
             return View();
@@ -20,6 +21,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult AddNewSerial()
         {
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
+            ViewBag.IdColor = new SelectList(dbc.Colors.ToList(), "Id", "TenColor");
+            ViewBag.IdSize = new SelectList(dbc.Sizes.ToList(), "Id", "TenSize");
+            ViewBag.Idver = new SelectList(dbc.Versions.ToList(), "Id", "VerName");
             return View();
         }
         [HttpPost]

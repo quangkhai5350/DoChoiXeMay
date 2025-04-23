@@ -426,6 +426,7 @@
     <Content Include="Areas\Admin\Views\ProjectTeK\InsertProjectUserDetail.cshtml" />
     <Content Include="Areas\Admin\Content\css\soft-ui\soft-ui-dashboard.css.map" />
     <Content Include="Areas\Admin\Views\Serial\ListSerialChuaIn.cshtml" />
+    <Content Include="Areas\Admin\Views\Serial\AddNewSerial.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
