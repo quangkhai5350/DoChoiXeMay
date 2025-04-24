@@ -3,9 +3,9 @@
     ViewBag.Title = "ListSerialChuaIn";
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
-
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="row">
-    @if (Session["quyen"]!=null && Session["quyen"].ToString() == "Admin")
+    @if (Session["quyen"]!=null)
     {
         <div class="col-md-6">
             <a class="btn btn-warning" style="margin-left:20px" href="/Admin/Serial/AddNewSerial" onclick="return confirm('Bạn muốn Tạo Mới Serial Number ??')">
@@ -18,7 +18,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                 @Session["ThongBaoSerialSPchuaIn"]
@@ -33,7 +33,7 @@
             </div>
             <div class="panel-body">
                 <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-                <div class="listSerSP">
+                <div class="listSerSP" style="max-height: 700px; overflow: auto">
 
 
                 </div>
@@ -51,7 +51,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
             <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                 @Session["ThongBaoSerialBoxchuaIn"]
@@ -66,7 +66,7 @@
             </div>
             <div class="panel-body">
                 <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-                <div class="listSerBox">
+                <div class="listSerBox" style="max-height: 700px; overflow: auto">
 
 
                 </div>
@@ -86,5 +86,29 @@
     </div>
     
 </div>
+<script>
+    
+    LoadPage();
+    function LoadPage() {
+        $.ajax({
+            url: "/Admin/Serial/GetListSer_SP",
+            data: {},
+            success: function (respone) {
+                $(".listSerSP").html(respone);
+                //var pagesp = pageNo + 1;
+                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+        $.ajax({
+            url: "/Admin/Serial/GetListSer_Box",
+            data: {},
+            success: function (respone) {
+                $(".listSerBox").html(respone);
+                //var pagesp = pageNo + 1;
+                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+    };
+</script>
 
 

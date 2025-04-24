@@ -48,5 +48,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("ListSerialChuaIn");
         }
+        public ActionResult GetListSer_SP()
+        {
+            ViewBag.SerSPchuaIn = dbc.Ser_sp.Where(kh => kh.Sudung == false).OrderBy(kh => kh.Stt).ToList();
+            return PartialView();
+        }
+        public ActionResult GetListSer_Box()
+        {
+            ViewBag.SerBoxchuaIn = dbc.Ser_box.Where(kh => kh.Sudung == false).OrderBy(kh => kh.Stt).ToList();
+            return PartialView();
+        }
     }
 }
