@@ -5,15 +5,10 @@
                 <th class="canhgiua" style="max-width: 15px">STT</th>
                 <th class="canhgiua">Lô Sản Xuất</th>
                 <th class="canhgiua">Serial Number</th>
-                <th class="canhgiua">Hãng</th>
-                <th class="canhgiua">Màu</th>
-                <th class="canhgiua">Size</th>
-                <th class="canhgiua">Version</th>
-                <th class="canhgiua">Tặng</th>
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
-            @foreach (DoChoiXeMay.Models.Ser_sp Item in ViewBag.SerSPchuaIn)
+            @foreach (DoChoiXeMay.Models.Ser_box Item in ViewBag.SerBoxchuaIn)
             {
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.Stt</td>
@@ -21,23 +16,9 @@
                         @Item.LoSanXuat
                     </td>
                     <td>
-                        @Item.SerialSP
+                        @Item.Serial
                     </td>
-                    <td>@Item.IDMF</td>
-                    <td>@Item.IdColor</td>
-
-                    <td>
-                        @Item.IdSize
-                    </td>
-                    <td>
-                        @Item.Version
-                    </td>
-                    <td>
-                        @Item.HangTangKhongBan
-                    </td>
-                    
                 </tr>
-
             }
         </tbody>
         <tfoot>
