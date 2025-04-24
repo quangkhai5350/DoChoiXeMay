@@ -5,7 +5,7 @@
 }
 
 <div class="row">
-    @if (Session["quyen"].ToString() == "Admin")
+    @if (Session["quyen"]!=null && Session["quyen"].ToString() == "Admin")
     {
         <div class="col-md-6">
             <a class="btn btn-warning" style="margin-left:20px" href="/Admin/Serial/AddNewSerial" onclick="return confirm('Bạn muốn Tạo Mới Serial Number ??')">

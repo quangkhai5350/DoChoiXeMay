@@ -1,4 +1,5 @@
-﻿using DoChoiXeMay.Models;
+﻿using DoChoiXeMay.Filters;
+using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
+    [Protect]
     public class SerialController : Controller
     {
         // GET: Admin/Serial
@@ -29,8 +31,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult AddNewSerial(Ser_sp SerSP)
+        public ActionResult AddNewSerial(Ser_sp SerSP,int SoSerialN)
         {
+            ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name", 5);
+            ViewBag.IdColor = new SelectList(dbc.Colors.ToList(), "Id", "TenColor");
+            ViewBag.IdSize = new SelectList(dbc.Sizes.ToList(), "Id", "TenSize");
+            ViewBag.Idver = new SelectList(dbc.Versions.ToList(), "Id", "VerName");
+            try
+            {
+
+            }
+            catch (Exception ex) {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "Thêm mới Thất Bại !!!!!!!!!!. Có lỗi hệ thống");
+                return View();
+            }
             return RedirectToAction("ListSerialChuaIn");
         }
     }
