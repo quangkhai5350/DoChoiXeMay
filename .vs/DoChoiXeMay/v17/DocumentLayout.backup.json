@@ -7,18 +7,6 @@
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\serial\\listserialchuain.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\areas\\admin\\views\\serial\\getlistser_sp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\serial\\getlistser_sp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\areas\\admin\\controllers\\xuatnhapcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\controllers\\xuatnhapcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\areas\\admin\\views\\xuatnhap\\listxuatnhapuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\xuatnhap\\listxuatnhapuser.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,12 +15,32 @@
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\controllers\\serialcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\views\\serial\\addnewserial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\serial\\addnewserial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\areas\\admin\\data\\projecttekdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\data\\projecttekdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\data\\thuchidata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\data\\thuchidata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\controllers\\thuchicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\controllers\\thuchicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\views\\serial\\getlistser_sp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\serial\\getlistser_sp.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\utils\\xstring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\utils\\xstring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\views\\serial\\addnewserial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\views\\serial\\addnewserial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\data\\serialdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\data\\serialdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,59 +50,80 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
+              "Title": "ProjectTeKData.cs",
+              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
+              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
+              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Data\\ProjectTeKData.cs",
+              "ViewState": "AgIAAKsAAAAAAAAAAAAiwMAAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-25T09:43:53.702Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ThuChiData.cs",
+              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ThuChiData.cs",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Data\\ThuChiData.cs",
+              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\ThuChiData.cs",
+              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Data\\ThuChiData.cs",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAywIoAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-25T09:42:38.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "XString.cs",
+              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Utils\\XString.cs",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Utils\\XString.cs",
+              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Utils\\XString.cs",
+              "RelativeToolTip": "DoChoiXeMay\\Utils\\XString.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-25T09:30:10.11Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "GetListSer_SP.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\GetListSer_SP.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\GetListSer_SP.cshtml",
               "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\GetListSer_SP.cshtml",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\GetListSer_SP.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-24T09:20:34.588Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-25T09:26:14.69Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ListXuatNhapUser.cshtml",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\XuatNhap\\ListXuatNhapUser.cshtml",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\XuatNhap\\ListXuatNhapUser.cshtml",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\XuatNhap\\ListXuatNhapUser.cshtml",
-              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\XuatNhap\\ListXuatNhapUser.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-24T09:19:13.987Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "XuatNhapController.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\XuatNhapController.cs",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\XuatNhapController.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\XuatNhapController.cs",
-              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\XuatNhapController.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAywA4AAAApAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "SerialData.cs",
+              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\SerialData.cs",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Data\\SerialData.cs",
+              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Data\\SerialData.cs",
+              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Data\\SerialData.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAA9wBgAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-24T09:07:59.509Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-25T08:35:32.193Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "AddNewSerial.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\AddNewSerial.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\AddNewSerial.cshtml",
               "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\AddNewSerial.cshtml",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\AddNewSerial.cshtml",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAEUAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAFUAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-23T08:08:51.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-23T08:08:51.706Z"
             },
             {
               "$type": "Document",
@@ -104,45 +133,45 @@
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\ListSerialChuaIn.cshtml",
               "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\ListSerialChuaIn.cshtml",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\ListSerialChuaIn.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAADQAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAABtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-04-22T08:20:05.869Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "SerialController.cs",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
               "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAmwDcAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAmwEQAAABnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-22T08:07:01.5Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "ThuChiController.cs",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\ThuChiController.cs",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\ThuChiController.cs",
               "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\ThuChiController.cs",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\ThuChiController.cs",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAxwHoAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAYwAwBAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-03T03:15:00.139Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "HomeController.cs",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\HomeController.cs",
               "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\HomeController.cs",
               "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAI0AAAAAAAAAAAAkwJgAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAH0AAAAAAAAAAADwv4IAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-27T07:53:15.791Z",
               "EditorCaption": ""

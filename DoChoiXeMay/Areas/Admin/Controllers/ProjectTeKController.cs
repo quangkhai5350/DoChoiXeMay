@@ -336,7 +336,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
                 var usertek = dbc.UserTeks.Find(ProjectDetail.UserId);
                 var userid = int.Parse(Session["UserId"].ToString());
-                @Session["ThongBaoProject"] = "Insert công việc cho " + usertek.UserName + "-Dự Án :"+project.NameProject+"- thành công.";
+                Session["ThongBaoProject"] = "Insert công việc cho " + usertek.UserName + "-Dự Án :"+project.NameProject+"- thành công.";
                 var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                             , Session["UserName"].ToString(), "Insert Cong Viec cho : " + ProjectDetail.UserTek.UserName + "-Dự Án :" + project.NameProject, "");
                 var kq = new Data.ProjectTeKData().updatephantramht(project.Id);

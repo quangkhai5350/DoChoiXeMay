@@ -23,7 +23,7 @@ namespace DoChoiXeMay.Models
         [Required]
         [StringLength(100)]
         public string Serial { get; set; }
-
+        public bool DaIn { get; set; }
         public bool Sudung { get; set; }
 
         [StringLength(50)]

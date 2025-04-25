@@ -1,4 +1,5 @@
-﻿using DoChoiXeMay.Filters;
+﻿using DoChoiXeMay.Areas.Admin.Data;
+using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.Idver = new SelectList(dbc.Versions.ToList(), "Id", "VerName");
             try
             {
-
+                for (int i = 0; i < SoSerialN; i++)
+                {
+                    SerSP.Stt=(i+1).ToString();
+                    SerSP.SerialSP = Utils.XString.MakeAotuName() + SerSP.LoSanXuat;
+                    var kq = new Data.SerialData().InsertSer_sp(SerSP);
+                    if (kq==false)
+                    {
+                        Session["ThongBaoSerialSPchuaIn"] = "Có lỗi Insert Serial SP.";
+                        break;
+                    }
+                }
             }
             catch (Exception ex) {
                 string loi = ex.ToString();
@@ -50,12 +61,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListSer_SP()
         {
-            ViewBag.SerSPchuaIn = dbc.Ser_sp.Where(kh => kh.Sudung == false).OrderBy(kh => kh.Stt).ToList();
+            ViewBag.SerSPchuaIn = dbc.Ser_sp.Where(kh => kh.Sudung == false).OrderBy(kh => kh.NgayTao).ToList();
             return PartialView();
         }
         public ActionResult GetListSer_Box()
         {
-            ViewBag.SerBoxchuaIn = dbc.Ser_box.Where(kh => kh.Sudung == false).OrderBy(kh => kh.Stt).ToList();
+            ViewBag.SerBoxchuaIn = dbc.Ser_box.Where(kh => kh.Sudung == false).OrderBy(kh => kh.NgayTao).ToList();
             return PartialView();
         }
     }

@@ -26,11 +26,19 @@
         </div>
         <div class="panel panel-default" style="margin-top:10px">
             <div class="panel-heading">
-                <div class="row" style="text-align:center">
-                    <h5>List Serial Sản Phẩm</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialSP" onclick="return confirm('Bạn muốn Xóa tất cả Serial Number còn lại ??')">
+                            <i class="fa bg-gradient-faded-danger"></i>&nbsp;&nbsp; Xóa S/N Sản Phẩm
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>List Serial Sản Phẩm</h5>
+                    </div>
+                    
                 </div>
 
-            </div>
+                </div>
             <div class="panel-body">
                 <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
                 <div class="listSerSP" style="max-height: 700px; overflow: auto">
@@ -59,11 +67,18 @@
         </div>
         <div class="panel panel-default" style="margin-top:10px">
             <div class="panel-heading">
-                <div class="row" style="text-align:center">
-                    <h5>List Serial Box</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialBox" onclick="return confirm('Bạn muốn Xóa tất cả Serial Number còn lại ??')">
+                            <i class="fa bg-gradient-faded-danger"></i>&nbsp;&nbsp; Xóa S/N Box
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>List Serial Box</h5>
+                    </div>
                 </div>
 
-            </div>
+                </div>
             <div class="panel-body">
                 <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
                 <div class="listSerBox" style="max-height: 700px; overflow: auto">
