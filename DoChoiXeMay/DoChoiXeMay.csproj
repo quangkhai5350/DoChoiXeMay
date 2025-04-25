@@ -141,6 +141,7 @@
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
     <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
     <Compile Include="Areas\Admin\Data\ProjectTeKData.cs" />
+    <Compile Include="Areas\Admin\Data\SerialData.cs" />
     <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
     <Compile Include="Areas\Admin\Data\Xstring.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
