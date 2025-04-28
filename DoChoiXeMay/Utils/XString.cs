@@ -34,7 +34,7 @@ namespace DoChoiXeMay.Utils
             StringBuilder randomText = new StringBuilder();
             string alphabets = "123456789QWERTYUIPASDFGHJKLZXCVBNM#@&*";
             Random r = new Random();
-            for (int j = 0; j <= i; j++)
+            for (int j = 0; j < i; j++)
             {
                 randomText.Append(alphabets[r.Next(alphabets.Length)]);
             }
