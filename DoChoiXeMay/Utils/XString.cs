@@ -19,11 +19,12 @@ namespace DoChoiXeMay.Utils
         {
             var date = DateTime.Now;
             string m = date.Millisecond.ToString();
-            var str = m + GetRanDomOTP(7);
-            if(str.Length < 10)
+            string s = date.Second.ToString();
+            var str = m + s + GetRanDomOTP(5);
+            if(str.Length < i)
             {
-                int kk=10-str.Length;
-                str = GetRanDomOTP(kk)+ m + GetRanDomOTP(7);
+                int kk=i-str.Length;
+                str = GetRanDomOTP(kk)+ m + s + GetRanDomOTP(5);
             }
             return str;
         }
@@ -31,7 +32,7 @@ namespace DoChoiXeMay.Utils
         {
             //get Random text
             StringBuilder randomText = new StringBuilder();
-            string alphabets = "123456789QWERTYUIPASDFGHJKLZXCVBNM#@!";
+            string alphabets = "123456789QWERTYUIPASDFGHJKLZXCVBNM#@&*";
             Random r = new Random();
             for (int j = 0; j <= i; j++)
             {
