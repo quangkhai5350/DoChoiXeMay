@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialSP" onclick="return confirm('Bạn muốn Xóa tất cả S/N Sản Phẩm còn lại ??')">
-                            <i class="fa bg-gradient-faded-danger"></i>&nbsp;&nbsp; Xóa S/N Sản Phẩm
+                            <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa S/N Sản Phẩm
                         </a>
                     </div>
                     <div class="col-md-6">
@@ -41,20 +41,17 @@
                 </div>
             <div class="panel-body">
                 <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-                <div class="listSerSP" style="max-height: 700px; overflow: auto">
+                <div class="listSerSP" style="max-height: 600px; overflow: auto">
 
 
                 </div>
             </div>
             <div class="panel-footer">
-
                 <div class="row">
-                    <div class="col-md-8">
-                        <span class="TongSanPham"></span>
-                    </div>
-                    <div class="col-md-4" style="text-align: right">
-                        <span class="TongSanPham"></span>
-                    </div>
+                    <input type="number" min="0" title="Chọn số lượng để In." name="SoSNSP" id="SoSNSP" required />
+                    <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialSP" onclick="return confirm('Bạn đã chọn số lượng và máy In ?')">
+                        <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Sản Phẩm
+                    </a>
                 </div>
             </div>
         </div>
@@ -69,8 +66,8 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-md-6">
-                        <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialBox" onclick="return confirm('Bạn muốn Xóa tất cả S/N Box còn lại ??')">
-                            <i class="fa bg-gradient-faded-danger"></i>&nbsp;&nbsp; Xóa S/N Box
+                        <a class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialBox" onclick="return confirm('Bạn đã chọn số lượng và máy In ?')">
+                            <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa S/N Box
                         </a>
                     </div>
                     <div class="col-md-6">
@@ -81,7 +78,7 @@
                 </div>
             <div class="panel-body">
                 <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
-                <div class="listSerBox" style="max-height: 700px; overflow: auto">
+                <div class="listSerBox" style="max-height: 600px; overflow: auto">
 
 
                 </div>
@@ -89,12 +86,10 @@
             <div class="panel-footer">
 
                 <div class="row">
-                    <div class="col-md-8">
-                        <span class="TongSanPham"></span>
-                    </div>
-                    <div class="col-md-4" style="text-align: right">
-                        <span class="TongSanPham"></span>
-                    </div>
+                    <input type="number" min="0" title="Chọn số lượng để In." name="SoSNBOX" id="SoSNBOX" required />
+                    <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialBox" onclick="return confirm('Bạn muốn In tất cả S/N Sản Phẩm còn lại ??')">
+                        <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Box
+                    </a>
                 </div>
             </div>
         </div>
@@ -110,7 +105,6 @@
             data: {},
             success: function (respone) {
                 $(".listSerSP").html(respone);
-                //var pagesp = pageNo + 1;
                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }
         });
@@ -119,7 +113,6 @@
             data: {},
             success: function (respone) {
                 $(".listSerBox").html(respone);
-                //var pagesp = pageNo + 1;
                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }
         });
