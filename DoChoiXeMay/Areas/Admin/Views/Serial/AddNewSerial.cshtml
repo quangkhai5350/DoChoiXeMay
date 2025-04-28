@@ -65,19 +65,26 @@
                         
                     </div>
                     <div class="rightcontact">
+                        <div class="form-group" style="border: 1px dashed #423333; padding: 5px; margin-bottom: 15px">
+                            <p>Số Lô sản xuất gồm 6 ký tự</p>
+                            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-sx-12 col-12">
+                                <p>3 ký tự tên (vd: DXN =>Đèn Xi Nhan)</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                <input type="text" value="DXN" name="soloName" id="soloName" required />
+                            </div>
+                            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-sx-12 col-12">
+                                <p>3 stt: (vd: 001)</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                <input type="text" name="soloSTT" id="soloSTT" required />
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <p>Tên SP</p>
+                            <p>Tên đầy đủ SP</p>
                             <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
                             @Html.TextBoxFor(m => m.Name_sp, new { @class = "form-control", style = "width: 75%; height: 40px", @required = true })
 
                         </div>
-                        <div class="form-group">
-                            <p>Số Lô sản xuất</p>
-                            <p>(gồm 6 ký tự: 3 tên + 3 stt: DXN001)</p>
-                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            @Html.TextBoxFor(m => m.LoSanXuat, new { @class = "form-control", style = "width: 75%; height: 40px", @required = true })
 
-                        </div>
                         <div class="form-group">
                             <p>Tổng Số Serial number</p>
                             <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
@@ -90,6 +97,7 @@
                     <div class="form-group col-sm-12">
                         <div class="text-center btn-crud">
                             <button id="btnLuu" class="btn btn-warning" data-action="AddNewSerial"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Save</button>
+                            <img id="loading" hidden src="~/Content/imgTeK/loading.gif"><span id="total_VTN"></span>
                             <a class="btn btn-primary" href="/Admin/Serial/ListSerialChuaIn" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
                         </div>
                         <script>
@@ -98,6 +106,7 @@
                                     if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
                                         return false;
                                     } else {
+                                        $("#loading").show();
                                         var action = $(this).attr("data-action");
                                         this.form.action = "/Admin/Serial/" + action;
                                     }

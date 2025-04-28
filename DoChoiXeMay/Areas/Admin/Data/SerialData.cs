@@ -38,15 +38,20 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        public bool InsertSer_Box(Ser_box box)
+        public bool InsertSer_Box(string Lo, string Seri,bool sudung,string stt, string ghichu)
         {
             try
             {
                 Ser_box b = new Ser_box();
-                b = box;
                 b.Id = Guid.NewGuid();
+                b.LoSanXuat = Lo;
+                b.Serial = Seri;
+                b.Sudung = sudung;
+                b.Stt = stt;
                 b.NgayTao = DateTime.Now;
                 b.NgayUpdate = DateTime.Now;
+                b.DaIn = false;
+                b.Ghichu = ghichu;
                 _context.Ser_box.Add(b);
                 int kt = _context.SaveChanges();
                 if (kt > 0)
