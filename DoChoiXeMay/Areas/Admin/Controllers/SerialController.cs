@@ -23,6 +23,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult ListSerialChuaIn()
         {
+            ViewBag.TotalSerialSPchuaIn = dbc.Ser_sp.Where(kh=>kh.DaIn==false).Count();
+            ViewBag.TotalSerialBoXchuaIn = dbc.Ser_box.Where(kh => kh.DaIn == false).Count();
             return View();
         }
         public ActionResult AddNewSerial()

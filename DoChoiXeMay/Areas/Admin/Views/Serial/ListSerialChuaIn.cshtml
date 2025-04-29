@@ -48,12 +48,17 @@
             </div>
             <div class="panel-footer">
                 <div class="row">
-                    <input type="number" min="0" title="Chọn số lượng để In." name="SoSNSP" id="SoSNSP" required />
-                    <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialSP" onclick="return confirm('Bạn đã chọn số lượng và máy In ?')">
-                        <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Sản Phẩm
-                    </a>
+                    <div class="col-md-10">
+                        <input type="number" min="0" title="Chọn số lượng để In." name="SoSNSP" id="SoSNSP" required />
+                        <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialSP" onclick="return confirm('Bạn đã chọn số lượng và máy In ?')">
+                            <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Sản Phẩm
+                        </a>
+                    </div>
+                    <div class="col-md-2" style="text-align:right">
+                        @ViewBag.TotalSerialSPchuaIn S/N
+                    </div>
                 </div>
-            </div>
+                </div>
         </div>
     </div>
     <div class="col-md-4">
@@ -86,10 +91,16 @@
             <div class="panel-footer">
 
                 <div class="row">
-                    <input type="number" min="0" title="Chọn số lượng để In." name="SoSNBOX" id="SoSNBOX" required />
-                    <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialBox" onclick="return confirm('Bạn muốn In tất cả S/N Sản Phẩm còn lại ??')">
-                        <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Box
-                    </a>
+                    <div class="col-md-10">
+                        <input type="number" style="width:100px" min="0" title="Chọn số lượng để In." name="SoSNBOX" id="SoSNBOX" required />
+                        <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialBox" onclick="return confirm('Bạn muốn In tất cả S/N Sản Phẩm còn lại ??')">
+                            <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Box
+                        </a>
+                    </div>
+                    <div class="col-md-2" style="text-align:right">
+                        @ViewBag.TotalSerialBoXchuaIn
+                    </div>
+                    
                 </div>
             </div>
         </div>

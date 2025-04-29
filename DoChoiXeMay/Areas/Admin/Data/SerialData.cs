@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -67,5 +68,72 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-    }
+        public bool UpdateSer_SP(string Id,bool sudung, bool dain, DateTime ngayupdate,bool tang)
+        {
+            try
+            {
+                var sp = _context.Ser_sp.Find(new Guid(Id));
+                if (sp != null) { 
+                    sp.Sudung = sudung;
+                    sp.DaIn = dain;
+                    sp.NgayUpdate= ngayupdate;
+                    sp.HangTangKhongBan = tang;
+                    _context.Entry(sp).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false ;
+            }
+            catch (Exception ex) {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
+        public bool UpdateSer_box(string Id, bool sudung, bool dain, DateTime ngayupdate, string ghichu)
+        {
+            try
+            {
+                var box = _context.Ser_box.Find(new Guid(Id));
+                if (box != null)
+                {
+                    box.Sudung = sudung;
+                    box.DaIn = dain;
+                    box.NgayUpdate = ngayupdate;
+                    box.Ghichu = ghichu;
+                    _context.Entry(box).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
+        public bool InsertSer_kichhoat(string IdSer_box, string IdSer_sp, string email)
+        {
+            try
+            {
+                Ser_kichhoat kichhoat = new Ser_kichhoat();
+                kichhoat.Id=Guid.NewGuid();
+                kichhoat.IDSer_box = new Guid(IdSer_box);
+                kichhoat.IDSer_sp = new Guid(IdSer_sp);
+                kichhoat.NgayKichHoat = DateTime.Now;
+                kichhoat.NgayUpdate = DateTime.Now;
+                kichhoat.EmailKichHoat= email;
+                kichhoat.TrangThaiId = 1;
+                kichhoat.Ghichu = "";
+                _context.Ser_kichhoat.Add(kichhoat);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                return false;
+            }
+        }
+        }
 }
