@@ -19,20 +19,8 @@ namespace DoChoiXeMay.Controllers
         Model1 dbc = new Model1();
         public ActionResult Index()
         {
-            var cookie = Request.Cookies["user_log_new"];
-            if (cookie != null)
-            {
-                ViewBag.UserName = cookie.Values["User"];
-                ViewBag.Password = cookie.Values["Pw"];
-                ViewBag.reme = cookie.Values["Remem"];
-            }
-            else
-            {
-                ViewBag.UserName = "";
-                ViewBag.Password = "";
-                ViewBag.reme = "";
-            }
-            return View("Login");
+            
+            return View();
         }
 
         public ActionResult About()
@@ -47,6 +35,23 @@ namespace DoChoiXeMay.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        public ActionResult Login()
+        {
+            var cookie = Request.Cookies["user_log_new"];
+            if (cookie != null)
+            {
+                ViewBag.UserName = cookie.Values["User"];
+                ViewBag.Password = cookie.Values["Pw"];
+                ViewBag.reme = cookie.Values["Remem"];
+            }
+            else
+            {
+                ViewBag.UserName = "";
+                ViewBag.Password = "";
+                ViewBag.reme = "";
+            }
+            return View("Login");
         }
         [HttpPost]
         public ActionResult Login(String UserName, String Password, System.Boolean? remember)

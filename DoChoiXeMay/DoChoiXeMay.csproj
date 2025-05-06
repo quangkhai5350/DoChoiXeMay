@@ -145,6 +145,7 @@
     <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
     <Compile Include="Areas\Admin\Data\Xstring.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
+    <Compile Include="Controllers\ActiveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\ProtectAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -457,6 +458,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Active\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />
