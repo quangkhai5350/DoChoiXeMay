@@ -62,6 +62,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             if (ktt.Count() == 0)
                             {
                                 SerSP.SerialSP = SN;
+                                SerSP.QRcode = new Data.SerialData().getQRcode(SN);
                                 break;
                             }
                         }
@@ -69,6 +70,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     else
                     {
                         SerSP.SerialSP = SN;
+                        string sn1 = new Data.SerialData().getImgtext(SN);
+                        string qr = new Data.SerialData().getQRcode(SN);
+                        SerSP.QRcode = new Data.SerialData().getMergeImg(sn1,qr);
                     }
                     SerSP.Stt = (i + 1).ToString();
                     
@@ -95,6 +99,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             if (ktt.Count() == 0)
                             {
                                 SerSP.SerialSP = SN;
+                                SerSP.QRcode = new Data.SerialData().getImgtext(SN) + new Data.SerialData().getQRcode(SN);
                                 break;
                             }
                         }
@@ -102,10 +107,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     else
                     {
                         SerSP.SerialSP = SN;
+                        string sn1 = new Data.SerialData().getImgtext(SN);
+                        string qr = new Data.SerialData().getQRcode(SN);
+                        SerSP.QRcode = new Data.SerialData().getMergeImg(sn1, qr);
                     }
                     SerSP.Stt = (i + 1).ToString();
 
-                    var kq = new Data.SerialData().InsertSer_Box(SerSP.LoSanXuat,SerSP.SerialSP,SerSP.Sudung,SerSP.Stt,SerSP.Ghichu);
+                    var kq = new Data.SerialData().InsertSer_Box(SerSP.LoSanXuat,SerSP.SerialSP,SerSP.Sudung,SerSP.Stt,SerSP.Ghichu,SerSP.QRcode);
                     if (kq == false)
                     {
                         Session["ThongBaoSerialBoxchuaIn"] = "Có lỗi Insert Serial Box.";

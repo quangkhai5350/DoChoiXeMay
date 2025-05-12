@@ -59,6 +59,7 @@ namespace DoChoiXeMay.Models
 
         [StringLength(500)]
         public string Avatar { get; set; }
+        public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<KyXuatNhap> KyXuatNhaps { get; set; }
@@ -79,7 +80,5 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectTeK> ProjectTeKs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
     }
 }

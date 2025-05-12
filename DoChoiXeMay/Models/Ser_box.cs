@@ -23,13 +23,18 @@ namespace DoChoiXeMay.Models
         [Required]
         [StringLength(100)]
         public string Serial { get; set; }
+
         public bool DaIn { get; set; }
+
         public bool Sudung { get; set; }
+
+        public string QRcode { get; set; }
 
         [StringLength(50)]
         public string Stt { get; set; }
 
         public DateTime NgayTao { get; set; }
+
         public DateTime NgayUpdate { get; set; }
 
         [StringLength(200)]

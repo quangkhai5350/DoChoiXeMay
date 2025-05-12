@@ -34,6 +34,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<ProjectTeK> ProjectTeKs { get; set; }
         public virtual DbSet<ProjectUserDetail> ProjectUserDetails { get; set; }
         public virtual DbSet<Ser_box> Ser_box { get; set; }
+        public virtual DbSet<Ser_ChiNhanh> Ser_ChiNhanh { get; set; }
         public virtual DbSet<Ser_kichhoat> Ser_kichhoat { get; set; }
         public virtual DbSet<Ser_sp> Ser_sp { get; set; }
         public virtual DbSet<Ser_trangthai> Ser_trangthai { get; set; }
@@ -45,7 +46,6 @@ namespace DoChoiXeMay.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            
             modelBuilder.Entity<Color>()
                 .HasMany(e => e.ChitietXuatNhaps)
                 .WithRequired(e => e.Color)
@@ -157,10 +157,22 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IDSer_box)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Ser_ChiNhanh>()
+                .HasMany(e => e.Ser_kichhoat)
+                .WithRequired(e => e.Ser_ChiNhanh)
+                .HasForeignKey(e => e.IdChiNhanh)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Ser_sp>()
                 .HasMany(e => e.Ser_kichhoat)
                 .WithRequired(e => e.Ser_sp)
                 .HasForeignKey(e => e.IDSer_sp)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Ser_trangthai>()
+                .HasMany(e => e.Ser_kichhoat)
+                .WithRequired(e => e.Ser_trangthai)
+                .HasForeignKey(e => e.TrangThaiId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Size>()

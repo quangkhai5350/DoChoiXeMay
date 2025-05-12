@@ -15,10 +15,19 @@ namespace DoChoiXeMay.Models
         public Guid IDSer_sp { get; set; }
 
         public DateTime NgayKichHoat { get; set; }
+
         public DateTime NgayUpdate { get; set; }
-        [Required]
+
         [StringLength(100)]
         public string EmailKichHoat { get; set; }
+
+        [StringLength(200)]
+        public string TenKhachHang { get; set; }
+
+        [StringLength(50)]
+        public string SDT { get; set; }
+
+        public int IdChiNhanh { get; set; }
 
         public int TrangThaiId { get; set; }
 
@@ -27,6 +36,10 @@ namespace DoChoiXeMay.Models
 
         public virtual Ser_box Ser_box { get; set; }
 
+        public virtual Ser_ChiNhanh Ser_ChiNhanh { get; set; }
+
         public virtual Ser_sp Ser_sp { get; set; }
+
+        public virtual Ser_trangthai Ser_trangthai { get; set; }
     }
 }
