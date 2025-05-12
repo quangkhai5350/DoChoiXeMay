@@ -55,6 +55,10 @@
       <HintPath>..\..\web_BacNinh\webvl2024_BacNinh\bin\MaHoa_GiaiMa_TaiKhoan.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="QRCoder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -175,6 +179,7 @@
     <Compile Include="Models\ProjectUserDetail.cs" />
     <Compile Include="Models\QCtrangchu.cs" />
     <Compile Include="Models\Ser_box.cs" />
+    <Compile Include="Models\Ser_ChiNhanh.cs" />
     <Compile Include="Models\Ser_kichhoat.cs" />
     <Compile Include="Models\Ser_sp.cs" />
     <Compile Include="Models\Ser_trangthai.cs" />
