@@ -166,3 +166,4 @@ E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\obj\Debug\DoChoiXeMay.csproj.CoreCompile
 E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\obj\Debug\DoChoiXe.D6D82594.Up2Date
 E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\obj\Debug\DoChoiXeMay.dll
 E:\GitHubDestop\DoChoiXeMay\DoChoiXeMay\obj\Debug\DoChoiXeMay.pdb
+D:\Git pm\DoChoiXeMay\DoChoiXeMay\bin\QRCoder.dll

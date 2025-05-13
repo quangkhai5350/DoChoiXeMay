@@ -151,15 +151,14 @@ namespace DoChoiXeMay.Areas.Admin.Data
             string QR = "";
             try
             {
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qRCodeData = qrGenerator.CreateQrCode(qrcode, QRCodeGenerator.ECCLevel.Q);
+                QRCode qRCode = new QRCode(qRCodeData);
+
                 using (MemoryStream ms = new MemoryStream())
                 {
-
-                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                    QRCodeGenerator.QRCode qrCode = qrGenerator.CreateQrCode(qrcode, QRCodeGenerator.ECCLevel.Q);
-
-                    using (Bitmap bitMap = qrCode.GetGraphic(15))
+                    using (Bitmap bitMap = qRCode.GetGraphic(15))
                     {
-
                         bitMap.Save(ms, ImageFormat.Png);
                         QR = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
                     }
@@ -200,7 +199,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
             base642 = Cleanbase64(base642);
             Image img1 = Base64toImg(base641);
             Image img2 = Base64toImg(base642);
-
+            //chiều rộng hình mới = tổng 2 chiều rộng
+            //chiều cao hình mới = max(2 chiều cao)
             int mergewith = img1.Width + img2.Width;
             int mergeheight = Math.Max(img1.Height, img2.Height);
 
