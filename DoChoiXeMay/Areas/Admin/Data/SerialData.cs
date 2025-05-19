@@ -157,7 +157,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
 
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    using (Bitmap bitMap = qRCode.GetGraphic(15))
+                    using (Bitmap bitMap = qRCode.GetGraphic(11))
                     {
                         bitMap.Save(ms, ImageFormat.Png);
                         QR = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
@@ -177,12 +177,12 @@ namespace DoChoiXeMay.Areas.Admin.Data
             byte[] bytes = null;
             using (var stream = new MemoryStream())
             {
-                Bitmap bitmap = new Bitmap(900, 500, PixelFormat.Format64bppArgb);
+                Bitmap bitmap = new Bitmap(740, 280, PixelFormat.Format64bppArgb);
                 Graphics graphics = Graphics.FromImage(bitmap);
                 graphics.Clear(System.Drawing.Color.White);
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-                graphics.DrawString(value, new Font("Roboto", 60, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(0.4F, 100F));
+                graphics.DrawString(value, new Font("Roboto", 47, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(0.4F, 90F));
                 graphics.Flush();
                 graphics.Dispose();
                 bitmap.Save(stream, ImageFormat.Jpeg);
@@ -199,17 +199,17 @@ namespace DoChoiXeMay.Areas.Admin.Data
             base642 = Cleanbase64(base642);
             Image img1 = Base64toImg(base641);
             Image img2 = Base64toImg(base642);
-            //chiều rộng hình mới = tổng 2 chiều rộng
-            //chiều cao hình mới = max(2 chiều cao)
-            int mergewith = img1.Width + img2.Width;
-            int mergeheight = Math.Max(img1.Height, img2.Height);
+            //Chiều cao hình mới = Tổng 2 chiều cao
+            //chiều rộng hình mới=max(2 chiều rộng)
+            int mergewith = Math.Max(img1.Width, img2.Width);
+            int mergeheight = img1.Height + img2.Height - img2.Height/2;
 
             Bitmap mergeImg = new Bitmap(mergewith, mergeheight);
             using (Graphics g = Graphics.FromImage(mergeImg))
             {
                 g.Clear(System.Drawing.Color.White);//nen trang
-                g.DrawImage(img1, 0, 0);
-                g.DrawImage(img2, img1.Width, 0);
+                g.DrawImage(img1, 0, img1.Height);
+                g.DrawImage(img2, img1.Width/4, 0);
             }
             //xuat anh ra stream
             using (MemoryStream ms = new MemoryStream())
@@ -220,14 +220,42 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return kq;
         }
-        private string Cleanbase64(string base64)
+        public byte[] getMergeImgbytetoPrint(string base641, string base642)
+        {
+            byte[] kq ;
+            base641 = Cleanbase64(base641);
+            base642 = Cleanbase64(base642);
+            Image img1 = Base64toImg(base641);
+            Image img2 = Base64toImg(base642);
+            //Chiều cao hình mới = Tổng 2 chiều cao
+            //chiều rộng hình mới=max(2 chiều rộng)
+            int mergewith = Math.Max(img1.Width, img2.Width);
+            int mergeheight = img1.Height + img2.Height - img2.Height / 2;
+
+            Bitmap mergeImg = new Bitmap(mergewith, mergeheight);
+            using (Graphics g = Graphics.FromImage(mergeImg))
+            {
+                g.Clear(System.Drawing.Color.White);//nen trang
+                g.DrawImage(img1, 0, img1.Height);
+                g.DrawImage(img2, img1.Width / 4, 0);
+            }
+            //xuat anh ra stream
+            using (MemoryStream ms = new MemoryStream())
+            {
+                mergeImg.Save(ms, ImageFormat.Png);
+                byte[] bytes = ms.ToArray();
+                kq = ms.ToArray();
+            }
+            return kq;
+        }
+        public string Cleanbase64(string base64)
         {
             if (base64.Contains(",")){
                 return base64.Split(',')[1];
             }
             return base64;
         }
-        private Image Base64toImg(string base64string)
+        public Image Base64toImg(string base64string)
         {
             byte[] imageBytes = Convert.FromBase64String(base64string);
             using (MemoryStream ms = new MemoryStream(imageBytes))

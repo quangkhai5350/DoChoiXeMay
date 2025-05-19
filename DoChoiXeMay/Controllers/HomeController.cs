@@ -38,19 +38,9 @@ namespace DoChoiXeMay.Controllers
         }
         public ActionResult Login()
         {
-            var cookie = Request.Cookies["user_log_new"];
-            if (cookie != null)
-            {
-                ViewBag.UserName = cookie.Values["User"];
-                ViewBag.Password = cookie.Values["Pw"];
-                ViewBag.reme = cookie.Values["Remem"];
-            }
-            else
-            {
-                ViewBag.UserName = "";
-                ViewBag.Password = "";
-                ViewBag.reme = "";
-            }
+            ViewBag.UserName = "";
+            ViewBag.Password = "";
+            ViewBag.reme = "";
             return View("Login");
         }
         [HttpPost]
