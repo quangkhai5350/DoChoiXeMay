@@ -1,9 +1,12 @@
-﻿using DoChoiXeMay.Areas.Admin.Data;
+﻿using Antlr.Runtime.Misc;
+using DoChoiXeMay.Areas.Admin.Data;
 using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -75,7 +78,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         SerSP.QRcode = new Data.SerialData().getMergeImg(sn1,qr);
                     }
                     SerSP.Stt = (i + 1).ToString();
-                    
                     var kq = new Data.SerialData().InsertSer_sp(SerSP);
                     if (kq==false)
                     {
@@ -130,6 +132,48 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             }
             return RedirectToAction("ListSerialChuaIn");
         }
+        public ActionResult InSNmoitaoBox(int bang=0, int soluong=0)
+        {
+            try
+            {
+                if (bang == 1)
+                {
+                    var SN = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao)
+                        .Skip(0)
+                        .Take(soluong)
+                        .ToList();
+                    foreach (var sn in SN) { 
+                        var img = new Data.SerialData().Cleanbase64(sn.QRcode);
+                        Image img64= new Data.SerialData().Base64toImg(img);
+                        PrintDocument pd = new PrintDocument();
+                        pd.DefaultPageSettings.Margins.Left = 30;
+                        pd.DefaultPageSettings.Margins.Top = 10;
+                        pd.DefaultPageSettings.Margins.Right = 10;
+                        pd.DefaultPageSettings.Margins.Bottom = 10;
+                        pd.OriginAtMargins = true;
+                        pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+                        pd.PrinterSettings.PrinterName = "HP LaserJet 200 color M251 PCL6 Class Driver";
+                        pd.Print();
+                    }
+                    return RedirectToAction("ListSerialChuaIn"); 
+                }
+                return RedirectToAction("ListSerialChuaIn");
+            }
+            catch (Exception ex)
+            {
+                string loi = ex.ToString();
+                ModelState.AddModelError("", "In thất bại !!!!!!!!!!. Có lỗi hệ thống");
+                return RedirectToAction("ListSerialChuaIn");
+            }
+        }
+        void pd_PrintPage(object sender, PrintPageEventArgs ev)
+        {
+            Font printFont = new Font("3 of 9 Barcode", 18);
+            Font printFont1 = new Font("Times New Roman", 11, FontStyle.Bold);
+            SolidBrush br = new SolidBrush(System.Drawing.Color.Black);
+            ev.Graphics.DrawString("hello", printFont, br, 10, 65);
+            ev.Graphics.DrawString("world", printFont1, br, 10, 85);
+        }
         public ActionResult DeleteSerialSP()
         {
             try
@@ -175,12 +219,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListSer_SP()
         {
-            ViewBag.SerSPchuaIn = dbc.Ser_sp.Where(kh => kh.Sudung == false).OrderBy(kh => kh.NgayTao).ToList();
+            ViewBag.SerSPchuaIn = dbc.Ser_sp.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao).ToList();
             return PartialView();
         }
         public ActionResult GetListSer_Box()
         {
-            ViewBag.SerBoxchuaIn = dbc.Ser_box.Where(kh => kh.Sudung == false).OrderBy(kh => kh.NgayTao).ToList();
+            ViewBag.SerBoxchuaIn = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao).ToList();
             return PartialView();
         }
     }
