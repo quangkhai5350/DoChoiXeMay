@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Xml.Linq;
 
@@ -136,24 +137,24 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             try
             {
-                if (bang == 1)
+                if (bang == 2)
                 {
                     var SN = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao)
                         .Skip(0)
                         .Take(soluong)
                         .ToList();
-                    foreach (var sn in SN) { 
-                        var img = new Data.SerialData().Cleanbase64(sn.QRcode);
-                        Image img64= new Data.SerialData().Base64toImg(img);
+                    foreach (var sn in SN) {
+                        Session["Img64"] = sn.QRcode;
                         PrintDocument pd = new PrintDocument();
-                        pd.DefaultPageSettings.Margins.Left = 30;
-                        pd.DefaultPageSettings.Margins.Top = 10;
-                        pd.DefaultPageSettings.Margins.Right = 10;
-                        pd.DefaultPageSettings.Margins.Bottom = 10;
-                        pd.OriginAtMargins = true;
+                        //pd.DefaultPageSettings.Margins.Left = 30;
+                        //pd.DefaultPageSettings.Margins.Top = 10;
+                        //pd.DefaultPageSettings.Margins.Right = 10;
+                        //pd.DefaultPageSettings.Margins.Bottom = 10;
+                        //pd.OriginAtMargins = true;
                         pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
-                        pd.PrinterSettings.PrinterName = "HP LaserJet 200 color M251 PCL6 Class Driver";
+                        pd.PrinterSettings.PrinterName = "Datamax-O'Neil E-4204B Mark III";
                         pd.Print();
+                        Session.Remove("Img64");
                     }
                     return RedirectToAction("ListSerialChuaIn"); 
                 }
@@ -162,17 +163,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 string loi = ex.ToString();
-                ModelState.AddModelError("", "In thất bại !!!!!!!!!!. Có lỗi hệ thống");
+                Session["ThongBaoSerialBoxchuaIn"] = "In thất bại !!!!!!!!!!. Có lỗi hệ thống";
                 return RedirectToAction("ListSerialChuaIn");
             }
         }
         void pd_PrintPage(object sender, PrintPageEventArgs ev)
         {
-            Font printFont = new Font("3 of 9 Barcode", 18);
-            Font printFont1 = new Font("Times New Roman", 11, FontStyle.Bold);
-            SolidBrush br = new SolidBrush(System.Drawing.Color.Black);
-            ev.Graphics.DrawString("hello", printFont, br, 10, 65);
-            ev.Graphics.DrawString("world", printFont1, br, 10, 85);
+            if(Session["Img64"] != null)
+            {
+                //string imgscale = new Data.SerialData().ScaleImgtext64(Session["Img64"].ToString());
+                //string clean64 = new Data.SerialData().Cleanbase64(Session["Img64"].ToString());
+                //Image img64 = new Data.SerialData().Base64toImg(clean64);
+                Image img64 = new Data.SerialData().getScaleImg(Session["Img64"].ToString());
+                ev.Graphics.DrawImage(img64, ev.MarginBounds);
+            }
         }
         public ActionResult DeleteSerialSP()
         {
