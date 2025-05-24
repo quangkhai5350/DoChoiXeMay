@@ -143,19 +143,36 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         .Skip(0)
                         .Take(soluong)
                         .ToList();
-                    foreach (var sn in SN) {
-                        Session["Img64"] = sn.QRcode;
+                    var countImg = Math.Ceiling(1.0 * SN.Count() / 3);
+
+                    for(int i = 0; i < countImg; i++)
+                    {
+                        var SNIMG = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao)
+                        .Skip(i*3).Take(3).ToList();
+
+                        Session["Img641"] = SN[i*3].QRcode;
+                        Session["Img642"] = SN[i*3+1].QRcode;
+                        Session["Img643"] = SN[i*3+2].QRcode;
+
                         PrintDocument pd = new PrintDocument();
-                        //pd.DefaultPageSettings.Margins.Left = 30;
-                        //pd.DefaultPageSettings.Margins.Top = 10;
-                        //pd.DefaultPageSettings.Margins.Right = 10;
-                        //pd.DefaultPageSettings.Margins.Bottom = 10;
-                        //pd.OriginAtMargins = true;
                         pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
                         pd.PrinterSettings.PrinterName = "Datamax-O'Neil E-4204B Mark III";
                         pd.Print();
-                        Session.Remove("Img64");
+                        Session.Remove("Img641"); Session.Remove("Img642"); Session.Remove("Img643");
                     }
+                    //foreach (var sn in SN) {
+                    //    Session["Img64"] = sn.QRcode;
+                    //    PrintDocument pd = new PrintDocument();
+                    //    //pd.DefaultPageSettings.Margins.Left = 30;
+                    //    //pd.DefaultPageSettings.Margins.Top = 10;
+                    //    //pd.DefaultPageSettings.Margins.Right = 10;
+                    //    //pd.DefaultPageSettings.Margins.Bottom = 10;
+                    //    //pd.OriginAtMargins = true;
+                    //    pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+                    //    pd.PrinterSettings.PrinterName = "Datamax-O'Neil E-4204B Mark III";
+                    //    pd.Print();
+                    //    Session.Remove("Img64");
+                    //}
                     return RedirectToAction("ListSerialChuaIn"); 
                 }
                 return RedirectToAction("ListSerialChuaIn");
@@ -174,9 +191,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 //string imgscale = new Data.SerialData().ScaleImgtext64(Session["Img64"].ToString());
                 //string clean64 = new Data.SerialData().Cleanbase64(Session["Img64"].ToString());
                 //Image img64 = new Data.SerialData().Base64toImg(clean64);
-                Image img64 = new Data.SerialData().getScaleImg(Session["Img64"].ToString());
+                Image img64 = new Data.SerialData().getScaleImg2(Session["Img64"].ToString());
                 ev.Graphics.DrawImage(img64, ev.MarginBounds);
             }
+        }
+        void pd_PrintPageString(object sender, PrintPageEventArgs ev)
+        {
+            Image img64 = new Data.SerialData().gettextImgbystring("NOSERIALNUMBER", "----------------");
+            ev.Graphics.DrawImage(img64, ev.MarginBounds);
         }
         public ActionResult DeleteSerialSP()
         {

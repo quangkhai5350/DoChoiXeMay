@@ -195,7 +195,6 @@ namespace DoChoiXeMay.Areas.Admin.Data
             kq = "data:image/png;base64," + Convert.ToBase64String(bytes, 0, bytes.Length);
             return kq;
         }
-        
         public string getMergeImg(string base641, string base642)
         {
             string kq = "";
@@ -224,29 +223,47 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return kq;
         }
-        public Image getScaleImg(string base641)
+        public string getMerge3Img(string str1, string str2, string str3)
         {
-            base641 = Cleanbase64(base641);
-            byte[] imageBytes = Convert.FromBase64String(base641);
-            WebImage webi = new WebImage(imageBytes);
-            if (webi.Width > 300)
-                webi.Resize(300, 250);
-            byte[] imageBytes2 = webi.GetBytes();
-            //
-            string base64String = Convert.ToBase64String(imageBytes2);
-            //
-            Image img2 = Base64toImg(base64String);
-           
-            return img2;
+            string kq = "";
+            str1 = Cleanbase64(str1);
+            str2 = Cleanbase64(str2);
+            str3 = Cleanbase64(str3);
+            Image img1 = Base64toImg(str1);
+            Image img2 = Base64toImg(str2);
+            Image img3 = Base64toImg(str3);
+            //Chiều cao hình mới = max(3 chiều cao)
+            //chiều rộng hình mới= tổng 3 chiều rộng
+            int mergewith = img1.Width+ img2.Width+img3.Width;
+            int mergeheightmax = Math.Max(img1.Height, img2.Height);
+            int mergeheight = Math.Max(mergeheightmax, img3.Height);
+
+            Bitmap mergeImg = new Bitmap(mergewith, mergeheight);
+            using (Graphics g = Graphics.FromImage(mergeImg))
+            {
+                g.Clear(System.Drawing.Color.White);//nen trang
+                g.DrawImage(img1, 0, 0);
+                g.DrawImage(img2, img1.Width, 0);
+                g.DrawImage(img3, img1.Width + img2.Width, 0);
+                //g.DrawImage(img2, img1.Width / 4, 0);
+            }
+            //xuat anh ra stream
+            using (MemoryStream ms = new MemoryStream())
+            {
+                mergeImg.Save(ms, ImageFormat.Png);
+                byte[] bytes = ms.ToArray();
+                kq = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+            }
+            return kq;
         }
-        public string Cleanbase64(string base64)
+        private string Cleanbase64(string base64)
         {
             if (base64.Contains(",")){
                 return base64.Split(',')[1];
             }
             return base64;
         }
-        public Image Base64toImg(string base64string)
+        private Image Base64toImg(string base64string)
         {
             byte[] imageBytes = Convert.FromBase64String(base64string);
             
@@ -254,21 +271,35 @@ namespace DoChoiXeMay.Areas.Admin.Data
             {
                 return Image.FromStream(ms);
             }
-
         }
-        //public Image ScaleImage(Image image, int maxImageHeight)
+        public Image getScaleImg2(string base641)
+        {
+            base641 = Cleanbase64(base641);
+            Image img2 = Base64toImg(base641);
+            return img2;
+        }
+        public Image gettextImgbystring(string QRbase641, string Strbase642)
+        {
+            string qrS = getQRcode(QRbase641);
+            string ImgS = getImgtext(Strbase642);
+            string merS = getMergeImg(ImgS, qrS);
+            Image img = getScaleImg2(merS);
+            return img;
+        }
+        //public Image getScaleImg(string base641)
         //{
-        //    /* we will resize image based on the height/width ratio by passing expected height as parameter. Based on Expected height and current image height, new ratio will be arrived and using the same we will do the resizing of image width. */
+        //    base641 = Cleanbase64(base641);
+        //    byte[] imageBytes = Convert.FromBase64String(base641);
+        //    WebImage webi = new WebImage(imageBytes);
+        //    if (webi.Width > 300)
+        //        webi.Resize(300, 250);
+        //    byte[] imageBytes2 = webi.GetBytes();
+        //    //
+        //    string base64String = Convert.ToBase64String(imageBytes2);
+        //    //
+        //    Image img2 = Base64toImg(base64String);
 
-        //    var ratio = (double)maxImageHeight / image.Height;
-        //    var newWidth = (int)(image.Width * ratio);
-        //    var newHeight = (int)(image.Height * ratio);
-        //    var newImage = new Bitmap(newWidth, newHeight);
-        //    using (var g = Graphics.FromImage(newImage))
-        //    {
-        //        g.DrawImage(image, 0, 0, newWidth, newHeight);
-        //    }
-        //    return newImage;
+        //    return img2;
         //}
     }
 }
