@@ -441,6 +441,11 @@
     <Content Include="Areas\Admin\Views\Serial\AddNewSerial.cshtml" />
     <Content Include="Areas\Admin\Views\Serial\GetListSer_SP.cshtml" />
     <Content Include="Areas\Admin\Views\Serial\GetListSer_Box.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\Levelchinhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\GetLevelchinhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\UpdateLVChiNhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\NhatKy.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\GetNhatKy.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
