@@ -15,6 +15,66 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/DanhMuc
         Model1 dbc = new Model1();
+        public ActionResult NhatKy()
+        {
+            Session["requestUri"] = "/Admin/DanhMuc/NhatKy";
+            return View();
+        }
+        public ActionResult GetNhatKy()
+        {
+            var model = dbc.NhatKyUTeks.OrderByDescending(kh => kh.CreateDate)
+                .Skip(0).Take(200).ToList();
+            for (int i = 0; i < model.Count(); i++)
+            {
+                model[i].GhiChu = (i + 1).ToString();
+            }
+            ViewBag.GetNhatKy = model;
+            return PartialView();
+        }
+        public ActionResult Levelchinhanh()
+        {
+            Session["requestUri"] = "/Admin/DanhMuc/Levelchinhanh";
+            return View();
+        }
+        public ActionResult GetLevelchinhanh()
+        {
+            var model = dbc.Ser_Levelchinhanh.OrderByDescending(kh => kh.Id).ToList();
+            ViewBag.GetLevelchinhanh = model;
+            return PartialView();
+        }
+        
+        public ActionResult UpdateLVChiNhanh(int id)
+        {
+            var model = dbc.Ser_Levelchinhanh.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateLVChiNhanh(Ser_Levelchinhanh LV)
+        {
+            try
+            {
+                dbc.Entry(LV).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoLVChiNhanh"] = "Update Level chi nhánh Id=" + LV.Id + ", thành công.";
+                var userid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Update Level chi nhánh Id=" + LV.Id + "-" + DateTime.Now.ToString(), "");
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("Levelchinhanh");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+
+                return View(LV);
+            }
+        }
         public ActionResult ListMaThuChi()
         {
             Session["requestUri"] = "/Admin/DanhMuc/ListMaThuChi";

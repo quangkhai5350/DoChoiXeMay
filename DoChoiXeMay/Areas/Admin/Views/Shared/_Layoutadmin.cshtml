@@ -435,10 +435,16 @@
                                     <a href="/Admin/Serial/Index">*List Serial đã in*</a>
                                 </li>
                                 <li>
+                                    <a href="/Admin/Serial/Index">*Kích hoạt serial*</a>
+                                </li>
+                                <li>
                                     <a href="/Admin/Serial/Index">**List Serial đã kích hoạt**</a>
                                 </li>
                                 <li>
-                                    <a href="/Admin/Serial/Index">LevelChiNhanh</a>
+                                    <a href="/Admin/DanhMuc/Levelchinhanh">List Chi Nhánh</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/DanhMuc/Levelchinhanh">LevelChiNhanh</a>
                                 </li>
                             </ul>
                         </div>
@@ -459,7 +465,7 @@
                         <div id="Tables" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 <li>
-                                    @if(Session["quyen"] != null)
+                                    @if (Session["quyen"] != null)
                                     {
                                         <a href="/Admin/XuatNhap/ListXuatNhapUser"> **Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
                                     }
@@ -469,6 +475,9 @@
                                 </li>
                                 <li>
                                     <a href="/Admin/DanhMuc/ListMauSanPham" target="_blank"> Màu sản phẩm</a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/DanhMuc/NhatKy" target="_blank"> Nhật Ký</a>
                                 </li>
                             </ul>
                         </div>
