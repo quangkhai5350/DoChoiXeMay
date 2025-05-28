@@ -35,6 +35,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<ProjectUserDetail> ProjectUserDetails { get; set; }
         public virtual DbSet<Ser_box> Ser_box { get; set; }
         public virtual DbSet<Ser_ChiNhanh> Ser_ChiNhanh { get; set; }
+        public virtual DbSet<Ser_Levelchinhanh> Ser_Levelchinhanh { get; set; }
         public virtual DbSet<Ser_kichhoat> Ser_kichhoat { get; set; }
         public virtual DbSet<Ser_sp> Ser_sp { get; set; }
         public virtual DbSet<Ser_trangthai> Ser_trangthai { get; set; }

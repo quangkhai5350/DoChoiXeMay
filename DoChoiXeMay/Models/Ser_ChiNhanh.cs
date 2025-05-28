@@ -17,16 +17,27 @@ namespace DoChoiXeMay.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(150)]
         public string TenChiNhanh { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(150)]
         public string DaiDien { get; set; }
-
+        [Required]
+        [StringLength(100)]
+        public string SDT { get; set; }
+        [StringLength(200)]
+        public string DiaChi { get; set; }
+        [StringLength(150)]
+        public string TaiKhoanNH { get; set; }
         public bool Sudung { get; set; }
+        public int IdLevel { get; set; }
+        [StringLength(1000)]
+        public string GhiChu { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ser_kichhoat> Ser_kichhoat { get; set; }
+        [ForeignKey("IdLevel")]
+        public virtual Ser_Levelchinhanh Ser_Levelchinhanh { get; set; }
     }
 }

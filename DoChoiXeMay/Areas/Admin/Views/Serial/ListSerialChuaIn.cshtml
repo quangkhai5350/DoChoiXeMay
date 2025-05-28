@@ -99,30 +99,22 @@
                         <script>
                             function Insp() {
                                 var ma = $('#SoSNBOX').val();
-                                if (!confirm("Bạn muốn In " + ma + " S/N box ??")) {
-                                    return false;
-                                } else {
-                                    $.ajax({
-                                        url: "/Admin/Serial/InSNmoitaoBox",
-                                        data: { bang: 2, soluong: ma },
-                                        success: function (respone) {
-                                            
-                                            //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
-                                        }
-                                    });
-                                    //var action = $(this).attr("data-action");
-                                    //this.form.action = "/Admin/Serial/" + action + ma;
-                                }
-                                
-                                //$("#InBox").click(function () {
-                                //    if (!confirm("Bạn muốn In " + ma + " S/N box ??")) {
-                                //        return false;
-                                //    } else {
-                                //        var action = $(this).attr("data-action");
-                                //        this.form.action = "/Admin/Serial/" + action + ma;
-                                //    }
+                                if (ma>0) {
+                                    if (!confirm("Bạn muốn In " + ma + " S/N box ??")) {
+                                        return false;
+                                    } else {
+                                        $.ajax({
+                                            url: "/Admin/Serial/InSNmoitaoBox",
+                                            data: { bang: 2, soluong: ma },
+                                            success: function (respone) {
 
-                                //});
+                                                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                                            }
+                                        });
+                                        //var action = $(this).attr("data-action");
+                                        //this.form.action = "/Admin/Serial/" + action + ma;
+                                    }
+                                }
                             };
                         </script>
                     </div>

@@ -226,12 +226,28 @@ namespace DoChoiXeMay.Areas.Admin.Data
         public string getMerge3Img(string str1, string str2, string str3)
         {
             string kq = "";
+            Image img2; Image img3; Image img1;
             str1 = Cleanbase64(str1);
-            str2 = Cleanbase64(str2);
-            str3 = Cleanbase64(str3);
-            Image img1 = Base64toImg(str1);
-            Image img2 = Base64toImg(str2);
-            Image img3 = Base64toImg(str3);
+            img1 = Base64toImg(str1);
+
+            if (str2 == "NOSERIALNUMBER")
+            {
+                img2= gettextImgbystring("NOSERIALNUMBER", "----------------");
+            }
+            else
+            {
+                str2 = Cleanbase64(str2);
+                img2 = Base64toImg(str2);
+            }
+            if (str3 == "NOSERIALNUMBER")
+            {
+                img3 = gettextImgbystring("NOSERIALNUMBER", "----------------");
+            }
+            else
+            {
+                str3 = Cleanbase64(str3);
+                img3 = Base64toImg(str3);
+            }
             //Chiều cao hình mới = max(3 chiều cao)
             //chiều rộng hình mới= tổng 3 chiều rộng
             int mergewith = img1.Width+ img2.Width+img3.Width;
@@ -252,7 +268,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             {
                 mergeImg.Save(ms, ImageFormat.Png);
                 byte[] bytes = ms.ToArray();
-                kq = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                kq = Convert.ToBase64String(ms.ToArray());
             }
             return kq;
         }
@@ -278,7 +294,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             Image img2 = Base64toImg(base641);
             return img2;
         }
-        public Image gettextImgbystring(string QRbase641, string Strbase642)
+        private Image gettextImgbystring(string QRbase641, string Strbase642)
         {
             string qrS = getQRcode(QRbase641);
             string ImgS = getImgtext(Strbase642);

@@ -5,6 +5,7 @@ using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
@@ -147,23 +148,37 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
                     for(int i = 0; i < countImg; i++)
                     {
-                        var SNIMG = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao)
-                        .Skip(i*3).Take(3).ToList();
-
-                        Session["Img641"] = SN[i*3].QRcode;
-                        Session["Img642"] = SN[i*3+1].QRcode;
-                        Session["Img643"] = SN[i*3+2].QRcode;
-
+                        var SNIMG = SN.Skip(i*3).Take(3).ToList();
+                        if (SNIMG.Count() == 3)
+                        {
+                            Session["Img641"] = SNIMG[0].QRcode;
+                            Session["Img642"] = SNIMG[1].QRcode;
+                            Session["Img643"] = SNIMG[2].QRcode;
+                        }
+                        else if (SNIMG.Count() == 2)
+                        {
+                            Session["Img641"] = SNIMG[0].QRcode;
+                            Session["Img642"] = SNIMG[1].QRcode;
+                            Session["Img643"] = "NOSERIALNUMBER";
+                        }
+                        else if (SNIMG.Count() == 1)
+                        {
+                            Session["Img641"] = SNIMG[0].QRcode;
+                            Session["Img642"] = "NOSERIALNUMBER";
+                            Session["Img643"] = "NOSERIALNUMBER";
+                        }
                         PrintDocument pd = new PrintDocument();
                         pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+                        
                         pd.PrinterSettings.PrinterName = "Datamax-O'Neil E-4204B Mark III";
                         pd.Print();
                         Session.Remove("Img641"); Session.Remove("Img642"); Session.Remove("Img643");
                     }
-                    //foreach (var sn in SN) {
+                    //foreach (var sn in SN)
+                    //{
                     //    Session["Img64"] = sn.QRcode;
                     //    PrintDocument pd = new PrintDocument();
-                    //    //pd.DefaultPageSettings.Margins.Left = 30;
+                    //    //pd.DefaultPageSettings.conf.Left = 30;
                     //    //pd.DefaultPageSettings.Margins.Top = 10;
                     //    //pd.DefaultPageSettings.Margins.Right = 10;
                     //    //pd.DefaultPageSettings.Margins.Bottom = 10;
@@ -173,7 +188,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     //    pd.Print();
                     //    Session.Remove("Img64");
                     //}
-                    return RedirectToAction("ListSerialChuaIn"); 
+                    //return RedirectToAction("ListSerialChuaIn"); 
                 }
                 return RedirectToAction("ListSerialChuaIn");
             }
@@ -186,19 +201,16 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         void pd_PrintPage(object sender, PrintPageEventArgs ev)
         {
-            if(Session["Img64"] != null)
+            if(Session["Img641"] != null && Session["Img642"] != null && Session["Img643"] != null)
             {
                 //string imgscale = new Data.SerialData().ScaleImgtext64(Session["Img64"].ToString());
                 //string clean64 = new Data.SerialData().Cleanbase64(Session["Img64"].ToString());
                 //Image img64 = new Data.SerialData().Base64toImg(clean64);
-                Image img64 = new Data.SerialData().getScaleImg2(Session["Img64"].ToString());
+                string imgscale = new Data.SerialData().getMerge3Img
+                    (Session["Img641"].ToString(), Session["Img642"].ToString(), Session["Img643"].ToString());
+                Image img64 = new Data.SerialData().getScaleImg2(imgscale);
                 ev.Graphics.DrawImage(img64, ev.MarginBounds);
             }
-        }
-        void pd_PrintPageString(object sender, PrintPageEventArgs ev)
-        {
-            Image img64 = new Data.SerialData().gettextImgbystring("NOSERIALNUMBER", "----------------");
-            ev.Graphics.DrawImage(img64, ev.MarginBounds);
         }
         public ActionResult DeleteSerialSP()
         {
