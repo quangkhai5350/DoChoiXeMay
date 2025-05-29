@@ -223,55 +223,56 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return kq;
         }
-        public string getMerge3Img(string str1, string str2, string str3)
-        {
-            string kq = "";
-            Image img2; Image img3; Image img1;
-            str1 = Cleanbase64(str1);
-            img1 = Base64toImg(str1);
+        //ghep 3 qr code
+        //public string getMerge3Img(string str1, string str2, string str3)
+        //{
+        //    string kq = "";
+        //    Image img2; Image img3; Image img1;
+        //    str1 = Cleanbase64(str1);
+        //    img1 = Base64toImg(str1);
 
-            if (str2 == "NOSERIALNUMBER")
-            {
-                img2= gettextImgbystring("NOSERIALNUMBER", "----------------");
-            }
-            else
-            {
-                str2 = Cleanbase64(str2);
-                img2 = Base64toImg(str2);
-            }
-            if (str3 == "NOSERIALNUMBER")
-            {
-                img3 = gettextImgbystring("NOSERIALNUMBER", "----------------");
-            }
-            else
-            {
-                str3 = Cleanbase64(str3);
-                img3 = Base64toImg(str3);
-            }
-            //Chiều cao hình mới = max(3 chiều cao)
-            //chiều rộng hình mới= tổng 3 chiều rộng
-            int mergewith = img1.Width+ img2.Width+img3.Width;
-            int mergeheightmax = Math.Max(img1.Height, img2.Height);
-            int mergeheight = Math.Max(mergeheightmax, img3.Height);
+        //    if (str2 == "NOSERIALNUMBER")
+        //    {
+        //        img2= gettextImgbystring("NOSERIALNUMBER", "----------------");
+        //    }
+        //    else
+        //    {
+        //        str2 = Cleanbase64(str2);
+        //        img2 = Base64toImg(str2);
+        //    }
+        //    if (str3 == "NOSERIALNUMBER")
+        //    {
+        //        img3 = gettextImgbystring("NOSERIALNUMBER", "----------------");
+        //    }
+        //    else
+        //    {
+        //        str3 = Cleanbase64(str3);
+        //        img3 = Base64toImg(str3);
+        //    }
+        //    //Chiều cao hình mới = max(3 chiều cao)
+        //    //chiều rộng hình mới= tổng 3 chiều rộng
+        //    int mergewith = img1.Width+ img2.Width+img3.Width;
+        //    int mergeheightmax = Math.Max(img1.Height, img2.Height);
+        //    int mergeheight = Math.Max(mergeheightmax, img3.Height);
 
-            Bitmap mergeImg = new Bitmap(mergewith, mergeheight);
-            using (Graphics g = Graphics.FromImage(mergeImg))
-            {
-                g.Clear(System.Drawing.Color.White);//nen trang
-                g.DrawImage(img1, 0, 0);
-                g.DrawImage(img2, img1.Width, 0);
-                g.DrawImage(img3, img1.Width + img2.Width, 0);
-                //g.DrawImage(img2, img1.Width / 4, 0);
-            }
-            //xuat anh ra stream
-            using (MemoryStream ms = new MemoryStream())
-            {
-                mergeImg.Save(ms, ImageFormat.Png);
-                byte[] bytes = ms.ToArray();
-                kq = Convert.ToBase64String(ms.ToArray());
-            }
-            return kq;
-        }
+        //    Bitmap mergeImg = new Bitmap(mergewith, mergeheight);
+        //    using (Graphics g = Graphics.FromImage(mergeImg))
+        //    {
+        //        g.Clear(System.Drawing.Color.White);//nen trang
+        //        g.DrawImage(img1, 0, 0);
+        //        g.DrawImage(img2, img1.Width, 0);
+        //        g.DrawImage(img3, img1.Width + img2.Width, 0);
+        //        //g.DrawImage(img2, img1.Width / 4, 0);
+        //    }
+        //    //xuat anh ra stream
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        mergeImg.Save(ms, ImageFormat.Png);
+        //        byte[] bytes = ms.ToArray();
+        //        kq = Convert.ToBase64String(ms.ToArray());
+        //    }
+        //    return kq;
+        //}
         private string Cleanbase64(string base64)
         {
             if (base64.Contains(",")){
@@ -302,6 +303,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             Image img = getScaleImg2(merS);
             return img;
         }
+        //Khoong dung nua
         //public Image getScaleImg(string base641)
         //{
         //    base641 = Cleanbase64(base641);

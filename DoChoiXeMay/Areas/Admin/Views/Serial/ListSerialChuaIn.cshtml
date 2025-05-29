@@ -53,6 +53,7 @@
                         <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialSP" onclick="return confirm('Bạn đã chọn số lượng và máy In ?')">
                             <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Sản Phẩm
                         </a>
+                        <input type="text" value="máy in" style="width:300px;margin-left:100px"  placeholder="Chọn máy in." name="MayIn" id="MayIn" required />
                     </div>
                     <div class="col-md-2" style="text-align:right">
                         @ViewBag.TotalSerialSPchuaIn S/N
@@ -93,19 +94,21 @@
                 <div class="row">
                     <div class="col-md-10">
                         <input type="number" style="width:100px" min="0" title="Chọn số lượng để In." name="SoSNBOX" id="SoSNBOX" required />
-                        <button id="InBox" class="btn btn-success" style="margin-left:20px" data-action ="InSNmoitaoBox?bang=2&soluong=" onclick="Insp()">
+                        <button id="InBox" class="btn btn-success" style="margin-left:20px" data-action="InSNmoitaoBox?bang=2&soluong=" onclick="Insp()">
                             <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Box
                         </button>
+                        
                         <script>
                             function Insp() {
                                 var ma = $('#SoSNBOX').val();
-                                if (ma>0) {
+                                var mayin = $('#MayIn').val();
+                                if (ma > 0) {
                                     if (!confirm("Bạn muốn In " + ma + " S/N box ??")) {
                                         return false;
                                     } else {
                                         $.ajax({
                                             url: "/Admin/Serial/InSNmoitaoBox",
-                                            data: { bang: 2, soluong: ma },
+                                            data: { bang: 2, soluong: ma, mayin: mayin },
                                             success: function (respone) {
 
                                                 //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');

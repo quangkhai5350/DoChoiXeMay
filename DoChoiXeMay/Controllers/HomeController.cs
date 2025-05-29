@@ -19,7 +19,6 @@ namespace DoChoiXeMay.Controllers
         Model1 dbc = new Model1();
         public ActionResult Index()
         {
-            
             return View();
         }
 
