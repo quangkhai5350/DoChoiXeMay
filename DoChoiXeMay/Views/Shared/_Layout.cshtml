@@ -2,15 +2,26 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Đồ Chơi Xe Máy</title>
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-    
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="shortcut icon" type="image/png" href="~/Content/imgTeK/favicon.jpg">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/Content/css/reset.css" />
+    <link rel="stylesheet" href="~/Content/css/animate.min.css" />
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/css/style.css" />
+    <link rel="stylesheet" href="~/Content/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.css" />
+    <link rel="stylesheet" href="~/Content/css/responsive.css" />
+    <link rel="stylesheet" href="~/Content/css/player/YTPlayer.css" />
+    <link href="~/Content/css/pro-bars.css" rel="stylesheet" />
+    <!-- End CSS Files -->
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <!--<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
             <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:34px" />
             @Html.ActionLink("TechZone", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -19,19 +30,44 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
-                    <li>@Html.ActionLink("Active", "Index", "Active", new { area = "" }, new { @class = "nav-link" })</li>
-                    @*<li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
-                </ul>
+                <ul class="navbar-nav flex-grow-1">-->
+    @*<li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
+    <!--<li>@Html.ActionLink("Active", "Index", "Active", new { area = "" }, new { @class = "nav-link" })</li>-->
+    @*<li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
+    <!--</ul>
             </div>
         </div>
-    </nav>
+    </nav>-->
+    <section id="navigation" class="dark-nav">
+        <!-- Navigation Inner -->
+        <div class="nav-inner">
+            <!-- Site Logo -->
+            <div class="site-logo">
+                <a href="#" id="logo-text" class="scroll logo">
+                    <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
+                    TechZone
+                </a>
+            </div><!-- End Site Logo -->
+            <a class="mini-nav-button gray2"><i class="fa fa-bars"></i></a>
+            <!-- Navigation Menu -->
+            <div class="nav-menu">
+                <ul class="nav uppercase">
+                    <li style="display:inline-block !important"><a href="/Home/Index" class="scroll">Home</a></li>
+                    <li style="display:inline-block !important"><a href="/Active/Index" class="scroll">Active</a></li>
+                    
+                </ul>
+            </div><!-- End Navigation Menu -->
+        </div><!-- End Navigation Inner -->
+    </section>
+    <!-- End Navigation Section -->
+    
+
     <div class="container body-content" style="min-height:700px">
         @RenderBody()
         <hr />
     </div>
-    <div class="bg-dark">
+    <!-- Footer -->
+    <footer id="footer" class="footer">
         <div class="container">
             <div style="margin-top:10px;padding-top:15px;padding-bottom:30px;color:white">
                 <div class="row text-center">
@@ -51,9 +87,37 @@
                 </div>
             </div>
         </div>
-    </div>
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+    </footer><!-- End Footer -->
+    <!-- JS Files -->
+
+
+    <script type="text/javascript" src="~/Content/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.appear.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.prettyPhoto.js"></script>
+    <script type="text/javascript" src="~/Content/js/modernizr-latest.js"></script>
+    @*<script type="text/javascript" src="~/Content/js/SmoothScroll.js"></script>*@
+    <script type="text/javascript" src="~/Content/js/jquery.parallax-1.1.3.js"></script>
+    @*<script type="text/javascript" src="~/Content/js/jquery.easing.1.3.js"></script>*@
+    <script type="text/javascript" src="~/Content/js/jquery.superslides.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.flexslider.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.mb.YTPlayer.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.slabtext.js"></script>
+    <script type="text/javascript" src="~/Content/js/plugins.js"></script>
+
+    <script>
+        $("a.about-icon").hover(function () {
+            $(this).children("i").addClass("fa-spin");
+        }, function () {
+            $(this).children("i").removeClass("fa-spin");
+        });
+    </script>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
