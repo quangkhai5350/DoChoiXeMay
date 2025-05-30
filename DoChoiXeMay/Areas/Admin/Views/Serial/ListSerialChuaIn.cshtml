@@ -48,12 +48,15 @@
             </div>
             <div class="panel-footer">
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-6">
                         <input type="number" min="0" title="Chọn số lượng để In." name="SoSNSP" id="SoSNSP" required />
                         <a class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialSP" onclick="return confirm('Bạn đã chọn số lượng và máy In ?')">
                             <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Sản Phẩm
                         </a>
-                        <input type="text" value="máy in" style="width:300px;margin-left:100px"  placeholder="Chọn máy in." name="MayIn" id="MayIn" required />
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" value="Brother QL-700" style="width:300px" placeholder="Chọn máy in." name="MayIn" id="MayIn" required />
                     </div>
                     <div class="col-md-2" style="text-align:right">
                         @ViewBag.TotalSerialSPchuaIn S/N

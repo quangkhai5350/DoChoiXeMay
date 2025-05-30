@@ -31,7 +31,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         
         public ActionResult LogOut() {
             Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
         [HttpGet]
         public ActionResult EditUser(int id)
