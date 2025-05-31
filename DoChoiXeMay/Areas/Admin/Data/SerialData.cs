@@ -174,18 +174,26 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return "";
             }
         }
-        public string getImgtext(string value)
+        public string getImgtextBOX(string value,bool box)
         {
             string kq = "";
             byte[] bytes = null;
             using (var stream = new MemoryStream())
             {
-                Bitmap bitmap = new Bitmap(600, 250, PixelFormat.Format64bppArgb);
+                Bitmap bitmap = new Bitmap(600, 230, PixelFormat.Format64bppArgb);
                 Graphics graphics = Graphics.FromImage(bitmap);
                 graphics.Clear(System.Drawing.Color.White);
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-                graphics.DrawString(value, new Font("Roboto", 35, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(0.4F, 35F));
+                if (box)
+                {
+                    graphics.DrawString(value, new Font("Roboto", 35, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(20F, 30F));
+                }
+                else
+                {
+                    graphics.DrawString(value, new Font("Roboto", 35, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(100F, 30F));
+                }
+                
                 graphics.Flush();
                 graphics.Dispose();
                 bitmap.Save(stream, ImageFormat.Jpeg);
@@ -316,7 +324,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
         public Image gettextImgbystring(string QRbase641, string Strbase642)
         {
             string qrS = getQRcode(QRbase641);
-            string ImgS = getImgtext(Strbase642);
+            string ImgS = getImgtextBOX(Strbase642,false);
             //string merS = getMergeImgNgang(qrS,ImgS);
             string merS = getMergeImg(ImgS,qrS);
             Image img = getScaleImg2(merS);
