@@ -35,8 +35,9 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<ProjectUserDetail> ProjectUserDetails { get; set; }
         public virtual DbSet<Ser_box> Ser_box { get; set; }
         public virtual DbSet<Ser_ChiNhanh> Ser_ChiNhanh { get; set; }
-        public virtual DbSet<Ser_Levelchinhanh> Ser_Levelchinhanh { get; set; }
         public virtual DbSet<Ser_kichhoat> Ser_kichhoat { get; set; }
+        public virtual DbSet<Ser_Levelchinhanh> Ser_Levelchinhanh { get; set; }
+        public virtual DbSet<Ser_LoaiHang> Ser_LoaiHang { get; set; }
         public virtual DbSet<Ser_sp> Ser_sp { get; set; }
         public virtual DbSet<Ser_trangthai> Ser_trangthai { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
@@ -164,6 +165,30 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdChiNhanh)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Ser_Levelchinhanh>()
+                .HasMany(e => e.Ser_ChiNhanh)
+                .WithRequired(e => e.Ser_Levelchinhanh)
+                .HasForeignKey(e => e.IdLevel)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Ser_LoaiHang>()
+                .HasMany(e => e.HangHoas)
+                .WithRequired(e => e.Ser_LoaiHang)
+                .HasForeignKey(e => e.IdLoai)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Ser_LoaiHang>()
+                .HasMany(e => e.Ser_box)
+                .WithRequired(e => e.Ser_LoaiHang)
+                .HasForeignKey(e => e.IdLoai)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Ser_LoaiHang>()
+                .HasMany(e => e.Ser_sp)
+                .WithRequired(e => e.Ser_LoaiHang)
+                .HasForeignKey(e => e.IdLoai)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Ser_sp>()
                 .HasMany(e => e.Ser_kichhoat)
                 .WithRequired(e => e.Ser_sp)
@@ -210,6 +235,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ProjectUserDetails)
                 .WithRequired(e => e.TrangThaiDuAn)
                 .HasForeignKey(e => e.TrangthaiId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserTek>()
+                .HasMany(e => e.ChiTietTCs)
+                .WithRequired(e => e.UserTek)
+                .HasForeignKey(e => e.UserId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<UserTek>()

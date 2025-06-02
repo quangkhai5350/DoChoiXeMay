@@ -185,6 +185,7 @@
     <Compile Include="Models\Ser_ChiNhanh.cs" />
     <Compile Include="Models\Ser_kichhoat.cs" />
     <Compile Include="Models\Ser_Levelchinhanh.cs" />
+    <Compile Include="Models\Ser_LoaiHang.cs" />
     <Compile Include="Models\Ser_sp.cs" />
     <Compile Include="Models\Ser_trangthai.cs" />
     <Compile Include="Models\Size.cs" />

@@ -48,12 +48,13 @@ namespace DoChoiXeMay.Models
         public bool YeuCauDay { get; set; }
 
         public bool AdminXacNhan { get; set; }
-        [ForeignKey("UserId")]
-        public virtual UserTek UserTek  { get; set; }
+
         public virtual HinhThucTC HinhThucTC { get; set; }
 
         public virtual KyXuatNhap KyXuatNhap { get; set; }
 
         public virtual MaTC MaTC { get; set; }
+
+        public virtual UserTek UserTek { get; set; }
     }
 }

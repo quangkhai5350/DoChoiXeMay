@@ -28,6 +28,8 @@ namespace DoChoiXeMay.Models
 
         public bool Sudung { get; set; }
 
+        public int IdLoai { get; set; }
+
         public string QRcode { get; set; }
 
         [StringLength(50)]
@@ -39,6 +41,8 @@ namespace DoChoiXeMay.Models
 
         [StringLength(200)]
         public string Ghichu { get; set; }
+
+        public virtual Ser_LoaiHang Ser_LoaiHang { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ser_kichhoat> Ser_kichhoat { get; set; }

@@ -62,18 +62,22 @@
 
                             </div>
                         </div>
-                        
+                        <div class="form-group">
+                            <p>Ngày Sản Xuất</p>
+                            <span class="icon-case"><i class="glyphicon glyphicon-time"></i></span>
+                            @Html.TextBoxFor(kh => kh.NgayUpdate, "{0:dd/MM/yyyy}", new { @class = "form-control", @type = "date", style = "height: 40px" })
+                        </div>
                     </div>
                     <div class="rightcontact">
                         <div class="form-group" style="border: 1px dashed #423333; padding: 5px; margin-bottom: 15px">
-                            <p>Số Lô sản xuất gồm 6 ký tự</p>
+                            @*<p>Số Lô sản xuất gồm 6 ký tự</p>*@
                             <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-sx-12 col-12">
-                                <p>3 ký tự tên (vd: DXN =>Đèn Xi Nhan)</p>
+                                <p>Loại Hàng</p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                <input type="text" value="DXN" name="soloName" id="soloName" required />
+                                @Html.DropDownList("IdLoai", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                             </div>
                             <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-sx-12 col-12">
-                                <p>3 stt: (vd: 001)</p>
+                                <p>Stt lô sp (vd: 001)</p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 <input type="text" name="soloSTT" id="soloSTT" required />
                             </div>
