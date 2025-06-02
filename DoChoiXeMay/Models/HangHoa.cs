@@ -23,6 +23,8 @@ namespace DoChoiXeMay.Models
 
         public DateTime NgayAuto { get; set; }
 
+        public int IdLoai { get; set; }
+
         [StringLength(100)]
         public string Hinh1 { get; set; }
 
@@ -44,6 +46,8 @@ namespace DoChoiXeMay.Models
         public virtual Color Color { get; set; }
 
         public virtual Manufacturer Manufacturer { get; set; }
+
+        public virtual Ser_LoaiHang Ser_LoaiHang { get; set; }
 
         public virtual Size Size { get; set; }
     }

@@ -48,6 +48,8 @@ namespace DoChoiXeMay.Models
 
         public int Idver { get; set; }
 
+        public int IdLoai { get; set; }
+
         public bool HangTangKhongBan { get; set; }
 
         [StringLength(200)]
@@ -61,6 +63,7 @@ namespace DoChoiXeMay.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ser_kichhoat> Ser_kichhoat { get; set; }
+        public virtual Ser_LoaiHang Ser_LoaiHang { get; set; }
 
         public virtual Size Size { get; set; }
 

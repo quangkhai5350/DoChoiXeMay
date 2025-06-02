@@ -12,13 +12,13 @@ namespace DoChoiXeMay.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserTek()
         {
+            ChiTietTCs = new HashSet<ChiTietTC>();
             KyXuatNhaps = new HashSet<KyXuatNhap>();
             MailTeKs = new HashSet<MailTeK>();
             MailTeKDetails = new HashSet<MailTeKDetail>();
             NoteKythuats = new HashSet<NoteKythuat>();
             ProjectDetails = new HashSet<ProjectDetail>();
             ProjectTeKs = new HashSet<ProjectTeK>();
-            ChiTietTCs = new HashSet<ChiTietTC>();
         }
 
         public int Id { get; set; }
@@ -59,6 +59,8 @@ namespace DoChoiXeMay.Models
 
         [StringLength(500)]
         public string Avatar { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTC> ChiTietTCs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

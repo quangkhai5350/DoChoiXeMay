@@ -5,7 +5,7 @@
                 <th class="canhgiua" style="max-width: 15px">STT</th>
                 <th class="canhgiua">Lô Sản Xuất</th>
                 <th class="canhgiua">Serial Number</th>
-                <th class="canhgiua">QRcode</th>
+                @*<th class="canhgiua">QRcode</th>*@
                 <th class="canhgiua">Hãng</th>
                 <th class="canhgiua">Màu</th>
                 <th class="canhgiua">Size</th>
@@ -24,9 +24,9 @@
                     <td>
                         @Item.SerialSP
                     </td>
-                    <td style="padding:0">
+                    @*<td style="padding:0">
                         <img src="@Item.QRcode" alt="" style="height:60px;width:240px" />
-                    </td>
+                    </td>*@
                     <td>@Item.Manufacturer.Name</td>
                     <td>@Item.Color.TenColor</td>
 

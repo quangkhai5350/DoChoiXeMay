@@ -4,8 +4,8 @@
             <tr class="canhgiua" style="background-color: #00bcd4">
                 <th class="canhgiua" style="max-width: 15px">STT</th>
                 <th class="canhgiua">Lô Sản Xuất</th>
+                <th class="canhgiua">Loai SP</th>
                 <th class="canhgiua">Serial Number</th>
-                <th class="canhgiua">QRcode</th>
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
@@ -17,11 +17,14 @@
                         @Item.LoSanXuat
                     </td>
                     <td>
+                        @Item.Ser_LoaiHang.Name
+                    </td>
+                    <td>
                         @Item.Serial
                     </td>
-                    <td style="padding:0">
-                        <img src="@Item.QRcode" alt="" style="height:50px;width:200px" />
-                    </td>
+                    @*<td style="padding:0">
+            <img src="@Item.QRcode" alt="" style="height:50px;width:200px" />
+        </td>*@
                 </tr>
             }
         </tbody>

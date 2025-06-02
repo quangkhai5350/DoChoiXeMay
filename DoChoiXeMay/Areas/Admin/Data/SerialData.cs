@@ -33,7 +33,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 p = sp;
                 p.Id = Guid.NewGuid();
                 p.NgayTao = DateTime.Now;
-                p.NgayUpdate = DateTime.Now;
+                p.NgayUpdate = sp.NgayUpdate;
                 p.DaIn = false;
                 _context.Ser_sp.Add(p);
                 int kt = _context.SaveChanges();
@@ -50,7 +50,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
-        public bool InsertSer_Box(string Lo, string Seri, bool sudung, string stt, string ghichu, string qr)
+        public bool InsertSer_Box(int IdLoai,string Ngaysx,string Lo, string Seri, bool sudung, string stt, string ghichu, string qr)
         {
             try
             {
@@ -61,7 +61,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 b.Sudung = sudung;
                 b.Stt = stt;
                 b.NgayTao = DateTime.Now;
-                b.NgayUpdate = DateTime.Now;
+                b.NgayUpdate = DateTime.Parse(Ngaysx);
+                b.IdLoai = IdLoai;
                 b.DaIn = false;
                 b.Ghichu = ghichu;
                 b.QRcode = qr;

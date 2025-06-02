@@ -39,25 +39,26 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.IdColor = new SelectList(dbc.Colors.ToList(), "Id", "TenColor");
             ViewBag.IdSize = new SelectList(dbc.Sizes.ToList(), "Id", "TenSize");
             ViewBag.Idver = new SelectList(dbc.Versions.ToList(), "Id", "VerName");
+            ViewBag.IdLoai = new SelectList(dbc.Ser_LoaiHang.ToList(), "Id", "Name");
             return View();
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult AddNewSerial(Ser_sp SerSP,int SoSerialN, string soloName, string soloSTT)
+        public ActionResult AddNewSerial(Ser_sp SerSP,int SoSerialN, string soloSTT)
         {
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name", 5);
             ViewBag.IdColor = new SelectList(dbc.Colors.ToList(), "Id", "TenColor");
             ViewBag.IdSize = new SelectList(dbc.Sizes.ToList(), "Id", "TenSize");
             ViewBag.Idver = new SelectList(dbc.Versions.ToList(), "Id", "VerName");
-            string solosp = soloName + soloSTT;
-            string solobox = "BXX" + soloSTT;
+            ViewBag.IdLoai = new SelectList(dbc.Ser_LoaiHang.ToList(), "Id", "Name");
             try
             {
                 //tạo S/N SP
+                string loai = dbc.Ser_LoaiHang.Find(SerSP.IdLoai).Viettat;
                 for (int i = 0; i < SoSerialN; i++)
                 {
                     //loSanxuat =>ngaythang // 5 ký tự Random
-                    SerSP.LoSanXuat = solosp;
+                    SerSP.LoSanXuat = soloSTT;
                     string SN = Utils.XString.MakeAotuSN(5);
                     var kt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
                     if (kt.Count() > 0)
@@ -69,9 +70,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             if (ktt.Count() == 0)
                             {
                                 SerSP.SerialSP = SN;
-                                string sn1 = new Data.SerialData().getImgtextBOX(SN, false);
-                                string qr = new Data.SerialData().getQRcode(SN);
-                                SerSP.QRcode = new Data.SerialData().getMergeImg(sn1, qr);
                                 break;
                             }
                         }
@@ -79,10 +77,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     else
                     {
                         SerSP.SerialSP = SN;
-                        string sn1 = new Data.SerialData().getImgtextBOX(SN, false);
-                        string qr = new Data.SerialData().getQRcode(SN);
-                        SerSP.QRcode = new Data.SerialData().getMergeImg(sn1,qr);
                     }
+                    SerSP.QRcode = "";
                     SerSP.Stt = (i + 1).ToString();
                     var kq = new Data.SerialData().InsertSer_sp(SerSP);
                     if (kq==false)
@@ -95,23 +91,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 for (int i = 0; i < SoSerialN; i++)
                 {
                     //loSanxuat =>ngaythang // loaihang = NEW
-                    SerSP.LoSanXuat = solobox;
-                    string SNB = "NEW"+ Utils.XString.MakeAotuSN(5);
+                    SerSP.LoSanXuat = soloSTT;
+                    string SNB = loai + Utils.XString.MakeAotuSN(5);
                     var kt = dbc.Ser_box.Where(kh => kh.Serial.Contains(SNB)).ToList();
                     if (kt.Count() > 0)
                     {
                         //Nếu S/N bị trùng, random 50 lần
                         for (int j = 0; j < 50; j++)
                         {
-                            SNB = "NEW" + Utils.XString.MakeAotuSN(5);
+                            SNB = loai + Utils.XString.MakeAotuSN(5);
                             var ktt = dbc.Ser_box.Where(kh => kh.Serial.Contains(SNB)).ToList();
                             if (ktt.Count() == 0)
                             {
                                 SerSP.SerialSP = SNB;
-                                //SerSP.QRcode = new Data.SerialData().getImgtext(SN) + new Data.SerialData().getQRcode(SN);
-                                string sn1 = new Data.SerialData().getImgtextBOX(SNB, true);
-                                string qr = new Data.SerialData().getQRcode(SNB);
-                                SerSP.QRcode = new Data.SerialData().getMergeImg(sn1, qr);
                                 break;
                             }
                         }
@@ -119,14 +111,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     else
                     {
                         SerSP.SerialSP = SNB;
-                        string sn1 = new Data.SerialData().getImgtextBOX(SNB,true);
-                        string qr = new Data.SerialData().getQRcode(SNB);
-                        SerSP.QRcode = new Data.SerialData().getMergeImg(sn1, qr);
-                        //SerSP.QRcode = new Data.SerialData().getMergeImgNgang(qr,sn1);
+                        //string sn1 = new Data.SerialData().getImgtextBOX(SNB, true);
+                        //string qr = new Data.SerialData().getQRcode(SNB);
+                        //SerSP.QRcode = new Data.SerialData().getMergeImg(sn1,qr);
                     }
+                    SerSP.QRcode = "";
                     SerSP.Stt = (i + 1).ToString();
 
-                    var kq = new Data.SerialData().InsertSer_Box(SerSP.LoSanXuat,SerSP.SerialSP,SerSP.Sudung,SerSP.Stt,SerSP.Ghichu,SerSP.QRcode);
+                    var kq = new Data.SerialData().InsertSer_Box(SerSP.IdLoai,SerSP.NgayUpdate.ToString(),SerSP.LoSanXuat,SerSP.SerialSP,SerSP.Sudung,SerSP.Stt,SerSP.Ghichu,SerSP.QRcode);
                     if (kq == false)
                     {
                         Session["ThongBaoSerialBoxchuaIn"] = "Có lỗi Insert Serial Box.";
@@ -188,13 +180,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var SNIMG = box.Skip(i * 2).Take(2).ToList();
                     if (SNIMG.Count() == 2)
                     {
-                        Session["Img641"] = SNIMG[0].QRcode;
-                        Session["Img642"] = SNIMG[1].QRcode;
+                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].Serial, true);
+                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].Serial);
+                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
+                        string sn2 = new Data.SerialData().getImgtextBOX(SNIMG[1].Serial, true);
+                        string qr2 = new Data.SerialData().getQRcode(SNIMG[1].Serial);
+                        Session["Img642"] = new Data.SerialData().getMergeImg(sn2, qr2);
                         //Session["Img643"] = SNIMG[2].QRcode;
                     }
                     else if (SNIMG.Count() == 1)
                     {
-                        Session["Img641"] = SNIMG[0].QRcode;
+                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].Serial, true);
+                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].Serial);
+                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
                         Session["Img642"] = "NOSERIALNUMBER";
                     }
 
@@ -220,13 +218,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var SNIMG = sp.Skip(i * 2).Take(2).ToList();
                     if (SNIMG.Count() == 2)
                     {
-                        Session["Img641"] = SNIMG[0].QRcode;
-                        Session["Img642"] = SNIMG[1].QRcode;
+                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].SerialSP, false);
+                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].SerialSP);
+                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1, qr1);
+                        string sn2 = new Data.SerialData().getImgtextBOX(SNIMG[1].SerialSP, false);
+                        string qr2 = new Data.SerialData().getQRcode(SNIMG[1].SerialSP);
+                        Session["Img642"] = new Data.SerialData().getMergeImg(sn2, qr2);
                         //Session["Img643"] = SNIMG[2].QRcode;
                     }
                     else if (SNIMG.Count() == 1)
                     {
-                        Session["Img641"] = SNIMG[0].QRcode;
+                        string sn1 = new Data.SerialData().getImgtextBOX(SNIMG[0].SerialSP, false);
+                        string qr1 = new Data.SerialData().getQRcode(SNIMG[0].SerialSP);
+                        Session["Img641"] = new Data.SerialData().getMergeImg(sn1,qr1);
                         Session["Img642"] = "NOSERIALNUMBER";
                     }
 
