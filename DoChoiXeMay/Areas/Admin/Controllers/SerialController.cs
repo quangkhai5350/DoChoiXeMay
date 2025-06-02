@@ -13,6 +13,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using static QRCoder.PayloadGenerator;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -55,19 +56,22 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 //tạo S/N SP
                 for (int i = 0; i < SoSerialN; i++)
                 {
+                    //loSanxuat =>ngaythang // 5 ký tự Random
                     SerSP.LoSanXuat = solosp;
-                    string SN = Utils.XString.MakeAotuSN(10) + SerSP.LoSanXuat;
+                    string SN = Utils.XString.MakeAotuSN(5);
                     var kt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
                     if (kt.Count() > 0)
                     {
                         //Nếu S/N bị trùng, random 50 lần
                         for (int j = 0; j < 50; j++) {
-                            SN= Utils.XString.MakeAotuSN(10) + SerSP.LoSanXuat;
+                            SN= Utils.XString.MakeAotuSN(5);
                             var ktt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
                             if (ktt.Count() == 0)
                             {
                                 SerSP.SerialSP = SN;
-                                SerSP.QRcode = new Data.SerialData().getQRcode(SN);
+                                string sn1 = new Data.SerialData().getImgtextBOX(SN, false);
+                                string qr = new Data.SerialData().getQRcode(SN);
+                                SerSP.QRcode = new Data.SerialData().getMergeImg(sn1, qr);
                                 break;
                             }
                         }
@@ -75,7 +79,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     else
                     {
                         SerSP.SerialSP = SN;
-                        string sn1 = new Data.SerialData().getImgtext(SN);
+                        string sn1 = new Data.SerialData().getImgtextBOX(SN, false);
                         string qr = new Data.SerialData().getQRcode(SN);
                         SerSP.QRcode = new Data.SerialData().getMergeImg(sn1,qr);
                     }
@@ -90,30 +94,35 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 //tạo S/N Box
                 for (int i = 0; i < SoSerialN; i++)
                 {
+                    //loSanxuat =>ngaythang // loaihang = NEW
                     SerSP.LoSanXuat = solobox;
-                    string SN = Utils.XString.MakeAotuSN(10) + SerSP.LoSanXuat;
-                    var kt = dbc.Ser_box.Where(kh => kh.Serial.Contains(SN)).ToList();
+                    string SNB = "NEW"+ Utils.XString.MakeAotuSN(5);
+                    var kt = dbc.Ser_box.Where(kh => kh.Serial.Contains(SNB)).ToList();
                     if (kt.Count() > 0)
                     {
                         //Nếu S/N bị trùng, random 50 lần
                         for (int j = 0; j < 50; j++)
                         {
-                            SN = Utils.XString.MakeAotuSN(10) + SerSP.LoSanXuat;
-                            var ktt = dbc.Ser_box.Where(kh => kh.Serial.Contains(SN)).ToList();
+                            SNB = "NEW" + Utils.XString.MakeAotuSN(5);
+                            var ktt = dbc.Ser_box.Where(kh => kh.Serial.Contains(SNB)).ToList();
                             if (ktt.Count() == 0)
                             {
-                                SerSP.SerialSP = SN;
-                                SerSP.QRcode = new Data.SerialData().getImgtext(SN) + new Data.SerialData().getQRcode(SN);
+                                SerSP.SerialSP = SNB;
+                                //SerSP.QRcode = new Data.SerialData().getImgtext(SN) + new Data.SerialData().getQRcode(SN);
+                                string sn1 = new Data.SerialData().getImgtextBOX(SNB, true);
+                                string qr = new Data.SerialData().getQRcode(SNB);
+                                SerSP.QRcode = new Data.SerialData().getMergeImg(sn1, qr);
                                 break;
                             }
                         }
                     }
                     else
                     {
-                        SerSP.SerialSP = SN;
-                        string sn1 = new Data.SerialData().getImgtext(SN);
-                        string qr = new Data.SerialData().getQRcode(SN);
+                        SerSP.SerialSP = SNB;
+                        string sn1 = new Data.SerialData().getImgtextBOX(SNB,true);
+                        string qr = new Data.SerialData().getQRcode(SNB);
                         SerSP.QRcode = new Data.SerialData().getMergeImg(sn1, qr);
+                        //SerSP.QRcode = new Data.SerialData().getMergeImgNgang(qr,sn1);
                     }
                     SerSP.Stt = (i + 1).ToString();
 
@@ -144,51 +153,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         .Skip(0)
                         .Take(soluong)
                         .ToList();
-                    //var countImg = Math.Ceiling(1.0 * SN.Count() / 3);
+                    var countImg = Math.Ceiling(1.0 * SN.Count() / 2);
 
-                    //for(int i = 0; i < countImg; i++)
-                    //{
-                    //    var SNIMG = SN.Skip(i*3).Take(3).ToList();
-                    //    if (SNIMG.Count() == 3)
-                    //    {
-                    //        Session["Img641"] = SNIMG[0].QRcode;
-                    //        Session["Img642"] = SNIMG[1].QRcode;
-                    //        Session["Img643"] = SNIMG[2].QRcode;
-                    //    }
-                    //    else if (SNIMG.Count() == 2)
-                    //    {
-                    //        Session["Img641"] = SNIMG[0].QRcode;
-                    //        Session["Img642"] = SNIMG[1].QRcode;
-                    //        Session["Img643"] = "NOSERIALNUMBER";
-                    //    }
-                    //    else if (SNIMG.Count() == 1)
-                    //    {
-                    //        Session["Img641"] = SNIMG[0].QRcode;
-                    //        Session["Img642"] = "NOSERIALNUMBER";
-                    //        Session["Img643"] = "NOSERIALNUMBER";
-                    //    }
-                    //    PrintDocument pd = new PrintDocument();
-                    //    pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+                    InFromData(null, SN, mayin);
 
-                    //    pd.PrinterSettings.PrinterName = "Datamax-O'Neil E-4204B Mark III";
-                    //    pd.Print();
-                    //    Session.Remove("Img641"); Session.Remove("Img642"); Session.Remove("Img643");
-                    //}
-                    foreach (var sn in SN)
-                    {
-                        Session["Img64"] = sn.QRcode;
-                        PrintDocument pd = new PrintDocument();
-                        //pd.DefaultPageSettings.conf.Left = 30;
-                        //pd.DefaultPageSettings.Margins.Top = 10;
-                        //pd.DefaultPageSettings.Margins.Right = 10;
-                        //pd.DefaultPageSettings.Margins.Bottom = 10;
-                        //pd.OriginAtMargins = true;
-                        pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
-                        pd.PrinterSettings.PrinterName = mayin;
-                        pd.Print();
-                        Session.Remove("Img64");
-                    }
-                    return RedirectToAction("ListSerialChuaIn");
+                }
+                else
+                {
+                    var SN = dbc.Ser_sp.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao)
+                        .Skip(0)
+                        .Take(soluong)
+                        .ToList();
+                    var countImg = Math.Ceiling(1.0 * SN.Count() / 2);
+
+                    InFromData(SN, null, mayin);
                 }
                 return RedirectToAction("ListSerialChuaIn");
             }
@@ -199,13 +177,83 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return RedirectToAction("ListSerialChuaIn");
             }
         }
+        void InFromData(List<Ser_sp> sp, List<Ser_box> box, string mayin)
+        {
+            double countImg;
+            if (box != null)
+            {
+                countImg = Math.Ceiling(1.0 * box.Count() / 2);
+                for (int i = 0; i < countImg; i++)
+                {
+                    var SNIMG = box.Skip(i * 2).Take(2).ToList();
+                    if (SNIMG.Count() == 2)
+                    {
+                        Session["Img641"] = SNIMG[0].QRcode;
+                        Session["Img642"] = SNIMG[1].QRcode;
+                        //Session["Img643"] = SNIMG[2].QRcode;
+                    }
+                    else if (SNIMG.Count() == 1)
+                    {
+                        Session["Img641"] = SNIMG[0].QRcode;
+                        Session["Img642"] = "NOSERIALNUMBER";
+                    }
+
+                    PrintDocument pd = new PrintDocument();
+                    //pd.DefaultPageSettings.Landscape = false;
+                    pd.DefaultPageSettings.Margins.Left = 4;
+                    pd.DefaultPageSettings.Margins.Top = 2;
+                    pd.DefaultPageSettings.Margins.Right = 0;
+                    pd.DefaultPageSettings.Margins.Bottom = 4;
+                    pd.OriginAtMargins = true;
+                    pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+
+                    pd.PrinterSettings.PrinterName = mayin;
+                    pd.Print();
+                    Session.Remove("Img641"); Session.Remove("Img642");
+                }
+            }
+            else
+            {
+                countImg = Math.Ceiling(1.0 * sp.Count() / 2);
+                for (int i = 0; i < countImg; i++)
+                {
+                    var SNIMG = sp.Skip(i * 2).Take(2).ToList();
+                    if (SNIMG.Count() == 2)
+                    {
+                        Session["Img641"] = SNIMG[0].QRcode;
+                        Session["Img642"] = SNIMG[1].QRcode;
+                        //Session["Img643"] = SNIMG[2].QRcode;
+                    }
+                    else if (SNIMG.Count() == 1)
+                    {
+                        Session["Img641"] = SNIMG[0].QRcode;
+                        Session["Img642"] = "NOSERIALNUMBER";
+                    }
+
+                    PrintDocument pd = new PrintDocument();
+                    //pd.DefaultPageSettings.Landscape = false;
+                    pd.DefaultPageSettings.Margins.Left = 4;
+                    pd.DefaultPageSettings.Margins.Top = 2;
+                    pd.DefaultPageSettings.Margins.Right = 0;
+                    pd.DefaultPageSettings.Margins.Bottom = 5;
+                    pd.OriginAtMargins = true;
+                    pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+
+                    pd.PrinterSettings.PrinterName = mayin;
+                    pd.Print();
+                    Session.Remove("Img641"); Session.Remove("Img642");
+                }
+            }
+        }
         void pd_PrintPage(object sender, PrintPageEventArgs ev)
         {
-            if(Session["Img64"] != null)
+            if(Session["Img641"] != null && Session["Img642"]!=null)
             {
                 //string imgscale = new Data.SerialData().getMerge3Img
                 //    (Session["Img641"].ToString(), Session["Img642"].ToString(), Session["Img643"].ToString());
-                Image img64 = new Data.SerialData().getScaleImg2(Session["Img64"].ToString());
+                string imgscale = new Data.SerialData().getMerge2Img
+                    (Session["Img641"].ToString(), Session["Img642"].ToString());
+                Image img64 = new Data.SerialData().getScaleImg2(imgscale);
                 ev.Graphics.DrawImage(img64, ev.MarginBounds);
             }
         }

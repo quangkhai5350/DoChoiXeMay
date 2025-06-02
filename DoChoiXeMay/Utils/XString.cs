@@ -17,15 +17,13 @@ namespace DoChoiXeMay.Utils
         }
         public static String MakeAotuSN(int i)
         {
-            var date = DateTime.Now;
-            string m = date.Millisecond.ToString();
-            string s = date.Second.ToString();
-            var str = m + s + GetRanDomOTP(5);
-            if(str.Length < i)
-            {
-                int kk=i-str.Length;
-                str = GetRanDomOTP(kk)+ m + s + GetRanDomOTP(5);
-            }
+            var date = DateTime.Now.ToString("dd/MM/yy");
+            string[] str1 = date.Split('/');
+            string d=str1[0];
+            string m=str1[1];
+            string y=str1[2];
+            string str = d+m+y+ GetRanDomOTP(i);
+            
             return str;
         }
         public static string GetRanDomOTP(int i)

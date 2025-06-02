@@ -160,7 +160,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
 
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    using (Bitmap bitMap = qRCode.GetGraphic(11))
+                    using (Bitmap bitMap = qRCode.GetGraphic(8))
                     {
                         bitMap.Save(ms, ImageFormat.Png);
                         QR = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
@@ -174,18 +174,26 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return "";
             }
         }
-        public string getImgtext(string value)
+        public string getImgtextBOX(string value,bool box)
         {
             string kq = "";
             byte[] bytes = null;
             using (var stream = new MemoryStream())
             {
-                Bitmap bitmap = new Bitmap(740, 280, PixelFormat.Format64bppArgb);
+                Bitmap bitmap = new Bitmap(600, 230, PixelFormat.Format64bppArgb);
                 Graphics graphics = Graphics.FromImage(bitmap);
                 graphics.Clear(System.Drawing.Color.White);
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-                graphics.DrawString(value, new Font("Roboto", 47, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(0.4F, 90F));
+                if (box)
+                {
+                    graphics.DrawString(value, new Font("Roboto", 35, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(20F, 30F));
+                }
+                else
+                {
+                    graphics.DrawString(value, new Font("Roboto", 35, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(100F, 30F));
+                }
+                
                 graphics.Flush();
                 graphics.Dispose();
                 bitmap.Save(stream, ImageFormat.Jpeg);
@@ -223,56 +231,74 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             return kq;
         }
-        //ghep 3 qr code
-        //public string getMerge3Img(string str1, string str2, string str3)
+        //không xài
+        //public string getMergeImgNgang(string base641, string base642)
         //{
         //    string kq = "";
-        //    Image img2; Image img3; Image img1;
-        //    str1 = Cleanbase64(str1);
-        //    img1 = Base64toImg(str1);
-
-        //    if (str2 == "NOSERIALNUMBER")
-        //    {
-        //        img2= gettextImgbystring("NOSERIALNUMBER", "----------------");
-        //    }
-        //    else
-        //    {
-        //        str2 = Cleanbase64(str2);
-        //        img2 = Base64toImg(str2);
-        //    }
-        //    if (str3 == "NOSERIALNUMBER")
-        //    {
-        //        img3 = gettextImgbystring("NOSERIALNUMBER", "----------------");
-        //    }
-        //    else
-        //    {
-        //        str3 = Cleanbase64(str3);
-        //        img3 = Base64toImg(str3);
-        //    }
-        //    //Chiều cao hình mới = max(3 chiều cao)
-        //    //chiều rộng hình mới= tổng 3 chiều rộng
-        //    int mergewith = img1.Width+ img2.Width+img3.Width;
-        //    int mergeheightmax = Math.Max(img1.Height, img2.Height);
-        //    int mergeheight = Math.Max(mergeheightmax, img3.Height);
+        //    base641 = Cleanbase64(base641);
+        //    base642 = Cleanbase64(base642);
+        //    Image img1 = Base64toImg(base641);
+        //    Image img2 = Base64toImg(base642);
+        //    //Chiều cao hình mới = max(2 chiều cao) Tổng 2 chiều cao
+        //    //chiều rộng hình mới=Tổng 2 chiều rong
+        //    int mergewith = img1.Width + img2.Width;
+        //    int mergeheight = Math.Max(img1.Height, img2.Height);
 
         //    Bitmap mergeImg = new Bitmap(mergewith, mergeheight);
         //    using (Graphics g = Graphics.FromImage(mergeImg))
         //    {
         //        g.Clear(System.Drawing.Color.White);//nen trang
         //        g.DrawImage(img1, 0, 0);
-        //        g.DrawImage(img2, img1.Width, 0);
-        //        g.DrawImage(img3, img1.Width + img2.Width, 0);
-        //        //g.DrawImage(img2, img1.Width / 4, 0);
+        //        g.DrawImage(img2, img1.Width, img1.Height/3);
         //    }
         //    //xuat anh ra stream
         //    using (MemoryStream ms = new MemoryStream())
         //    {
         //        mergeImg.Save(ms, ImageFormat.Png);
         //        byte[] bytes = ms.ToArray();
-        //        kq = Convert.ToBase64String(ms.ToArray());
+        //        kq = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
         //    }
         //    return kq;
         //}
+        //ghep 2 qr code
+        public string getMerge2Img(string str1, string str2)
+        {
+            string kq = "";
+            Image img2; Image img1;
+            str1 = Cleanbase64(str1);
+            img1 = Base64toImg(str1);
+
+            if (str2 == "NOSERIALNUMBER")
+            {
+                img2 = gettextImgbystring("NOSERIALNUMBER", "------------");
+            }
+            else
+            {
+                str2 = Cleanbase64(str2);
+                img2 = Base64toImg(str2);
+            }
+            
+            //Chiều cao hình mới = max(2 chiều cao)
+            //chiều rộng hình mới= tổng 2 chiều rộng
+            int mergewith = img1.Width + img2.Width;
+            int mergeheight = Math.Max(img1.Height, img2.Height);
+
+            Bitmap mergeImg = new Bitmap(mergewith, mergeheight);
+            using (Graphics g = Graphics.FromImage(mergeImg))
+            {
+                g.Clear(System.Drawing.Color.White);//nen trang
+                g.DrawImage(img1, 0, 0);
+                g.DrawImage(img2, img1.Width, 0);
+            }
+            //xuat anh ra stream
+            using (MemoryStream ms = new MemoryStream())
+            {
+                mergeImg.Save(ms, ImageFormat.Png);
+                byte[] bytes = ms.ToArray();
+                kq = Convert.ToBase64String(ms.ToArray());
+            }
+            return kq;
+        }
         private string Cleanbase64(string base64)
         {
             if (base64.Contains(",")){
@@ -295,11 +321,12 @@ namespace DoChoiXeMay.Areas.Admin.Data
             Image img2 = Base64toImg(base641);
             return img2;
         }
-        private Image gettextImgbystring(string QRbase641, string Strbase642)
+        public Image gettextImgbystring(string QRbase641, string Strbase642)
         {
             string qrS = getQRcode(QRbase641);
-            string ImgS = getImgtext(Strbase642);
-            string merS = getMergeImg(ImgS, qrS);
+            string ImgS = getImgtextBOX(Strbase642,false);
+            //string merS = getMergeImgNgang(qrS,ImgS);
+            string merS = getMergeImg(ImgS,qrS);
             Image img = getScaleImg2(merS);
             return img;
         }
@@ -309,8 +336,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
         //    base641 = Cleanbase64(base641);
         //    byte[] imageBytes = Convert.FromBase64String(base641);
         //    WebImage webi = new WebImage(imageBytes);
-        //    if (webi.Width > 300)
-        //        webi.Resize(300, 250);
+            
+        //        webi.Resize(1000, 300);
         //    byte[] imageBytes2 = webi.GetBytes();
         //    //
         //    string base64String = Convert.ToBase64String(imageBytes2);
