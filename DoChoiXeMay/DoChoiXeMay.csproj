@@ -500,6 +500,9 @@
     <Content Include="Content\fonts\fontawesome-webfont862f.woff" />
     <Content Include="Content\fonts\fontawesome-webfontd41d.eot" />
     <Content Include="Content\images\bgd\Thumbs.db" />
+    <Content Include="Areas\Admin\Views\Serial\ListSerialDaIn.cshtml" />
+    <Content Include="Areas\Admin\Views\Serial\GetListSer_BoxDaIn.cshtml" />
+    <Content Include="Areas\Admin\Views\Serial\GetListSer_SPDaIn.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

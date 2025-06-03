@@ -164,7 +164,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     using (Bitmap bitMap = qRCode.GetGraphic(8))
                     {
                         bitMap.Save(ms, ImageFormat.Png);
-                        QR = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                        QR = Convert.ToBase64String(ms.ToArray());
+                        //QR = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
                     }
                 }
                 return QR;
@@ -188,7 +189,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
                 if (box)
                 {
-                    graphics.DrawString(value, new Font("Roboto", 35, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(20F, 30F));
+                    graphics.DrawString(value, new Font("Roboto", 32, FontStyle.Regular), new SolidBrush(System.Drawing.Color.FromArgb(0, 0, 0)), new PointF(20F, 33F));
                 }
                 else
                 {
@@ -201,7 +202,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 bitmap.Dispose();
                 bytes = stream.ToArray();
             }
-            kq = "data:image/png;base64," + Convert.ToBase64String(bytes, 0, bytes.Length);
+            kq =Convert.ToBase64String(bytes, 0, bytes.Length);
+            //kq = "data:image/png;base64," + Convert.ToBase64String(bytes, 0, bytes.Length);
             return kq;
         }
         public string getMergeImg(string base641, string base642)

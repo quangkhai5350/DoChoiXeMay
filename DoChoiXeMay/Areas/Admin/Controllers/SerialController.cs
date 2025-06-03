@@ -33,6 +33,12 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.TotalSerialBoXchuaIn = dbc.Ser_box.Where(kh => kh.DaIn == false).Count();
             return View();
         }
+        public ActionResult ListSerialDaIn()
+        {
+            ViewBag.TotalSerialSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true).Count();
+            ViewBag.TotalSerialBoXDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true).Count();
+            return View();
+        }
         public ActionResult AddNewSerial()
         {
             ViewBag.IDMF = new SelectList(dbc.Manufacturers.Where(kh => kh.Sudung == true), "Id", "Name",5);
@@ -148,7 +154,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var countImg = Math.Ceiling(1.0 * SN.Count() / 2);
 
                     InFromData(null, SN, mayin);
-
+                    Session["ThongBaoSerialBoxchuaIn"] = "Đã in "+soluong+" serial, thành công.";
                 }
                 else
                 {
@@ -159,6 +165,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var countImg = Math.Ceiling(1.0 * SN.Count() / 2);
 
                     InFromData(SN, null, mayin);
+                    Session["ThongBaoSerialSPchuaIn"] = "Đã in " + soluong + " serial, thành công.";
                 }
                 return RedirectToAction("ListSerialChuaIn");
             }
@@ -174,6 +181,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             double countImg;
             if (box != null)
             {
+                //Tính xem có bao nhiêu cặp?
                 countImg = Math.Ceiling(1.0 * box.Count() / 2);
                 for (int i = 0; i < countImg; i++)
                 {
@@ -201,13 +209,23 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     pd.DefaultPageSettings.Margins.Left = 4;
                     pd.DefaultPageSettings.Margins.Top = 2;
                     pd.DefaultPageSettings.Margins.Right = 0;
-                    pd.DefaultPageSettings.Margins.Bottom = 4;
+                    pd.DefaultPageSettings.Margins.Bottom = 5;
                     pd.OriginAtMargins = true;
                     pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
 
                     pd.PrinterSettings.PrinterName = mayin;
                     pd.Print();
                     Session.Remove("Img641"); Session.Remove("Img642");
+                    if (SNIMG.Count() == 2)
+                    {
+                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_box] set DaIn=1 where Id = '" + SNIMG[0].Id + "' or Id= '" + SNIMG[1].Id + "'";
+                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+                    }
+                    else if (SNIMG.Count() == 1)
+                    {
+                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_box] set DaIn=1 where Id = '" + SNIMG[0].Id + "'";
+                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+                    }
                 }
             }
             else
@@ -246,6 +264,16 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     pd.PrinterSettings.PrinterName = mayin;
                     pd.Print();
                     Session.Remove("Img641"); Session.Remove("Img642");
+                    if (SNIMG.Count() == 2)
+                    {
+                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_sp] set DaIn=1 where Id = '" + SNIMG[0].Id + "' or Id= '" + SNIMG[1].Id + "'";
+                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+                    }
+                    else if (SNIMG.Count() == 1)
+                    {
+                        string sql = "Update [" + DBname + "TechZone].[dbo].[Ser_sp] set DaIn=1 where Id = '" + SNIMG[0].Id + "'";
+                        var UpdateSerBox = dbc.Database.ExecuteSqlCommand(sql);
+                    }
                 }
             }
         }
@@ -312,6 +340,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult GetListSer_Box()
         {
             ViewBag.SerBoxchuaIn = dbc.Ser_box.Where(kh => kh.DaIn == false).OrderBy(kh => kh.NgayTao).ToList();
+            return PartialView();
+        }
+        public ActionResult GetListSer_SPDaIn()
+        {
+            ViewBag.SerSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true).OrderBy(kh => kh.NgayTao)
+                .ThenBy(kh=>kh.Sudung)
+                .ToList();
+            return PartialView();
+        }
+        public ActionResult GetListSer_BoxDaIn()
+        {
+            ViewBag.SerBoxDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true).OrderBy(kh => kh.NgayTao)
+                .ThenBy(kh=>kh.Sudung)
+                .ToList();
             return PartialView();
         }
     }
