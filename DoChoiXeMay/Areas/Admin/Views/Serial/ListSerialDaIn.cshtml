@@ -48,35 +48,36 @@
             </div>
             <div class="panel-footer">
                 <div class="row">
-                    @*<div class="col-md-6">
-                        <input type="number" min="0" title="Chọn số lượng để In." name="SoSNSP" id="SoSNSP" required />
-                        <button id="Insp" class="btn btn-success" style="margin-left:20px" href="/Admin/Serial/PrintSerialSP" onclick="Insp()">
-                            <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Sản Phẩm
+                    <div class="col-md-10">
+                        <input type="text" placeholder="Chọn serial để xóa." name="serialsp" id="serialsp" />
+                        <button id="Xoasp" class="btn btn-danger" style="margin-left:20px" href="/Admin/Serial/DeleteSerialSP" onclick="XoaSNSP()">
+                            <i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp; Xóa Serial Number cụ thể
                         </button>
-                        <script>
-                            function Insp() {
-                                var ma = $('#SoSNSP').val();
-                                var mayin = $('#MayIn').val();
-                                if (ma > 0) {
-                                    if (!confirm("Bạn muốn In " + ma + " S/N sp ??")) {
-                                        return false;
-                                    } else {
-                                        $.ajax({
-                                            url: "/Admin/Serial/InSNmoitaoBox",
-                                            data: { bang: 1, soluong: ma, mayin: mayin },
-                                            success: function (respone) {
-                                                location.reload();
-                                                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
-                                            }
-                                        });
-                                    }
-                                }
-                            };
-                        </script>
                     </div>
-                    <div class="col-md-4">
-                        <input type="text" value="Brother QL-700" style="width:300px" placeholder="Chọn máy in." name="MayIn" id="MayIn" required />
-                    </div>*@
+                    
+            
+            <script>
+                function XoaSNSP() {
+                    var serialsp = $('#serialsp').val();
+                    if (serialsp.length > 0) {
+                        if (!confirm("Bạn muốn xóa serial: " + serialsp + "  ??")) {
+                            return false;
+                        } else {
+                            $.ajax({
+                                url: "/Admin/Serial/XoaserialSP",
+                                data: { serialsp: serialsp },
+                                success: function (respone) {
+                                    location.reload();
+                                    //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                                }
+                            });
+                        }
+                    } else {
+                        alert("Bạn chưa chọn Serial để xóa.")
+                    }
+                };
+            </script>
+        
                     <div class="col-md-2" style="text-align:right">
                         @ViewBag.TotalSerialSPDaIn S/N
                     </div>
@@ -141,8 +142,8 @@
                             };
                         </script>
                     </div>*@
-                    <div class="col-md-2" style="text-align:right">
-                        @ViewBag.TotalSerialBoXDaIn
+                    <div class="col-md-2" style="">
+                        @ViewBag.TotalSerialBoXDaIn S/N
                     </div>
 
                 </div>
