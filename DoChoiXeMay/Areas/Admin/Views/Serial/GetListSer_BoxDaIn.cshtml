@@ -3,7 +3,8 @@
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
                 <th class="canhgiua" style="max-width: 15px">STT</th>
-                <th class="canhgiua">Lô Sản Xuất</th>
+                <th class="canhgiua">Lô SX</th>
+                <th class="canhgiua">Ngày</th>
                 <th class="canhgiua">Loai SP</th>
                 <th class="canhgiua">Serial Number</th>
                 <th class="canhgiua">Kích hoạt</th>
@@ -16,6 +17,9 @@
                     <td>@Item.Stt</td>
                     <td>
                         @Item.LoSanXuat
+                    </td>
+                    <td>
+                        @Item.NgayUpdate.ToShortDateString()
                     </td>
                     <td>
                         @Item.Ser_LoaiHang.Name

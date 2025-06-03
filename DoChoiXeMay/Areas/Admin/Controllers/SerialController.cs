@@ -29,12 +29,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult ListSerialChuaIn()
         {
+            Session["requestUri"] = "/Admin/Serial/ListSerialChuaIn";
             ViewBag.TotalSerialSPchuaIn = dbc.Ser_sp.Where(kh=>kh.DaIn==false).Count();
             ViewBag.TotalSerialBoXchuaIn = dbc.Ser_box.Where(kh => kh.DaIn == false).Count();
             return View();
         }
         public ActionResult ListSerialDaIn()
         {
+            Session["requestUri"] = "/Admin/Serial/ListSerialDaIn";
             ViewBag.TotalSerialSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true).Count();
             ViewBag.TotalSerialBoXDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true).Count();
             return View();
@@ -308,6 +310,53 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 string loi = ex.ToString();
                 Session["ThongBaoSerialSPchuaIn"] = "Có Lỗi hệ thống khi xóa S/N SP !!!";
                 return RedirectToAction("ListSerialChuaIn");
+            }
+        }
+        public ActionResult XoaserialSP(string serialsp)
+        {
+            try
+            {
+                if (serialsp.Length == 11)
+                {
+                    var sp = dbc.Ser_sp.FirstOrDefault(kh => kh.SerialSP == serialsp && kh.Sudung == false && kh.DaIn==true);
+                    if (sp == null)
+                    {
+                        Session["ThongBaoSerialSPDaIn"] = "Serial này không tồn tại, hoặc đã kích hoạt, không Xóa Được !!!";
+                        return RedirectToAction("ListSerialDaIn");
+                    }
+                    else
+                    {
+                        string sql = "DELETE  FROM [" + DBname + "TechZone].[dbo].[Ser_sp] where SerialSP='"+sp.SerialSP+"'";
+                        var Xoaserialsp = dbc.Database.ExecuteSqlCommand(sql);
+                        Session["ThongBaoSerialSPDaIn"] = "Xóa thành công serial: " + serialsp + ".";
+                        return RedirectToAction("ListSerialDaIn");
+                    }
+                }
+                else if(serialsp.Length == 14)
+                {
+                    var box = dbc.Ser_box.FirstOrDefault(kh => kh.Serial == serialsp && kh.Sudung == false && kh.DaIn == true);
+                    if (box == null)
+                    {
+                        Session["ThongBaoSerialBoxDaIn"] = "Serial này không tồn tại, hoặc đã kích hoạt, không Xóa Được !!!";
+                        return RedirectToAction("ListSerialDaIn");
+                    }
+                    else
+                    {
+                        string sql = "DELETE  FROM [" + DBname + "TechZone].[dbo].[Ser_box] where Serial='" + box.Serial + "'";
+                        var Xoaserialsp = dbc.Database.ExecuteSqlCommand(sql);
+                        Session["ThongBaoSerialBoxDaIn"] = "Xóa thành công serial: "+ serialsp+".";
+                        return RedirectToAction("ListSerialDaIn");
+                    }
+                    
+                }
+                Session["ThongBaoSerialSPDaIn"] = "Serial này không tồn tại !!!";
+                Session["ThongBaoSerialBoxDaIn"] = "Serial này không tồn tại !!!";
+                return RedirectToAction("ListSerialDaIn");
+            }
+            catch (Exception ex) {
+                string loi = ex.ToString();
+                Session["ThongBaoSerialSPDaIn"] = "Có Lỗi hệ thống khi xóa S/N SP !!!";
+                return RedirectToAction("ListSerialDaIn");
             }
         }
         public ActionResult DeleteSerialBox()
