@@ -15,7 +15,7 @@ namespace DoChoiXeMay.Filters
             {
                 //HttpContext.Current.Session["Message"] = "Vui lòng đăng nhập";
                 filterContext.HttpContext.Session["ThongbaoLogin"] = "Phiên làm việc đã kết thúc, vui lòng đăng nhập lại.";
-                HttpContext.Current.Response.Redirect("/Dang-Nhap");
+                HttpContext.Current.Response.Redirect("/Login");
                 return;
             }
         }

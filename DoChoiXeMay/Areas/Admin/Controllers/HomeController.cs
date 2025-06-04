@@ -31,7 +31,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         
         public ActionResult LogOut() {
             Session.Clear();
-            return RedirectToAction("Login");
+            return Redirect("/Login");
         }
         [HttpGet]
         public ActionResult EditUser(int id)
@@ -46,6 +46,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 ViewBag.passcu = "";
             }
+            ViewBag.IdLoai = new SelectList(dbc.LoaiUserTeks.Where(kh => kh.IsLocked == false), "Id", "LoaiUser", model.IdLoai);
             return View(model);
         }
         [HttpPost]

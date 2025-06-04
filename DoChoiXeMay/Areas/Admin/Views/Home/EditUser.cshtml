@@ -16,7 +16,6 @@
                 @Html.HiddenFor(kh => kh.Id)
                 @Html.HiddenFor(kh => kh.Password)
                 @Html.HiddenFor(kh => kh.PasswordSalt)
-                @Html.HiddenFor(kh => kh.IdLoai)
                 @Html.HiddenFor(kh => kh.LoaiConnection)
                 @Html.HiddenFor(kh => kh.Islocked)
                 @Html.HiddenFor(kh => kh.lastPasswordChangedate)
@@ -60,6 +59,23 @@
                             @Html.TextBoxFor(m => m.EmailConnection, new { @class = "form-control", style = "height: 40px", @required = true })
 
                         </div>
+                        @if (Session["quyen"].ToString() == "Admin")
+                        {
+                            <div class="row" style="width:95%;padding-left:15px">
+                                <p>Loại User(Guess==ChiNhanh)</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
+                                @Html.DropDownList("IdLoai", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row" style="width:95%;padding-left:15px;display:none">
+                                <p>Loại User(Guess==ChiNhanh)</p>
+                                <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
+                                @Html.DropDownList("IdLoai", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
+                            </div>
+                        }
+                            
                         <div class="row">
                             <div class="col-sm-9">
                                 <div class="form-group">
@@ -81,7 +97,7 @@
                             <div class="form-group col-sm-12">
                                 <div class="text-center btn-crud">
                                     <button id="btnLuu" class="btn btn-warning" data-action="EditUser"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update User</button>
-                                    <a class="btn btn-primary" href="/Admin/ThuChi/ListThuChiTeK" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                                    <a class="btn btn-primary" href="/Admin/Home/ListUserTeK" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
                                 </div>
                                 <script>
                                     $('#Dinhkem1').bind('change', function () {

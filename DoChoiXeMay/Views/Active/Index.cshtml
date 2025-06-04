@@ -16,36 +16,62 @@
 
         @using (Html.BeginForm("Index", "Active", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            bool nho = @ViewBag.reme == "true" ? true : false;
+            bool ND = @ViewBag.ND == "true" ? true : false;
+            bool DL = @ViewBag.DL == "true" ? true : false;
             <div class="row omb_row-sm-offset-3">
                 <div class="col-xs-12 col-sm-6" style="padding-bottom:10px">
                     <form class="omb_loginForm" action="" autocomplete="off" method="post">
-                       
+
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="text-center text-primary-emphasis">_Để Kích hoạt bảo hành cần điền 2 số serial:</span>
-                            <span class="text-primary-emphasis"> * Một trên hộp và một trên sản phẩm *</span>
+                            <span class="text-primary-emphasis"> * Một trên hộp(Box) và một trên sản phẩm(SP) *</span>
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="text-primary-emphasis">_Để kiểm tra thời gian bảo hành sản phẩm:</span>
                             <span class="text-primary-emphasis"> * Chỉ cần 1 số serial *</span>
                         </div>
+                        
+                            <div class="col-md-6" style="border: 1px dashed #423333; margin-bottom: 10px">
+                                <label class="checkbox text-danger" style="">
+                                    @Html.CheckBox("remember", ND) Bạn là Người Dùng
+                                </label>
+                            </div>
+                            <div class="col-md-6" style="border: 1px dashed #423333; margin-bottom: 10px">
+                                <label class="checkbox text-danger" style="">
+                                    @Html.CheckBox("remember", DL) Là nhà phân phối
+                                </label>
+                            </div>
+                            
+                        
                         <div class="input-group" style="margin-bottom:5px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pushpin"></i></span>
-                            <input value="@ViewBag.UserName" type="text" class="form-control" name="UserName" placeholder="S/N Box" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-warning-sign"></i></span>
+                            <input value="@ViewBag.UserName" type="text" class="form-control" name="SerialBox" placeholder="S/N Box">
                         </div>
 
 
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input value="@ViewBag.Password" type="password" class="form-control" name="Password" placeholder="S/N SP" required>
+                            <input value="@ViewBag.Password" type="text" class="form-control" name="SerialSP" placeholder="S/N SP">
+                        </div>
+                        <div class="input-group" style="margin-bottom:5px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
+                            <input value="@ViewBag.Password" type="text" class="form-control" name="Gmail" placeholder="Gmail" required>
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
-                            <input value="@ViewBag.Password" type="password" class="form-control" name="Password" placeholder="Gmail kíck hoạt" required>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                            <input value="@ViewBag.Password" type="text" class="form-control" name="SDT" placeholder="Số điện thoại" required>
                         </div>
-                        <span class="help-block">@Html.ValidationSummary(false, "", new { @class = "text-danger" })</span>
+                        <div class="col-md-6">
 
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Check / Kíck hoạt</button>
+                        </div>
+
+                        <span class="help-block">@Html.ValidationSummary(false, "", new { @class = "text-danger" })</span>
+                        <div class="col-md-6">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Kíck hoạt BH</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Kiểm tra BH</button>
+                        </div>
 
                     </form>
 

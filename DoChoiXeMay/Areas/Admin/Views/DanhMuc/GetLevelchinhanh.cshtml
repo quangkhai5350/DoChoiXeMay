@@ -39,7 +39,8 @@
                         @if (Session["quyen"].ToString() != "Guest")
                         {
                             <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateLVChiNhanh/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                        }
+                            <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.Level_Name ??')" href="/Admin/DanhMuc/DeleteLVChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                            }
                     </td>
                 </tr>
 
