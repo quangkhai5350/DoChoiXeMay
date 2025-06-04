@@ -86,6 +86,47 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.GetListMaThuChi = model;
             return PartialView();
         }
+        public ActionResult InsertLVChiNhanh()
+        {
+            Ser_Levelchinhanh model = new Ser_Levelchinhanh();
+            model.Level_Name = "Auto Level";
+            model.ChietKhau_bandau = 0;
+            model.chietkhau_khbh = 0;
+            model.chietkhau_KPIQUI = 0;
+            model.ChietKhau_KPIYEAR = 0;
+            model.ChietKhau_khac = 0;
+            model.Thuongcuoinam = "Thưởng cuối năm.";
+            dbc.Ser_Levelchinhanh.Add(model);
+            dbc.SaveChanges();
+            Session["ThongBaoLVChiNhanh"] = "Insert LV chi nhánh thành công. Cần update để sử dụng.";
+            var userid = int.Parse(Session["UserId"].ToString());
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Insert LV chi nhánh-" + model.Level_Name + "-" + DateTime.Now.ToString(), "");
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("Levelchinhanh");
+        }
+        public ActionResult DeleteLVChiNhanh(int id)
+        {
+            var userid = int.Parse(Session["UserId"].ToString());
+            var model = dbc.Ser_Levelchinhanh.Find(id);
+            dbc.Ser_Levelchinhanh.Remove(model);
+            dbc.SaveChanges();
+            Session["ThongBaoLVChiNhanh"] = "Delete LV chi nhánh :"+model.Level_Name+" thành công.";
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Delete LV chi nhánh -" + model.Level_Name + "-" + DateTime.Now.ToString(), "");
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("Levelchinhanh");
+        }
         public ActionResult InsertMaThuChi()
         {
             MaTC model = new MaTC();
