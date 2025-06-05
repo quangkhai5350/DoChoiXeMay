@@ -31,6 +31,18 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.GetNhatKy = model;
             return PartialView();
         }
+        public ActionResult Listchinhanh()
+        {
+            Session["requestUri"] = "/Admin/DanhMuc/Listchinhanh";
+            return View();
+        }
+        public ActionResult GetListchinhanh()
+        {
+            var model = dbc.Ser_ChiNhanh.OrderByDescending(kh => kh.Id)
+                .ThenByDescending(kh=>kh.IdLevel).ToList();
+            ViewBag.GetListchinhanh = model;
+            return PartialView();
+        }
         public ActionResult Levelchinhanh()
         {
             Session["requestUri"] = "/Admin/DanhMuc/Levelchinhanh";
@@ -42,7 +54,63 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.GetLevelchinhanh = model;
             return PartialView();
         }
-        
+        public ActionResult UpdateChiNhanh(int id)
+        {
+            var model = dbc.Ser_ChiNhanh.Find(id);
+            ViewBag.IdLevel = new SelectList(dbc.Ser_Levelchinhanh.OrderBy(kh=>kh.Id).ToList(), "Id", "Level_Name", model.IdLevel);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateChiNhanh(Ser_ChiNhanh CN)
+        {
+            try
+            {
+                dbc.Entry(CN).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + ", thành công.";
+                var userid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Update chi nhánh Id=" + CN.Id + "-" + DateTime.Now.ToString(), "");
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("Listchinhanh");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                return View(CN);
+            }
+        }
+        public ActionResult InsertChiNhanh()
+        {
+            Ser_ChiNhanh model = new Ser_ChiNhanh();
+            model.TenChiNhanh = "Auto_Name";
+            model.DaiDien = "Trần Auto";
+            model.SDT = "0987654321";
+            model.DiaChi = "139 Trần Văn ơn, Khu 6, Phú Hòa, Thủ Dầu Một, Bình Dương, Việt Nam.";
+            model.TaiKhoanNH = "VietComBank 0987654321 Trần Auto";
+            model.Sudung = false;
+            model.IdLevel = 2;
+            model.GhiChu = "";
+            dbc.Ser_ChiNhanh.Add(model);
+            dbc.SaveChanges();
+            Session["ThongBaoListChiNhanh"] = "Insert chi nhánh thành công. Cần update để sử dụng.";
+            var userid = int.Parse(Session["UserId"].ToString());
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Insert chi nhánh - " + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("Listchinhanh");
+        }
         public ActionResult UpdateLVChiNhanh(int id)
         {
             var model = dbc.Ser_Levelchinhanh.Find(id);

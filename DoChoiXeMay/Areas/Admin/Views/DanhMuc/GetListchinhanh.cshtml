@@ -1,0 +1,56 @@
+﻿<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua">Id</th>
+                <th class="canhgiua">Tên CN</th>
+                <th class="canhgiua">Đại Diện</th>
+                <th class="canhgiua">Số ĐT</th>
+                <th class="canhgiua">Địa Chỉ</th>
+                <th class="canhgiua">Tài Khoản NH</th>
+                <th class="canhgiua">Sử Dụng</th>
+                <th class="canhgiua">Id Level</th>
+                <th class="canhgiua">GhiChu</th>
+                <th class="canhgiua">Update</th>
+            </tr>
+        </thead>
+        <tbody style="border: 2px solid black !important">
+            @foreach (DoChoiXeMay.Models.Ser_ChiNhanh Item in ViewBag.GetListchinhanh)
+            {
+                <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                    <td>@Item.Id</td>
+                    <td>@Item.TenChiNhanh</td>
+                    <td>@Item.DaiDien</td>
+                    <td>
+                        @Item.SDT
+                    </td>
+                    <td>
+                        @Item.DiaChi
+                    </td>
+                    <td>
+                        @Item.TaiKhoanNH
+                    </td>
+                    <td>
+                        @Item.Sudung
+                    </td>
+                    <td>
+                        @Item.Ser_Levelchinhanh.Level_Name
+                    </td>
+                    <td>
+                        @Item.GhiChu
+                    </td>
+                    <td>
+                        @if (Session["quyen"].ToString() != "Guest")
+                        {
+                            <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateChiNhanh/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.TenChiNhanh ??')" href="/Admin/DanhMuc/DeleteChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+
+    </table>
+
+</div>

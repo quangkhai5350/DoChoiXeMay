@@ -504,6 +504,9 @@
     <Content Include="Areas\Admin\Views\Serial\ListSerialDaIn.cshtml" />
     <Content Include="Areas\Admin\Views\Serial\GetListSer_BoxDaIn.cshtml" />
     <Content Include="Areas\Admin\Views\Serial\GetListSer_SPDaIn.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\Listchinhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\GetListchinhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\UpdateChiNhanh.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

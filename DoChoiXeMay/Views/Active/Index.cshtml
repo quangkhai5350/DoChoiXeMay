@@ -5,6 +5,7 @@
 }
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link href="~/Content/Login_Style.css" rel="stylesheet" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <div class="container" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
 
     <div class="omb_login">
@@ -16,8 +17,8 @@
 
         @using (Html.BeginForm("Index", "Active", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            bool ND = @ViewBag.ND == "true" ? true : false;
-            bool DL = @ViewBag.DL == "true" ? true : false;
+            var ND = @ViewBag.ND;
+            var NPP = @ViewBag.NPP;
             <div class="row omb_row-sm-offset-3">
                 <div class="col-xs-12 col-sm-6" style="padding-bottom:10px">
                     <form class="omb_loginForm" action="" autocomplete="off" method="post">
@@ -30,19 +31,28 @@
                             <span class="text-primary-emphasis">_Để kiểm tra thời gian bảo hành sản phẩm:</span>
                             <span class="text-primary-emphasis"> * Chỉ cần 1 số serial *</span>
                         </div>
-                        
-                            <div class="col-md-6" style="border: 1px dashed #423333; margin-bottom: 10px">
+                        <div class="input-group" style="width:100%;margin-bottom:15px">
+                            <div style="width: 49%; border: 1px dashed #423333; float: left">
                                 <label class="checkbox text-danger" style="">
-                                    @Html.CheckBox("remember", ND) Bạn là Người Dùng
+                                    <input type="radio" id="ND" value="@ND" name="Check" />
+                                    <span>Người Dùng Cá Nhân (ND)</span>
+                                    @*@Html.RadioButton("remember", ND) Bạn là Người Dùng*@
                                 </label>
                             </div>
-                            <div class="col-md-6" style="border: 1px dashed #423333; margin-bottom: 10px">
+                            <div style="width: 49%; border: 1px dashed #423333;float:right">
                                 <label class="checkbox text-danger" style="">
-                                    @Html.CheckBox("remember", DL) Là nhà phân phối
+                                    <input type="radio" id="NPP" value="@NPP" name="Check" />
+                                    <span>Nhà phân phối/đại lý (NPP)</span>
                                 </label>
                             </div>
-                            
+                        </div>
                         
+
+                        <div class="input-group" id="nhaphanphoi" style="display: none;height:85px">
+                            <label>Bạn là nhà phân phối nào?</label>
+                            @Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "width: 100%; height: 40px" })
+
+                        </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-warning-sign"></i></span>
                             <input value="@ViewBag.UserName" type="text" class="form-control" name="SerialBox" placeholder="S/N Box">
@@ -55,22 +65,19 @@
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
-                            <input value="@ViewBag.Password" type="text" class="form-control" name="Gmail" placeholder="Gmail" required>
+                            <input value="@ViewBag.Password" type="email" class="form-control" name="Gmail" placeholder="Gmail" required>
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
                             <input value="@ViewBag.Password" type="text" class="form-control" name="SDT" placeholder="Số điện thoại" required>
                         </div>
-                        <div class="col-md-6">
-
-                        </div>
 
                         <span class="help-block">@Html.ValidationSummary(false, "", new { @class = "text-danger" })</span>
                         <div class="col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Kíck hoạt BH</button>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"><span id="nameBH">Kíck hoạt BH</span> </button>
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Kiểm tra BH</button>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"><span id="nameKT">Kiểm tra BH</span></button>
                         </div>
 
                     </form>
@@ -82,3 +89,35 @@
         }
     </div>
 </div>
+<script>
+    onLoad();
+    function onLoad() {
+        var ll = $("#ND").val();
+        if (ll == "ND") {
+            $("#ND").prop("checked", true);
+            $("#nameBH").html("Kíck hoạt BH ND");
+            $("#nameKT").html("Kiểm tra BH ND");
+        } else {
+            $("#NPP").prop("checked", true);
+            $("#nhaphanphoi").css('display', 'block');
+            $("#nameBH").html("Kíck hoạt BH NPP");
+            $("#nameKT").html("Kiểm tra BH NPP");
+        }
+    }
+    $("input:radio").on('click', function () {
+        var $box = $(this);
+        if ($box.is(":checked")) {
+            tk = $box.attr("id");
+            if (tk == "NPP") {
+                $("#nhaphanphoi").css('display', 'block');
+                $("#nameBH").html("Kíck hoạt BH NPP");
+                $("#nameKT").html("Kiểm tra BH NPP");
+            } else {
+                $("#nhaphanphoi").css('display', 'none');
+                $("#nameBH").html("Kíck hoạt BH ND");
+                $("#nameKT").html("Kiểm tra BH ND");
+            }
+            
+        }
+    });
+</script>
