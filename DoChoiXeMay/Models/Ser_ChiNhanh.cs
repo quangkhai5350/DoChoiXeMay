@@ -33,7 +33,8 @@ namespace DoChoiXeMay.Models
 
         [StringLength(150)]
         public string TaiKhoanNH { get; set; }
-
+        [StringLength(100)]
+        public string Gmail { get; set; }
         public bool Sudung { get; set; }
 
         public int IdLevel { get; set; }

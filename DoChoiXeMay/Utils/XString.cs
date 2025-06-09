@@ -40,5 +40,17 @@ namespace DoChoiXeMay.Utils
             string text = randomText.ToString();
             return text;
         }
+        //public static string MakeDatebySerial(string tr)
+        //{
+        //    if (tr.Length == 11)
+        //    {
+        //        tr = tr.Trim();
+        //        var ngay = tr.Substring(0, 2);
+        //        var mth = tr.Substring(2, 2);
+        //        var year = tr.Substring(4, 2);
+        //        return ngay+"/"+mth+"/"+year;
+        //    }
+        //    return "No";
+        //}
     }
 }

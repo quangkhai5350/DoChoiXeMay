@@ -97,12 +97,30 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             model.Sudung = false;
             model.IdLevel = 2;
             model.GhiChu = "";
+            model.Gmail = "";
             dbc.Ser_ChiNhanh.Add(model);
             dbc.SaveChanges();
             Session["ThongBaoListChiNhanh"] = "Insert chi nhánh thành công. Cần update để sử dụng.";
             var userid = int.Parse(Session["UserId"].ToString());
             var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "Insert chi nhánh - " + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("Listchinhanh");
+        }
+        public ActionResult DeleteChiNhanh(int id)
+        {
+            var userid = int.Parse(Session["UserId"].ToString());
+            var model = dbc.Ser_ChiNhanh.Find(id);
+            dbc.Ser_ChiNhanh.Remove(model);
+            dbc.SaveChanges();
+            Session["ThongBaoListChiNhanh"] = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
+            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Delete chi nhánh -" + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;
             if (requestUri != null)
@@ -148,6 +166,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["requestUri"] = "/Admin/DanhMuc/ListMaThuChi";
             return View();
         }
+
         public ActionResult GetListMaThuChi()
         {
             var model = dbc.MaTCs.OrderByDescending(kh => kh.Id).ToList();

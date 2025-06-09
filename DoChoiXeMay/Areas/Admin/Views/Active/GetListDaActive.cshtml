@@ -2,54 +2,50 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
-                <th class="canhgiua">Id</th>
-                <th class="canhgiua">Tên CN</th>
-                <th class="canhgiua">Đại Diện</th>
-                <th class="canhgiua">Số ĐT</th>
-                <th class="canhgiua">Gmail</th>
-                <th class="canhgiua">Địa Chỉ</th>
-                <th class="canhgiua">Tài Khoản NH</th>
-                <th class="canhgiua">Sử Dụng</th>
-                <th class="canhgiua">Id Level</th>
-                <th class="canhgiua">GhiChu</th>
-                <th class="canhgiua">Update</th>
+                <th class="canhgiua">Ngày Active</th>
+                <th class="canhgiua">Serial Box</th>
+                <th class="canhgiua">Serial SP</th>
+                <th class="canhgiua">Email</th>
+                <th class="canhgiua">Tên</th>
+                <th class="canhgiua">SDT</th>
+                <th class="canhgiua">Chi Nhánh</th>
+                <th class="canhgiua">Trạng Thái</th>
+                <th class="canhgiua">Hết hạn</th>
+                @*<th class="canhgiua">Update</th>*@
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
-            @foreach (DoChoiXeMay.Models.Ser_ChiNhanh Item in ViewBag.GetListchinhanh)
+            @foreach (DoChoiXeMay.Models.Ser_kichhoat Item in ViewBag.ListSerialKH)
             {
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                    <td>@Item.Id</td>
-                    <td>@Item.TenChiNhanh</td>
-                    <td>@Item.DaiDien</td>
+                    <td>@Item.NgayKichHoat</td>
+                    <td>@Item.Ser_box.Serial</td>
+                    <td>@Item.Ser_sp.SerialSP</td>
+                    <td>
+                        @Item.EmailKichHoat
+                    </td>
+                    <td>
+                        @Item.TenKhachHang
+                    </td>
                     <td>
                         @Item.SDT
                     </td>
                     <td>
-                        @Item.Gmail
+                        @Item.Ser_ChiNhanh.TenChiNhanh
                     </td>
                     <td>
-                        @Item.DiaChi
+                        @Item.Ser_trangthai.Name
                     </td>
                     <td>
-                        @Item.TaiKhoanNH
+                        @Item.Ghichu
                     </td>
-                    <td>
-                        @Item.Sudung
-                    </td>
-                    <td>
-                        @Item.Ser_Levelchinhanh.Level_Name
-                    </td>
-                    <td>
-                        @Item.GhiChu
-                    </td>
-                    <td>
+                    @*<td>
                         @if (Session["quyen"].ToString() != "Guest")
                         {
                             <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateChiNhanh/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
                             <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.TenChiNhanh ??')" href="/Admin/DanhMuc/DeleteChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                         }
-                    </td>
+                    </td>*@
                 </tr>
 
             }

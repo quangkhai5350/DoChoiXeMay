@@ -147,6 +147,7 @@
     <Compile Include="Areas\Admin\Controllers\SerialController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
+    <Compile Include="Areas\Admin\Data\ActiveData.cs" />
     <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
     <Compile Include="Areas\Admin\Data\ProjectTeKData.cs" />
     <Compile Include="Areas\Admin\Data\SerialData.cs" />
@@ -507,6 +508,8 @@
     <Content Include="Areas\Admin\Views\DanhMuc\Listchinhanh.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\GetListchinhanh.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\UpdateChiNhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\Active\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Active\GetListDaActive.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -536,7 +539,6 @@
     <Content Include="Views\Active\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Active\" />
     <Folder Include="Content\imgthuchi\" />
     <Folder Include="Content\imgxuatnhap\" />
   </ItemGroup>
