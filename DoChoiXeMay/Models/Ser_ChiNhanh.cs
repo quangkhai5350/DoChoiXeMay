@@ -38,7 +38,7 @@ namespace DoChoiXeMay.Models
         public bool Sudung { get; set; }
 
         public int IdLevel { get; set; }
-
+        public int IdUser { get; set; }
         [StringLength(1000)]
         public string GhiChu { get; set; }
 

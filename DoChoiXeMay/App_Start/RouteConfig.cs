@@ -19,6 +19,12 @@ namespace DoChoiXeMay
                namespaces: new[] { "DoChoiXeMay.Controllers" }
            );
             routes.MapRoute(
+               name: "DangNhapWeb",
+               url: "LoginWeb",
+               defaults: new { controller = "Home", action = "LoginWebGuest", id = UrlParameter.Optional },
+               namespaces: new[] { "DoChoiXeMay.Controllers" }
+           );
+            routes.MapRoute(
                name: "BaoHanh",
                url: "warranty",
                defaults: new { controller = "Active", action = "Index", id = UrlParameter.Optional },

@@ -67,5 +67,47 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        public string InsertUserAotu()
+        {
+            UserTek model = new UserTek();
+            var name = "TeK" + (_context.UserTeks.Count() + 1000).ToString();
+            var checkname = _context.UserTeks.FirstOrDefault(kh => kh.UserName == name);
+            if (checkname != null)
+            {
+                //Nếu name bị trùng, random 100 lần
+                for (int j = 0; j < 100; j++)
+                {
+                    name = "TeK" + (_context.UserTeks.Count() + 1000 * (j + 2)).ToString();
+                    checkname = _context.UserTeks.FirstOrDefault(kh => kh.UserName == name);
+                    if (checkname == null)
+                    {
+                        model.UserName = name;
+                        break;
+                    }
+                }
+            }else
+            {
+                model.UserName = name;
+            }
+            model.Password = "4+szJJPdHNwGTpohvWoq5W0FS0TGKrNhny2zvF6cf64fgvm9EvAuew==";
+            model.PasswordSalt = "cwYRNpQl/Jissz6PZo/oUjHBEsYJw8w=";
+            model.IdLoai = 5;
+            model.LoaiConnection = "";
+            model.EmailConnection = "email@gmail.com";
+            model.Islocked = false;
+            model.lastPasswordChangedate = DateTime.Now;
+            model.LastLokedChangedate = DateTime.Now;
+            model.Createdate = DateTime.Now;
+            model.CountFailedPassword = 0;
+            model.GhiChu = "";
+            model.Avatar = "";
+            _context.UserTeks.Add(model);
+            var kq= _context.SaveChanges();
+            if (kq > 0)
+            {
+                return model.UserName;
+            }
+            return "No";
+        }
     }
 }

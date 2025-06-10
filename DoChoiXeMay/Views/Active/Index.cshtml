@@ -148,7 +148,17 @@
                 }
             }
         } else if ($("#NPP").is(":checked")) {
-            alert("bạn chọn NPP")
+            if ($("#IdChiNhanh").val() == 1) {
+                alert("Bạn muốn kiểm tra BH điện tử? Bạn Chưa Chọn Đại Lý !!!")
+            } else {
+                if (!confirm("Bạn là đại Lý? Bạn cần đăng nhập web để kiểm tra BH điện tử. Nếu chưa có thông tin đăng nhập, hãy liên hệ Admin TeK.")) {
+                    return false;
+                } else {
+                    window.location.href = "/Home/LoginWebGuest"
+                    @*//@Url.Action("LoginWebGuest", "Home")*@
+                }
+            }
+
         }
     }
     function Kichhoatbh() {

@@ -74,8 +74,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         //Nếu S/N bị trùng, random 50 lần
                         for (int j = 0; j < 50; j++) {
                             SN= Utils.XString.MakeAotuSN(5);
-                            var ktt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
-                            if (ktt.Count() == 0)
+                            kt = dbc.Ser_sp.Where(kh => kh.SerialSP.Contains(SN)).ToList();
+                            if (kt.Count() == 0)
                             {
                                 SerSP.SerialSP = SN;
                                 break;

@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "IndexDL";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<link href="~/Content/Login_Style.css" rel="stylesheet" />
+
+<div class="container" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
+
+    <div class="omb_login">
+        <h3 class="omb_authTitle "><a>Kiểm tra hoặc kích hoạt bảo hành điện tử cho @Session["thongtinDL"].</a></h3>
+
+        <div class="row" style="text-align:center">
+            <span style="font-size:15px" class="pull-right label label-warning">@Session["ThongbaoActiveDL"]</span>
+        </div>
+    </div>
+</div>
+
