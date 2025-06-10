@@ -1,6 +1,7 @@
 ﻿using DoChoiXeMay.Areas.Admin.Data;
 using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
+using MaHoa_GiaiMa_TaiKhoan;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,6 +16,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/DanhMuc
         Model1 dbc = new Model1();
+        TaiKhoanInfo tk = new TaiKhoanInfo();
         public ActionResult NhatKy()
         {
             Session["requestUri"] = "/Admin/DanhMuc/NhatKy";
@@ -58,13 +60,19 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var model = dbc.Ser_ChiNhanh.Find(id);
             ViewBag.IdLevel = new SelectList(dbc.Ser_Levelchinhanh.OrderBy(kh=>kh.Id).ToList(), "Id", "Level_Name", model.IdLevel);
+            var UserCN = dbc.UserTeks.Find(model.IdUser);
+            string check_pass = tk.DeCryptDotNetNukePassword(UserCN.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", UserCN.PasswordSalt);//pass ma hoa
+            
+            Session["UserNamechinhanh"] = UserCN.UserName;
+            Session["PWchinhanh"] = check_pass;
             return View(model);
         }
         [HttpPost]
-        public ActionResult UpdateChiNhanh(Ser_ChiNhanh CN)
+        public ActionResult UpdateChiNhanh(Ser_ChiNhanh CN, string UserName, string Password)
         {
             try
             {
+                //Update UserName,Password neu bi thay doi
                 dbc.Entry(CN).State = EntityState.Modified;
                 dbc.SaveChanges();
                 Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + ", thành công.";
@@ -88,29 +96,41 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult InsertChiNhanh()
         {
-            Ser_ChiNhanh model = new Ser_ChiNhanh();
-            model.TenChiNhanh = "Auto_Name";
-            model.DaiDien = "Trần Auto";
-            model.SDT = "0987654321";
-            model.DiaChi = "139 Trần Văn ơn, Khu 6, Phú Hòa, Thủ Dầu Một, Bình Dương, Việt Nam.";
-            model.TaiKhoanNH = "VietComBank 0987654321 Trần Auto";
-            model.Sudung = false;
-            model.IdLevel = 2;
-            model.GhiChu = "";
-            model.Gmail = "";
-            dbc.Ser_ChiNhanh.Add(model);
-            dbc.SaveChanges();
-            Session["ThongBaoListChiNhanh"] = "Insert chi nhánh thành công. Cần update để sử dụng.";
-            var userid = int.Parse(Session["UserId"].ToString());
-            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "Insert chi nhánh - " + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
-            //tro lai trang truoc do 
-            var requestUri = Session["requestUri"] as string;
-            if (requestUri != null)
+            try
             {
-                return Redirect(requestUri);
+                var UN = new Data.ActiveData().InsertUserAotu();
+                var IDU = dbc.UserTeks.FirstOrDefault(kh => kh.UserName == UN).Id;
+                Ser_ChiNhanh model = new Ser_ChiNhanh();
+                model.TenChiNhanh = "Auto_Name";
+                model.DaiDien = "Trần Auto";
+                model.SDT = "0987654321";
+                model.DiaChi = "139 Trần Văn ơn, Khu 6, Phú Hòa, Thủ Dầu Một, Bình Dương, Việt Nam.";
+                model.TaiKhoanNH = "VietComBank 0987654321 Trần Auto";
+                model.Sudung = false;
+                model.IdLevel = 3;
+                model.GhiChu = "";
+                model.Gmail = "";
+                model.IdUser = IDU;
+                dbc.Ser_ChiNhanh.Add(model);
+                dbc.SaveChanges();
+                Session["ThongBaoListChiNhanh"] = "Insert chi nhánh thành công. Cần update để sử dụng.";
+                var userid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Insert chi nhánh - " + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("Listchinhanh");
             }
-            return RedirectToAction("Listchinhanh");
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return RedirectToAction("Listchinhanh");
+            }
+            
         }
         public ActionResult DeleteChiNhanh(int id)
         {

@@ -537,6 +537,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Active\Index.cshtml" />
+    <Content Include="Views\Home\LoginWebGuest.cshtml" />
+    <Content Include="Views\Active\IndexDL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

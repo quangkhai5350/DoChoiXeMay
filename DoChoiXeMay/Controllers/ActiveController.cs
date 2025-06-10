@@ -31,6 +31,12 @@ namespace DoChoiXeMay.Controllers
                 .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh");
             return View();
         }
+        public ActionResult IndexDL(int idchinhanh)
+        {
+            var chinhanh = dbc.Ser_ChiNhanh.Find(idchinhanh);
+            Session["thongtinDL"] = chinhanh.TenChiNhanh;
+            return View();
+        }
         public ActionResult IndexCheckBHND(string SerialSP)
         {
             try
