@@ -1,30 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\GitHubDestop\\DoChoiXeMay\\",
+  "WorkspaceRootPath": "D:\\Git pm\\DoChoiXeMay\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\views\\active\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\views\\active\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\controllers\\activecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\controllers\\activecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\views\\home\\loginwebguest.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\views\\home\\loginwebguest.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\controllers\\danhmuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|d:\\git pm\\dochoixemay\\dochoixemay\\areas\\admin\\controllers\\danhmuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\controllers\\danhmuccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|E:\\GitHubDestop\\DoChoiXeMay\\dochoixemay\\areas\\admin\\controllers\\serialcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\areas\\admin\\controllers\\serialcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ActiveController.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\ActiveController.cs",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Controllers\\ActiveController.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\ActiveController.cs",
-              "RelativeToolTip": "DoChoiXeMay\\Controllers\\ActiveController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAowA4AAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T14:31:57.816Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DanhMucController.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
-              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAqwEoAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-10T07:58:10.573Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "LoginWebGuest.cshtml",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Views\\Home\\LoginWebGuest.cshtml",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Views\\Home\\LoginWebGuest.cshtml",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Views\\Home\\LoginWebGuest.cshtml",
-              "RelativeToolTip": "DoChoiXeMay\\Views\\Home\\LoginWebGuest.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-10T03:43:23.247Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Views\\Active\\Index.cshtml",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Views\\Active\\Index.cshtml",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Views\\Active\\Index.cshtml",
-              "RelativeToolTip": "DoChoiXeMay\\Views\\Active\\Index.cshtml",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAAAJkAAABaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-07T08:44:27.801Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SerialController.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
-              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\SerialController.cs",
-              "ViewState": "AgIAAD0AAAAAAAAAAAAxwEkAAAA5AAAAAAAAAA==",
+              "Title": "DanhMucController.cs",
+              "DocumentMoniker": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
+              "ToolTip": "D:\\Git pm\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
+              "RelativeToolTip": "DoChoiXeMay\\Areas\\Admin\\Controllers\\DanhMucController.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAkwFAAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-07T08:19:23.288Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "DoChoiXeMay\\Controllers\\HomeController.cs",
-              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "DoChoiXeMay\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAACcAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T03:16:57.981Z",
+              "WhenOpened": "2025-06-11T04:08:57.43Z",
               "EditorCaption": ""
             }
           ]

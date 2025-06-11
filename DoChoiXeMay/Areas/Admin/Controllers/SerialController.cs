@@ -207,6 +207,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     }
 
                     PrintDocument pd = new PrintDocument();
+
                     //pd.DefaultPageSettings.Landscape = false;
                     pd.DefaultPageSettings.Margins.Left = 4;
                     pd.DefaultPageSettings.Margins.Top = 2;

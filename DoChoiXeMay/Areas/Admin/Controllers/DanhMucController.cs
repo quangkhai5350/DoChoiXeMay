@@ -73,6 +73,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             try
             {
                 //Update UserName,Password neu bi thay doi
+                var UserChinhanh = dbc.UserTeks.Find(CN.IdUser);
+                string check_pass = tk.DeCryptDotNetNukePassword(UserChinhanh.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", UserChinhanh.PasswordSalt);//pass ma hoa
+                //Nếu user và pass không thay đổi thì thôi
+                if(UserChinhanh.UserName==UserName.Trim() && check_pass == Password.Trim())
+                {
+                    //Không update UserChinhanh
+                }
+                else
+                {
+                    //update UserChinhanh
+                }
                 dbc.Entry(CN).State = EntityState.Modified;
                 dbc.SaveChanges();
                 Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + ", thành công.";
