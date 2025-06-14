@@ -22,7 +22,7 @@ namespace DoChoiXeMay
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            var Max = dbc.aspnet_getVisitors.OrderByDescending(kh => kh.Id)
+            var Max = dbc.Aspnet_getVisitors.OrderByDescending(kh => kh.Id)
                                             .Take(1)
                                             .Single();
             Application["Visitors"] = Max.TongLuotTruyCap;
@@ -61,7 +61,7 @@ namespace DoChoiXeMay
             File.WriteAllText(path, text);
             //luu so luot truy cap
             aspnet_getVisitors sum = new aspnet_getVisitors();
-            var Max = dbc.aspnet_getVisitors.OrderByDescending(kh => kh.Id)
+            var Max = dbc.Aspnet_getVisitors.OrderByDescending(kh => kh.Id)
                                             .Take(1)
                                             .Single();
             //var Maxold = dbc.aspnet_getVisitors.OrderByDescending(kh => kh.Id)
@@ -85,12 +85,12 @@ namespace DoChoiXeMay
                         sum.Online = int.Parse(Application["TotalOnlineUsers"].ToString());
                         sum.Ghichu = "Global";
                         sum.Ngay = DateTime.Now;
-                        dbc.aspnet_getVisitors.Add(sum);
+                        dbc.Aspnet_getVisitors.Add(sum);
                         dbc.SaveChanges();
                     }
                     else
                     {
-                        var ar = dbc.aspnet_getVisitors.Find(Max.Id);
+                        var ar = dbc.Aspnet_getVisitors.Find(Max.Id);
                         ar.TongLuotTruyCap = int.Parse(text);
                         ar.Ghichu = "Global update";
                         if ((int)Application["TotalOnlineUsers"] > ar.Online)

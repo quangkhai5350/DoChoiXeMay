@@ -16,19 +16,21 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult Index()
         {
             Session["requestUri"] = "/Admin/Active/Index";
-            ViewBag.TotalSerialKH = dbc.Ser_kichhoat
-                .OrderByDescending(kh=>kh.NgayUpdate)
-                .OrderByDescending(kh=>kh.IdChiNhanh)
-                .OrderBy(kh=>kh.TrangThaiId).Count();
+            var model = dbc.Ser_kichhoat
+                .OrderByDescending(kh => kh.NgayUpdate)
+                .OrderByDescending(kh => kh.IdChiNhanh)
+                .OrderBy(kh => kh.TrangThaiId).ToList();
+            ViewBag.TotalSerialKH = model.Count();
             return View();
         }
         public ActionResult GetListDaActive()
         {
-            ViewBag.ListSerialKH = dbc.Ser_kichhoat
-                .OrderByDescending(kh => kh.NgayUpdate)
-                .OrderByDescending(kh => kh.IdChiNhanh)
-                .OrderBy(kh => kh.TrangThaiId).ToList();
-            return PartialView();
+            var model = dbc.Ser_kichhoat
+                .OrderByDescending(kh=>kh.IdChiNhanh)
+                .ThenByDescending(kh => kh.NgayUpdate)
+                .ThenBy(kh => kh.TrangThaiId).ToList();
+            ViewBag.ListSerialKH = model;
+            return PartialView(model);
         }
     }
 }

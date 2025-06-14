@@ -12,7 +12,7 @@ namespace DoChoiXeMay.Models
         {
         }
 
-        public virtual DbSet<aspnet_getVisitors> aspnet_getVisitors { get; set; }
+        public virtual DbSet<aspnet_getVisitors> Aspnet_getVisitors { get; set; }
         public virtual DbSet<ChiTietTC> ChiTietTCs { get; set; }
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
@@ -20,6 +20,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<HangHoa> HangHoas { get; set; }
         public virtual DbSet<HanhDong> HanhDongs { get; set; }
         public virtual DbSet<HinhThucTC> HinhThucTCs { get; set; }
+        public virtual DbSet<KhuVuc> KhuVucs { get; set; }
         public virtual DbSet<KyXuatNhap> KyXuatNhaps { get; set; }
         public virtual DbSet<LoaiNoteTeK> LoaiNoteTeKs { get; set; }
         public virtual DbSet<LoaiUserTek> LoaiUserTeks { get; set; }
@@ -82,6 +83,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ChiTietTCs)
                 .WithRequired(e => e.HinhThucTC)
                 .HasForeignKey(e => e.IdHT)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<KhuVuc>()
+                .HasMany(e => e.Ser_ChiNhanh)
+                .WithRequired(e => e.KhuVuc)
+                .HasForeignKey(e => e.IdKhuVuc)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<KyXuatNhap>()
@@ -157,12 +164,6 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.Ser_kichhoat)
                 .WithRequired(e => e.Ser_box)
                 .HasForeignKey(e => e.IDSer_box)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Ser_ChiNhanh>()
-                .HasMany(e => e.Ser_kichhoat)
-                .WithRequired(e => e.Ser_ChiNhanh)
-                .HasForeignKey(e => e.IdChiNhanh)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Ser_Levelchinhanh>()

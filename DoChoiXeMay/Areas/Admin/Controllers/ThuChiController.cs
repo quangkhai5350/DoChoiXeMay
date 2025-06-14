@@ -101,9 +101,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file1 = Request.Files["Filesave1"];
                 var file2 = Request.Files["Filesave2"];
                 var file3 = Request.Files["HoaDon"];
-                var ten1 = Xstring.saveFile(file1, "imgthuchi/");
-                var ten2 = Xstring.saveFile(file2, "imgthuchi/");
-                var ten3 = Xstring.saveFile(file3, "imgthuchi/");
+                var ten1 = XstringAdmin.saveFile(file1, "imgthuchi/");
+                var ten2 = XstringAdmin.saveFile(file2, "imgthuchi/");
+                var ten3 = XstringAdmin.saveFile(file3, "imgthuchi/");
                 TC.Filesave1 = ten1;
                 TC.Filesave2 = ten2;
                 TC.HoaDon = ten3;
@@ -161,20 +161,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     if (file1.ContentLength > 0)
                     {
                         //Xoa hinh cu
-                        bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave1);
-                        TC.Filesave1 = Xstring.saveFile(file1, "imgthuchi/");
+                        bool xoahinhcu = XstringAdmin.Xoahinhcu("imgthuchi/", TC.Filesave1);
+                        TC.Filesave1 = XstringAdmin.saveFile(file1, "imgthuchi/");
                     }
                     if (file2.ContentLength > 0)
                     {
                         //Xoa hinh cu
-                        bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.Filesave2);
-                        TC.Filesave2 = Xstring.saveFile(file2, "imgthuchi/");
+                        bool xoahinhcu = XstringAdmin.Xoahinhcu("imgthuchi/", TC.Filesave2);
+                        TC.Filesave2 = XstringAdmin.saveFile(file2, "imgthuchi/");
                     }
                     if (file3.ContentLength > 0)
                     {
                         //Xoa hinh cu
-                        bool xoahinhcu = Xstring.Xoahinhcu("imgthuchi/", TC.HoaDon);
-                        TC.HoaDon = Xstring.saveFile(file3, "imgthuchi/");
+                        bool xoahinhcu = XstringAdmin.Xoahinhcu("imgthuchi/", TC.HoaDon);
+                        TC.HoaDon = XstringAdmin.saveFile(file3, "imgthuchi/");
                     }
                 }
                 else
@@ -182,17 +182,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     if (file1.ContentLength > 0)
                     {
                         //Không Xoa hinh cu
-                        TC.Filesave1 = Xstring.saveFile(file1, "imgxuatnhap/");
+                        TC.Filesave1 = XstringAdmin.saveFile(file1, "imgxuatnhap/");
                     }
                     if (file2.ContentLength > 0)
                     {
                         //Không Xoa hinh cu
-                        TC.Filesave2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                        TC.Filesave2 = XstringAdmin.saveFile(file2, "imgxuatnhap/");
                     }
                     if (file3.ContentLength > 0)
                     {
                         //Không Xoa hinh cu
-                        TC.HoaDon = Xstring.saveFile(file3, "imgxuatnhap/");
+                        TC.HoaDon = XstringAdmin.saveFile(file3, "imgxuatnhap/");
                     }
                 }
                 TC.NgayAuto = DateTime.Now;
@@ -243,9 +243,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var file1 = model.Filesave1;
                     var file2 = model.Filesave2;
                     var file3 = model.HoaDon;
-                    bool xoa1 = Xstring.Xoahinhcu("imgthuchi/", file1);
-                    bool xoa2 = Xstring.Xoahinhcu("imgthuchi/", file2);
-                    bool xoa3 = Xstring.Xoahinhcu("imgthuchi/", file3);
+                    bool xoa1 = XstringAdmin.Xoahinhcu("imgthuchi/", file1);
+                    bool xoa2 = XstringAdmin.Xoahinhcu("imgthuchi/", file2);
+                    bool xoa3 = XstringAdmin.Xoahinhcu("imgthuchi/", file3);
                     //Xóa hình thu chi củ
                     var ngay = model.NgayTC;
                     dbc.ChiTietTCs.Remove(model);

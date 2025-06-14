@@ -32,7 +32,7 @@
             @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXNTeK)
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
-                var tenky = Xstring.Truncate(Item.TenKy, 50);
+                var tenky = XstringAdmin.Truncate(Item.TenKy, 50);
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.STT</td>
                     <td>
@@ -175,7 +175,7 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            var tenHH = Xstring.Truncate(ct.Ten, 40);
+                            var tenHH = XstringAdmin.Truncate(ct.Ten, 40);
                             <p style="height:40px" title="@ct.Ten">
 
                                 <span>@ct.SoLuong&nbsp;</span>

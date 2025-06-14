@@ -148,15 +148,18 @@
     <Compile Include="Areas\Admin\Controllers\ThuChiController.cs" />
     <Compile Include="Areas\Admin\Controllers\XuatNhapController.cs" />
     <Compile Include="Areas\Admin\Data\ActiveData.cs" />
+    <Compile Include="Areas\Admin\Data\ChiNhanhData.cs" />
     <Compile Include="Areas\Admin\Data\NoteKyThuatData.cs" />
     <Compile Include="Areas\Admin\Data\ProjectTeKData.cs" />
     <Compile Include="Areas\Admin\Data\SerialData.cs" />
     <Compile Include="Areas\Admin\Data\ThuChiData.cs" />
-    <Compile Include="Areas\Admin\Data\Xstring.cs" />
+    <Compile Include="Areas\Admin\Data\UserData.cs" />
+    <Compile Include="Areas\Admin\Data\XstringAdmin.cs" />
     <Compile Include="Areas\Admin\Data\XuatNhapData.cs" />
     <Compile Include="Controllers\ActiveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\ProtectAttribute.cs" />
+    <Compile Include="Filters\ProtectKHAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -168,6 +171,7 @@
     <Compile Include="Models\HangHoa.cs" />
     <Compile Include="Models\HanhDong.cs" />
     <Compile Include="Models\HinhThucTC.cs" />
+    <Compile Include="Models\KhuVuc.cs" />
     <Compile Include="Models\KyXuatNhap.cs" />
     <Compile Include="Models\LoaiNoteTeK.cs" />
     <Compile Include="Models\LoaiUserTek.cs" />
@@ -507,7 +511,7 @@
     <Content Include="Areas\Admin\Views\Serial\GetListSer_SPDaIn.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\Listchinhanh.cshtml" />
     <Content Include="Areas\Admin\Views\DanhMuc\GetListchinhanh.cshtml" />
-    <Content Include="Areas\Admin\Views\DanhMuc\UpdateChiNhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\UpdateChiNhanhvaUser.cshtml" />
     <Content Include="Areas\Admin\Views\Active\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Active\GetListDaActive.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
@@ -539,6 +543,7 @@
     <Content Include="Views\Active\Index.cshtml" />
     <Content Include="Views\Home\LoginWebGuest.cshtml" />
     <Content Include="Views\Active\IndexDL.cshtml" />
+    <Content Include="Views\Active\GetListKHBHbyChiNhanh.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

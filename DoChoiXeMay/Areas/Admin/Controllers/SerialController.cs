@@ -37,8 +37,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult ListSerialDaIn()
         {
             Session["requestUri"] = "/Admin/Serial/ListSerialDaIn";
-            ViewBag.TotalSerialSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true).Count();
-            ViewBag.TotalSerialBoXDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true).Count();
+            ViewBag.TotalSerialSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung==false).Count();
+            ViewBag.TotalSerialBoXDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true && kh.Sudung == false).Count();
             return View();
         }
         public ActionResult AddNewSerial()
@@ -394,14 +394,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListSer_SPDaIn()
         {
-            ViewBag.SerSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true).OrderBy(kh => kh.NgayTao)
+            ViewBag.SerSPDaIn = dbc.Ser_sp.Where(kh => kh.DaIn == true && kh.Sudung==false).OrderBy(kh => kh.NgayTao)
                 .ThenBy(kh=>kh.Sudung)
                 .ToList();
             return PartialView();
         }
         public ActionResult GetListSer_BoxDaIn()
         {
-            ViewBag.SerBoxDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true).OrderBy(kh => kh.NgayTao)
+            ViewBag.SerBoxDaIn = dbc.Ser_box.Where(kh => kh.DaIn == true && kh.Sudung==false).OrderBy(kh => kh.NgayTao)
                 .ThenBy(kh=>kh.Sudung)
                 .ToList();
             return PartialView();

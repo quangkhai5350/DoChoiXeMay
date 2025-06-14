@@ -2,7 +2,7 @@
     <table class="table table-hover table-striped" style="margin-bottom:0">
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
-
+                <th class="canhgiua">Id</th>
                 <th class="canhgiua">UserName</th>
                 <th class="canhgiua">Pass</th>
                 <th class="canhgiua">Email</th>
@@ -15,6 +15,7 @@
             @foreach (DoChoiXeMay.Models.UserTek Item in ViewBag.UserTeK)
             {
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                    <td>@Item.Id</td>
                     <td>@Item.UserName</td>
 
                     <td>@Item.Password</td>
@@ -32,6 +33,7 @@
                         @if (Session["quyen"].ToString() != "Guest")
                         {
                             <a class="btn btn-danger" href="/Admin/Home/EditUser/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa User: @Item.Id ??')" href="/Admin/Home/DeleteUserChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                         }
                     </td>
                 </tr>

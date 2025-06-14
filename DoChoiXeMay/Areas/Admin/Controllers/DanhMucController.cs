@@ -1,13 +1,17 @@
 ﻿using DoChoiXeMay.Areas.Admin.Data;
 using DoChoiXeMay.Filters;
 using DoChoiXeMay.Models;
+using DoChoiXeMay.Utils;
 using MaHoa_GiaiMa_TaiKhoan;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
+using System.Windows.Documents;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -16,6 +20,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
     {
         // GET: Admin/DanhMuc
         Model1 dbc = new Model1();
+        string DBname = ConfigurationManager.AppSettings["DBname"];
         TaiKhoanInfo tk = new TaiKhoanInfo();
         public ActionResult NhatKy()
         {
@@ -43,7 +48,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var model = dbc.Ser_ChiNhanh.OrderByDescending(kh => kh.Id)
                 .ThenByDescending(kh=>kh.IdLevel).ToList();
             ViewBag.GetListchinhanh = model;
-            return PartialView();
+            return PartialView(model);
         }
         public ActionResult Levelchinhanh()
         {
@@ -56,37 +61,90 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.GetLevelchinhanh = model;
             return PartialView();
         }
-        public ActionResult UpdateChiNhanh(int id)
+        public ActionResult UpdateChiNhanhvaUser(int id)
         {
             var model = dbc.Ser_ChiNhanh.Find(id);
             ViewBag.IdLevel = new SelectList(dbc.Ser_Levelchinhanh.OrderBy(kh=>kh.Id).ToList(), "Id", "Level_Name", model.IdLevel);
-            var UserCN = dbc.UserTeks.Find(model.IdUser);
-            string check_pass = tk.DeCryptDotNetNukePassword(UserCN.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", UserCN.PasswordSalt);//pass ma hoa
+            ViewBag.IdKhuVuc = new SelectList(dbc.KhuVucs.Where(kh=>kh.Sudung==true).OrderBy(kh => kh.Id).ToList()
+                                                                          , "Id", "TenKhuvuc", model.IdKhuVuc);
+            var UserCN = dbc.UserTeks.FirstOrDefault(kh=>kh.Id== model.IdUser);
+            if(UserCN != null)
+            {
+                string check_pass = tk.DeCryptDotNetNukePassword(UserCN.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", UserCN.PasswordSalt);//pass ma hoa
+                Session["UserNamechinhanh"] = UserCN.UserName;
+                Session["PWchinhanh"] = check_pass;
+            }
+            else
+            {
+                Session["UserNamechinhanh"] = "Da Xoa.";
+                Session["PWchinhanh"] = "";
+            }
             
-            Session["UserNamechinhanh"] = UserCN.UserName;
-            Session["PWchinhanh"] = check_pass;
             return View(model);
         }
         [HttpPost]
-        public ActionResult UpdateChiNhanh(Ser_ChiNhanh CN, string UserName, string Password)
+        public ActionResult UpdateChiNhanhvaUser(Ser_ChiNhanh CN, string UserName, string Password)
         {
             try
             {
-                //Update UserName,Password neu bi thay doi
-                var UserChinhanh = dbc.UserTeks.Find(CN.IdUser);
-                string check_pass = tk.DeCryptDotNetNukePassword(UserChinhanh.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", UserChinhanh.PasswordSalt);//pass ma hoa
-                //Nếu user và pass không thay đổi thì thôi
-                if(UserChinhanh.UserName==UserName.Trim() && check_pass == Password.Trim())
+                int updateUser = 0;
+                if(Session["UserNamechinhanh"].ToString()!="Da Xoa.")//User chưa bị xóa thì mới làm
                 {
-                    //Không update UserChinhanh
+                    var UserChinhanh = dbc.UserTeks.Find(CN.IdUser);
+                    string check_pass = tk.DeCryptDotNetNukePassword(UserChinhanh.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", UserChinhanh.PasswordSalt);//pass ma hoa
+                    if (UserChinhanh.UserName == UserName.Trim() && check_pass == Password.Trim() && UserChinhanh.EmailConnection == CN.Gmail)
+                    {
+                        //Không update UserChinhanh
+                    }
+                    else
+                    {
+                        //update UserChinhanh
+                        if (UserName.Trim() == UserChinhanh.UserName)
+                        {
+                            UserChinhanh.UserName = UserName.Trim();
+                        }
+                        else
+                        {
+                            var CheckUser = dbc.UserTeks.FirstOrDefault(kh => kh.UserName == UserName.Trim());
+                            if (CheckUser == null)
+                            {
+                                UserChinhanh.UserName = UserName.Trim();
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("", "Update Thất Bại !!!! UserName bị trùng lặp.");
+                                return View(CN);
+                            }
+                        }
+                        UserChinhanh.EmailConnection = CN.Gmail;
+                        string PasswordSalt = Convert.ToBase64String(tk.GenerateSalt()); //tạo chuổi salt ngẫu nhiên
+                        string cipherPass = tk.EnCryptDotNetNukePassword(Password, "", PasswordSalt);
+
+                        UserChinhanh.Password = cipherPass;
+                        UserChinhanh.PasswordSalt = PasswordSalt;
+                        UserChinhanh.lastPasswordChangedate = DateTime.Now;
+                        dbc.Entry(UserChinhanh).State = EntityState.Modified;
+                        dbc.SaveChanges();
+                        updateUser = 1;
+                    }
+                }
+                var model = dbc.Ser_ChiNhanh.Find(CN.Id);
+                if(CN.IdLevel != model.IdLevel || model.IdKhuVuc != CN.IdKhuVuc && model.Id > 1)
+                {
+                    CN.TenChiNhanh = new ChiNhanhData().MakeNameChiNhanh(model.IdKhuVuc, CN.IdKhuVuc, CN.IdLevel,CN.STTCNOFTinh);
+                    string[] ssst = CN.TenChiNhanh.Split('_');
+                    CN.STTCNOFTinh = ssst[2].ToString();
+                }
+
+                var kqupdate = new ChiNhanhData().Update_ChiNhanh(CN, DBname);
+                if (updateUser == 1)
+                {
+                    Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + " và User Web, thành công.";
                 }
                 else
                 {
-                    //update UserChinhanh
+                    Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + ", thành công.";
                 }
-                dbc.Entry(CN).State = EntityState.Modified;
-                dbc.SaveChanges();
-                Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + ", thành công.";
                 var userid = int.Parse(Session["UserId"].ToString());
                 var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "Update chi nhánh Id=" + CN.Id + "-" + DateTime.Now.ToString(), "");
@@ -102,7 +160,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             {
                 string message = ex.Message;
                 ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
-                return View(CN);
+                return RedirectToAction("UpdateChiNhanhvaUser");
             }
         }
         public ActionResult InsertChiNhanh()
@@ -110,18 +168,23 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             try
             {
                 var UN = new Data.ActiveData().InsertUserAotu();
+                
+                var counHCM = dbc.Ser_ChiNhanh.Where(kh=>kh.IdKhuVuc==27).Count();
                 var IDU = dbc.UserTeks.FirstOrDefault(kh => kh.UserName == UN).Id;
                 Ser_ChiNhanh model = new Ser_ChiNhanh();
-                model.TenChiNhanh = "Auto_Name";
+                model.TenChiNhanh = new ChiNhanhData().MakeNameChiNhanh(26,27, 3, XString.makeSTT(counHCM));
                 model.DaiDien = "Trần Auto";
                 model.SDT = "0987654321";
+                model.IdKhuVuc = 27;
+                string[] ssst = model.TenChiNhanh.Split('_');
+                model.STTCNOFTinh=ssst[2].ToString();
                 model.DiaChi = "139 Trần Văn ơn, Khu 6, Phú Hòa, Thủ Dầu Một, Bình Dương, Việt Nam.";
                 model.TaiKhoanNH = "VietComBank 0987654321 Trần Auto";
+                model.Gmail = "email@gmail.com";
                 model.Sudung = false;
                 model.IdLevel = 3;
-                model.GhiChu = "";
-                model.Gmail = "";
                 model.IdUser = IDU;
+                model.GhiChu = "";
                 dbc.Ser_ChiNhanh.Add(model);
                 dbc.SaveChanges();
                 Session["ThongBaoListChiNhanh"] = "Insert chi nhánh thành công. Cần update để sử dụng.";
@@ -146,12 +209,26 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult DeleteChiNhanh(int id)
         {
             var userid = int.Parse(Session["UserId"].ToString());
-            var model = dbc.Ser_ChiNhanh.Find(id);
-            dbc.Ser_ChiNhanh.Remove(model);
-            dbc.SaveChanges();
-            Session["ThongBaoListChiNhanh"] = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
-            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "Delete chi nhánh -" + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
+            if(id > 1)
+            {
+                var model = dbc.Ser_ChiNhanh.Find(id);
+                var user = dbc.UserTeks.FirstOrDefault(kh=>kh.Id == model.IdUser);
+                dbc.Ser_ChiNhanh.Remove(model);
+                dbc.SaveChanges();
+                if(User != null)
+                {
+                    var UserD = dbc.UserTeks.Find(model.IdUser);
+                    dbc.UserTeks.Remove(UserD);
+                    dbc.SaveChanges();
+                    Session["ThongBaoListChiNhanh"] = "Delete chi nhánh và User liên kết :" + model.TenChiNhanh + " thành công.";
+                }
+                else
+                {
+                    Session["ThongBaoListChiNhanh"] = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
+                }
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Delete chi nhánh -" + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
+            }
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;
             if (requestUri != null)
@@ -408,8 +485,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 if (file1.ContentLength > 0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgTeK/", Ma.Logo);
-                    Ma.Logo = Xstring.saveFile(file1, "imgTeK/");
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgTeK/", Ma.Logo);
+                    Ma.Logo = XstringAdmin.saveFile(file1, "imgTeK/");
                 }
                 Ma.NgayAuto = DateTime.Now;
                 dbc.Entry(Ma).State = EntityState.Modified;

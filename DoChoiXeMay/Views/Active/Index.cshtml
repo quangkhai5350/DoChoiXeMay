@@ -133,7 +133,7 @@
                 if (serialSP.length == 0) {
                     alert("Cần điền số serial trên sản phẩm để kiểm tra !!!")
                 } else {
-                    alert(serialSP);
+                    //alert(serialSP);
                     var postData = JSON.stringify({ SerialSP: serialSP });
                     $.ajax({
                         contentType: "application/json; charset=utf-8",
@@ -193,6 +193,7 @@
                         contentType: "application/json; charset=utf-8",
                         url: "/Active/KichHoatBaoHanh",
                         dataType: 'json',
+                        type: 'POST',
                         data: postData,
                         success: function (response) {
                             if (response == "11") {
@@ -252,8 +253,9 @@
                                     $("#thongbaoActive").html("")
                                     $("#thongbaoBox").html("")
                                     $("#thongbaoSP").html("")
-                                    $("#SerialBox").html("")
-                                    $("#SerialSP").html("")
+                                    $("#SerialBox").val('')
+                                    $("#SerialSP").val('')
+                                    $("#SerialSP").focus()
                                 }
                             }
                         });

@@ -8,12 +8,6 @@ namespace DoChoiXeMay.Models
 
     public partial class Ser_ChiNhanh
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ser_ChiNhanh()
-        {
-            Ser_kichhoat = new HashSet<Ser_kichhoat>();
-        }
-
         public int Id { get; set; }
 
         [Required]
@@ -28,23 +22,32 @@ namespace DoChoiXeMay.Models
         [StringLength(100)]
         public string SDT { get; set; }
 
+        public int IdKhuVuc { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string STTCNOFTinh { get; set; }
+
         [StringLength(200)]
         public string DiaChi { get; set; }
 
         [StringLength(150)]
         public string TaiKhoanNH { get; set; }
+
         [StringLength(100)]
         public string Gmail { get; set; }
+
         public bool Sudung { get; set; }
 
         public int IdLevel { get; set; }
+
         public int IdUser { get; set; }
+
         [StringLength(1000)]
         public string GhiChu { get; set; }
 
-        public virtual Ser_Levelchinhanh Ser_Levelchinhanh { get; set; }
+        public virtual KhuVuc KhuVuc { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ser_kichhoat> Ser_kichhoat { get; set; }
+        public virtual Ser_Levelchinhanh Ser_Levelchinhanh { get; set; }
     }
 }

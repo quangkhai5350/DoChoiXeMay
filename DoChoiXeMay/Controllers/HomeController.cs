@@ -94,12 +94,13 @@ namespace DoChoiXeMay.Controllers
                             Session["UserName"] = UserName;
                             Session["UserId"] = UserFirt;
                             //
-                                Session["quyen"] = user.LoaiUserTek.LoaiUser;
+                                Session["quyen"] = user.LoaiUserTek.Id;
                                 Session["avatar"] = user.Avatar;
                                 var uID = UserFirt;
                                 var model_uid = dbc.UserTeks.Find(UserFirt);
                                 bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
                         , Session["UserName"].ToString(), "LoginWeb", "");
+                            Session["idchinhanhAt"] = dbc.Ser_ChiNhanh.FirstOrDefault(kh=>kh.IdUser == uID).Id;
                             ////
                             return RedirectToAction("IndexDL", "Active"); 
                         }
@@ -236,7 +237,7 @@ namespace DoChoiXeMay.Controllers
                             
                             if (user.IdLoai == 1 || user.IdLoai == 2)
                             {
-                                Session["quyen"] = user.LoaiUserTek.LoaiUser;
+                                Session["quyen"] = user.LoaiUserTek.Id;
                                 Session["avatar"] = user.Avatar;
                                 var uID = UserFirt;
                                 var model_uid = dbc.UserTeks.Find(UserFirt);
@@ -251,7 +252,7 @@ namespace DoChoiXeMay.Controllers
                             }
                             else
                             {
-                                Session["quyen"] = user.LoaiUserTek.LoaiUser;
+                                Session["quyen"] = user.LoaiUserTek.Id;
                                 var uID = UserFirt;
                                 var model_uid = dbc.UserTeks.Find(uID);
                                 bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
@@ -295,6 +296,11 @@ namespace DoChoiXeMay.Controllers
                 ModelState.AddModelError("", "Sai tên đăng nhập");
             }
             return View();
+        }
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            return Redirect("/warranty");
         }
     }
 }
