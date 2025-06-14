@@ -40,6 +40,22 @@ namespace DoChoiXeMay.Utils
             string text = randomText.ToString();
             return text;
         }
+        public static string makeSTT(int i)
+        {
+            var stt = i.ToString().Length;
+            var add = 4 - stt;
+            var kq = "";
+            if (add > 0)
+            {
+                kq=i.ToString();
+                for(int j = 0; j < add; j++)
+                {
+                    kq = "0" + kq;
+                }
+                return kq;
+            }
+            return i.ToString();
+        }
         //public static string MakeDatebySerial(string tr)
         //{
         //    if (tr.Length == 11)

@@ -66,9 +66,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             if(model.Avatar != "Namn.png")
                             {
                                 //Xoa hinh cu
-                                bool xoahinhcu = Xstring.Xoahinhcu("imgTeK/", model.Avatar);
+                                bool xoahinhcu = XstringAdmin.Xoahinhcu("imgTeK/", model.Avatar);
                             }
-                            model.Avatar = Xstring.saveFile(file1, "imgTeK/");
+                            model.Avatar = XstringAdmin.saveFile(file1, "imgTeK/");
                         }
                         string PasswordSalt = Convert.ToBase64String(tk.GenerateSalt()); //tạo chuổi salt ngẫu nhiên
                         string cipherPass = tk.EnCryptDotNetNukePassword(PWM, "", PasswordSalt);
@@ -205,20 +205,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 if (file1.ContentLength > 0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh1);
-                    model.Hinh1 = Xstring.saveFile(file1, "imgxuatnhap/");
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh1);
+                    model.Hinh1 = XstringAdmin.saveFile(file1, "imgxuatnhap/");
                 }
                 if (file2.ContentLength > 0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh2);
-                    model.Hinh2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh2);
+                    model.Hinh2 = XstringAdmin.saveFile(file2, "imgxuatnhap/");
                 }
                 if (file3.ContentLength > 0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh3);
-                    model.Hinh3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh3);
+                    model.Hinh3 = XstringAdmin.saveFile(file3, "imgxuatnhap/");
                 }
                 model.NgayAuto = DateTime.Now;
                 dbc.Entry(model).State = EntityState.Modified;
@@ -269,6 +269,29 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return Redirect(requestUri);
             }
             return RedirectToAction("ListThuChiTeK");
+        }
+        public ActionResult DeleteUserChiNhanh(int Id)
+        {
+            var UserCN = dbc.UserTeks.Find(Id);
+            if (UserCN != null && UserCN.IdLoai > 4)
+            {
+                dbc.UserTeks.Remove(UserCN);
+                dbc.SaveChanges();
+                Session["ThongBaoUserTEK"] = "Delete User " + UserCN.UserName + " thành công.";
+                var uid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
+                                , Session["UserName"].ToString(), "Delete User: " + UserCN.UserName + " Thành Công. ", "");
+            }
+            else {
+                Session["ThongBaoUserTEK"] = "User không xóa được. Delete User " + UserCN.UserName + " Không thành công !!!.";
+            }
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("ListUserTeK", "ThuChi");
         }
     }
 }

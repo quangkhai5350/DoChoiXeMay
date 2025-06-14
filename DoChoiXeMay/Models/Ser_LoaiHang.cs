@@ -15,7 +15,7 @@ namespace DoChoiXeMay.Models
             Ser_box = new HashSet<Ser_box>();
             Ser_sp = new HashSet<Ser_sp>();
         }
-        [Key]
+
         public int Id { get; set; }
 
         [Required]

@@ -36,8 +36,6 @@ namespace DoChoiXeMay.Models
 
         public virtual Ser_box Ser_box { get; set; }
 
-        public virtual Ser_ChiNhanh Ser_ChiNhanh { get; set; }
-
         public virtual Ser_sp Ser_sp { get; set; }
 
         public virtual Ser_trangthai Ser_trangthai { get; set; }

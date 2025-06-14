@@ -6,10 +6,11 @@ namespace DoChoiXeMay.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Ser_Levelchinhanh
+    [Table("KhuVuc")]
+    public partial class KhuVuc
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ser_Levelchinhanh()
+        public KhuVuc()
         {
             Ser_ChiNhanh = new HashSet<Ser_ChiNhanh>();
         }
@@ -18,25 +19,28 @@ namespace DoChoiXeMay.Models
 
         [Required]
         [StringLength(200)]
-        public string Level_Name { get; set; }
+        public string TenKhuvuc { get; set; }
 
         [Required]
         [StringLength(10)]
         public string Viettat { get; set; }
 
-        public int ChietKhau_bandau { get; set; }
+        public bool Sudung { get; set; }
 
-        public int chietkhau_khbh { get; set; }
+        [StringLength(50)]
+        public string MaVungDT { get; set; }
 
-        public int chietkhau_KPIQUI { get; set; }
+        [StringLength(50)]
+        public string BienSoXe { get; set; }
 
-        public int ChietKhau_KPIYEAR { get; set; }
+        [StringLength(50)]
+        public string MaBuuChinh { get; set; }
 
-        public int ChietKhau_khac { get; set; }
-
-        [Required]
         [StringLength(200)]
-        public string Thuongcuoinam { get; set; }
+        public string SatNhap { get; set; }
+
+        [StringLength(200)]
+        public string Ghichu { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ser_ChiNhanh> Ser_ChiNhanh { get; set; }

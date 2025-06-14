@@ -9,7 +9,7 @@ using System.Web;
 
 namespace DoChoiXeMay.Areas.Admin.Data
 {
-    public static class Xstring
+    public static class XstringAdmin
     {
         public static String Cutstring_getLastString(this String nn)
         {

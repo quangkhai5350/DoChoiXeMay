@@ -1,21 +1,194 @@
-﻿
+﻿@using DoChoiXeMay.Models
+@model Ser_ChiNhanh
+
 @{
     ViewBag.Title = "IndexDL";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
 <link href="~/Content/Login_Style.css" rel="stylesheet" />
 
 <div class="container" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
+    @if (Model != null)
+    {
+        <div class="omb_login" style="text-align:center">
+            <h3><a style="text-decoration: none">Kiểm tra hoặc kích hoạt bảo hành điện tử cho @Model.TenChiNhanh</a></h3>
+            <h3><a style="text-decoration:none">@Model.Ser_Levelchinhanh.Level_Name _ Khu vực: @Model.KhuVuc.TenKhuvuc </a></h3>
+            <div class="row" style="text-align:center">
+                <span style="font-size:15px" class="pull-right label label-warning">@Session["ThongbaoActiveDL"]</span>
+            </div>
+        </div>
+    }
 
     <div class="omb_login">
-        <h3 class="omb_authTitle "><a>Kiểm tra hoặc kích hoạt bảo hành điện tử cho @Session["thongtinDL"].</a></h3>
-
         <div class="row" style="text-align:center">
-            <span style="font-size:15px" class="pull-right label label-warning">@Session["ThongbaoActiveDL"]</span>
+            <span style="font-size:15px" class="pull-right label label-warning">@Session["ThongbaoActive"]</span>
+        </div>
+
+        @using (Html.BeginForm("Index", "Active", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            var ND = @ViewBag.ND;
+            var NPP = @ViewBag.NPP;
+            <div class="row omb_row-sm-offset-3">
+                <div class="col-xs-12 col-sm-6" style="padding-bottom:10px">
+                    <form class="omb_loginForm" action="" autocomplete="off" method="post">
+
+                        <div class="input-group" style="margin-bottom:5px">
+                            <span class="text-center text-primary-emphasis">_Để Kích hoạt bảo hành cần điền 2 số serial:</span>
+                            <span class="text-primary-emphasis"> * Một trên hộp(Box) và một trên sản phẩm(SP) *</span>
+                        </div>
+                        <div class="input-group" style="margin-bottom:5px">
+                            <span class="text-primary-emphasis">_Để kiểm tra thời gian bảo hành sản phẩm:</span>
+                            <span class="text-primary-emphasis"> * Chỉ cần 1 số serial trên sản phẩm(SP)*</span>
+                        </div>
+                        
+
+
+                        <div class="input-group" id="nhaphanphoi" style="height:85px;width:100%">
+                            
+                            @Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "width: 100%; height: 40px",@disabled=true })
+
+                        </div>
+                        <div class="input-group" id="Tenkhachhang" style="display: none; height: 85px ">
+                            <label>Họ và tên:</label>
+                            <input value="@ViewBag.Password" type="text" class="form-control" id="Tenkh" name="Tenkh" placeholder="Họ và Tên">
+                        </div>
+                        <p class="pull-right label label-warning" id="thongbaoSP"></p>
+                        <div class="input-group" style="margin-bottom:5px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input value="@ViewBag.Password" type="text" class="form-control" id="SerialSP" name="SerialSP" placeholder="S/N trên sản phẩm">
+                        </div>
+                        <p class="pull-right label label-warning" id="thongbaoBox"></p>
+                        <div class="input-group" style="margin-bottom:5px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-warning-sign"></i></span>
+                            <input value="@ViewBag.UserName" type="text" class="form-control" id="SerialBox" name="SerialBox" placeholder="S/N trên hộp">
+                        </div>
+                        <div class="input-group" style="margin-bottom:5px">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
+                            <input value="@Model.Gmail" type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail" required>
+                        </div>
+                        <div class="input-group" style="margin-bottom:10px">
+                            <span class="input-group-addon" style="margin-bottom:5px"><i class="glyphicon glyphicon-phone"></i></span>
+                            <input value="@Model.SDT" type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại" required>
+                        </div>
+                        <div class="input-group" style="margin-bottom:5px">
+                            <p class="pull-right label label-warning" style="font-size:15px" id="thongbaoActive"></p>
+                            <p class="pull-right label label-success" style="font-size:15px" id="thongbaoAcTC"></p>
+                        </div>
+                        <div id="ThongtinBH">
+                            <label class="col-md-12" id="tt1">@Session["thongtin1"]</label>
+                            <label class="col-md-12" id="tt2">@Session["thongtin2"]</label>
+                            <label class="col-md-12" id="tt3">@Session["thongtin3"]</label>
+                            <label class="col-md-12" id="tt4">@Session["thongtin4"]</label>
+                        </div>
+                        <span class="help-block">@Html.ValidationSummary(false, "", new { @class = "text-danger" })</span>
+                        <div class="col-md-6">
+                            <a class="btn btn-lg btn-primary btn-block" onclick="Kichhoatbh()"><span id="nameBH">Kíck hoạt BH </span> </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-lg btn-primary btn-block" onclick="kiemtrabh()"><span id="nameKT">Kiểm tra BH</span></a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        }
+    </div>
+</div>
+<div class="container" style="width:100%;background-color: white; margin-top: 80px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
+    <style>
+        .DaXoa {
+            color: red;
+        }
+
+        .NPP {
+            color: blue;
+        }
+    </style>
+    <h5><a style="text-decoration: none">Danh Sách S/N Đã Kích Hoạt bởi :@Model.TenChiNhanh</a></h5>
+    <div class="table-responsive">
+        <div class="listSerSPKHDaKH" style="max-height: 600px; overflow: auto">
+
+
         </div>
     </div>
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    LoadListKHBHbyChiNhanh();
+    function LoadListKHBHbyChiNhanh() {
+        $.ajax({
+            url: "/Active/GetListKHBHbyChiNhanh",
+            data: {},
+            success: function (response) {
+                $(".listSerSPKHDaKH").html(response);
+            }
+        });
+    }
+    function kiemtrabh() {
+        if (!confirm("Bạn là đại Lý? Bạn cần đăng nhập web để kiểm tra BH điện tử. Nếu chưa có thông tin đăng nhập, hãy liên hệ Admin TeK.")) {
+            return false;
+        } else {
+            window.location.href = "/Active/IndexDL"
+            @*//@Url.Action("LoginWebGuest", "Home")*@
+        }
+    }
+    function Kichhoatbh() {
+        var serialBox = $("#SerialBox").val()
+        var serialSP = $("#SerialSP").val()
+
+        var tenkh = $("#Tenkh").val()
+        var gmail = $("#Gmail").val()
+        var SDT = $("#SDT").val()
+        if (!confirm("Bạn muốn kích hoạt BH điện tử?")) {
+            return false;
+        } else {
+            $("#ThongtinBH").css('display', 'none')
+            var idChiNhanh = $("#IdChiNhanh").val()
+            tenkh = "";
+            if (serialBox.length == 0) {
+                alert("Bạn chưa điền số serial trên hộp !!!")
+            } else if (serialSP.length == 0) {
+                alert("Bạn chưa điền số serial trên sản phẩm !!!")
+            } else {
+                var postData = JSON.stringify({
+                    ND: true, NPP: false, Tenkh: tenkh, sBOX: serialBox
+                    , sSP: serialSP, IdChiNhanh: idChiNhanh, gmail: gmail, sdt: SDT
+                });
+                $.ajax({
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Active/KichHoatBaoHanh",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: postData,
+                    success: function (response) {
+                        if (response == "11") {
+                            $("#thongbaoBox").html("S/N không đúng, hoặc đã kích hoạt !!!")
+                        } else if (response == "22") {
+                            $("#thongbaoSP").html("S/N không đúng, hoặc đã kích hoạt !!!")
+                        } else if (response == "33") {
+                            $("#thongbaoActive").html("Có Lỗi Hệ Thống, Kích Hoạt không thành công !!!")
+                            $("#thongbaoBox").html("")
+                            $("#thongbaoSP").html("")
+                        } else if (response == "yes") {
+                            $("#thongbaoAcTC").html("Kích Hoạt thành công serial: " + serialSP + ", chúc mừng.")
+                            LoadListKHBHbyChiNhanh();
+                            //$("#thongbaoActive").html("")
+                            //$("#thongbaoBox").html("")
+                            //$("#thongbaoSP").html("")
+                            $("#SerialBox").val('')
+                            $("#SerialSP").val('')
+                            $("#SerialSP").focus()
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+</script>
 

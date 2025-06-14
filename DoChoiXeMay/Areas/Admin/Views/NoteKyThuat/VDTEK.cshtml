@@ -37,7 +37,7 @@
                     <tbody style="border: 2px solid black !important">
                         @foreach (DoChoiXeMay.Models.NoteKythuat Item in ViewBag.ViDeo)
                         {
-                            var str = DoChoiXeMay.Areas.Admin.Data.Xstring.Cutstring_getLastString(Item.NoiDung);
+                            var str = DoChoiXeMay.Areas.Admin.Data.XstringAdmin.Cutstring_getLastString(Item.NoiDung);
                             <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                                 <td>@Item.SavenhieuFile</td>
                                 <td>

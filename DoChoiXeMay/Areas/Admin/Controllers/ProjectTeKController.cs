@@ -233,7 +233,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         //duyệt ds mới, //Thêm mới ProjectTeK detail
                         if (lead != null && lead[0].Length > 4)
                         {
-                            leadid = Data.Xstring.Cutstring_getID(lead[0]);
+                            leadid = Data.XstringAdmin.Cutstring_getID(lead[0]);
                         }
                         for (int j = 0; j < ProjectDetail.Count(); j++)
                         {

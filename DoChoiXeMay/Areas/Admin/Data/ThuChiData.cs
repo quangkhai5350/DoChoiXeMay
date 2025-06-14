@@ -239,9 +239,9 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     var file1 = model.Filesave1;
                     var file2 = model.Filesave2;
                     var file3 = model.HoaDon;
-                    bool xoa1 = Xstring.Xoahinhcu("imgthuchi/", file1);
-                    bool xoa2 = Xstring.Xoahinhcu("imgthuchi/", file2);
-                    bool xoa3 = Xstring.Xoahinhcu("imgthuchi/", file3);
+                    bool xoa1 = XstringAdmin.Xoahinhcu("imgthuchi/", file1);
+                    bool xoa2 = XstringAdmin.Xoahinhcu("imgthuchi/", file2);
+                    bool xoa3 = XstringAdmin.Xoahinhcu("imgthuchi/", file3);
                     //Xóa hình thu chi củ
                     var ngay = model.NgayTC;
                     dbc.ChiTietTCs.Remove(model);

@@ -1,4 +1,5 @@
-﻿using DoChoiXeMay.Models;
+﻿using DoChoiXeMay.Filters;
+using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,11 +32,36 @@ namespace DoChoiXeMay.Controllers
                 .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh");
             return View();
         }
-        public ActionResult IndexDL(int idchinhanh)
+        [ProtectKH]
+        public ActionResult IndexDL()
         {
-            var chinhanh = dbc.Ser_ChiNhanh.Find(idchinhanh);
+            var chinhanh = dbc.Ser_ChiNhanh.Find(int.Parse(Session["idchinhanhAt"].ToString()));
             Session["thongtinDL"] = chinhanh.TenChiNhanh;
-            return View();
+            if (Session["ND"] == null && Session["NPP"] == null)
+            {
+                ViewBag.ND = "ND";
+                ViewBag.NPP = "NONPP";
+            }
+            else
+            {
+                ViewBag.ND = Session["ND"].ToString();
+                ViewBag.NPP = Session["NPP"].ToString();
+            }
+            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh
+                .OrderByDescending(kh => kh.IdLevel)
+                .ThenByDescending(kh => kh.Id)
+                .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh",chinhanh.Id);
+            return View(chinhanh);
+        }
+        [ProtectKH]
+        public ActionResult GetListKHBHbyChiNhanh()
+        {
+            var chinhanh = dbc.Ser_ChiNhanh.Find(int.Parse(Session["idchinhanhAt"].ToString()));
+            ViewBag.ListSerialKH = dbc.Ser_kichhoat.Where(kh => kh.IdChiNhanh == chinhanh.Id)
+                .OrderByDescending(kh => kh.NgayUpdate)
+                .ThenBy(kh => kh.TrangThaiId).ToList();
+            ViewBag.TotalSerialDaKH = dbc.Ser_kichhoat.Where(kh => kh.IdChiNhanh == chinhanh.Id).Count();
+            return PartialView(chinhanh);
         }
         public ActionResult IndexCheckBHND(string SerialSP)
         {
@@ -74,7 +100,7 @@ namespace DoChoiXeMay.Controllers
                 return Json("22", JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult KichHoatBaoHanh(bool ND,bool NPP, string Tenkh, string sBOX, string sSP, int IdChiNhanh, string gmail,string sdt) {
+        public ActionResult KichHoatBaoHanh(bool ND,bool NPP, string Tenkh = "", string sBOX="", string sSP="", int IdChiNhanh=0, string gmail = "",string sdt = "") {
             try
             {
                 Session["thongtin1"] = ""; Session["thongtin2"] = ""; 

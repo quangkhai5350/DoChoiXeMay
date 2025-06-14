@@ -27,7 +27,7 @@
             @foreach (DoChoiXeMay.Models.KyXuatNhap Item in ViewBag.KyXN)
             {
                 var Chitiet = new XuatNhapData().GetListByKy(Item.Id);
-                var tenky = Xstring.Truncate(Item.TenKy, 20);
+                var tenky = XstringAdmin.Truncate(Item.TenKy, 20);
                 <tr class="canhgiua" style="border: 2px solid black !important">
                     <td style="padding-top:40px">
                         @if (Item.UserId == int.Parse(Session["UserId"].ToString()))
@@ -183,7 +183,7 @@
                     <td>
                         @foreach (DoChoiXeMay.Models.ChitietXuatNhap ct in Chitiet)
                         {
-                            var tenHH = Xstring.Truncate(ct.Ten, 40);
+                            var tenHH = XstringAdmin.Truncate(ct.Ten, 40);
                             <p style="height:40px">
                                 <span style="float:left">
                                     @if (Item.UPush == true)

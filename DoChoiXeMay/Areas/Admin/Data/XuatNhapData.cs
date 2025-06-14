@@ -275,9 +275,9 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     {
                         var model = db.HangHoas.Find(modelhh.Id);
                         //Xoa hinh cu
-                        bool xoahinhcu1 = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh1);
-                        bool xoahinhcu2 = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh2);
-                        bool xoahinhcu3 = Xstring.Xoahinhcu("imgxuatnhap/", model.Hinh3);
+                        bool xoahinhcu1 = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh1);
+                        bool xoahinhcu2 = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh2);
+                        bool xoahinhcu3 = XstringAdmin.Xoahinhcu("imgxuatnhap/", model.Hinh3);
                         db.HangHoas.Remove(modelhh);
                         db.SaveChanges();
                         return true;

@@ -345,20 +345,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 if (file1.ContentLength>0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.HoaDon);
-                    XN.HoaDon = Xstring.saveFile(file1, "imgxuatnhap/");
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", XN.HoaDon);
+                    XN.HoaDon = XstringAdmin.saveFile(file1, "imgxuatnhap/");
                 }
                 if (file2.ContentLength > 0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.Filesave2);
-                    XN.Filesave2 = Xstring.saveFile(file2, "imgxuatnhap/");
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", XN.Filesave2);
+                    XN.Filesave2 = XstringAdmin.saveFile(file2, "imgxuatnhap/");
                 }
                 if (file3.ContentLength > 0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu = Xstring.Xoahinhcu("imgxuatnhap/", XN.Filesave3);
-                    XN.Filesave3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                    bool xoahinhcu = XstringAdmin.Xoahinhcu("imgxuatnhap/", XN.Filesave3);
+                    XN.Filesave3 = XstringAdmin.saveFile(file3, "imgxuatnhap/");
                 }
                 XN.NgayAuto = DateTime.Now;
                 //Tính lại Tổng tiền
@@ -421,9 +421,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var file1 = Request.Files["HoaDon"];
                 var file2 = Request.Files["Filesave2"];
                 var file3 = Request.Files["Filesave3"];
-                var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
-                var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
-                var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                var ten1 = XstringAdmin.saveFile(file1, "imgxuatnhap/");
+                var ten2 = XstringAdmin.saveFile(file2, "imgxuatnhap/");
+                var ten3 = XstringAdmin.saveFile(file3, "imgxuatnhap/");
 
                 model.HoaDon = ten1;
                 model.Filesave2 = ten2;
@@ -494,9 +494,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var file1 = Request.Files["Hinh1"];
                     var file2 = Request.Files["Hinh2"];
                     var file3 = Request.Files["Hinh3"];
-                    var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
-                    var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
-                    var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                    var ten1 = XstringAdmin.saveFile(file1, "imgxuatnhap/");
+                    var ten2 = XstringAdmin.saveFile(file2, "imgxuatnhap/");
+                    var ten3 = XstringAdmin.saveFile(file3, "imgxuatnhap/");
                     model.Hinh1 = ten1;
                     model.Hinh2 = ten2;
                     model.Hinh3 = ten3;
@@ -516,9 +516,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                             var file1 = Request.Files["Hinh1"];
                             var file2 = Request.Files["Hinh2"];
                             var file3 = Request.Files["Hinh3"];
-                            var ten1 = Xstring.saveFile(file1, "imgxuatnhap/");
-                            var ten2 = Xstring.saveFile(file2, "imgxuatnhap/");
-                            var ten3 = Xstring.saveFile(file3, "imgxuatnhap/");
+                            var ten1 = XstringAdmin.saveFile(file1, "imgxuatnhap/");
+                            var ten2 = XstringAdmin.saveFile(file2, "imgxuatnhap/");
+                            var ten3 = XstringAdmin.saveFile(file3, "imgxuatnhap/");
                             model.Hinh1 = ten1;
                             model.Hinh2 = ten2;
                             model.Hinh3 = ten3;
@@ -582,9 +582,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 if (kq > 0)
                 {
                     //Xoa hinh cu
-                    bool xoahinhcu1 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh1);
-                    bool xoahinhcu2 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh2);
-                    bool xoahinhcu3 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh3);
+                    bool xoahinhcu1 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhinh1);
+                    bool xoahinhcu2 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhinh2);
+                    bool xoahinhcu3 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhinh3);
                     
                     KyXuatNhap XN = dbc.KyXuatNhaps.Find(idky);
                     //update tổng tiền
@@ -621,9 +621,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var tenhinh1 = model.HoaDon;
                 var tenhinh2 = model.Filesave2;
                 var tenhinh3 = model.Filesave3;
-                bool xoahinhcu1 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh1);
-                bool xoahinhcu2 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh2);
-                bool xoahinhcu3 = Xstring.Xoahinhcu("imgxuatnhap/", tenhinh3);
+                bool xoahinhcu1 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhinh1);
+                bool xoahinhcu2 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhinh2);
+                bool xoahinhcu3 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhinh3);
                 //Xoa hinh chitietXN củ
                 var chitietXNbyky = dbc.ChitietXuatNhaps.Where(kh => kh.IdKy == id).ToList();
                 for(int i = 0; i < chitietXNbyky.Count(); i++)
@@ -631,9 +631,9 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     var tenhct1 = chitietXNbyky[i].Hinh1;
                     var tenhct2 = chitietXNbyky[i].Hinh2;
                     var tenhct3 = chitietXNbyky[i].Hinh3;
-                    bool xoa1 = Xstring.Xoahinhcu("imgxuatnhap/", tenhct1);
-                    bool xoa2 = Xstring.Xoahinhcu("imgxuatnhap/", tenhct2);
-                    bool xoa3 = Xstring.Xoahinhcu("imgxuatnhap/", tenhct3);
+                    bool xoa1 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhct1);
+                    bool xoa2 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhct2);
+                    bool xoa3 = XstringAdmin.Xoahinhcu("imgxuatnhap/", tenhct3);
                 }
                 var tenky=model.TenKy;
                 var ngayky = model.NgayXuatNhap;
