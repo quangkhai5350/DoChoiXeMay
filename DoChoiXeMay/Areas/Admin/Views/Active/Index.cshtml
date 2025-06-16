@@ -15,13 +15,21 @@
     <div class="panel panel-default" style="margin-top:10px">
         <div class="panel-heading">
             <div class="row">
-                
+
                 <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                     @Session["ThongBaoListDaActive"]
                 </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <input type="text" class="form-control input-sm pull-right" style="margin-top: 10px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo Số Serial hoặc Khu Vực." />
+                    </div>
+                    <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
+                        @Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "margin-top: 10px;width: 75%; height: 40px" })
+                    </div>
+                </div>
             </div>
 
-        </div>
+            </div>
         <div class="panel-body">
             @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
             <div class="listDaAC">
@@ -29,18 +37,111 @@
 
             </div>
         </div>
+        <div class="panel-footer">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="TongSanPham"></span>
+                </div>
+                <div class="col-md-4" style="text-align: center">
+                    <span class="TongSanPhamAC"></span>
+                </div>
+                <div class="col-md-4" style="text-align: right">
+                    <span class="TongSanPham"></span>
+                </div>
+            </div>
+
+
+                <ul class="pager">
+                    <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+                </ul>
+
+            </div>
     </div>
 </div>
 <script>
-    LoadPage();
-    function LoadPage() {
+    $(function () {
+        pageNo = 0;
+        pageSize = 10;
+        TongSP = 0;
+        var IdCN = $('#IdChiNhanh').val();
+        getTongSanPham(pageSize, pageNo, IdCN);
+        getTongSanPhamAC(IdCN);
+
+        $(".pager a:eq(0)").click(function () {
+            if (pageNo > 0) {
+                pageNo = 0;
+                IdCN = $('#IdChiNhanh').val();
+                LoadPage(pageNo, pageSize, IdCN);
+            }
+            return false;
+        });
+        $(".pager a:eq(1)").click(function () {
+            if (pageNo > 0) {
+                pageNo--;
+                IdCN = $('#IdChiNhanh').val();
+                LoadPage(pageNo, pageSize, IdCN);
+            }
+            return false;
+        });
+        $(".pager a:eq(2)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo++;
+                IdCN = $('#IdChiNhanh').val();
+                LoadPage(pageNo, pageSize, IdCN);
+            }
+            return false;
+        });
+
+        $(".pager a:eq(3)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo = pageCount - 1;
+                IdCN = $('#IdChiNhanh').val();
+                LoadPage(pageNo, pageSize, IdCN);
+            }
+            return false
+        });
+        $("#IdChiNhanh").change(function () {
+            pageNo = 0;
+            pageSize = 10;
+            TongSP = 0;
+            IdCN = $('#IdChiNhanh').val();
+            //KeywordsTTT = $('#KeywordsTT').val();
+                getTongSanPham(pageSize, pageNo, IdCN);
+        });
+    });
+    //LoadPage();
+    function LoadPage(pageNo, pageSize, IdCN) {
         $.ajax({
             url: "/Admin/Active/GetListDaActive",
-            data: {  },
+            data: { PageNo: pageNo, PageSize: pageSize, IdCN: IdCN },
             success: function (respone) {
                 $(".listDaAC").html(respone);
-                //var pagesp = pageNo + 1;
-                //$('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+                var pagesp = pageNo + 1;
+                $('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
+            }
+        });
+    };
+    function getTongSanPham(pageSize, pageNo, IdCN) {
+        $.ajax({
+            url: "/Admin/Active/GetPageCountActive",
+            data: { PageSize: pageSize, IdCN: IdCN },
+            success: function (respone) {
+                pageCount = respone;
+                TongSP = respone;
+                LoadPage(pageNo, pageSize, IdCN);
+            }
+        });
+    };
+    function getTongSanPhamAC(IdCN) {
+        $.ajax({
+            url: "/Admin/Active/GetTongSanPhamAC",
+            data: { IdCN: IdCN },
+            success: function (respone) {
+                $('.TongSanPhamAC').html('Tổng: '+respone+' S/N');
             }
         });
     };

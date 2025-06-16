@@ -2,6 +2,7 @@
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,21 +17,30 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult Index()
         {
             Session["requestUri"] = "/Admin/Active/Index";
-            var model = dbc.Ser_kichhoat
-                .OrderByDescending(kh => kh.NgayUpdate)
-                .OrderByDescending(kh => kh.IdChiNhanh)
-                .OrderBy(kh => kh.TrangThaiId).ToList();
-            ViewBag.TotalSerialKH = model.Count();
+            //var model = dbc.Ser_kichhoat
+            //    .OrderByDescending(kh => kh.NgayUpdate)
+            //    .ThenByDescending(kh => kh.IdChiNhanh)
+            //    .ThenBy(kh => kh.TrangThaiId).ToList();
+            //ViewBag.TotalSerialKH = model.Count();
+            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.OrderBy(kh=>kh.Id), "Id", "TenChiNhanh");
             return View();
         }
-        public ActionResult GetListDaActive()
+        
+        public ActionResult GetListDaActive(int PageNo = 0, int PageSize = 8, int IdCN=0)
         {
-            var model = dbc.Ser_kichhoat
-                .OrderByDescending(kh=>kh.IdChiNhanh)
-                .ThenByDescending(kh => kh.NgayUpdate)
-                .ThenBy(kh => kh.TrangThaiId).ToList();
+            var model = new Data.ActiveData().getSNACTek(PageNo, PageSize, IdCN);
             ViewBag.ListSerialKH = model;
             return PartialView(model);
+        }
+        public ActionResult GetPageCountActive(int PageSize = 20, int IdCN=0) {
+            var num = new Data.ActiveData().GetPageCountACTek(IdCN);
+            var pageCount = Math.Ceiling(1.0 * num / PageSize);
+            return Json(pageCount, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetTongSanPhamAC(int IdCN)
+        {
+            var num = new Data.ActiveData().GetPageCountACTek(IdCN);
+            return Json(num, JsonRequestBehavior.AllowGet);
         }
     }
 }

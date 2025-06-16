@@ -12,6 +12,57 @@ namespace DoChoiXeMay.Areas.Admin.Data
         public ActiveData() { 
             _context = new Model1();
         }
+        public List<Ser_kichhoat> getSNACTek(int Sec, int pageSize, int IdCN)
+        {
+            List<Ser_kichhoat> model1 = new List<Ser_kichhoat>();
+            if(IdCN == 0)
+            {
+                model1 = _context.Ser_kichhoat
+                    .OrderByDescending(kh => kh.NgayUpdate)
+                    .ThenByDescending(kh => kh.IdChiNhanh)
+                    .ThenBy(kh => kh.TrangThaiId)
+                    .Skip(Sec * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+            }
+            else
+            {
+                model1 = _context.Ser_kichhoat.Where(kh => kh.IdChiNhanh == IdCN)
+                    .OrderByDescending(kh => kh.NgayUpdate)
+                    .ThenByDescending(kh => kh.IdChiNhanh)
+                    .ThenBy(kh => kh.TrangThaiId)
+                    .Skip(Sec * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+            }
+            
+
+            //for (int i = 0; i < model1.Count(); i++)
+            //{
+            //    model1[i].STT = (i + 1).ToString();
+            //}
+
+            //model1 = model1
+            //    .OrderByDescending(kh => kh.NgayAuto)
+            //    .Skip(Sec * pageSize)
+            //                .Take(pageSize)
+            //                .ToList();
+            return model1;
+        }
+        public int GetPageCountACTek(int IdCN)
+        {
+            var model1 = 0;
+            if (IdCN==0)
+            {
+                model1 = _context.Ser_kichhoat.Count();
+            }
+            else
+            {
+                model1 = _context.Ser_kichhoat.Where(kh => kh.IdChiNhanh == IdCN).Count();
+            }
+            
+            return model1;
+        }
         public bool InsertKichHoatBH(bool ND, string IdBox, string IdSP,int chinhanh,string email, string tenkh,string sdt)
         {
             try
