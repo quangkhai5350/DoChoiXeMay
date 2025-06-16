@@ -26,7 +26,7 @@ namespace DoChoiXeMay.Controllers
                 ViewBag.ND = Session["ND"].ToString();
                 ViewBag.NPP = Session["NPP"].ToString();
             }
-            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh
+            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh=>kh.Id>1)
                 .OrderByDescending(kh=>kh.IdLevel)
                 .ThenByDescending(kh=>kh.Id)
                 .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh");
