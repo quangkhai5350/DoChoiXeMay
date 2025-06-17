@@ -1,4 +1,5 @@
-﻿
+﻿@using DoChoiXeMay.Models
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,11 +50,25 @@
                         </div>
 
 
-                        <div class="input-group" id="nhaphanphoi" style="display: none;height:85px">
+                        <div class="input-group" id="nhaphanphoi" style="display: none;width:100%;height:50px">
                             <label>Bạn là nhà phân phối nào?</label>
-                            @Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "width: 100%; height: 40px" })
+                            @*@Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "width: 100%; height: 40px" })*@
+                            <input id="IdChiNhanh" onchange="LoadChiNhanh()" list="ChiNhanh" name="ChiNhanh" />
+                            <datalist id="ChiNhanh">
+                                @foreach (Ser_ChiNhanh item in ViewBag.ChiNhanh)
+                                {
+                                    <option value="@item.TenChiNhanh"></option>
+                                }
 
+                            </datalist>
                         </div>
+                        <div class="input-group" id="GGmail" style="display: none">
+                            <input value="@ViewBag.Password" disabled type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail NPP" required>
+                        </div>
+                        <div class="input-group" id="GSDT" style="display: none; margin-bottom: 110px">
+                            <input value="@ViewBag.Password" disabled type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại NPP" required>
+                        </div>
+
                         <div class="input-group" id="Tenkhachhang" style="display: none; height: 85px ">
                             <label>Họ và tên:</label>
                             <input value="@ViewBag.Password" type="text" class="form-control" id="Tenkh" name="Tenkh" placeholder="Họ và Tên">
@@ -70,11 +85,11 @@
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
-                            <input value="@ViewBag.Password" type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail" required>
+                            <input value="@ViewBag.Password" type="email" class="form-control" id="GmailND" name="GmailND" placeholder="Gmail Người Dùng" required>
                         </div>
                         <div class="input-group" style="margin-bottom:10px">
                             <span class="input-group-addon" style="margin-bottom:5px"><i class="glyphicon glyphicon-phone"></i></span>
-                            <input value="@ViewBag.Password" type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại" required>
+                            <input value="@ViewBag.Password" type="text" class="form-control" id="SDTND" name="SDTND" placeholder="Số điện thoại Người Dùng" required>
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <p class="pull-right label label-warning" style="font-size:15px" id="thongbaoActive"></p>
@@ -108,6 +123,7 @@
 <script>
     onLoad();
     function onLoad() {
+
         var ll = $("#ND").val();
         if (ll == "ND") {
             $("#ND").prop("checked", true);
@@ -274,32 +290,49 @@
                 $("#Tenkhachhang").css('display', 'none');
                 $("#nameBH").html("Kíck hoạt BH NPP");
                 $("#nameKT").html("Kiểm tra BH NPP");
+                LoadChiNhanh();
             } else {
                 $("#ThongtinBH").css('display', 'block');
                 $("#nhaphanphoi").css('display', 'none');
                 $("#Tenkhachhang").css('display', 'block');
                 $("#nameBH").html("Kíck hoạt BH ND");
                 $("#nameKT").html("Kiểm tra BH ND");
+                $("#GGmail").css('display', 'none');
+                $("#GSDT").css('display', 'none');
             }
 
         }
     });
-    $('#IdChiNhanh').change(function () {
+
+    function LoadChiNhanh() {
         var idChiNhanh = $('#IdChiNhanh').val();
-        $.ajax({
-            //url: "/Active/GetChitietNPP", // we are calling json method
-            url:'@Url.Action("GetChitietNPP", "Active")',
-            dataType: 'json',
-            type: 'GET',
-            data: { NPP: idChiNhanh },
-            success: function (data) {
-                const myArray = data.split('/');
-                $("#Gmail").val(myArray[1])
-                $("#SDT").val(myArray[0])
-            },
-            error: function (ex) {
-                alert('Lỗi load Chi Nhánh: ' + ex);
-            }
-        });
-    });
+        if (idChiNhanh.trim() != "") {
+            $.ajax({
+                //url: "/Active/GetChitietNPP", // we are calling json method
+                url:'@Url.Action("GetChitietNPP", "Active")',
+                dataType: 'json',
+                type: 'GET',
+                data: { NPP: idChiNhanh },
+                success: function (data) {
+                    if (data != "No") {
+                        const myArray = data.split('/');
+                        $("#GGmail").css('display', 'block');
+                        $("#GSDT").css('display', 'block');
+                        $("#Gmail").val(myArray[1])
+                        $("#SDT").val(myArray[0])
+                    } else {
+                        $("#Gmail").val('')
+                        $("#SDT").val('')
+                        $("#GGmail").css('display', 'none');
+                        $("#GSDT").css('display', 'none');
+                        alert("Tên đại lý / NPP không đúng !!!.")
+                    }
+                },
+                error: function (ex) {
+                    alert('Lỗi load Chi Nhánh: ' + ex);
+                }
+            });
+        }
+
+    }
 </script>

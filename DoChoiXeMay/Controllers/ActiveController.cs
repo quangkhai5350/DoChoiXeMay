@@ -26,10 +26,14 @@ namespace DoChoiXeMay.Controllers
                 ViewBag.ND = Session["ND"].ToString();
                 ViewBag.NPP = Session["NPP"].ToString();
             }
-            ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh=>kh.Id>1)
-                .OrderByDescending(kh=>kh.IdLevel)
-                .ThenByDescending(kh=>kh.Id)
-                .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh");
+            //ViewBag.IdChiNhanh = new SelectList(dbc.Ser_ChiNhanh.Where(kh=>kh.Id>1)
+            //    .OrderByDescending(kh=>kh.IdLevel)
+            //    .ThenByDescending(kh=>kh.Id)
+            //    .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh");
+            ViewBag.ChiNhanh = dbc.Ser_ChiNhanh.Where(kh => kh.Id > 1)
+                                .OrderByDescending(kh => kh.IdLevel)
+                                .ThenByDescending(kh => kh.Id)
+                                .ToList();  
             return View();
         }
         [ProtectKH]
@@ -169,13 +173,16 @@ namespace DoChoiXeMay.Controllers
                 return Json("33", JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult GetChitietNPP(int NPP=0)
+        public ActionResult GetChitietNPP(string NPP="")
         {
             try
             {
-                var daily = dbc.Ser_ChiNhanh.Find(NPP);
-                var kq = daily.SDT + "/" + daily.Gmail;
-                return Json( kq, JsonRequestBehavior.AllowGet);
+                var daily = dbc.Ser_ChiNhanh.FirstOrDefault(kh=>kh.TenChiNhanh==NPP);
+                if (daily != null) {
+                    var kq = daily.SDT + "/" + daily.Gmail;
+                    return Json(kq, JsonRequestBehavior.AllowGet);
+                }
+                return Json("No", JsonRequestBehavior.AllowGet);
             }
             catch (Exception exc)
             {
