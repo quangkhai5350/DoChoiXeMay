@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="input-group" id="Tenkhachhang" style="display: none; height: 85px ">
-                            <label>Họ và tên:</label>
+                            <label>Họ và tên người dùng:</label>
                             <input value="@ViewBag.Password" type="text" class="form-control" id="Tenkh" name="Tenkh" placeholder="Họ và Tên">
                         </div>
                         <p class="pull-right label label-warning" id="thongbaoSP"></p>
@@ -90,6 +90,10 @@
                         <div class="input-group" style="margin-bottom:10px">
                             <span class="input-group-addon" style="margin-bottom:5px"><i class="glyphicon glyphicon-phone"></i></span>
                             <input value="@ViewBag.Password" type="text" class="form-control" id="SDTND" name="SDTND" placeholder="Số điện thoại Người Dùng" required>
+                        </div>
+                        <div class="input-group" style="margin-bottom:10px">
+                            <span class="input-group-addon" style="">Khu Vực Người Dùng</span>
+                            @Html.DropDownList("KhuVuc", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <p class="pull-right label label-warning" style="font-size:15px" id="thongbaoActive"></p>
@@ -182,28 +186,30 @@
         var serialSP = $("#SerialSP").val()
 
         var tenkh = $("#Tenkh").val()
-        var gmail = $("#Gmail").val()
-        var SDT = $("#SDT").val()
+        var gmailND = $("#GmailND").val()
+        var SDTND = $("#SDTND").val()
+        var idChiNhanh = $("#IdChiNhanh").val()
+        var tenkhu = $("#KhuVuc option:selected").text()
         if ($("#ND").is(":checked")) {
             if (!confirm("Bạn là người dùng? Bạn muốn kích hoạt BH điện tử?")) {
                 return false;
             } else {
                 $("#ThongtinBH").css('display', 'none')
-                var idChiNhanh = 1
+                idChiNhanh = "1"
                 if (serialBox.length == 0) {
                     alert("Bạn chưa điền số serial trên hộp !!!")
                 } else if (serialSP.length == 0) {
                     alert("Bạn chưa điền số serial trên sản phẩm !!!")
                 } else if (tenkh.length == 0) {
                     alert("Bạn chưa điền Tên của mình !!!")
-                } else if (gmail.length == 0) {
+                } else if (gmailND.length == 0) {
                     alert("Bạn chưa điền gmail của mình !!!")
-                } else if (SDT.length == 0) {
+                } else if (SDTND.length == 0) {
                     alert("Bạn chưa điền sdt của mình !!!")
                 } else {
                     var postData = JSON.stringify({
                         ND: true, NPP: false, Tenkh: tenkh, sBOX: serialBox
-                        , sSP: serialSP, IdChiNhanh: idChiNhanh, gmail: gmail, sdt: SDT
+                        , sSP: serialSP, ChiNhanh: idChiNhanh, gmail: gmailND, sdt: SDTND, khuvuc: tenkhu
                     });
                     $.ajax({
                         contentType: "application/json; charset=utf-8",
@@ -231,23 +237,28 @@
                 }
             }
         } else if ($("#NPP").is(":checked")) {
-            if (!confirm("Bạn là Nhà phân phối/đại lý? Bạn muốn kích hoạt BH điện tử?")) {
+            if (!confirm("Bạn là Nhà phân phối/đại lý? Bạn muốn kích hoạt BH điện tử cho người dùng khu vực: " + tenkhu+" ???")) {
                 return false;
             } else {
-                if ($("#IdChiNhanh").val() == 1) {
+                if ($("#IdChiNhanh").val() == "") {
                     alert("Bạn Chưa Chọn Đại Lý !!!")
                 } else {
                     $("#ThongtinBH").css('display', 'none')
-                    var idChiNhanh = $("#IdChiNhanh").val()
-                    tenkh = "";
                     if (serialBox.length == 0) {
                         alert("Bạn chưa điền số serial trên hộp !!!")
                     } else if (serialSP.length == 0) {
                         alert("Bạn chưa điền số serial trên sản phẩm !!!")
-                    } else {
+                    } else if (tenkh.length == 0) {
+                        alert("Bạn chưa điền Tên người dùng !!!")
+                    } else if (gmailND.length == 0) {
+                        alert("Bạn chưa điền gmail người dùng !!!")
+                    } else if (SDTND.length == 0) {
+                        alert("Bạn chưa điền sdt của người dùng !!!")
+                    } 
+                    else {
                         var postData = JSON.stringify({
-                            ND: true, NPP: false, Tenkh: tenkh, sBOX: serialBox
-                            , sSP: serialSP, IdChiNhanh: idChiNhanh, gmail: gmail, sdt: SDT
+                            ND: false, NPP: true, Tenkh: tenkh, sBOX: serialBox
+                            , sSP: serialSP, ChiNhanh: idChiNhanh, gmail: gmailND, sdt: SDTND, khuvuc: tenkhu
                         });
                         $.ajax({
                             contentType: "application/json; charset=utf-8",
@@ -264,7 +275,10 @@
                                     $("#thongbaoActive").html("Có Lỗi Hệ Thống, Kích Hoạt không thành công !!!")
                                     $("#thongbaoBox").html("")
                                     $("#thongbaoSP").html("")
-                                } else if (response == "yes") {
+                                } else if (response == "44") {
+                                    $("#thongbaoActive").html("Tên của đại lý/NPP không đúng, không thể kích hoạt !!!")
+                                }
+                                else if (response == "yes") {
                                     $("#thongbaoAcTC").html("Kích Hoạt thành công serial: " + serialSP + ", chúc mừng.")
                                     $("#thongbaoActive").html("")
                                     $("#thongbaoBox").html("")
@@ -287,7 +301,7 @@
             if (tk == "NPP") {
                 $("#ThongtinBH").css('display', 'none');
                 $("#nhaphanphoi").css('display', 'block');
-                $("#Tenkhachhang").css('display', 'none');
+                $("#Tenkhachhang").css('display', 'block');
                 $("#nameBH").html("Kíck hoạt BH NPP");
                 $("#nameKT").html("Kiểm tra BH NPP");
                 LoadChiNhanh();

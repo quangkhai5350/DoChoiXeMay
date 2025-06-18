@@ -16,8 +16,9 @@
                 <th class="canhgiua">Ngày Active</th>
                 <th class="canhgiua">Serial Box</th>
                 <th class="canhgiua">Serial SP</th>
-                <th class="canhgiua">Email</th>
-                <th class="canhgiua">KhuVực/Tên</th>
+                <th class="canhgiua">Email ND</th>
+                <th class="canhgiua">KhuVực ND</th>
+                <th class="canhgiua">Tên ND</th>
                 <th class="canhgiua">SDT</th>
                 <th class="canhgiua">Chi Nhánh</th>
                 <th class="canhgiua">Trạng Thái</th>
@@ -41,18 +42,10 @@
                             @Item.EmailKichHoat
                         </td>
                         <td>
-                            @if (chinhanh == null)
-                            {
-                                <span class="DaXoa">Đã Xóa</span>
-                            }
-                            else if (chinhanh.Id == 1)
-                            {
-                                @Item.TenKhachHang
-                            }
-                            else
-                            {
-                                <span class="NPP">KV:@chinhanh.KhuVuc.TenKhuvuc</span>
-                            }
+                            <span class="">KV:@Item.DiaChiKhach</span>
+                        </td>
+                        <td>
+                            @Item.TenKhachHang
                         </td>
                         <td>
                             @Item.SDT
@@ -85,12 +78,12 @@
                             }
                         </td>
                         @*<td>
-                                @if (Session["quyen"].ToString() != "Guest")
-                                {
-                                    <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateChiNhanh/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.TenChiNhanh ??')" href="/Admin/DanhMuc/DeleteChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
-                                }
-                            </td>*@
+            @if (Session["quyen"].ToString() != "Guest")
+            {
+                <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateChiNhanh/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.TenChiNhanh ??')" href="/Admin/DanhMuc/DeleteChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+            }
+        </td>*@
                     </tr>
 
                 }

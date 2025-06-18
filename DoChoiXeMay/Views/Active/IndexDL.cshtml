@@ -42,16 +42,16 @@
                             <span class="text-primary-emphasis">_Để kiểm tra thời gian bảo hành sản phẩm:</span>
                             <span class="text-primary-emphasis"> * Chỉ cần 1 số serial trên sản phẩm(SP)*</span>
                         </div>
-                        
+
 
 
                         <div class="input-group" id="nhaphanphoi" style="height:85px;width:100%">
-                            
-                            @Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "width: 100%; height: 40px",@disabled=true })
+
+                            @Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "width: 100%; height: 40px", @disabled = true })
 
                         </div>
-                        <div class="input-group" id="Tenkhachhang" style="display: none; height: 85px ">
-                            <label>Họ và tên:</label>
+                        <div class="input-group" id="Tenkhachhang" style="height: 85px ">
+                            <label>Họ và tên người dùng:</label>
                             <input value="@ViewBag.Password" type="text" class="form-control" id="Tenkh" name="Tenkh" placeholder="Họ và Tên">
                         </div>
                         <p class="pull-right label label-warning" id="thongbaoSP"></p>
@@ -66,11 +66,15 @@
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
-                            <input value="@Model.Gmail" type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail" required>
+                            <input value="" type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail người dùng" required>
                         </div>
                         <div class="input-group" style="margin-bottom:10px">
                             <span class="input-group-addon" style="margin-bottom:5px"><i class="glyphicon glyphicon-phone"></i></span>
-                            <input value="@Model.SDT" type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại" required>
+                            <input value="" type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại người dùng" required>
+                        </div>
+                        <div class="input-group" style="margin-bottom:10px">
+                            <span class="input-group-addon" style="">Khu Vực Người Dùng</span>
+                            @Html.DropDownList("KhuVuc", null, new { @class = "form-control", style = "width: 75%; height: 40px" })
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <p class="pull-right label label-warning" style="font-size:15px" id="thongbaoActive"></p>
@@ -144,20 +148,28 @@
         var tenkh = $("#Tenkh").val()
         var gmail = $("#Gmail").val()
         var SDT = $("#SDT").val()
-        if (!confirm("Bạn muốn kích hoạt BH điện tử?")) {
+        var idChiNhanh = $("#IdChiNhanh option:selected").text()
+        var tenkhu = $("#KhuVuc option:selected").text()
+        if (!confirm("Bạn muốn kích hoạt BH điện tử cho người dùng khu vực: " + tenkhu+" ???")) {
             return false;
         } else {
             $("#ThongtinBH").css('display', 'none')
-            var idChiNhanh = $("#IdChiNhanh").val()
-            tenkh = "";
+            
             if (serialBox.length == 0) {
                 alert("Bạn chưa điền số serial trên hộp !!!")
             } else if (serialSP.length == 0) {
                 alert("Bạn chưa điền số serial trên sản phẩm !!!")
-            } else {
+            } else if (tenkh.length == 0) {
+                alert("Bạn chưa điền Tên người dùng !!!")
+            } else if (gmail.length == 0) {
+                alert("Bạn chưa điền gmail người dùng !!!")
+            } else if (SDT.length == 0) {
+                alert("Bạn chưa điền sdt người dùng !!!")
+            } 
+            else {
                 var postData = JSON.stringify({
-                    ND: true, NPP: false, Tenkh: tenkh, sBOX: serialBox
-                    , sSP: serialSP, IdChiNhanh: idChiNhanh, gmail: gmail, sdt: SDT
+                    ND: false, NPP: true, Tenkh: tenkh, sBOX: serialBox
+                    , sSP: serialSP, ChiNhanh: idChiNhanh, gmail: gmail, sdt: SDT, khuvuc: tenkhu
                 });
                 $.ajax({
                     contentType: "application/json; charset=utf-8",
@@ -177,9 +189,7 @@
                         } else if (response == "yes") {
                             $("#thongbaoAcTC").html("Kích Hoạt thành công serial: " + serialSP + ", chúc mừng.")
                             LoadListKHBHbyChiNhanh();
-                            //$("#thongbaoActive").html("")
-                            //$("#thongbaoBox").html("")
-                            //$("#thongbaoSP").html("")
+
                             $("#SerialBox").val('')
                             $("#SerialSP").val('')
                             $("#SerialSP").focus()

@@ -33,7 +33,8 @@ namespace DoChoiXeMay.Controllers
             ViewBag.ChiNhanh = dbc.Ser_ChiNhanh.Where(kh => kh.Id > 1)
                                 .OrderByDescending(kh => kh.IdLevel)
                                 .ThenByDescending(kh => kh.Id)
-                                .ToList();  
+                                .ToList();
+            ViewBag.KhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc");
             return View();
         }
         [ProtectKH]
@@ -55,6 +56,7 @@ namespace DoChoiXeMay.Controllers
                 .OrderByDescending(kh => kh.IdLevel)
                 .ThenByDescending(kh => kh.Id)
                 .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh",chinhanh.Id);
+            ViewBag.KhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc");
             return View(chinhanh);
         }
         [ProtectKH]
@@ -104,66 +106,76 @@ namespace DoChoiXeMay.Controllers
                 return Json("22", JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult KichHoatBaoHanh(bool ND,bool NPP, string Tenkh = "", string sBOX="", string sSP="", int IdChiNhanh=0, string gmail = "",string sdt = "") {
+        public ActionResult KichHoatBaoHanh(bool ND,bool NPP, string Tenkh = "", string sBOX="", string sSP="", string ChiNhanh="", string gmail = "",string sdt = "",string khuvuc="") {
             try
             {
                 Session["thongtin1"] = ""; Session["thongtin2"] = ""; 
                 Session["thongtin3"] = ""; Session["thongtin4"] = ""; Session["ThongbaoActive"] = "";
                 var serial = dbc.Ser_sp.FirstOrDefault(kh => kh.SerialSP == sSP && kh.DaIn == true && kh.Sudung == false);
                 var serialb = dbc.Ser_box.FirstOrDefault(kh => kh.Serial == sBOX && kh.DaIn == true && kh.Sudung == false);
+                var tenchinhanh = dbc.Ser_ChiNhanh.FirstOrDefault(x => x.TenChiNhanh == ChiNhanh.Trim());
                 if (ND)
                 {
-                    if (serial != null)
-                    {
-                        if (serialb != null)
+                        if (serial != null)
                         {
-                            var Ac = new Areas.Admin.Data.ActiveData().InsertKichHoatBH(true,
-                                serialb.Id.ToString(), serial.Id.ToString(), IdChiNhanh, gmail, Tenkh, sdt);
-                            if (Ac)
+                            if (serialb != null)
                             {
-                                var kqBox = new Areas.Admin.Data.SerialData().UpdateSer_box(serialb.Id.ToString(),
-                                    true, true, serialb.NgayUpdate, "Active");
-                                var kqSP = new Areas.Admin.Data.SerialData().UpdateSer_SP(serial.Id.ToString(),
-                                    true, true, serial.NgayUpdate, serial.HangTangKhongBan);
-                                return Json("yes", JsonRequestBehavior.AllowGet);
+                                var Ac = new Areas.Admin.Data.ActiveData().InsertKichHoatBH(
+                                    serialb.Id.ToString(), serial.Id.ToString(), 1, gmail, Tenkh, sdt, khuvuc);
+                                if (Ac)
+                                {
+                                    var kqBox = new Areas.Admin.Data.SerialData().UpdateSer_box(serialb.Id.ToString(),
+                                        true, true, serialb.NgayUpdate, "Active");
+                                    var kqSP = new Areas.Admin.Data.SerialData().UpdateSer_SP(serial.Id.ToString(),
+                                        true, true, serial.NgayUpdate, serial.HangTangKhongBan);
+                                    return Json("yes", JsonRequestBehavior.AllowGet);
+                                }
+                            }
+                            else
+                            {
+                                return Json("11", JsonRequestBehavior.AllowGet);
                             }
                         }
                         else
                         {
-                            return Json("11", JsonRequestBehavior.AllowGet);
+                            return Json("22", JsonRequestBehavior.AllowGet);
                         }
-                    }
-                    else
-                    {
-                        return Json("22", JsonRequestBehavior.AllowGet);
-                    }
+                    
                 }else if (NPP)
                 {
-                    if (serial != null)
+                    if (tenchinhanh != null)
                     {
-                        if (serialb != null)
+                        if (serial != null)
                         {
-                            var chinhanh = dbc.Ser_ChiNhanh.Find(IdChiNhanh);
-                            var Ac = new Areas.Admin.Data.ActiveData().InsertKichHoatBH(true,
-                                serialb.Id.ToString(), serial.Id.ToString(), IdChiNhanh, gmail, "", sdt);
-                            if (Ac)
+                            if (serialb != null)
                             {
-                                var kqBox = new Areas.Admin.Data.SerialData().UpdateSer_box(serialb.Id.ToString(),
-                                    true, true, serialb.NgayUpdate, "Active");
-                                var kqSP = new Areas.Admin.Data.SerialData().UpdateSer_SP(serial.Id.ToString(),
-                                    true, true, serial.NgayUpdate, serial.HangTangKhongBan);
-                                return Json("yes", JsonRequestBehavior.AllowGet);
+                                
+                                var Ac = new Areas.Admin.Data.ActiveData().InsertKichHoatBH(
+                                    serialb.Id.ToString(), serial.Id.ToString(), tenchinhanh.Id, gmail, Tenkh, sdt, khuvuc);
+                                if (Ac)
+                                {
+                                    var kqBox = new Areas.Admin.Data.SerialData().UpdateSer_box(serialb.Id.ToString(),
+                                        true, true, serialb.NgayUpdate, "Active");
+                                    var kqSP = new Areas.Admin.Data.SerialData().UpdateSer_SP(serial.Id.ToString(),
+                                        true, true, serial.NgayUpdate, serial.HangTangKhongBan);
+                                    return Json("yes", JsonRequestBehavior.AllowGet);
+                                }
+                            }
+                            else
+                            {
+                                return Json("11", JsonRequestBehavior.AllowGet);
                             }
                         }
                         else
                         {
-                            return Json("11", JsonRequestBehavior.AllowGet);
+                            return Json("22", JsonRequestBehavior.AllowGet);
                         }
                     }
                     else
                     {
-                        return Json("22", JsonRequestBehavior.AllowGet);
+                        return Json("44", JsonRequestBehavior.AllowGet);
                     }
+
                 }
                 return Json("33", JsonRequestBehavior.AllowGet);
             }
@@ -186,6 +198,7 @@ namespace DoChoiXeMay.Controllers
             }
             catch (Exception exc)
             {
+                string loi = exc.ToString();
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Bad Request");
             }
             

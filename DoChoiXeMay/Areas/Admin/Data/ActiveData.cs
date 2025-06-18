@@ -63,54 +63,31 @@ namespace DoChoiXeMay.Areas.Admin.Data
             
             return model1;
         }
-        public bool InsertKichHoatBH(bool ND, string IdBox, string IdSP,int chinhanh,string email, string tenkh,string sdt)
+        public bool InsertKichHoatBH(string IdBox, string IdSP,int chinhanh,string email, string tenkh,string sdt,string khuvuc)
         {
             try
             {
-                if (ND)
+
+                Ser_kichhoat kh = new Ser_kichhoat();
+                kh.Id = Guid.NewGuid();
+                kh.IDSer_box = new Guid(IdBox);
+                kh.IDSer_sp = new Guid(IdSP);
+                kh.NgayKichHoat = DateTime.Now;
+                kh.NgayUpdate = DateTime.Now;
+                kh.EmailKichHoat = email;
+                kh.TenKhachHang = tenkh;
+                kh.SDT = sdt;
+                kh.IdChiNhanh = chinhanh;
+                kh.TrangThaiId = 1;
+                kh.DiaChiKhach = khuvuc;
+                kh.Ghichu = DateTime.Now.AddMonths(12).ToShortDateString();
+                _context.Ser_kichhoat.Add(kh);
+                int kt = _context.SaveChanges();
+                if (kt > 0)
                 {
-                    Ser_kichhoat kh = new Ser_kichhoat();
-                    kh.Id = Guid.NewGuid();
-                    kh.IDSer_box = new Guid(IdBox);
-                    kh.IDSer_sp=new Guid(IdSP);
-                    kh.NgayKichHoat =   DateTime.Now;
-                    kh.NgayUpdate = DateTime.Now;
-                    kh.EmailKichHoat = email;
-                    kh.TenKhachHang = tenkh;
-                    kh.SDT = sdt;
-                    kh.IdChiNhanh = chinhanh;
-                    kh.TrangThaiId = 1;
-                    kh.Ghichu = DateTime.Now.AddMonths(12).ToShortDateString();
-                    _context.Ser_kichhoat.Add(kh);
-                    int kt = _context.SaveChanges();
-                    if (kt > 0)
-                    {
-                        return true;
-                    }
-                    return false;
+                    return true;
                 }
-                else
-                {
-                    Ser_kichhoat kh = new Ser_kichhoat();
-                    kh.Id = Guid.NewGuid();
-                    kh.IDSer_box = new Guid(IdBox);
-                    kh.IDSer_sp = new Guid(IdSP);
-                    kh.NgayKichHoat = DateTime.Now;
-                    kh.NgayUpdate = DateTime.Now;
-                    kh.EmailKichHoat = email;
-                    kh.TenKhachHang = tenkh;
-                    kh.SDT = sdt;
-                    kh.IdChiNhanh = chinhanh;
-                    kh.TrangThaiId = 1;
-                    kh.Ghichu = "Nhà phân phối, đại lý";
-                    _context.Ser_kichhoat.Add(kh);
-                    int kt = _context.SaveChanges();
-                    if (kt > 0)
-                    {
-                        return true;
-                    }
-                    return false;
-                }
+                return false;
             }
             catch (Exception ex)
             {
