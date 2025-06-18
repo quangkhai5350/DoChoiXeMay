@@ -39,7 +39,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult GetListKyXNUser()
         {
             var uid = int.Parse(Session["UserId"].ToString());
-            if(Session["quyen"].ToString() == "Admin")
+            if(Session["quyen"].ToString() == "1")
             {
                 ViewBag.KyXN = dbc.KyXuatNhaps.Where(kh => kh.UserId == uid && kh.Id > 1 && kh.UPush == false
                         ||(kh.UserId != uid && kh.Id>1 && kh.UPush ==true && kh.AdminXNPUSH ==false))
@@ -86,7 +86,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var XN = dbc.KyXuatNhaps.Find(id);
             if(XN != null)
             {
-                if (Session["quyen"].ToString() == "Admin")
+                if (Session["quyen"].ToString() == "1")
                 {
                     //Admin thì đẩy lên luôn
                     if (XN.UPush == false)
@@ -159,13 +159,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                                 , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXuatNhapTek - Đẩy= " + XN.UPush, "");
                         //Thoong bao Msg cho SubAd
-                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
+                        if (Session["quyen"].ToString() != "1" && XN.UPush == true)
                         {
                             var sms = Session["UserName"].ToString().ToUpper() + " đã yêu cầu đẩy -" + XN.TenKy + "- của mình lên Tek." + XN.NgayAuto.ToString("{dd/MM/yyyy}") +
                                 "-ADMIN vào Bảng XN của mình để xác nhận.";
                             var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
                         }
-                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
+                        if (Session["quyen"].ToString() != "1" && XN.UPush == false)
                         {
                             var sms = Session["UserName"].ToString().ToUpper() + " đã Hủy yêu cầu đẩy -" + XN.TenKy + "- lên Tek của mình." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
                             var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
@@ -180,13 +180,13 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                                 , Session["UserName"].ToString(), "Thay đổi yêu cầu DayXNTek(Không có TC) - Đẩy= " + XN.UPush, "");
                         //Thoong bao Msg cho SubAd
-                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == true)
+                        if (Session["quyen"].ToString() != "1" && XN.UPush == true)
                         {
                             var sms = Session["UserName"].ToString().ToUpper() + " đã yêu cầu đẩy -" + XN.TenKy + "- của mình lên Tek(Không có TC)." + XN.NgayAuto.ToString("{dd/MM/yyyy}") +
                                 "-ADMIN vào Bảng XN của mình để xác nhận.";
                             var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
                         }
-                        if (Session["quyen"].ToString() != "Admin" && XN.UPush == false)
+                        if (Session["quyen"].ToString() != "1" && XN.UPush == false)
                         {
                             var sms = Session["UserName"].ToString().ToUpper() + " đã Hủy yêu cầu đẩy -" + XN.TenKy + "- lên Tek(Không có TC) của mình." + XN.NgayAuto.ToString("{dd/MM/yyyy}");
                             var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
@@ -308,7 +308,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                     Session["ThongBaoXuatNhapUser"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
                     Session["ThongBaoXuatNhapTeK"] = "XacNhanXuatNhapTek thành công File Xuất nhập- " + XN.TenKy + "- của user: " + XN.UserTek.UserName;
                     //Thoong bao Msg cho SubAd
-                    if (Session["quyen"].ToString() == "Admin")
+                    if (Session["quyen"].ToString() == "1")
                     {
                         var sms = "Yêu cầu đẩy -" + XN.TenKy + "- của -" + XN.UserTek.UserName.ToUpper() + "- được chấp nhận." + XN.NgayAuto.ToString("{dd/MM/yyyy}")
                             + "-" + XN.UserTek.UserName.ToUpper() + " vào Bảng XN TeK và Bảng TC Tek để kiểm tra.";
@@ -407,7 +407,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model = XN;
                 model.UserId = uid;
                 model.UPush = false;
-                if (Session["quyen"].ToString() == "Admin")
+                if (Session["quyen"].ToString() == "1")
                 {
                     model.AdminXNPUSH = true;
                 }

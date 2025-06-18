@@ -201,7 +201,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 p = TC;
                 p.Id = Guid.NewGuid();
                 p.NgayAuto = DateTime.Now;
-                if (quyen == "Admin")
+                if (quyen == "1")
                 {
                     // nếu Session["quyen"]=="Admin" thì đẩy thẳng lên Tek
                     p.YeuCauDay = true;

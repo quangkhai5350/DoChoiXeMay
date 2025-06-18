@@ -49,7 +49,7 @@
                                 </td>
                                 <td>
                                     <a class="btn btn-danger" href="/Admin/NoteKyThuat/EditVideo/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                                    @if (Session["quyen"].ToString() == "Admin")
+                                    @if (Session["quyen"].ToString() == "1")
                                     {
                                         <a class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Video: @Item.NoteName ??')" href="/Admin/NoteKyThuat/DeleteVideo/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
                                     }

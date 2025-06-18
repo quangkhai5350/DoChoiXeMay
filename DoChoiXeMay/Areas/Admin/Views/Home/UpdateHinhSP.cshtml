@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <p>Số Lượng <span></span></p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
-                                @if (Session["quyen"].ToString() == "Admin")
+                                @if (Session["quyen"].ToString() == "1")
                                 {
                                     @Html.TextBoxFor(m => m.SoLuong, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
                                 }
@@ -48,7 +48,7 @@
                             <div class="form-group">
                                 <p>Giá <span></span></p>
                                 <span class="icon-case"><i class="glyphicon glyphicon-import"></i></span>
-                                @if (Session["quyen"].ToString() == "Admin")
+                                @if (Session["quyen"].ToString() == "1")
                                 {
                                     @Html.TextBoxFor(m => m.GiaNhap, new { @class = "form-control", @type = "number", style = "width: 100%; height: 40px" })
                                 }

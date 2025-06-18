@@ -19,7 +19,7 @@
                         @Item.Ngay
                     </td>
                     <td>
-                        @if (Session["quyen"].ToString() != "Guest")
+                        @if (int.Parse(Session["quyen"].ToString()) < 5)
                         {
                             <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateMauSP/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
                         }

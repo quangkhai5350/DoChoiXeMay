@@ -18,7 +18,7 @@
                 <th class="canhgiua" style="width:10px">File2</th>
                 <th class="canhgiua" style="width:10px">Hóa Đơn</th>
                 <th class="canhgiua">Ngày Update</th>
-                @if (Session["quyen"].ToString() == "Admin")
+                @if (Session["quyen"].ToString() == "1")
                 {
                     <th class="canhgiua" style="width:120px">Sửa/Xóa</th>
                 }
@@ -136,7 +136,7 @@
                     }
 
                     <td>@Html.FormatValue(Item.NgayAuto, "{0:dd/MM/yyyy}")</td>
-                    @if (Session["quyen"].ToString() == "Admin")
+                    @if (Session["quyen"].ToString() == "1")
                     {
                         <td>
                             <a class="btn btn-danger" href="/Admin/ThuChi/UpdateCTthuchi/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>

@@ -59,7 +59,7 @@
                             @Html.TextBoxFor(m => m.EmailConnection, new { @class = "form-control", style = "height: 40px", @required = true })
 
                         </div>
-                        @if (Session["quyen"].ToString() == "Admin")
+                        @if (Session["quyen"].ToString() == "1")
                         {
                             <div class="row" style="width:95%;padding-left:15px">
                                 <p>Loại User(Guess==ChiNhanh)</p>

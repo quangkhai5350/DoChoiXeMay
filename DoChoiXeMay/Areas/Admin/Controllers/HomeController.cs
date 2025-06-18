@@ -38,7 +38,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var model = dbc.UserTeks.Find(id);
             string check_pass = tk.DeCryptDotNetNukePassword(model.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", model.PasswordSalt);//pass ma hoa
-            if (Session["quyen"].ToString() == "Admin")
+            if (Session["quyen"].ToString() == "1")
             {
                 ViewBag.passcu = check_pass;
             }
@@ -80,7 +80,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         dbc.SaveChanges();
                         var uid = int.Parse(Session["UserId"].ToString());
                         var sms = "";
-                        if(Session["quyen"].ToString() == "Admin")
+                        if(Session["quyen"].ToString() == "1")
                         {
                             sms = Session["UserName"].ToString().ToUpper() + " đã update user: "+model.UserName+" .Thành Công." + DateTime.Now.ToString("{dd/MM/yyyy}");
                         }

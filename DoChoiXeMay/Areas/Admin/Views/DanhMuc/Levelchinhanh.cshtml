@@ -15,7 +15,7 @@
     <div class="panel panel-default" style="margin-top:10px">
         <div class="panel-heading">
             <div class="row">
-                @if (Session["quyen"].ToString() == "Admin")
+                @if (Session["quyen"].ToString() == "1")
                 {
                     <div class="col-md-6">
                         <a class="btn btn-warning" style="margin-left:20px" href="/Admin/DanhMuc/InsertLVChiNhanh" onclick="return confirm('Bạn muốn Thêm Mới Level Chi Nhánh ??')">

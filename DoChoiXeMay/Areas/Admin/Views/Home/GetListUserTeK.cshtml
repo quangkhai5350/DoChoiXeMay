@@ -30,7 +30,7 @@
                         <td><img src="~/Content/imgTeK/Namn.png" alt="" class="avatartek" /></td>
                     }
                     <td>
-                        @if (Session["quyen"].ToString() != "Guest")
+                        @if (int.Parse(Session["quyen"].ToString()) < 5)
                         {
                             <a class="btn btn-danger" href="/Admin/Home/EditUser/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
                             <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa User: @Item.Id ??')" href="/Admin/Home/DeleteUserChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>

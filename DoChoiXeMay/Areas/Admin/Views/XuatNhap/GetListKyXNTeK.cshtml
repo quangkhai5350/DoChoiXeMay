@@ -4,7 +4,7 @@
         <thead>
             <tr class="canhgiua" style="background-color: #00bcd4">
                 <th class="canhgiua" style="max-width: 15px">STT</th>
-                @if (Session["quyen"].ToString() == "Admin")
+                @if (Session["quyen"].ToString() == "1")
                 {
                     <th class="canhgiua" style="width:30px">Update / Xóa</th>
                 }
@@ -36,7 +36,7 @@
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.STT</td>
                     <td>
-                        @if (Session["quyen"].ToString() == "Admin")
+                        @if (Session["quyen"].ToString() == "1")
                         {
                             <a title="Update Kỳ hiện tại" class="btn btn-primary" href="/Admin/XuatNhap/UpdateKyXNUser/@Item.Id">
                                 <span class="glyphicon glyphicon-edit" style="font-size:20px"></span>
@@ -45,7 +45,7 @@
                             <a hidden title="Xóa Kỳ hiện tại" class="btn btn-danger" onclick="return confirm('Bạn muốn xóa Kỳ @Item.TenKy ??')"
                                href="/Admin/XuatNhap/DeleteKyXNUser/@Item.Id"><span class="glyphicon glyphicon-trash" style="font-size:20px"></span></a>
                         }
-                        else if (Session["quyen"].ToString() != "Admin" && Item.UserId == int.Parse(Session["UserId"].ToString()))
+                        else if (Session["quyen"].ToString() != "1" && Item.UserId == int.Parse(Session["UserId"].ToString()))
                         {
                             if (Item.UYeuCauThuHoi == false)
                             {
@@ -103,7 +103,7 @@
 
 
                         </p>
-                        @if (Item.UYeuCauThuHoi && Session["quyen"].ToString() == "Admin")
+                        @if (Item.UYeuCauThuHoi && Session["quyen"].ToString() == "1")
                         {
                             <hr />
                             <p>

@@ -193,7 +193,7 @@
                             <li>
                                 @if (Session["quyen"] != null)
                                 {
-                                    if (Session["quyen"].ToString() == "Admin")
+                                    if (Session["quyen"].ToString() == "1")
                                     {
                                         <a href="/Admin/Home/ListUserTeK" class="title_user">UserManager</a>
                                     }
@@ -389,7 +389,7 @@
                         </li>
 
                         <li>
-                            @if (Session["quyen"]!=null && Session["quyen"].ToString() != "Guest")
+                            @if (Session["quyen"]!=null && int.Parse(Session["quyen"].ToString()) < 5)
                             {
                                 <a data-toggle="tab" href="#Tables"><i class="notika-icon notika-form"></i>(1) Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
                             }
