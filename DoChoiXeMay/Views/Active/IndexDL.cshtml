@@ -115,24 +115,130 @@
     </style>
     <h5><a style="text-decoration: none">Danh Sách S/N Đã Kích Hoạt bởi :@Model.TenChiNhanh</a></h5>
     <div class="table-responsive">
+        <div class="panel-heading">
+            <div class="row">
+
+                <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
+                    @Session["ThongBaoListDaActive"]
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12">
+                        <input type="text" class="form-control input-sm pull-right" style="margin-top: 10px;font-size: medium; height: 40px; width: 95%" name="KeywordsTT" id="KeywordsTT" onchange="TimKiemsp()" placeholder="Enter Tìm Theo Số Serial hoặc Khu Vực." />
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div class="listSerSPKHDaKH" style="max-height: 600px; overflow: auto">
 
+
+        </div>
+        <div class="panel-footer">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="TongSanPham"></span>
+                </div>
+                <div class="col-md-4" style="text-align: center">
+                    
+                </div>
+                <div class="col-md-4" style="text-align: right">
+                    <span class="TongSanPham"></span>
+                </div>
+            </div>
+
+
+            <ul class="pager">
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+            </ul>
 
         </div>
     </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+@*<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>*@
 <script>
-    LoadListKHBHbyChiNhanh();
-    function LoadListKHBHbyChiNhanh() {
+    $(function () {
+        pageNo = 0;
+        pageSize = 10;
+        TongSP = 0;
+        var KeywordsTTT = $('#KeywordsTT').val();
+        var IdCN = $('#IdChiNhanh').val();
+        getTongSanPham(pageSize, pageNo, IdCN, KeywordsTTT);
+        $(".pager a:eq(0)").click(function () {
+            if (pageNo > 0) {
+                pageNo = 0;
+                IdCN = $('#IdChiNhanh').val();
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadListKHBHbyChiNhanh(pageNo, pageSize, IdCN, KeywordsTTT);
+            }
+            return false;
+        });
+        $(".pager a:eq(1)").click(function () {
+            if (pageNo > 0) {
+                pageNo--;
+                IdCN = $('#IdChiNhanh').val();
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadListKHBHbyChiNhanh(pageNo, pageSize, IdCN, KeywordsTTT);
+            }
+            return false;
+        });
+        $(".pager a:eq(2)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo++;
+                IdCN = $('#IdChiNhanh').val();
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadListKHBHbyChiNhanh(pageNo, pageSize, IdCN, KeywordsTTT);
+            }
+            return false;
+        });
+
+        $(".pager a:eq(3)").click(function () {
+            if (pageNo < pageCount - 1) {
+                pageNo = pageCount - 1;
+                IdCN = $('#IdChiNhanh').val();
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadListKHBHbyChiNhanh(pageNo, pageSize, IdCN, KeywordsTTT);
+            }
+            return false
+        });
+    });
+    //LoadListKHBHbyChiNhanh(pageNo, pageSize, IdCN, KeywordsTTT);
+    function LoadListKHBHbyChiNhanh(pageNo, pageSize, IdCN, KeywordsTTT) {
         $.ajax({
             url: "/Active/GetListKHBHbyChiNhanh",
-            data: {},
+            data: { PageNo: pageNo, PageSize: pageSize, IdCN: IdCN, KeywordsTTT: KeywordsTTT },
             success: function (response) {
                 $(".listSerSPKHDaKH").html(response);
+                var pagesp = pageNo + 1;
+                $('.TongSanPham').html(pagesp + '/' + TongSP + ' trang');
             }
         });
     }
+    function getTongSanPham(pageSize, pageNo, IdCN, KeywordsTTT) {
+        $.ajax({
+            url: "/Active/GetPageCountActive",
+            data: { PageSize: pageSize, IdCN: IdCN, KeywordsTTT: KeywordsTTT },
+            success: function (respone) {
+                pageCount = respone;
+                TongSP = respone;
+                LoadListKHBHbyChiNhanh(pageNo, pageSize, IdCN, KeywordsTTT);
+            }
+        });
+    };
+    function TimKiemsp() {
+        pageNo = 0;
+        pageSize = 10;
+        TongSP = 0;
+        var KeywordsTTT = $('#KeywordsTT').val();
+        var IdCN = $('#IdChiNhanh').val();
+        getTongSanPham(pageSize, pageNo, IdCN, KeywordsTTT);
+        getTongSanPhamAC(IdCN, KeywordsTTT);
+
+    };
     function kiemtrabh() {
         if (!confirm("Bạn là đại Lý? Bạn cần đăng nhập web để kiểm tra BH điện tử. Nếu chưa có thông tin đăng nhập, hãy liên hệ Admin TeK.")) {
             return false;
@@ -178,16 +284,19 @@
                     type: 'POST',
                     data: postData,
                     success: function (response) {
-                        if (response == "11") {
+                        $("#thongbaoBox").html("")
+                        $("#thongbaoSP").html("")
+                        $("#thongbaoActive").html("")
+                        $("#thongbaoAcTC").html("")
+                        if (response == "111") {
                             $("#thongbaoBox").html("S/N không đúng, hoặc đã kích hoạt !!!")
-                        } else if (response == "22") {
+                        } else if (response == "222") {
                             $("#thongbaoSP").html("S/N không đúng, hoặc đã kích hoạt !!!")
-                        } else if (response == "33") {
+                        } else if (response == "333") {
                             $("#thongbaoActive").html("Có Lỗi Hệ Thống, Kích Hoạt không thành công !!!")
-                            $("#thongbaoBox").html("")
-                            $("#thongbaoSP").html("")
-                        } else if (response == "yes") {
-                            $("#thongbaoAcTC").html("Kích Hoạt thành công serial: " + serialSP + ", chúc mừng.")
+                            
+                        } else if (parseInt(response) > -1) {
+                            $("#thongbaoAcTC").html("Bạn đã kích hoạt bảo hành thành công S/N: " + serialSP + ", hạn bảo hành " + response + " tháng.")
                             LoadListKHBHbyChiNhanh();
 
                             $("#SerialBox").val('')

@@ -32,7 +32,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.ListSerialKH = model;
             return PartialView(model);
         }
-        public ActionResult GetPageCountActive(int PageSize = 20, int IdCN=0, string KeywordsTTT = "") {
+        public ActionResult GetPageCountActive(int PageSize = 0, int IdCN=0, string KeywordsTTT = "") {
             var num = new Data.ActiveData().GetPageCountACTek(IdCN,KeywordsTTT);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);

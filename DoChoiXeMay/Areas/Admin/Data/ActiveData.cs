@@ -71,7 +71,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             
             return model1;
         }
-        public bool InsertKichHoatBH(string IdBox, string IdSP,int chinhanh,string email, string tenkh,string sdt,string khuvuc)
+        public int InsertKichHoatBH(string IdBox, string IdSP,int chinhanh,string email, string tenkh,string sdt,string khuvuc)
         {
             try
             {
@@ -88,19 +88,20 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 kh.IdChiNhanh = chinhanh;
                 kh.TrangThaiId = 1;
                 kh.DiaChiKhach = khuvuc;
-                kh.Ghichu = DateTime.Now.AddMonths(12).ToShortDateString();
+                int tgbh = _context.Ser_sp.Find(kh.IDSer_sp).BaoHanh;
+                kh.Ghichu = DateTime.Now.AddMonths(tgbh).ToShortDateString();
                 _context.Ser_kichhoat.Add(kh);
                 int kt = _context.SaveChanges();
                 if (kt > 0)
                 {
-                    return true;
+                    return tgbh;
                 }
-                return false;
+                return -1;
             }
             catch (Exception ex)
             {
                 string loi = ex.ToString();
-                return false;
+                return -1;
             }
         }
         public string InsertUserAotu()

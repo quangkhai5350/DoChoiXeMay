@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DoChoiXeMay.Areas.Admin.Data;
 
 namespace DoChoiXeMay.Controllers
 {
@@ -53,17 +54,26 @@ namespace DoChoiXeMay.Controllers
                 .ThenByDescending(kh => kh.Id)
                 .Where(kh => kh.Sudung == true), "Id", "TenChiNhanh",chinhanh.Id);
             ViewBag.KhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc");
+            ViewBag.TotalSerialDaKH = dbc.Ser_kichhoat.Where(kh => kh.IdChiNhanh == chinhanh.Id).Count();
             return View(chinhanh);
         }
         [ProtectKH]
-        public ActionResult GetListKHBHbyChiNhanh()
+        public ActionResult GetListKHBHbyChiNhanh(int PageNo = 0, int PageSize = 0, int IdCN = 0, string KeywordsTTT = "")
+        {
+            var model = new ActiveData().getSNACTek(PageNo, PageSize, IdCN, KeywordsTTT);
+            
+            var chinhanh = dbc.Ser_ChiNhanh.Find(int.Parse(Session["idchinhanhAt"].ToString()));
+            model = model.Where(kh => kh.IdChiNhanh == chinhanh.Id).ToList();
+            ViewBag.ListSerialKH = model;
+            return PartialView(chinhanh);
+        }
+        [ProtectKH]
+        public ActionResult GetPageCountActive(int PageSize = 0, int IdCN = 0, string KeywordsTTT = "")
         {
             var chinhanh = dbc.Ser_ChiNhanh.Find(int.Parse(Session["idchinhanhAt"].ToString()));
-            ViewBag.ListSerialKH = dbc.Ser_kichhoat.Where(kh => kh.IdChiNhanh == chinhanh.Id)
-                .OrderByDescending(kh => kh.NgayUpdate)
-                .ThenBy(kh => kh.TrangThaiId).ToList();
-            ViewBag.TotalSerialDaKH = dbc.Ser_kichhoat.Where(kh => kh.IdChiNhanh == chinhanh.Id).Count();
-            return PartialView(chinhanh);
+            var num =  ActiveData.ChiTietkichhoatDBTEK(dbc, IdCN, KeywordsTTT).Count();
+            var pageCount = Math.Ceiling(1.0 * num / PageSize);
+            return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
         public ActionResult IndexCheckBHND(string SerialSP)
         {
@@ -116,25 +126,25 @@ namespace DoChoiXeMay.Controllers
                         {
                             if (serialb != null)
                             {
-                                var Ac = new Areas.Admin.Data.ActiveData().InsertKichHoatBH(
+                                var Ac = new ActiveData().InsertKichHoatBH(
                                     serialb.Id.ToString(), serial.Id.ToString(), 1, gmail, Tenkh, sdt, khuvuc);
-                                if (Ac)
+                                if (Ac > -1)
                                 {
-                                    var kqBox = new Areas.Admin.Data.SerialData().UpdateSer_box(serialb.Id.ToString(),
+                                    var kqBox = new SerialData().UpdateSer_box(serialb.Id.ToString(),
                                         true, true, serialb.NgayUpdate, "Active");
-                                    var kqSP = new Areas.Admin.Data.SerialData().UpdateSer_SP(serial.Id.ToString(),
+                                    var kqSP = new SerialData().UpdateSer_SP(serial.Id.ToString(),
                                         true, true, serial.NgayUpdate, serial.HangTangKhongBan);
-                                    return Json("yes", JsonRequestBehavior.AllowGet);
+                                    return Json(Ac.ToString(), JsonRequestBehavior.AllowGet);
                                 }
                             }
                             else
                             {
-                                return Json("11", JsonRequestBehavior.AllowGet);
+                                return Json("111", JsonRequestBehavior.AllowGet);
                             }
                         }
                         else
                         {
-                            return Json("22", JsonRequestBehavior.AllowGet);
+                            return Json("222", JsonRequestBehavior.AllowGet);
                         }
                     
                 }else if (NPP)
@@ -146,39 +156,39 @@ namespace DoChoiXeMay.Controllers
                             if (serialb != null)
                             {
                                 
-                                var Ac = new Areas.Admin.Data.ActiveData().InsertKichHoatBH(
+                                var Ac = new ActiveData().InsertKichHoatBH(
                                     serialb.Id.ToString(), serial.Id.ToString(), tenchinhanh.Id, gmail, Tenkh, sdt, khuvuc);
-                                if (Ac)
+                                if (Ac > -1)
                                 {
-                                    var kqBox = new Areas.Admin.Data.SerialData().UpdateSer_box(serialb.Id.ToString(),
+                                    var kqBox = new SerialData().UpdateSer_box(serialb.Id.ToString(),
                                         true, true, serialb.NgayUpdate, "Active");
-                                    var kqSP = new Areas.Admin.Data.SerialData().UpdateSer_SP(serial.Id.ToString(),
+                                    var kqSP = new SerialData().UpdateSer_SP(serial.Id.ToString(),
                                         true, true, serial.NgayUpdate, serial.HangTangKhongBan);
-                                    return Json("yes", JsonRequestBehavior.AllowGet);
+                                    return Json(Ac.ToString(), JsonRequestBehavior.AllowGet);
                                 }
                             }
                             else
                             {
-                                return Json("11", JsonRequestBehavior.AllowGet);
+                                return Json("111", JsonRequestBehavior.AllowGet);
                             }
                         }
                         else
                         {
-                            return Json("22", JsonRequestBehavior.AllowGet);
+                            return Json("222", JsonRequestBehavior.AllowGet);
                         }
                     }
                     else
                     {
-                        return Json("44", JsonRequestBehavior.AllowGet);
+                        return Json("444", JsonRequestBehavior.AllowGet);
                     }
 
                 }
-                return Json("33", JsonRequestBehavior.AllowGet);
+                return Json("333", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 string loi = ex.ToString();
-                return Json("33", JsonRequestBehavior.AllowGet);
+                return Json("333", JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult GetChitietNPP(string NPP="")
