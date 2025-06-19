@@ -218,17 +218,21 @@
                         type: 'POST',
                         data: postData,
                         success: function (response) {
-                            if (response == "11") {
+                            $("#thongbaoBox").html("")
+                            $("#thongbaoSP").html("")
+                            $("#thongbaoActive").html("")
+                            $("#thongbaoAcTC").html("")
+                            if (response == "111") {
                                 $("#thongbaoBox").html("S/N không đúng, hoặc đã kích hoạt !!!")
-                            } else if (response == "22") {
+                            } else if (response == "222") {
                                 $("#thongbaoSP").html("S/N không đúng, hoặc đã kích hoạt !!!")
-                            } else if (response == "33") {
+                            } else if (response == "333") {
                                 $("#thongbaoActive").html("Có Lỗi Hệ Thống, Kích Hoạt không thành công !!!")
                                 $("#thongbaoBox").html("")
                                 $("#thongbaoSP").html("")
-                            } else if (response == "yes") {
-                                $("#thongbaoAcTC").html("Kích Hoạt thành công serial: " + serialSP + ", chúc mừng.")
-                                $("#thongbaoActive").html("")
+                            } else if (parseInt(response) > -1) {
+                                $("#thongbaoAcTC").html("Bạn đã kích hoạt bảo hành thành công S/N: " + serialSP + ", hạn bảo hành " + response + " tháng.")
+                                
                                 $("#thongbaoBox").html("")
                                 $("#thongbaoSP").html("")
                             }
@@ -267,22 +271,23 @@
                             type: 'POST',
                             data: postData,
                             success: function (response) {
-                                if (response == "11") {
+                                $("#thongbaoBox").html("")
+                                $("#thongbaoSP").html("")
+                                $("#thongbaoActive").html("")
+                                $("#thongbaoAcTC").html("")
+                                if (response == "111") {
                                     $("#thongbaoBox").html("S/N không đúng, hoặc đã kích hoạt !!!")
-                                } else if (response == "22") {
+                                } else if (response == "222") {
                                     $("#thongbaoSP").html("S/N không đúng, hoặc đã kích hoạt !!!")
-                                } else if (response == "33") {
+                                } else if (response == "333") {
                                     $("#thongbaoActive").html("Có Lỗi Hệ Thống, Kích Hoạt không thành công !!!")
-                                    $("#thongbaoBox").html("")
-                                    $("#thongbaoSP").html("")
-                                } else if (response == "44") {
+                                    
+                                } else if (response == "444") {
                                     $("#thongbaoActive").html("Tên của đại lý/NPP không đúng, không thể kích hoạt !!!")
                                 }
-                                else if (response == "yes") {
-                                    $("#thongbaoAcTC").html("Kích Hoạt thành công serial: " + serialSP + ", chúc mừng.")
-                                    $("#thongbaoActive").html("")
-                                    $("#thongbaoBox").html("")
-                                    $("#thongbaoSP").html("")
+                                else if (parseInt(response) >-1) {
+                                    $("#thongbaoAcTC").html("Bạn đã kích hoạt bảo hành thành công S/N: " + serialSP + ", hạn bảo hành " + response + " tháng.")
+                                    
                                     $("#SerialBox").val('')
                                     $("#SerialSP").val('')
                                     $("#SerialSP").focus()

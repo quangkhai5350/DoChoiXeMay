@@ -6,7 +6,8 @@
             <th class="canhgiua">Ngày Active</th>
             <th class="canhgiua">Serial SP</th>
             <th class="canhgiua">Serial Box</th>
-
+            <th class="canhgiua">Tên</th>
+            <th class="canhgiua">KhuVuc</th>
             <th class="canhgiua">Trạng Thái</th>
             <th class="canhgiua">Hết hạn</th>
             @*<th class="canhgiua">Update</th>*@
@@ -24,6 +25,8 @@
                     <td>@Item.NgayKichHoat</td>
                     <td>@Item.Ser_sp.SerialSP</td>
                     <td>@Item.Ser_box.Serial</td>
+                    <td>@Item.TenKhachHang</td>
+                    <td>@Item.DiaChiKhach</td>
                     <td>
                         @Item.Ser_trangthai.Name
                     </td>
@@ -50,12 +53,4 @@
         }
     </tbody>
 </table>
-<div class="panel-footer">
-    <div class="row">
-        <div class="col-md-10">
-        </div>
-        <div class="col-md-2" style="text-align:right">
-            @ViewBag.TotalSerialDaKH S/N
-        </div>
-    </div>
-</div>
+
