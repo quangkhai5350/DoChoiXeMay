@@ -31,7 +31,7 @@
 
             </div>
         <div class="panel-body">
-            @*<img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />*@
+            <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
             <div class="listDaAC">
 
 
@@ -65,17 +65,19 @@
 <script>
     $(function () {
         pageNo = 0;
-        pageSize = 10;
+        pageSize = 20;
         TongSP = 0;
+        var KeywordsTTT = $('#KeywordsTT').val();
         var IdCN = $('#IdChiNhanh').val();
-        getTongSanPham(pageSize, pageNo, IdCN);
-        getTongSanPhamAC(IdCN);
+        getTongSanPham(pageSize, pageNo, IdCN, KeywordsTTT);
+        getTongSanPhamAC(IdCN, KeywordsTTT);
 
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
                 IdCN = $('#IdChiNhanh').val();
-                LoadPage(pageNo, pageSize, IdCN);
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadPage(pageNo, pageSize, IdCN, KeywordsTTT);
             }
             return false;
         });
@@ -83,7 +85,8 @@
             if (pageNo > 0) {
                 pageNo--;
                 IdCN = $('#IdChiNhanh').val();
-                LoadPage(pageNo, pageSize, IdCN);
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadPage(pageNo, pageSize, IdCN, KeywordsTTT);
             }
             return false;
         });
@@ -91,7 +94,8 @@
             if (pageNo < pageCount - 1) {
                 pageNo++;
                 IdCN = $('#IdChiNhanh').val();
-                LoadPage(pageNo, pageSize, IdCN);
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadPage(pageNo, pageSize, IdCN, KeywordsTTT);
             }
             return false;
         });
@@ -100,25 +104,26 @@
             if (pageNo < pageCount - 1) {
                 pageNo = pageCount - 1;
                 IdCN = $('#IdChiNhanh').val();
-                LoadPage(pageNo, pageSize, IdCN);
+                KeywordsTTT = $('#KeywordsTT').val();
+                LoadPage(pageNo, pageSize, IdCN, KeywordsTTT);
             }
             return false
         });
         $("#IdChiNhanh").change(function () {
             pageNo = 0;
-            pageSize = 10;
+            pageSize = 20;
             TongSP = 0;
             IdCN = $('#IdChiNhanh').val();
-            //KeywordsTTT = $('#KeywordsTT').val();
-            getTongSanPham(pageSize, pageNo, IdCN);
-            getTongSanPhamAC(IdCN);
+            KeywordsTTT = $('#KeywordsTT').val();
+            getTongSanPham(pageSize, pageNo, IdCN, KeywordsTTT);
+            getTongSanPhamAC(IdCN, KeywordsTTT);
         });
     });
     //LoadPage();
-    function LoadPage(pageNo, pageSize, IdCN) {
+    function LoadPage(pageNo, pageSize, IdCN, KeywordsTTT) {
         $.ajax({
             url: "/Admin/Active/GetListDaActive",
-            data: { PageNo: pageNo, PageSize: pageSize, IdCN: IdCN },
+            data: { PageNo: pageNo, PageSize: pageSize, IdCN: IdCN, KeywordsTTT: KeywordsTTT },
             success: function (respone) {
                 $(".listDaAC").html(respone);
                 var pagesp = pageNo + 1;
@@ -126,25 +131,42 @@
             }
         });
     };
-    function getTongSanPham(pageSize, pageNo, IdCN) {
+    function getTongSanPham(pageSize, pageNo, IdCN, KeywordsTTT) {
         $.ajax({
             url: "/Admin/Active/GetPageCountActive",
-            data: { PageSize: pageSize, IdCN: IdCN },
+            data: { PageSize: pageSize, IdCN: IdCN, KeywordsTTT: KeywordsTTT },
             success: function (respone) {
                 pageCount = respone;
                 TongSP = respone;
-                LoadPage(pageNo, pageSize, IdCN);
+                LoadPage(pageNo, pageSize, IdCN, KeywordsTTT);
             }
         });
     };
-    function getTongSanPhamAC(IdCN) {
+    function getTongSanPhamAC(IdCN, KeywordsTTT) {
         $.ajax({
             url: "/Admin/Active/GetTongSanPhamAC",
-            data: { IdCN: IdCN },
+            data: { IdCN: IdCN, KeywordsTTT: KeywordsTTT },
             success: function (respone) {
                 $('.TongSanPhamAC').html('Tổng: '+respone+' S/N');
             }
         });
+    };
+    function TimKiemsp() {
+        pageNo = 0;
+        pageSize = 20;
+        TongSP = 0;
+        var KeywordsTTT = $('#KeywordsTT').val();
+        var IdCN = $('#IdChiNhanh').val();
+        $("#loading").show();
+        $(".list").css('display', 'none');
+        setTimeout(function () {
+            $(".list").css('display', 'block');
+            getTongSanPham(pageSize, pageNo, IdCN, KeywordsTTT);
+            getTongSanPhamAC(IdCN, KeywordsTTT);
+            //1s sau hiên lên
+        }, 800);
+        $("#loading").hide();
+
     };
 </script>
 
