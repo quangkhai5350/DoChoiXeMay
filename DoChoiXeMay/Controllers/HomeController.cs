@@ -175,8 +175,8 @@ namespace DoChoiXeMay.Controllers
                         int UserFirt = user.Id;
                         var quyenAd = dbc.UserTeks.Where(p => p.UserName == UserName && p.IdLoai == 1).ToList();
                         var quyensub = dbc.UserTeks.Where(p => p.UserName == UserName && p.IdLoai == 2).ToList();
-                        var quyenguest = dbc.UserTeks.Where(p => p.UserName == UserName && p.IdLoai == 3).ToList();
-                        if (UserFirt == -1 || UserFirt == 0 || quyenAd.Count == 0 && quyensub.Count == 0 && quyenguest.Count==1)
+                        var quyenStaff = dbc.UserTeks.Where(p => p.UserName == UserName && (p.IdLoai == 3 || p.IdLoai == 4)).ToList();
+                        if (UserFirt == -1 || UserFirt == 0 || quyenAd.Count == 0 && quyensub.Count == 0 && quyenStaff.Count==0)
                         {
                             ModelState.AddModelError("", "Chào bạn, tài khoản của bạn không sử dụng được trên web của chúng tôi. Liên Hệ trung tâm để được hổ trợ, hoặc tạo tài khoản mới để đăng nhập web !!");
                         }
@@ -195,45 +195,6 @@ namespace DoChoiXeMay.Controllers
                             Session["UserName"] = UserName;
                             Session["UserId"] = UserFirt;
                             //
-                            //if (Request.Cookies["user_log_new"] != null)
-                            //{
-                            //    var cookie = Request.Cookies["user_log_new"];
-                            //    if (remember != null)
-                            //    {
-                            //        if (remember == true)
-                            //        {
-                            //            cookie.Values["User"] = UserName;
-                            //            cookie.Values["Pw"] = Password;
-                            //            cookie.Values["Remem"] = "true";
-                            //            cookie.Expires = DateTime.Now.AddDays(7);
-                            //        }
-                            //        else
-                            //        {
-                            //            cookie.Expires = DateTime.Now.AddDays(-1);
-                            //        }
-                            //    }
-                            //    else
-                            //    {
-                            //        cookie.Expires = DateTime.Now.AddDays(-1);
-                            //    }
-                            //    Response.Cookies.Add(cookie);
-                            //}
-                            //else
-                            //{
-                            //    var cookie = new HttpCookie("user_log_new");
-                            //    if (remember != null)
-                            //    {
-                            //        if (remember == true)
-                            //        {
-                            //            cookie.Values["User"] = UserName;
-                            //            cookie.Values["Pw"] = Password;
-                            //            cookie.Values["Remem"] = "true";
-                            //            cookie.Expires = DateTime.Now.AddDays(7);
-                            //        }
-                            //    }
-                            //    Response.Cookies.Add(cookie);
-                            //}
-                            
                             
                             if (user.IdLoai == 1 || user.IdLoai == 2)
                             {

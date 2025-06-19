@@ -12,12 +12,32 @@ namespace DoChoiXeMay.Areas.Admin.Data
         public ActiveData() { 
             _context = new Model1();
         }
-        public List<Ser_kichhoat> getSNACTek(int Sec, int pageSize, int IdCN)
+        public static List<Ser_kichhoat> ChiTietkichhoatDBTEK(Model1 db, int IdCN, string strTK)
+        {
+            strTK = strTK.Trim().ToLower();
+            List<Ser_kichhoat> model = new List<Ser_kichhoat>();
+            if (IdCN == 0)
+            {
+                model = db.Ser_kichhoat
+                    .Where(kh => kh.Ser_sp.SerialSP.ToLower().Contains(strTK)
+                            || kh.Ser_box.Serial.ToLower().Contains(strTK)
+                            || kh.DiaChiKhach.ToLower().Contains(strTK)).ToList();
+            }
+            else
+            {
+                model = db.Ser_kichhoat.Where(kh => kh.IdChiNhanh == IdCN
+                        && (kh.Ser_sp.SerialSP.ToLower().Contains(strTK)
+                            || kh.Ser_box.Serial.ToLower().Contains(strTK)
+                            || kh.DiaChiKhach.ToLower().Contains(strTK))).ToList();
+            }
+            return model;
+        }
+            public List<Ser_kichhoat> getSNACTek(int Sec, int pageSize, int IdCN, string strTK)
         {
             List<Ser_kichhoat> model1 = new List<Ser_kichhoat>();
             if(IdCN == 0)
             {
-                model1 = _context.Ser_kichhoat
+                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK)
                     .OrderByDescending(kh => kh.NgayUpdate)
                     .ThenByDescending(kh => kh.IdChiNhanh)
                     .ThenBy(kh => kh.TrangThaiId)
@@ -27,7 +47,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             }
             else
             {
-                model1 = _context.Ser_kichhoat.Where(kh => kh.IdChiNhanh == IdCN)
+                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK)
                     .OrderByDescending(kh => kh.NgayUpdate)
                     .ThenByDescending(kh => kh.IdChiNhanh)
                     .ThenBy(kh => kh.TrangThaiId)
@@ -35,30 +55,18 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     .Take(pageSize)
                     .ToList();
             }
-            
-
-            //for (int i = 0; i < model1.Count(); i++)
-            //{
-            //    model1[i].STT = (i + 1).ToString();
-            //}
-
-            //model1 = model1
-            //    .OrderByDescending(kh => kh.NgayAuto)
-            //    .Skip(Sec * pageSize)
-            //                .Take(pageSize)
-            //                .ToList();
             return model1;
         }
-        public int GetPageCountACTek(int IdCN)
+        public int GetPageCountACTek(int IdCN, string strTK)
         {
             var model1 = 0;
             if (IdCN==0)
             {
-                model1 = _context.Ser_kichhoat.Count();
+                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK).Count();
             }
             else
             {
-                model1 = _context.Ser_kichhoat.Where(kh => kh.IdChiNhanh == IdCN).Count();
+                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK).Count();
             }
             
             return model1;

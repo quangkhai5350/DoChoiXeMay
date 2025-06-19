@@ -26,20 +26,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             return View();
         }
         
-        public ActionResult GetListDaActive(int PageNo = 0, int PageSize = 8, int IdCN=0)
+        public ActionResult GetListDaActive(int PageNo = 0, int PageSize = 8, int IdCN=0, string KeywordsTTT="")
         {
-            var model = new Data.ActiveData().getSNACTek(PageNo, PageSize, IdCN);
+            var model = new Data.ActiveData().getSNACTek(PageNo, PageSize, IdCN,KeywordsTTT);
             ViewBag.ListSerialKH = model;
             return PartialView(model);
         }
-        public ActionResult GetPageCountActive(int PageSize = 20, int IdCN=0) {
-            var num = new Data.ActiveData().GetPageCountACTek(IdCN);
+        public ActionResult GetPageCountActive(int PageSize = 20, int IdCN=0, string KeywordsTTT = "") {
+            var num = new Data.ActiveData().GetPageCountACTek(IdCN,KeywordsTTT);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetTongSanPhamAC(int IdCN)
+        public ActionResult GetTongSanPhamAC(int IdCN, string KeywordsTTT = "")
         {
-            var num = new Data.ActiveData().GetPageCountACTek(IdCN);
+            var num = new Data.ActiveData().GetPageCountACTek(IdCN,KeywordsTTT);
             return Json(num, JsonRequestBehavior.AllowGet);
         }
     }
