@@ -58,22 +58,29 @@ namespace DoChoiXeMay.Controllers
             return View(chinhanh);
         }
         [ProtectKH]
-        public ActionResult GetListKHBHbyChiNhanh(int PageNo = 0, int PageSize = 0, int IdCN = 0, string KeywordsTTT = "")
+        public ActionResult GetListKHBHbyChiNhanh(string tu, string den, int PageNo = 0, int PageSize = 0, int IdCN = 0, string KeywordsTTT = "")
         {
-            var model = new ActiveData().getSNACTek(PageNo, PageSize, IdCN, KeywordsTTT);
-            
+            var model = new ActiveData().getSNACTek(PageNo, PageSize, IdCN, KeywordsTTT,tu,den);
+
             var chinhanh = dbc.Ser_ChiNhanh.Find(int.Parse(Session["idchinhanhAt"].ToString()));
-            model = model.Where(kh => kh.IdChiNhanh == chinhanh.Id).ToList();
+            //model = model.Where(kh => kh.IdChiNhanh == chinhanh.Id).ToList();
             ViewBag.ListSerialKH = model;
             return PartialView(chinhanh);
         }
         [ProtectKH]
-        public ActionResult GetPageCountActive(int PageSize = 0, int IdCN = 0, string KeywordsTTT = "")
+        public ActionResult GetPageCountActive(string tu, string den, int PageSize = 0, int IdCN = 0, string KeywordsTTT = "")
         {
             var chinhanh = dbc.Ser_ChiNhanh.Find(int.Parse(Session["idchinhanhAt"].ToString()));
-            var num =  ActiveData.ChiTietkichhoatDBTEK(dbc, IdCN, KeywordsTTT).Count();
+            var num =  ActiveData.ChiTietkichhoatDBTEK(dbc, IdCN, KeywordsTTT, tu, den).Count();
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
+        }
+        [ProtectKH]
+        public ActionResult GetTongSanPhamAC(string tu, string den, int IdCN, string KeywordsTTT = "")
+        {
+            var chinhanh = dbc.Ser_ChiNhanh.Find(int.Parse(Session["idchinhanhAt"].ToString()));
+            var num = ActiveData.ChiTietkichhoatDBTEK(dbc, IdCN, KeywordsTTT, tu, den).Count();
+            return Json(num, JsonRequestBehavior.AllowGet);
         }
         public ActionResult IndexCheckBHND(string SerialSP)
         {

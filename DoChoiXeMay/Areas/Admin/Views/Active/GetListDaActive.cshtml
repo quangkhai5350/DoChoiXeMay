@@ -22,8 +22,9 @@
                 <th class="canhgiua">SDT</th>
                 <th class="canhgiua">Chi Nhánh</th>
                 <th class="canhgiua">Trạng Thái</th>
+                <th class="canhgiua">Lô sx</th>
                 <th class="canhgiua">Hết hạn</th>
-                @*<th class="canhgiua">Update</th>*@
+                <th class="canhgiua">Update</th>
             </tr>
         </thead>
         <tbody style="border: 2px solid black !important">
@@ -68,6 +69,9 @@
                             @Item.Ser_trangthai.Name
                         </td>
                         <td>
+                            @Item.Ser_sp.LoSanXuat
+                        </td>
+                        <td>
                             @if (DateTime.Now > hh)
                             {
                                 <span class="DaXoa">@hh.ToShortDateString()</span>
@@ -77,13 +81,12 @@
                                 <span>@hh.ToShortDateString()</span>
                             }
                         </td>
-                        @*<td>
-            @if (Session["quyen"].ToString() != "Guest")
-            {
-                <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateChiNhanh/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.TenChiNhanh ??')" href="/Admin/DanhMuc/DeleteChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
-            }
-        </td>*@
+                        <td>
+                            @if (Session["quyen"].ToString() != "Guest")
+                            {
+                                <a class="btn btn-danger" href="/Admin/Active/UpdateSNActive/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            }
+                        </td>
                     </tr>
 
                 }

@@ -54,7 +54,7 @@ namespace DoChoiXeMay.Controllers
                 var check_time = DateTime.Now - time_locked;
 
                 // Kiểm tra xem thời giạn bị khóa trên 5 chưa ? Nếu trên 5p reset lại thành false
-                if (check_time.Minutes > 5 && user.Islocked == true)
+                if (check_time.Minutes > 4 && user.Islocked == true)
                 {
                     user.Islocked = false;
                     user.CountFailedPassword = 0;
@@ -63,7 +63,7 @@ namespace DoChoiXeMay.Controllers
                 // Sau khi kiểm tra tình trạng khóa tài khoản thì kiểm tra đăng nhập
                 if (user.Islocked == true)
                 {
-                    ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa.Vui lòng đăng nhập sau " + (5 - check_time.Minutes) + " phút " + (60 - check_time.Seconds) + " giây");
+                    ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa.Vui lòng đăng nhập sau " + (4 - check_time.Minutes) + " phút " + (60 - check_time.Seconds) + " giây");
                 }
                 else
                 {
@@ -108,24 +108,25 @@ namespace DoChoiXeMay.Controllers
                     else
                     {
                         //đếm số lần nhập sai
-                        user.CountFailedPassword += 1;
+                        user.CountFailedPassword = user.CountFailedPassword + 1;
                         if (user.CountFailedPassword == 5)
                         {
                             //Sai 5 lần tài khoản bị khóa
                             user.Islocked = true;
                             user.lastPasswordChangedate = DateTime.Now;
+                            user.LastLokedChangedate = DateTime.Now;
                             dbc.Entry(user).State = EntityState.Modified;
-                            dbc.SaveChanges();
-                            ModelState.AddModelError("", "Nhập sai password liên tiếp 5 lần !!! Tài khoản của bạn bị khóa !!!");
+                            var kqlo= dbc.SaveChanges();
+                            ModelState.AddModelError("", "Nhập sai password liên tiếp 5 lần !!! Tài khoản của bạn bị khóa trong 5p !!!");
                         }
                         else
                         {
                             dbc.Entry(user).State = EntityState.Modified;
                             dbc.SaveChanges();
-                            ModelState.AddModelError("", "Nhập sai password lần: " + user.CountFailedPassword);
+                            ModelState.AddModelError("", "Nhập sai password lần: " + user.CountFailedPassword + ".Tài khoản của bạn sẽ bị khóa nếu nhập sai 5 lần liên tiếp !!!");
                         }
                         //// địa chỉ đến
-                        return RedirectToAction("LoginWebGuest", "Home");
+                        //return RedirectToAction("LoginWebGuest", "Home");
                     }
                 }
             }
@@ -156,7 +157,7 @@ namespace DoChoiXeMay.Controllers
                 var check_time = DateTime.Now - time_locked;
 
                 // Kiểm tra xem thời giạn bị khóa trên 5 chưa ? Nếu trên 5p reset lại thành false
-                if (check_time.Minutes > 5 && user.Islocked == true)
+                if (check_time.Minutes > 4 && user.Islocked == true)
                 {
                     user.Islocked = false;
                     user.CountFailedPassword = 0;
@@ -165,7 +166,7 @@ namespace DoChoiXeMay.Controllers
                 // Sau khi kiểm tra tình trạng khóa tài khoản thì kiểm tra đăng nhập
                 if (user.Islocked == true)
                 {
-                    ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa.Vui lòng đăng nhập sau " + (5 - check_time.Minutes) + " phút " + (60 - check_time.Seconds) + " giây");
+                    ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa.Vui lòng đăng nhập sau " + (4 - check_time.Minutes) + " phút " + (60 - check_time.Seconds) + " giây");
                 }
                 else
                 {
@@ -232,21 +233,22 @@ namespace DoChoiXeMay.Controllers
                     {
                         ModelState.AddModelError("", "Mật khẩu sai vui lòng nhập lại");
                         //đếm số lần nhập sai
-                        user.CountFailedPassword += 1;
+                        user.CountFailedPassword = user.CountFailedPassword + 1;
                         if (user.CountFailedPassword == 5)
                         {
                             //Sai 5 lần tài khoản bị khóa
                             user.Islocked = true;
                             user.lastPasswordChangedate = DateTime.Now;
+                            user.LastLokedChangedate = DateTime.Now;
                             dbc.Entry(user).State = EntityState.Modified;
                             dbc.SaveChanges();
-                            ModelState.AddModelError("", "Nhập sai password liên tiếp 5 lần !!! Tài khoản của bạn bị khóa !!!");
+                            ModelState.AddModelError("", "Nhập sai password liên tiếp 5 lần !!! Tài khoản của bạn bị khóa trong 5p !!!");
                         }
                         else
                         {
                             dbc.Entry(user).State = EntityState.Modified;
                             dbc.SaveChanges();
-                            ModelState.AddModelError("", "Nhập sai password lần: " + user.CountFailedPassword);
+                            ModelState.AddModelError("", "Nhập sai password lần: " + user.CountFailedPassword + ".Tài khoản của bạn sẽ bị khóa nếu nhập sai 5 lần liên tiếp !!!");
                         }
                     }
                 }
