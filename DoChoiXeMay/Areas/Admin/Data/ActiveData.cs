@@ -9,11 +9,14 @@ namespace DoChoiXeMay.Areas.Admin.Data
     public class ActiveData
     {
         Model1 _context;
-        public ActiveData() { 
+        public ActiveData()
+        {
             _context = new Model1();
         }
-        public static List<Ser_kichhoat> ChiTietkichhoatDBTEK(Model1 db, int IdCN, string strTK)
+        public static List<Ser_kichhoat> ChiTietkichhoatDBTEK(Model1 db, int IdCN, string strTK, string tu, string den)
         {
+            var tungay = DateTime.Now;
+            var denngay = DateTime.Now;
             strTK = strTK.Trim().ToLower();
             List<Ser_kichhoat> model = new List<Ser_kichhoat>();
             if (IdCN == 0)
@@ -21,57 +24,44 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 model = db.Ser_kichhoat
                     .Where(kh => kh.Ser_sp.SerialSP.ToLower().Contains(strTK)
                             || kh.Ser_box.Serial.ToLower().Contains(strTK)
-                            || kh.DiaChiKhach.ToLower().Contains(strTK)).ToList();
+                            || kh.DiaChiKhach.ToLower().Contains(strTK)
+                            || kh.TenKhachHang.ToLower().Contains(strTK)).ToList();
             }
             else
             {
                 model = db.Ser_kichhoat.Where(kh => kh.IdChiNhanh == IdCN
                         && (kh.Ser_sp.SerialSP.ToLower().Contains(strTK)
                             || kh.Ser_box.Serial.ToLower().Contains(strTK)
-                            || kh.DiaChiKhach.ToLower().Contains(strTK))).ToList();
+                            || kh.DiaChiKhach.ToLower().Contains(strTK)
+                            || kh.TenKhachHang.ToLower().Contains(strTK))).ToList();
+            }
+            if (tu != "" && den != "")
+            {
+                tungay = DateTime.Parse(tu);
+                denngay = DateTime.Parse(den);
+                model=model.Where(kh => kh.NgayKichHoat >= tungay && kh.NgayKichHoat <= denngay).ToList();
             }
             return model;
         }
-            public List<Ser_kichhoat> getSNACTek(int Sec, int pageSize, int IdCN, string strTK)
+        public List<Ser_kichhoat> getSNACTek(int Sec, int pageSize, int IdCN, string strTK, string tu, string den)
         {
             List<Ser_kichhoat> model1 = new List<Ser_kichhoat>();
-            if(IdCN == 0)
-            {
-                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK)
+            model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK, tu, den)
                     .OrderByDescending(kh => kh.NgayUpdate)
                     .ThenByDescending(kh => kh.IdChiNhanh)
                     .ThenBy(kh => kh.TrangThaiId)
                     .Skip(Sec * pageSize)
                     .Take(pageSize)
                     .ToList();
-            }
-            else
-            {
-                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK)
-                    .OrderByDescending(kh => kh.NgayUpdate)
-                    .ThenByDescending(kh => kh.IdChiNhanh)
-                    .ThenBy(kh => kh.TrangThaiId)
-                    .Skip(Sec * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-            }
             return model1;
         }
-        public int GetPageCountACTek(int IdCN, string strTK)
+        public int GetPageCountACTek(int IdCN, string strTK, string tu, string den)
         {
             var model1 = 0;
-            if (IdCN==0)
-            {
-                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK).Count();
-            }
-            else
-            {
-                model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK).Count();
-            }
-            
+            model1 = ChiTietkichhoatDBTEK(_context, IdCN, strTK, tu, den).Count();
             return model1;
         }
-        public int InsertKichHoatBH(string IdBox, string IdSP,int chinhanh,string email, string tenkh,string sdt,string khuvuc)
+        public int InsertKichHoatBH(string IdBox, string IdSP, int chinhanh, string email, string tenkh, string sdt, string khuvuc)
         {
             try
             {
@@ -122,7 +112,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                         break;
                     }
                 }
-            }else
+            }
+            else
             {
                 model.UserName = name;
             }
@@ -139,7 +130,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
             model.GhiChu = "";
             model.Avatar = "";
             _context.UserTeks.Add(model);
-            var kq= _context.SaveChanges();
+            var kq = _context.SaveChanges();
             if (kq > 0)
             {
                 return model.UserName;

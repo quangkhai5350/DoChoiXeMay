@@ -26,21 +26,33 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             return View();
         }
         
-        public ActionResult GetListDaActive(int PageNo = 0, int PageSize = 8, int IdCN=0, string KeywordsTTT="")
+        public ActionResult GetListDaActive(string tu, string den, int PageNo = 0, int PageSize = 8, int IdCN=0, string KeywordsTTT="")
         {
-            var model = new Data.ActiveData().getSNACTek(PageNo, PageSize, IdCN,KeywordsTTT);
+            var model = new Data.ActiveData().getSNACTek(PageNo, PageSize, IdCN,KeywordsTTT, tu, den);
             ViewBag.ListSerialKH = model;
             return PartialView(model);
         }
-        public ActionResult GetPageCountActive(int PageSize = 0, int IdCN=0, string KeywordsTTT = "") {
-            var num = new Data.ActiveData().GetPageCountACTek(IdCN,KeywordsTTT);
+        public ActionResult GetPageCountActive(string tu, string den, int PageSize = 0, int IdCN=0, string KeywordsTTT = "") {
+            var num = new Data.ActiveData().GetPageCountACTek(IdCN,KeywordsTTT, tu, den);
             var pageCount = Math.Ceiling(1.0 * num / PageSize);
             return Json(pageCount, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetTongSanPhamAC(int IdCN, string KeywordsTTT = "")
+        public ActionResult GetTongSanPhamAC(string tu, string den, int IdCN, string KeywordsTTT = "")
         {
-            var num = new Data.ActiveData().GetPageCountACTek(IdCN,KeywordsTTT);
+            var num = new Data.ActiveData().GetPageCountACTek(IdCN,KeywordsTTT, tu, den);
             return Json(num, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult UpdateSNActive(string Id)
+        {
+            var II= new Guid(Id);
+            var model = dbc.Ser_kichhoat.Find(II);
+            ViewBag.TrangThaiId = new SelectList(dbc.Ser_trangthai.OrderBy(kh => kh.Id), "Id", "Name",model.TrangThaiId);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateSNActive(Ser_kichhoat model, string ngayhethan)
+        {
+            return View();
         }
     }
 }
