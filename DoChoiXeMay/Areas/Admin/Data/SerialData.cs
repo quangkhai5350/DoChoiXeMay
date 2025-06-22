@@ -127,6 +127,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return false;
             }
         }
+        //Khoong xai
         public bool InsertSer_kichhoat(string IdSer_box, string IdSer_sp, string email)
         {
             try

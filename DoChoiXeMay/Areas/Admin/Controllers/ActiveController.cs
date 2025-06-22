@@ -2,6 +2,7 @@
 using DoChoiXeMay.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
@@ -50,9 +51,36 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult UpdateSNActive(Ser_kichhoat model, string ngayhethan)
+        public ActionResult UpdateSNActive(Ser_kichhoat model, DateTime ngayhethan)
         {
-            return View();
+            try
+            {
+                var SerSP= dbc.Ser_sp.Find(model.IDSer_sp);
+                model.Ghichu = ngayhethan.ToShortDateString();
+                model.NgayUpdate = DateTime.Now;
+                dbc.Entry(model).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoListDaActive"] = "Update thành công số SN: " + SerSP.SerialSP + ".";
+                var userid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                        , Session["UserName"].ToString(), "Update thành công số SN -" + model.Ser_sp.SerialSP + "-" + DateTime.Now.ToString(), "");
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                model = dbc.Ser_kichhoat.Find(model.Id);
+                ViewBag.TrangThaiId = new SelectList(dbc.Ser_trangthai.OrderBy(kh => kh.Id), "Id", "Name", model.TrangThaiId);
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                return View(model);
+            }
+            
         }
     }
 }
