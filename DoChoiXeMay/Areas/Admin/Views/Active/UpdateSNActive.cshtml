@@ -4,10 +4,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
 <link href="~/Areas/Admin/Content/css/Info_Style.css" rel="stylesheet" />
-<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
+@*<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>*@
+
 <div class="container">
     <h2>Update S/N đã Active</h2>
-    @using (Html.BeginForm("Active", "UpdateSNActive", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("UpdateSNActive", "Active",  FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset class="info_form" style="margin-top:0">
             <div class="container">
@@ -36,27 +37,28 @@
                         <div class="row" style="width:95%;padding-left:15px">
                             <p>Ngày hết hạn </p>
                             <span class="icon-case"><i class="glyphicon glyphicon-warning-sign"></i></span>
-                            <input type="date" name="ngayhethan" id="ngayhethan" />
+                            <input type="date" onload="getDate()" name="ngayhethan" id="ngayhethan" />
                         </div>
+                        @Html.HiddenFor(m => m.Ghichu, new { @class = "form-control", style = "height: 40px", @required = true })
                         <div class="row">
                             <div class="form-group col-sm-12">
                                 <div class="text-center btn-crud">
-                                    <button id="btnLuu" class="btn btn-warning" data-action="UpdateMauSP"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update</button>
-                                    <a class="btn btn-primary" href="/Admin/DanhMuc/ListMauSanPham" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                                    <button id="btnLuu" type="submit" class="btn btn-warning" data-action="UpdateSNActive"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update</button>
+                                    <a class="btn btn-primary" href="/Admin/Active/Index" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
                                 </div>
-                                <script>
+                                @*<script>
                                     $(function () {
                                         $("button[data-action]").click(function () {
                                             if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
                                                 return false;
                                             } else {
                                                 var action = $(this).attr("data-action");
-                                                this.form.action = "/Admin/DanhMuc/" + action;
+                                                this.form.action = "/Admin/Active/" + action;
                                             }
 
                                         });
                                     });
-                                </script>
+                                </script>*@
                             </div>
                         </div>
                     </div>
@@ -66,4 +68,17 @@
         </fieldset>
     }
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    getDate()
+    function getDate() {
+        var data = $("#Ghichu").val()
+        const dateInput = $("#ngayhethan").val()
+        const myArray = data.split('/');
+        if (myArray.length == 3) {
+            var da = myArray[2] + "-" + myArray[1] + "-" + myArray[0];
+            $("#ngayhethan").val(da)
+        }
+    }
+</script>
 
