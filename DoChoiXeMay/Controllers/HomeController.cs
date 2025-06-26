@@ -47,7 +47,7 @@ namespace DoChoiXeMay.Controllers
         {
             TaiKhoanInfo tk_check = new TaiKhoanInfo();
             //tài khoản không phân biệt hoa thường.
-            var user = dbc.UserTeks.Where(p => p.UserName.ToLower() == UserName.ToLower()).SingleOrDefault();
+            var user = dbc.UserTeks.Where(p => p.UserName.ToLower() == UserName.ToLower() && p.IdLoai == 5).SingleOrDefault();
             if (user != null)
             {
                 var time_locked = user.LastLokedChangedate;
@@ -71,39 +71,28 @@ namespace DoChoiXeMay.Controllers
                     if (user.Password == check_pass)
                     {
                         int UserFirt = user.Id;
-                        
-                        var quyenChiNhanh = dbc.UserTeks.Where(p => p.UserName == UserName && p.IdLoai == 5).ToList();
-                        if (quyenChiNhanh.Count == 0)
+                        // đăng nhập thành công set lại số lần nhập sai = 0
+                        if (user.CountFailedPassword > 0)
                         {
-                            ModelState.AddModelError("", "Chào bạn, tài khoản chi nhánh của bạn không đúng. Liên Hệ trung tâm để được hổ trợ !!");
-                            //// địa chỉ đến
-                            return RedirectToAction("LoginWebGuest", "Home");
+                            user.CountFailedPassword = 0;
+                            dbc.Entry(user).State = EntityState.Modified;
+                            dbc.SaveChanges();
                         }
-                        else
-                        {
-                            // đăng nhập thành công set lại số lần nhập sai = 0
-                            if (user.CountFailedPassword > 0)
-                            {
-                                user.CountFailedPassword = 0;
-                                dbc.Entry(user).State = EntityState.Modified;
-                                dbc.SaveChanges();
-                            }
-                            string[] user_log = new string[2];
-                            user_log[0] = UserName;
-                            user_log[1] = Password;
-                            Session["UserName"] = UserName;
-                            Session["UserId"] = UserFirt;
-                            //
-                                Session["quyen"] = user.LoaiUserTek.Id;
-                                Session["avatar"] = user.Avatar;
-                                var uID = UserFirt;
-                                var model_uid = dbc.UserTeks.Find(UserFirt);
-                                bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "LoginWeb", "");
-                            Session["idchinhanhAt"] = dbc.Ser_ChiNhanh.FirstOrDefault(kh=>kh.IdUser == uID).Id;
-                            ////
-                            return RedirectToAction("IndexDL", "Active"); 
-                        }
+                        string[] user_log = new string[2];
+                        user_log[0] = UserName;
+                        user_log[1] = Password;
+                        Session["UserName"] = UserName;
+                        Session["UserId"] = UserFirt;
+                        //
+                        Session["quyen"] = user.LoaiUserTek.Id;
+                        Session["avatar"] = user.Avatar;
+                        var uID = UserFirt;
+                        //var model_uid = dbc.UserTeks.Find(UserFirt);
+                        bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
+                , Session["UserName"].ToString(), "LoginWeb", "");
+                        Session["idchinhanhAt"] = dbc.Ser_ChiNhanh.FirstOrDefault(kh => kh.IdUser == uID).Id;
+                        ////
+                        return RedirectToAction("IndexDL", "Active");
                     }
                     else
                     {

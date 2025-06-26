@@ -92,7 +92,7 @@ namespace DoChoiXeMay.Controllers
                 var serialSP = dbc.Ser_sp.FirstOrDefault(kh => kh.SerialSP == SerialSP && kh.DaIn == true && kh.Sudung == true);
                 if (serialSP != null) {
                     var kt = dbc.Ser_kichhoat.FirstOrDefault(kh => kh.IDSer_sp == serialSP.Id);
-                    if (kt != null && kt.IdChiNhanh==1)
+                    if (kt != null)
                     {
                         Session["thongtin1"] = "S/N:"+ SerialSP + ", được kích hoạt bởi: " + kt.TenKhachHang+", sdt:"+kt.SDT;
                         Session["thongtin2"] = "_Sản phẩm đã kích hoạt ngày "+kt.NgayKichHoat;

@@ -25,5 +25,6 @@ namespace DoChoiXeMay.Areas.Admin.Data
             string check_pass = tk.DeCryptDotNetNukePassword(UserChinhanh.Password, "A872EDF100E1BC806C0E37F1B3FF9EA279F2F8FD378103CB", UserChinhanh.PasswordSalt);//pass ma hoa
             return check_pass;
         }
+
     }
 }
