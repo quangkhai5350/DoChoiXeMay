@@ -43,18 +43,22 @@
         <div class="nav-inner">
             <!-- Site Logo -->
             <div class="site-logo">
-                <a href="#" id="logo-text" class="scroll logo">
-                    <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
-                    @if (Session["UserName"] != null)
-                    {
+                @if (Session["UserName"] != null)
+                {
+                    <a href="/Active/IndexDL" id="logo-text" title="Click đến trang của NPP" class="scroll logo">
+                        <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
                         <span>@Session["UserName"].ToString()</span>
-                    }
-                    else
-                    {
-                        <span>Trần Nguyễn TechZone</span>
-                    }
-                </a>
-            </div><!-- End Site Logo -->
+                    </a>
+}
+else
+            {
+            <a href="" id="logo-text" class="scroll logo">
+                <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
+                <span>Trần Nguyễn TechZone</span>
+            </a>
+               }
+                    
+                </div><!-- End Site Logo -->
             <a class="mini-nav-button gray2"><i class="fa fa-bars"></i></a>
             <!-- Navigation Menu -->
             <div class="nav-menu">
@@ -63,6 +67,7 @@
                     <li style="display:inline-block !important"><a href="/Active/Index" class="scroll">Warranty</a></li>
                     @if (Session["UserName"] != null)
                     {
+                        <li style="display:inline-block !important"><a href="/AccountWeb/_ChangeInFo/@int.Parse(Session["idchinhanhAt"].ToString())" class="scroll">ThongTinTaiKhoan</a></li>
                         <li style="display:inline-block !important"><a href="/Home/LogOut" class="scroll">LogOut</a></li>
                     }
                     else

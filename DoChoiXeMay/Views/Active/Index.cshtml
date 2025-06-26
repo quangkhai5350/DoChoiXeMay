@@ -51,9 +51,9 @@
 
 
                         <div class="input-group" id="nhaphanphoi" style="display: none;width:100%;height:50px">
-                            <label>Bạn là nhà phân phối nào?</label>
+                            <label style="font-size:15px">Bạn là nhà phân phối nào?</label>
                             @*@Html.DropDownList("IdChiNhanh", null, new { @class = "form-control", style = "width: 100%; height: 40px" })*@
-                            <input id="IdChiNhanh" onchange="LoadChiNhanh()" list="ChiNhanh" name="ChiNhanh" />
+                            <input id="IdChiNhanh" style="font-size:20px" onchange="LoadChiNhanh()" list="ChiNhanh" name="ChiNhanh" />
                             <datalist id="ChiNhanh">
                                 @foreach (Ser_ChiNhanh item in ViewBag.ChiNhanh)
                                 {
@@ -63,14 +63,14 @@
                             </datalist>
                         </div>
                         <div class="input-group" id="GGmail" style="display: none">
-                            <input value="@ViewBag.Password" disabled type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail NPP" required>
+                            <input value="" disabled type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail NPP" required>
                         </div>
                         <div class="input-group" id="GSDT" style="display: none; margin-bottom: 110px">
-                            <input value="@ViewBag.Password" disabled type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại NPP" required>
+                            <input value="" disabled type="text" class="form-control" id="SDT" name="SDT" placeholder="Số điện thoại NPP" required>
                         </div>
 
                         <div class="input-group" id="Tenkhachhang" style="display: none; height: 85px ">
-                            <label>Họ và tên người dùng:</label>
+                            <label style="font-size:15px">Họ và tên người dùng:</label>
                             <input value="@ViewBag.Password" type="text" class="form-control" id="Tenkh" name="Tenkh" placeholder="Họ và Tên">
                         </div>
                         <p class="pull-right label label-warning" id="thongbaoSP"></p>
@@ -316,8 +316,8 @@
                 $("#Tenkhachhang").css('display', 'block');
                 $("#nameBH").html("Kíck hoạt BH ND");
                 $("#nameKT").html("Kiểm tra BH ND");
-                $("#GGmail").css('display', 'none');
-                $("#GSDT").css('display', 'none');
+                //$("#GGmail").css('display', 'none');
+                //$("#GSDT").css('display', 'none');
             }
 
         }
@@ -334,16 +334,16 @@
                 data: { NPP: idChiNhanh },
                 success: function (data) {
                     if (data != "No") {
-                        const myArray = data.split('/');
-                        $("#GGmail").css('display', 'block');
-                        $("#GSDT").css('display', 'block');
-                        $("#Gmail").val(myArray[1])
-                        $("#SDT").val(myArray[0])
+                        //const myArray = data.split('/');
+                        //$("#GGmail").css('display', 'block');
+                        //$("#GSDT").css('display', 'block');
+                        //$("#Gmail").val(myArray[1])
+                        //$("#SDT").val(myArray[0])
                     } else {
-                        $("#Gmail").val('')
-                        $("#SDT").val('')
-                        $("#GGmail").css('display', 'none');
-                        $("#GSDT").css('display', 'none');
+                        //$("#Gmail").val('')
+                        //$("#SDT").val('')
+                        //$("#GGmail").css('display', 'none');
+                        //$("#GSDT").css('display', 'none');
                         alert("Tên đại lý / NPP không đúng !!!.")
                     }
                 },
