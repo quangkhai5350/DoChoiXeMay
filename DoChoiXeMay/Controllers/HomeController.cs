@@ -193,7 +193,7 @@ namespace DoChoiXeMay.Controllers
                                 var uID = UserFirt;
                                 var model_uid = dbc.UserTeks.Find(UserFirt);
                                 bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "LoginWeb", "");
+                        , Session["UserName"].ToString(), "LoginWeb_Admin", "");
                                 //tro lai trang truoc do 
                                 if (requestUri != null)
                                 {
@@ -207,7 +207,7 @@ namespace DoChoiXeMay.Controllers
                                 var uID = UserFirt;
                                 var model_uid = dbc.UserTeks.Find(uID);
                                 bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "LoginWeb", "");
+                                    , Session["UserName"].ToString(), "LoginWeb_Admin", "");
                             }
                             Session.Remove("Thongbaodangky");
                             //tro lai trang truoc do 

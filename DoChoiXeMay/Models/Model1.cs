@@ -12,7 +12,7 @@ namespace DoChoiXeMay.Models
         {
         }
 
-        public virtual DbSet<aspnet_getVisitors> Aspnet_getVisitors { get; set; }
+        public virtual DbSet<aspnet_getVisitors> aspnet_getVisitors { get; set; }
         public virtual DbSet<ChiTietTC> ChiTietTCs { get; set; }
         public virtual DbSet<ChitietXuatNhap> ChitietXuatNhaps { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
@@ -36,12 +36,15 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<ProjectUserDetail> ProjectUserDetails { get; set; }
         public virtual DbSet<Ser_box> Ser_box { get; set; }
         public virtual DbSet<Ser_ChiNhanh> Ser_ChiNhanh { get; set; }
+        public virtual DbSet<Ser_Chitiet_XuatSN_CN> Ser_Chitiet_XuatSN_CN { get; set; }
         public virtual DbSet<Ser_kichhoat> Ser_kichhoat { get; set; }
         public virtual DbSet<Ser_Levelchinhanh> Ser_Levelchinhanh { get; set; }
         public virtual DbSet<Ser_LoaiHang> Ser_LoaiHang { get; set; }
         public virtual DbSet<Ser_sp> Ser_sp { get; set; }
         public virtual DbSet<Ser_trangthai> Ser_trangthai { get; set; }
+        public virtual DbSet<Ser_XuatSN_CN> Ser_XuatSN_CN { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TrangThaiDuAn> TrangThaiDuAns { get; set; }
         public virtual DbSet<UserTek> UserTeks { get; set; }
         public virtual DbSet<Version> Versions { get; set; }
@@ -107,6 +110,12 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdKy)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<KyXuatNhap>()
+                .HasMany(e => e.Ser_XuatSN_CN)
+                .WithRequired(e => e.KyXuatNhap)
+                .HasForeignKey(e => e.IdKyxuat)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<LoaiNoteTeK>()
                 .HasMany(e => e.NoteKythuats)
                 .WithRequired(e => e.LoaiNoteTeK)
@@ -166,6 +175,12 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IDSer_box)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Ser_ChiNhanh>()
+                .HasMany(e => e.Ser_XuatSN_CN)
+                .WithRequired(e => e.Ser_ChiNhanh)
+                .HasForeignKey(e => e.IdChiNhanh)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Ser_Levelchinhanh>()
                 .HasMany(e => e.Ser_ChiNhanh)
                 .WithRequired(e => e.Ser_Levelchinhanh)
@@ -200,6 +215,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.Ser_kichhoat)
                 .WithRequired(e => e.Ser_trangthai)
                 .HasForeignKey(e => e.TrangThaiId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Ser_XuatSN_CN>()
+                .HasMany(e => e.Ser_Chitiet_XuatSN_CN)
+                .WithRequired(e => e.Ser_XuatSN_CN)
+                .HasForeignKey(e => e.IdSN_CN)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Size>()

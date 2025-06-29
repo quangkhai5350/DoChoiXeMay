@@ -140,6 +140,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ActiveController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChiNhanhController.cs" />
     <Compile Include="Areas\Admin\Controllers\DanhMucController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\NoteKyThuatController.cs" />
@@ -191,12 +192,15 @@
     <Compile Include="Models\QCtrangchu.cs" />
     <Compile Include="Models\Ser_box.cs" />
     <Compile Include="Models\Ser_ChiNhanh.cs" />
+    <Compile Include="Models\Ser_Chitiet_XuatSN_CN.cs" />
     <Compile Include="Models\Ser_kichhoat.cs" />
     <Compile Include="Models\Ser_Levelchinhanh.cs" />
     <Compile Include="Models\Ser_LoaiHang.cs" />
     <Compile Include="Models\Ser_sp.cs" />
     <Compile Include="Models\Ser_trangthai.cs" />
+    <Compile Include="Models\Ser_XuatSN_CN.cs" />
     <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TrangThaiDuAn.cs" />
     <Compile Include="Models\UserTek.cs" />
     <Compile Include="Models\Version.cs" />
@@ -518,6 +522,10 @@
     <Content Include="Areas\Admin\Views\Active\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Active\GetListDaActive.cshtml" />
     <Content Include="Areas\Admin\Views\Active\UpdateSNActive.cshtml" />
+    <Content Include="Areas\Admin\Views\ChiNhanh\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ChiNhanh\GetListSNchinhanh.cshtml" />
+    <Content Include="Areas\Admin\Views\ChiNhanh\UpdateSNchoCN.cshtml" />
+    <Content Include="Areas\Admin\Views\ChiNhanh\AddSN_ChiNhanh.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

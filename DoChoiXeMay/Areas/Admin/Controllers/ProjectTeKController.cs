@@ -190,8 +190,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         {
             var model = dbc.ProjectTeKs.Find(id);
             ViewBag.TrangthaiId = new SelectList(dbc.TrangThaiDuAns.ToList(), "Id", "Name", model.TrangthaiId);
-            ViewBag.User = dbc.UserTeks.OrderBy(kh => kh.Id).ToList();
-            ViewBag.UserC = dbc.UserTeks.OrderBy(kh => kh.Id).Count();
+            ViewBag.User = dbc.UserTeks.Where(kh=>kh.IdLoai<3).OrderBy(kh => kh.Id).ToList();
+            ViewBag.UserC = dbc.UserTeks.Where(kh => kh.IdLoai < 3).OrderBy(kh => kh.Id).Count();
             ViewBag.ProjectDetail = dbc.ProjectDetails.Where(kh => kh.ProjectId == id).OrderBy(kh => kh.Id).ToList();
             ViewBag.CountProjectDetail = dbc.ProjectDetails.Where(kh => kh.ProjectId == id).OrderBy(kh => kh.Id).Count();
             return View(model);
