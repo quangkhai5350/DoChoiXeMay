@@ -64,7 +64,7 @@ else
             <div class="nav-menu">
                 <ul class="nav uppercase">
                     <li style="display:inline-block !important"><a href="/Home/Index" class="scroll">Home</a></li>
-                    <li style="display:inline-block !important"><a href="/Active/Index" class="scroll">Warranty</a></li>
+
                     @if (Session["UserName"] != null)
                     {
                         <li style="display:inline-block !important"><a href="/AccountWeb/_ChangeInFo/@int.Parse(Session["idchinhanhAt"].ToString())" class="scroll">ThongTinTaiKhoan</a></li>
@@ -72,6 +72,7 @@ else
                     }
                     else
                     {
+                        <li style="display:inline-block !important"><a href="/Active/Index" class="scroll">Warranty</a></li>
                         <li style="display:inline-block !important"><a href="/LoginWeb" class="scroll">LoginWebTEK</a></li>
                     }
                 </ul>

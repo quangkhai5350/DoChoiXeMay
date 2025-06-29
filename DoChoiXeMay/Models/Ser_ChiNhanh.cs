@@ -8,6 +8,12 @@ namespace DoChoiXeMay.Models
 
     public partial class Ser_ChiNhanh
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Ser_ChiNhanh()
+        {
+            Ser_XuatSN_CN = new HashSet<Ser_XuatSN_CN>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -49,5 +55,8 @@ namespace DoChoiXeMay.Models
         public virtual KhuVuc KhuVuc { get; set; }
 
         public virtual Ser_Levelchinhanh Ser_Levelchinhanh { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ser_XuatSN_CN> Ser_XuatSN_CN { get; set; }
     }
 }

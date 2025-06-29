@@ -16,6 +16,18 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             _context = new Model1();
         }
+        public KyXuatNhap GetKyByIdXuat(int Id)
+        {
+            var modelxuat = _context.Ser_XuatSN_CN.Find(Id);
+            var modelKy = _context.KyXuatNhaps.Find(modelxuat.IdKyxuat);
+            return modelKy;
+        }
+        public Ser_ChiNhanh GetChiNhanhByIdXuat(int Id)
+        {
+            var modelxuat = _context.Ser_XuatSN_CN.Find(Id);
+            var modelCN = _context.Ser_ChiNhanh.Find(modelxuat.IdChiNhanh);
+            return modelCN;
+        }
         public Ser_ChiNhanh GetChiNhanhbyID(int IDCN)
         {
             //var chinhanh = _context.Ser_ChiNhanh.FirstOrDefault(kh=>kh.Id == IDCN);

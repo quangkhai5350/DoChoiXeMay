@@ -26,8 +26,10 @@ namespace DoChoiXeMay.Models
 
         [StringLength(50)]
         public string SDT { get; set; }
+
         [StringLength(500)]
-        public string DiaChiKhach {  get; set; }
+        public string DiaChiKhach { get; set; }
+
         public int IdChiNhanh { get; set; }
 
         public int TrangThaiId { get; set; }

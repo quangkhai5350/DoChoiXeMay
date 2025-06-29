@@ -10,7 +10,7 @@
 <div class="container" style="width:100%;background-color: white; margin-top: 150px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
     <div class="omb_login">
         <div class="row" style="text-align:center">
-            <span style="font-size:15px" class="pull-right label label-warning">@Session["ThongbaoActive"]</span>
+            <span style="font-size:15px" class="pull-right label label-warning">@Session["ThongbaoUthanhcong"]</span>
         </div>
     </div>
     @if (Model != null)
@@ -34,103 +34,63 @@
                     <div class="contentform">
                         <div class="form-group">
                             <div class="row" style="width:95%;padding-left:15px">
+                                <p>Thông tin ngân hàng</p>
+                                @Html.TextBoxFor(m => m.TaiKhoanNH, new { @class = "form-control", style = "height: 40px", @disabled = true })
 
-                                <p>Người Đại Diện</p>
+                            </div>
+                            <div class="row" style="width:95%;padding-left:15px">
+                                <p>Địa Chỉ</p>
+                                @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", style = "height: 40px", @required = true })
+
+                            </div>
+                            <div class="row" style="width:95%;padding-left:15px">
+                                <p>Tên Người Đại Diện</p>
                                 @Html.TextBoxFor(m => m.DaiDien, new { @class = "form-control", style = "height: 40px", @required = true })
 
                             </div>
                             <div class="row" style="width:95%;padding-left:15px">
-                                <p>SDT</p>
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
+                                <p>SDT liên lạc</p>
                                 @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", style = "height: 40px", @required = true })
 
                             </div>
                             <div class="row" style="width:95%;padding-left:15px">
-                                <p>PassWord củ</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input type="text" value="@ViewBag.passcu" name="PW" required />
-                            </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <p>PassWord mới</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input type="text" name="PWM" required />
-                            </div>
-                            <div class="row" style="width:95%;padding-left:15px">
-                                <p>Xác nhận PassWord mới</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-lock"></i></span>
-                                <input type="text" name="PWMM" required />
-                            </div>
-                            <div class="row" style="width:95%;padding-left:15px">
                                 <p>Email chi nhánh</p>
-                                <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
                                 @Html.TextBoxFor(m => m.Gmail, new { @class = "form-control", style = "height: 40px", @required = true })
 
                             </div>
-                            @*@if (Session["quyen"].ToString() == "1")
-                                {
-                                    <div class="row" style="width:95%;padding-left:15px">
-                                        <p>Loại User(Guess==ChiNhanh)</p>
-                                        <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
-                                        @Html.DropDownList("IdLoai", null, new { @class = "form-control", style = "width: 55%; height: 40px" })
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="row" style="width:95%;padding-left:15px;display:none">
-                                        <p>Loại User(Guess==ChiNhanh)</p>
-                                        <span class="icon-case"><i class="glyphicon glyphicon-user"></i></span>
-                                        @Html.DropDownList("IdLoai", null, new { @class = "form-control", style = "width: 55%; height: 40px" })
-                                    </div>
-                                }*@
 
-                            @*<div class="row">
-                                    <div class="col-sm-9">
-                                        <div class="form-group">
-                                            <p>Avatar <span>(Nên dùng hình vuông-giới hạn 7MB)</span></p>
-                                            <span class="icon-case"><i class="glyphicon glyphicon-info-sign"></i></span>
-                                            <input type="file" name="Dinhkem1" id="Dinhkem1" />
-                                            <p id="thongbaosite1" style="color:red; display:none">File quá lớn !!!</p>
-                                            @Html.HiddenFor(kh => kh.Avatar)
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        @if (File.Exists(Request.MapPath("~/Content/imgTeK/" + Model.Avatar)))
-                                        {
-                                            <img class="img-responsive img-thumbnail" src="~/Content/imgTeK/@Model.Avatar" style="max-width:100%;max-height:200px" />
-                                        }
-                                    </div>
-                                </div>*@
-                            <div class="row">
+                            <div class="input-group" style="width:100%;margin-bottom:15px;margin-top:15px">
+                                <div style="width: 49%; border: 1px dashed #423333; float: left">
+                                    <label class="checkbox text-danger" style="margin-left:5px">
+                                        <input type="checkbox" id="ND" dirname="" value="" name="Check" />
+                                        <span>Thay đổi pass word</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="row" id="pwc" style="width:95%;padding-left:15px;display:none">
+                                <p>PassWord củ</p>
+                                <input type="text" id="PW" value="" name="PW" required />
+                                <span class="label label-warning" id="thongbaopwc"></span>
+                            </div>
+                            <div class="row" id="pwm" style="width: 95%; padding-left: 15px; display: none">
+                                <p>PassWord mới</p>
+                                <input type="text" id="PWM" name="PWM" required />
+                                <span class="label label-warning" id="thongbaopwm"></span>
+                            </div>
+                            <div class="row" id="lpwm" style="width: 95%; padding-left: 15px; display: none">
+                                <p>Lặp lại PassWord mới</p>
+                                <input type="text" id="PWMM" name="PWMM" required />
+                                <span class="label label-warning" id="thongbaolpwm"></span>
+                            </div>
+
+                            <div class="row" style="margin-top:20px">
                                 <div class="form-group col-sm-12">
-                                    <div class="text-center btn-crud">
-                                        <button id="btnLuu" class="btn btn-warning" data-action="EditUser"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update User</button>
-                                        <a class="btn btn-primary" href="/Home/ListUserTeK" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
+                                    <div class="btn-crud">
+                                        <a id="btnLuu" class="btn btn-warning" onclick="UpdateThongtin()"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Update User</a>
+                                        <a class="btn btn-primary" href="/warranty" style="margin-left:10%"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;Quay Lại</a>
                                     </div>
-                                    <script>
-                                        $('#Dinhkem1').bind('change', function () {
-                                            //this.files[0].size gets the size of your file.
-                                            var size = this.files[0].size;
-                                            const file = Math.round((size / 1024));
-                                            if (file >= 7200) {
-                                                $("#thongbaosite1").css('display', 'block');
-                                                document.getElementById('btnLuu').disabled = true;
-                                            } else {
-                                                $("#thongbaosite1").css('display', 'none')
-                                                document.getElementById('btnLuu').disabled = false;
-                                            }
-                                        });
-                                        $(function () {
-                                            $("button[data-action]").click(function () {
-                                                if (!confirm("Bạn Có Chắc Chắn Hành Động Của Mình?")) {
-                                                    return false;
-                                                } else {
-                                                    var action = $(this).attr("data-action");
-                                                    this.form.action = "/Home/" + action;
-                                                }
 
-                                            });
-                                        });
-                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -142,4 +102,68 @@
 
     }
 </div>
+<script>
+    $("input:checkbox").on('click', function () {
+        var $box = $(this);
+        if ($box.is(":checked")) {
+            $("#pwc").css('display', 'block')
+            $("#pwm").css('display', 'block')
+            $("#lpwm").css('display', 'block')
+        } else {
+            $("#pwc").css('display', 'none')
+            $("#pwm").css('display', 'none')
+            $("#lpwm").css('display', 'none')
+        }
+    });
+    function UpdateThongtin() {
+        var check = $("#ND");
+        var ischeck = "false";
+        var id = $("#Id").val();
+        var daidien = $("#DaiDien").val();
+        var diachi = $("#DiaChi").val();
+        var sdt = $("#SDT").val();
+        var gmail = $("#Gmail").val();
+        var pw = $("#PW").val();
+        var pwm = $("#PWM").val();
+        var pwmm = $("#PWMM").val();
+        
+        if (check.is(":checked")) {
+            if (!confirm("Bạn muốn thay đổi thông tin của Chi Nhánh và PassWord ??")) {
+                return false;
+            } else {
+                if (pw == null || pw.trim() == "") {
+                    $("#thongbaopwc").html("Pass word của bạn là gì ??")
+                } else if (pwm == null || pwm.trim() == "") {
+                    $("#thongbaopwm").html("Pass word mới không để trống !!!")
+                } else if (pwmm == null || pwmm.trim() == "" || pwmm.trim() != pwm) {
+                    $("#thongbaolpwm").html("Lặp lại Pass word không đúng !!!")
+                } else {
+                    var postData = JSON.stringify({
+                        Id: id, DaiDien: daidien, SDT: sdt, DiaChi: diachi, Gmail: gmail
+                        , PW: pw, PWM: pwm, PWMM: pwmm
+                    });
+                    $.ajax({
+                        contentType: "application/json; charset=utf-8",
+                        url: "/AccountWeb/ChangeInFoJson",
+                        dataType: 'json',
+                        type: 'POST',
+                        data: postData,
+                        success: function (response) {
+                            location.reload();
+                        }
+                    });
+                }
+                    
+            }
+        } else {
+            if (!confirm("Bạn muốn thay đổi thông tin của Chi Nhánh ??")) {
+                return false;
+            } else {
+
+            }
+        }
+        
+            
+    }
+</script>
 
