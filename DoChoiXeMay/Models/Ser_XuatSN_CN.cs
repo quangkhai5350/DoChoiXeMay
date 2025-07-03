@@ -19,6 +19,7 @@ namespace DoChoiXeMay.Models
         public int UserId { get; set; }
 
         public int SoLuong { get; set; }
+
         public int DaAdd { get; set; }
 
         public DateTime NgayXuat { get; set; }

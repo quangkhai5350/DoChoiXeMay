@@ -226,7 +226,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var uid = int.Parse(Session["UserId"].ToString());
                 var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
                                 , Session["UserName"].ToString(), "Update hình sp: "+model.Ten+ " bảng HH Thành Công. ", "");
-                @Session["TBHinhSPTEK"] = "Update hình sp: "+model.Ten+" Thành Công.";
+                Session["ThongBaoHangHoaTEK"] = "Update hình sp: "+model.Ten+" Thành Công.";
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
                 if (requestUri != null)

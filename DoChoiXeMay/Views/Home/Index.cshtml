@@ -1,16 +1,23 @@
-﻿@{
+﻿@using DoChoiXeMay.Models;
+
+@{
     ViewBag.Title = "Home Page";
 }
-
+<style>
+    /*// Tự thêm vào*/
+    .imgSP {
+        height: 500px;
+    }
+</style>
 <!-- Home Section -->
 <section id="home" class="relative">
     <div id="slides">
         <div class="slides-container relative">
             <!-- Slider Images -->
-            <div class="image2"></div>
-            <div class="image1"></div>
-            <div class="image3"></div>
-            <div class="image4"></div>
+            @foreach (QCtrangchu QCN in ViewBag.GetPanelNgang)
+            {
+                <img src="~/Content/images/@QCN.Name" />
+            }
             <!-- End Slider Images -->
         </div>
         <!-- Slider Controls -->
@@ -23,9 +30,6 @@
         <!-- Auto Typocraphic Texts -->
         <div class="typographic">
             <!-- Your Logo -->
-            <div class="logo">
-                <img src="~/Content/images/logo-icon.png" width="200" alt="Logo" />
-            </div>
             <h2 class="condensed uppercase no-padding no-margin bold gray1">Introducing</h2>
             <h2 class="condensed uppercase no-padding no-margin bold colored">Fitness Passion</h2>
             @*<a href="#about" class="scroll"><i class="arrow-down fa fa-3x fa-angle-double-down"></i></a>*@
@@ -38,8 +42,9 @@
 
     <div class="inner fun-acts">
         <div class="about-margin"></div>
+        @*<img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="z-index:100;width:50px;margin-bottom:10px" />*@
         <a class="about-icon">
-            <i class="fa fa-life-ring"></i>
+        <i class="fa"><img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="z-index:100;width:100px;margin-bottom:10px" /></i>
         </a>
         <br />
 
@@ -53,3 +58,107 @@
     </div><!-- End Fun Acts Inner -->
 </section>
 <!-- End Fun Acts Section -->
+<!-- Clients -->
+<section id="clients" class="container">
+
+    <!-- Team Inner -->
+    <div class="inner team">
+
+        <!-- Header -->
+        <h1 class="header light gray3"><span class="colored">Our </span> Gymnasts</h1>
+
+        <!-- Description -->
+        <p class="h-desc gray4">lorem Ipsum is<span class="colored bold">  lorem Ipsum</span> lorem Ipsum is simply dummy text of the printing and typesetting industry loremipsum. lorem Ipsum is simply dummy text of the printing and typesetting industry loremipsum is simple.</p>
+
+
+        <!-- Members -->
+        <div class="team-members inner-details">
+
+            <!-- Member -->
+            @foreach (QCtrangchu QCD in ViewBag.GetPanelDoc)
+            {
+                <div class="col-xs-4 member animated" data-animation="fadeInUp" data-animation-delay="0">
+                    <div class="member-inner">
+                        <!-- Team Member Image -->
+                        <a class="team-image">
+                            <!-- Img -->
+                            <img src="~/Content/images/clients/@QCD.Name" class="imgSP" alt="" />
+                        </a>
+                        <div class="member-details">
+                            <div class="member-details-inner">
+                                <!-- Name -->
+                                <h2 class="member-name light">@QCD.Ghichu</h2>
+                                <!-- Description -->
+                                <p class="member-description">CLick đến socials page đặt hàng.</p>
+                                <!-- Socials -->
+                                <div class="socials">
+                                    <!-- Link -->
+                                    @if (QCD.Idloai_socials == 5)
+                                    {
+                                        <a href="@QCD.Urlsocials" target="_blank" class="social">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    }
+                                    else if (QCD.Idloai_socials == 4)
+                                    {
+                                        <a href="@QCD.Urlsocials" target="_blank" class="">
+                                            <img src="~/Content/images/icons8-zalo-48.png" style="margin-left:-4px;margin-top:-5px" />
+                                        </a>
+                                    }
+                                    else if (QCD.Idloai_socials == 2)
+                                    {
+                                        <a href="@QCD.Urlsocials" target="_blank" class="social">
+                                            <i class="fa fa-instagram"></i>
+                                        </a>
+                                    }
+                                    @*<a href="#"><i class="fa fa-shopping-cart"></i></a>*@
+                                </div><!-- End Socials -->
+                            </div> <!-- End Detail Inner -->
+                        </div><!-- End Details -->
+                    </div> <!-- End Member Inner -->
+                </div>
+            }
+
+        </div><!-- End Members -->
+    </div><!-- End Team Inner -->
+</section><!-- End Team Section -->
+<!-- Site Socials and Address -->
+<section id="site-socials" class="no-padding white-bg">
+    <div class="site-socials inner no-padding">
+        <!-- Socials -->
+        <div class="socials animated" data-animation="fadeInLeft" data-animation-delay="400">
+            <!-- Facebook -->
+            <a href="#" target="_blank" class="social">
+                <i class="fa fa-facebook"></i>
+            </a>
+            <!-- Twitter -->
+            <a href="#" target="_blank" class="social">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <!-- Instagram -->
+            <a href="#" class="social">
+                <i class="fa fa-instagram"></i>
+            </a>
+            <!-- Linkedin -->
+            <a href="#" target="_blank" class="social">
+                <i class="fa fa-linkedin"></i>
+            </a>
+            <!-- Vimeo -->
+            <a href="#" target="_blank" class="social">
+                <i class="fa fa-vimeo-square"></i>
+            </a>
+            <!-- Youtube -->
+            <a href="#" target="_blank" class="social">
+                <i class="fa fa-youtube"></i>
+            </a>
+
+        </div>
+        <!-- Adress, Mail -->
+        <div class="address socials animated" data-animation="fadeInRight" data-animation-delay="500">
+            <!-- Phone Number, Mail -->
+            <p>Phone: +1 (800) 245-1234 Email : <a href="mailto:khai.trannguyen.tek.net@gmail.com" class="colored">khai.trannguyen.tek.net@gmail.com</a></p>
+            <!-- Top Button -->
+
+        </div><!-- End Adress, Mail -->
+    </div><!-- End Inner -->
+</section><!-- End Site Socials and Address -->
