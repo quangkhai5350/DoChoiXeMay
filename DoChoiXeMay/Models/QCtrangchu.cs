@@ -9,32 +9,30 @@ namespace DoChoiXeMay.Models
     [Table("QCtrangchu")]
     public partial class QCtrangchu
     {
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         [StringLength(500)]
         public string Name { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         public DateTime Ngay { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
+        public int Idvitri { get; set; }
+
         public bool Sudung { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
         public bool Img { get; set; }
 
+        public int Idloai_socials { get; set; }
+
         [StringLength(50)]
-        public string Stt { get; set; }
+        public string Urlsocials { get; set; }
 
         [StringLength(500)]
         public string Ghichu { get; set; }
+
+        public virtual Loai_Socials Loai_Socials { get; set; }
+
+        public virtual QCVitri QCVitri { get; set; }
     }
 }

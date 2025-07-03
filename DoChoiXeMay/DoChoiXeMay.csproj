@@ -178,6 +178,7 @@
     <Compile Include="Models\KyXuatNhap.cs" />
     <Compile Include="Models\LoaiNoteTeK.cs" />
     <Compile Include="Models\LoaiUserTek.cs" />
+    <Compile Include="Models\Loai_Socials.cs" />
     <Compile Include="Models\MailTeK.cs" />
     <Compile Include="Models\MailTeKDetail.cs" />
     <Compile Include="Models\Manufacturer.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Models\ProjectTeK.cs" />
     <Compile Include="Models\ProjectUserDetail.cs" />
     <Compile Include="Models\QCtrangchu.cs" />
+    <Compile Include="Models\QCVitri.cs" />
     <Compile Include="Models\Ser_box.cs" />
     <Compile Include="Models\Ser_ChiNhanh.cs" />
     <Compile Include="Models\Ser_Chitiet_XuatSN_CN.cs" />
@@ -404,14 +406,10 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular-4.html" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.html" />
     <Content Include="Content\fonts\glyphicons-halflings-regulard41d.html" />
-    <Content Include="Content\images\1.jpg" />
-    <Content Include="Content\images\2.jpg" />
-    <Content Include="Content\images\3.jpg" />
-    <Content Include="Content\images\4.jpg" />
-    <Content Include="Content\images\5.jpg" />
     <Content Include="Content\images\bgd\background5.jpg" />
     <Content Include="Content\images\bgd\background6.jpg" />
     <Content Include="Content\images\bgd\horse.png" />
+    <Content Include="Content\images\icons8-zalo-48.png" />
     <Content Include="Content\images\logo-icon.jpg" />
     <Content Include="Content\images\logo-icon.png" />
     <Content Include="Content\images\pattern-white.png" />
@@ -526,6 +524,10 @@
     <Content Include="Areas\Admin\Views\ChiNhanh\GetListSNchinhanh.cshtml" />
     <Content Include="Areas\Admin\Views\ChiNhanh\UpdateSNchoCN.cshtml" />
     <Content Include="Areas\Admin\Views\ChiNhanh\AddSN_ChiNhanh.cshtml" />
+    <Content Include="Content\images\clients\Thumbs.db" />
+    <Content Include="Areas\Admin\Views\NoteKyThuat\HinhTrangChu.cshtml" />
+    <Content Include="Areas\Admin\Views\NoteKyThuat\GetHinhTrangChu.cshtml" />
+    <Content Include="Areas\Admin\Views\NoteKyThuat\UpdateHTC.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

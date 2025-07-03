@@ -22,6 +22,7 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<HinhThucTC> HinhThucTCs { get; set; }
         public virtual DbSet<KhuVuc> KhuVucs { get; set; }
         public virtual DbSet<KyXuatNhap> KyXuatNhaps { get; set; }
+        public virtual DbSet<Loai_Socials> Loai_Socials { get; set; }
         public virtual DbSet<LoaiNoteTeK> LoaiNoteTeKs { get; set; }
         public virtual DbSet<LoaiUserTek> LoaiUserTeks { get; set; }
         public virtual DbSet<MailTeK> MailTeKs { get; set; }
@@ -34,6 +35,8 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<ProjectDetail> ProjectDetails { get; set; }
         public virtual DbSet<ProjectTeK> ProjectTeKs { get; set; }
         public virtual DbSet<ProjectUserDetail> ProjectUserDetails { get; set; }
+        public virtual DbSet<QCtrangchu> QCtrangchus { get; set; }
+        public virtual DbSet<QCVitri> QCVitris { get; set; }
         public virtual DbSet<Ser_box> Ser_box { get; set; }
         public virtual DbSet<Ser_ChiNhanh> Ser_ChiNhanh { get; set; }
         public virtual DbSet<Ser_Chitiet_XuatSN_CN> Ser_Chitiet_XuatSN_CN { get; set; }
@@ -48,7 +51,6 @@ namespace DoChoiXeMay.Models
         public virtual DbSet<TrangThaiDuAn> TrangThaiDuAns { get; set; }
         public virtual DbSet<UserTek> UserTeks { get; set; }
         public virtual DbSet<Version> Versions { get; set; }
-        public virtual DbSet<QCtrangchu> QCtrangchus { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -116,6 +118,12 @@ namespace DoChoiXeMay.Models
                 .HasForeignKey(e => e.IdKyxuat)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Loai_Socials>()
+                .HasMany(e => e.QCtrangchus)
+                .WithRequired(e => e.Loai_Socials)
+                .HasForeignKey(e => e.Idloai_socials)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<LoaiNoteTeK>()
                 .HasMany(e => e.NoteKythuats)
                 .WithRequired(e => e.LoaiNoteTeK)
@@ -167,6 +175,12 @@ namespace DoChoiXeMay.Models
                 .HasMany(e => e.ProjectDetails)
                 .WithRequired(e => e.ProjectTeK)
                 .HasForeignKey(e => e.ProjectId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<QCVitri>()
+                .HasMany(e => e.QCtrangchus)
+                .WithRequired(e => e.QCVitri)
+                .HasForeignKey(e => e.Idvitri)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Ser_box>()
