@@ -68,5 +68,16 @@ namespace DoChoiXeMay.Utils
         //    }
         //    return "No";
         //}
+        public static String EditStringCV(this String n)
+        {
+            if (n != "" && n != null)
+            {
+                var str1 = n.Replace('"', '\'');
+                var str2 = str1.Replace("  ", " ");
+                return str2;
+
+            }
+            return n;
+        }
     }
 }

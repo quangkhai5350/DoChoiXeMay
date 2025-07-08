@@ -18,26 +18,20 @@
     <link href="~/Content/css/pro-bars.css" rel="stylesheet" />
     <!-- End CSS Files -->
     @*@Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
+        @Scripts.Render("~/bundles/modernizr")*@
+    <style>
+        .Title_TC{
+            font-size:30px
+        }
+        @@media screen and (max-width:700px) {
+            .Title_TC {
+                font-size: 20px
+            }
+        }
+    </style>
 </head>
 <body>
-    <!--<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:34px" />
-            @Html.ActionLink("TechZone", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">-->
-    @*<li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
-    <!--<li>@Html.ActionLink("Active", "Index", "Active", new { area = "" }, new { @class = "nav-link" })</li>-->
-    @*<li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
-    <!--</ul>
-            </div>
-        </div>
-    </nav>-->
+    
     <section id="navigation" class="dark-nav">
         <!-- Navigation Inner -->
         <div class="nav-inner">
@@ -47,18 +41,18 @@
                 {
                     <a href="/Active/IndexDL" id="logo-text" title="Click đến trang của NPP" class="scroll logo">
                         <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
-                        <span>@Session["UserName"].ToString()</span>
+                        <span class="Title_TC">@Session["UserName"].ToString()</span>
                     </a>
-}
-else
-            {
-            <a href="" id="logo-text" class="scroll logo">
-                <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
-                <span>Trần Nguyễn TechZone</span>
-            </a>
-               }
-                    
-                </div><!-- End Site Logo -->
+                }
+                else
+                {
+                    <a href="" id="logo-text" class="scroll logo">
+                        <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
+                        <span class="Title_TC">Trần Nguyễn TechZone</span>
+                    </a>
+                }
+
+            </div><!-- End Site Logo -->
             <a class="mini-nav-button gray2"><i class="fa fa-bars"></i></a>
             <!-- Navigation Menu -->
             <div class="nav-menu">
@@ -80,7 +74,7 @@ else
         </div><!-- End Navigation Inner -->
     </section>
     <!-- End Navigation Section -->
-    
+
 
     <div class="container body-content" style="min-height:750px">
         @RenderBody()

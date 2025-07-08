@@ -25,13 +25,17 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult Index()
         {
             ViewBag.ChiTietTC = dbc.ChiTietTCs.Where(kh => kh.AdminXacNhan == true);
+            if (Session["ActiveS"] != null) Session["ActiveS"] = "li-Home";
             return View();
         }
-        
-        
         public ActionResult LogOut() {
             Session.Clear();
             return Redirect("/Login");
+        }
+        public ActionResult SetSession(string Sec)
+        {
+            Session["ActiveS"]=Sec;
+            return Json("ok", JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult EditUser(int id)
