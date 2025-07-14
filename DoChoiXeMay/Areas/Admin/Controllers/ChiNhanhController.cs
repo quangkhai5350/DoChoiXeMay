@@ -144,6 +144,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model[i].Ghichu = (i + 1).ToString();
             }
             ViewBag.GetListSNtoNPP=model.OrderByDescending(kh=>kh.NgayXuat).ToList();
+            ViewBag.GetCountSNtoNPP = model.Count();
             return View(model);
         }
         public ActionResult TimSNLoHang(string Serial)

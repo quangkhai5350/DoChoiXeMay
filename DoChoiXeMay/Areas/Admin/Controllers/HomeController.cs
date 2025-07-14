@@ -37,6 +37,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             Session["ActiveS"]=Sec;
             return Json("ok", JsonRequestBehavior.AllowGet);
         }
+        public ActionResult SetSessionMB(string Sec)
+        {
+            Session["ActiveMB"] = Sec;
+            return Json("ok", JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult EditUser(int id)
         {
@@ -83,20 +88,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         dbc.Entry(model).State = EntityState.Modified;
                         dbc.SaveChanges();
                         var uid = int.Parse(Session["UserId"].ToString());
-                        var sms = "";
-                        if(Session["quyen"].ToString() == "1")
-                        {
-                            sms = Session["UserName"].ToString().ToUpper() + " đã update user: "+model.UserName+" .Thành Công." + DateTime.Now.ToString("{dd/MM/yyyy}");
-                        }
-                        else
-                        {
-                            sms = Session["UserName"].ToString().ToUpper() + " đã tự update user của mình Thành Công." + DateTime.Now.ToString("{dd/MM/yyyy}");
-                        }
-                        
-                        var Msg = Data.XuatNhapData.InsertMsgAotu(dbc, uid, sms, false, false, false, false, false);
-                        //Insert Nhật Ký
-                        var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "Update user của mình Thành Công ", "");
+                        //SMS hệ thống
+                        string sms = " đã update user: " + model.UserName + " .Thành Công.";
+                        new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                            , Session["quyen"].ToString(), sms);
                         @Session["ThongBaoUserTEK"] = sms;
                     }
                     else
@@ -227,9 +222,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.NgayAuto = DateTime.Now;
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
-                var uid = int.Parse(Session["UserId"].ToString());
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "Update hình sp: "+model.Ten+ " bảng HH Thành Công. ", "");
+                //SMS hệ thống
+                string sms = " đã Update hình sp: " + model.Ten + " bảng HH, Thành Công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
                 Session["ThongBaoHangHoaTEK"] = "Update hình sp: "+model.Ten+" Thành Công.";
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
@@ -282,12 +278,14 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 dbc.UserTeks.Remove(UserCN);
                 dbc.SaveChanges();
                 Session["ThongBaoUserTEK"] = "Delete User " + UserCN.UserName + " thành công.";
-                var uid = int.Parse(Session["UserId"].ToString());
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "Delete User: " + UserCN.UserName + " Thành Công. ", "");
+                
+                //SMS hệ thống
+                string sms = "Delete User: " + UserCN.UserName + " Thành Công. ";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
             }
             else {
-                Session["ThongBaoUserTEK"] = "User không xóa được. Delete User " + UserCN.UserName + " Không thành công !!!.";
+                Session["ThongBaoUserTEK"] = "User không xóa được !!!. Delete User " + UserCN.UserName + " Không thành công !!!.";
             }
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;

@@ -144,7 +144,7 @@
 
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-5 col-sm-3 col-xs-4 col-4">
+                <div class="col-lg-5 col-md-5 col-sm-3 col-xs-4 col-4">
                     <div class="header-top-menu Topmn">
                         <ul class="nav navbar-nav notika-top-nav">
                             <li class="nav-item nc-al">
@@ -164,7 +164,7 @@
                                     <div class="hd-message-info" style="height:500px;overflow:auto">
                                         @for (int i = 0; i < liststringMsg().Count(); i++)
                                         {
-                                            <a href="">
+                                            <a>
                                                 <div class="hd-message-sn">
                                                     <div class="hd-message-img" style="line-height: 50px">
                                                         <img style="width:40px" src="~/Areas/Admin/Content/img/logo/Teklogo.png" alt="" />
@@ -179,7 +179,7 @@
 
                                     </div>
                                     <div class="hd-mg-va">
-                                        <a href="">...</a>
+                                        <a>...</a>
                                     </div>
                                 </div>
                             </li>
@@ -214,7 +214,7 @@
                         </ul>
                     </div>
                 </div>
-                    <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12 col-12">
+                    <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12 col-12">
 
                         <div class="header-top-menu Topmn">
                             <ul class="nav navbar-nav notika-top-nav">
@@ -247,73 +247,74 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="mobile-menu">
                         <nav id="dropdown">
+                            <input id="SecssMB" value="@Session["ActiveMB"]" hidden/>
                             <ul class="mobile-menu-nav">
                                 <li>
-                                    <a class="colordark" data-toggle="collapse" data-target="#Charts" href="#"><i class="notika-icon notika-bar-chart"></i> Thu Chi Tek</a>
+                                    <a onclick="mobile('ul-Charts')" id="ul-Charts" class="colordark" data-toggle="collapse" data-target="#Charts" href="#"><i class="notika-icon notika-bar-chart"></i> Thu Chi Tek</a>
                                     <ul id="Charts" class="collapse dropdown-header-top titlemobile">
-                                        <li><a href="/Admin/ThuChi/ListThuChiTeK" class="colordarkChil">**Bảng Thu Chi TeK**</a></li>
-                                        <li><a href="/Admin/DanhMuc/ListMaThuChi" class="colordarkChil">Mã Thu Chi</a></li>
+                                        <li><a id="li1-Charts" onclick="mobile('li1-Charts')" href="/Admin/ThuChi/ListThuChiTeK" class="colordarkChil">**Bảng Thu Chi TeK**</a></li>
+                                        <li><a id="li2-Charts" onclick="mobile('li2-Charts')" href="/Admin/DanhMuc/ListMaThuChi" class="colordarkChil">Mã Thu Chi</a></li>
 
                                     </ul>
                                 </li>
                                 <li>
-                                    <a class="colordark" data-toggle="collapse" data-target="#demoevent" href="#"><i class="notika-icon notika-form"></i> (2)Xuất Nhập Tek</a>
+                                    <a onclick="mobile('ul-demoevent')" id="ul-demoevent" class="colordark" data-toggle="collapse" data-target="#demoevent" href="#"><i class="notika-icon notika-form"></i> (2)Xuất Nhập Tek</a>
                                     <ul id="demoevent" class="collapse dropdown-header-top titlemobile">
                                         <li>
-                                            <a href="/Admin/XuatNhap/ListXuatNhapTeK" class="colordarkChil">**Bảng Xuất Nhập TeK**</a>
+                                            <a id="li1-demoevent" onclick="mobile('li1-demoevent')" href="/Admin/XuatNhap/ListXuatNhapTeK" class="colordarkChil">**Bảng Xuất Nhập TeK**</a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/Home/ListHangHoaTek" class="colordarkChil" target="_blank"> Hàng Hóa TeK</a>
+                                            <a id="li2-demoevent" onclick="mobile('li2-demoevent')" href="/Admin/Home/ListHangHoaTek" class="colordarkChil" target="_blank"> Hàng Hóa TeK</a>
                                         </li>
 
                                     </ul>
                                 </li>
                                 <li>
-                                    <a data-toggle="collapse" data-target="#Duan" class="colordark"><i class="notika-icon notika-alarm"></i> Dự Án Tek</a>
+                                    <a onclick="mobile('ul-Duan')" id="ul-Duan" data-toggle="collapse" data-target="#Duan" class="colordark"><i class="notika-icon notika-alarm"></i> Dự Án Tek</a>
                                     <ul id="Duan" class="collapse dropdown-header-top titlemobile">
                                         <li>
-                                            <a href="/Admin/ProjectTeK/Index" class="colordarkChil">**Theo dõi dự án**</a>
+                                            <a id="li1-Duan" onclick="mobile('li1-Duan')" href="/Admin/ProjectTeK/Index" class="colordarkChil">**Theo dõi dự án**</a>
                                         </li>
                                     </ul>
                                 </li>
 
                                 <li>
-                                    <a class="colordark" data-toggle="collapse" data-target="#Serial" href="#"><i class="notika-icon notika-print"></i> Serial TeK</a>
+                                    <a onclick="mobile('ul-Serial')" id="ul-Serial" class="colordark" data-toggle="collapse" data-target="#Serial" href="#"><i class="notika-icon notika-print"></i> Serial TeK</a>
                                     <ul id="Serial" class="collapse dropdown-header-top titlemobile">
                                         <li>
-                                            <a href="/Admin/Serial/ListSerialChuaIn" class="colordarkChil">Tạo mới Serial</a>
+                                            <a id="li1-Serial" onclick="mobile('li1-Serial')" href="/Admin/Serial/ListSerialChuaIn" class="colordarkChil">Tạo mới Serial</a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/Serial/ListSerialDaIn" class="colordarkChil">*List Serial đã in*</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="/Admin/Active/Index" class="colordarkChil">**List Serial đã kích hoạt**</a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/ChiNhanh/Index" class="colordarkChil">***Xuất Serial_ChiNhanh***</a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/DanhMuc/Listchinhanh" class="colordarkChil">List Chi Nhánh</a>
+                                            <a id="li2-Serial" onclick="mobile('li2-Serial')" href="/Admin/Serial/ListSerialDaIn" class="colordarkChil">*List Serial đã in*</a>
                                         </li>
 
                                         <li>
-                                            <a href="/Admin/DanhMuc/Levelchinhanh" class="colordarkChil">LevelChiNhanh</a>
+                                            <a id="li3-Serial" onclick="mobile('li3-Serial')" href="/Admin/Active/Index" class="colordarkChil">**List Serial đã kích hoạt**</a>
+                                        </li>
+                                        <li>
+                                            <a id="li4-Serial" onclick="mobile('li4-Serial')" href="/Admin/ChiNhanh/Index" class="colordarkChil">***Xuất Serial_ChiNhanh***</a>
+                                        </li>
+                                        <li>
+                                            <a id="li5-Serial" onclick="mobile('li5-Serial')" href="/Admin/DanhMuc/Listchinhanh" class="colordarkChil">List Chi Nhánh</a>
+                                        </li>
+
+                                        <li>
+                                            <a id="li6-Serial" onclick="mobile('li6-Serial')" href="/Admin/DanhMuc/Levelchinhanh" class="colordarkChil">LevelChiNhanh</a>
                                         </li>
                                     </ul>
                                 </li>
 
                                 <li>
-                                    <a class="colordark" data-toggle="collapse" data-target="#democrou" href="#"><i class="notika-icon notika-edit"></i> Note Tek</a>
+                                    <a onclick="mobile('ul-democrou')" id="ul-democrou" class="colordark" data-toggle="collapse" data-target="#democrou" href="#"><i class="notika-icon notika-edit"></i> Note Tek</a>
                                     <ul id="democrou" class="collapse dropdown-header-top titlemobile">
                                         <li>
-                                            <a href="/Admin/NoteKyThuat/Index" class="colordarkChil" target="_blank">Video hướng dẫn</a>
+                                            <a href="/Admin/NoteKyThuat/Index" class="colordarkChil">Video hướng dẫn</a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/NoteKyThuat/VDTEK" class="colordarkChil" target="_blank">Video TeK</a>
+                                            <a href="/Admin/NoteKyThuat/VDTEK" class="colordarkChil">Video TeK</a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/NoteKyThuat/HinhTrangChu" class="colordarkChil" target="_blank">Hình Trang Chủ</a>
+                                            <a href="/Admin/NoteKyThuat/HinhTrangChu" class="colordarkChil">Hình Trang Chủ</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -322,28 +323,28 @@
                                 <li>
                                     @if (Session["UserName"] != null)
                                     {
-                                        <a data-toggle="collapse" data-target="#demolibra" class="colordark" href="#"><i class="notika-icon notika-form"></i> (1)Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
+                                        <a onclick="mobile('ul-demolibra')" id="ul-demolibra" data-toggle="collapse" data-target="#demolibra" class="colordark" href="#"><i class="notika-icon notika-form"></i> (1)Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
                                         <ul id="demolibra" class="collapse dropdown-header-top titlemobile">
                                             <li>
                                                 @if (Session["quyen"] != null)
                                                 {
-                                                    <a href="/Admin/XuatNhap/ListXuatNhapUser" class="colordarkChil"> **Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
+                                                    <a id="li1-demolibra" onclick="mobile('li1-demolibra')" href="/Admin/XuatNhap/ListXuatNhapUser" class="colordarkChil"> **Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
                                                 }
                                             </li>
                                             <li>
-                                                <a href="/Admin/DanhMuc/ListHangSanXuat" class="colordarkChil"> Hãng Sản Xuất</a>
+                                                <a id="li2-demolibra" onclick="mobile('li2-demolibra')" href="/Admin/DanhMuc/ListHangSanXuat" class="colordarkChil"> Hãng Sản Xuất</a>
                                             </li>
                                             <li>
-                                                <a href="/Admin/DanhMuc/ListMauSanPham" class="colordarkChil" target="_blank"> Màu sản phẩm</a>
+                                                <a id="li3-demolibra" onclick="mobile('li3-demolibra')" href="/Admin/DanhMuc/ListMauSanPham" class="colordarkChil"> Màu sản phẩm</a>
                                             </li>
                                             <li>
-                                                <a href="/Admin/DanhMuc/NhatKy" class="colordarkChil" target="_blank"> Nhật Ký</a>
+                                                <a id="li4-demolibra" onclick="mobile('li4-demolibra')" href="/Admin/DanhMuc/NhatKy" class="colordarkChil"> Nhật Ký</a>
                                             </li>
                                         </ul>
                                     }
 
                                 </li>
-                                
+
                             </ul>
                         </nav>
                     </div>
@@ -357,25 +358,25 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <input id="Secss"value="@Session["ActiveS"]" hidden/>
+                    <input id="SecssI" value="@Session["ActiveS"]" hidden/>
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
-                        <li id="li-Home">
+                        <li id="li-Home" onclick="kkk('li-Home')">
                             <a data-toggle="tab" href="#Home" class="color-tile-tek"><i class="notika-icon notika-bar-chart"></i> Thu Chi Tek</a>
                         </li>
-                        <li id="li-mailbox">
+                        <li id="li-mailbox" onclick="kkk('li-mailbox')">
                             <a data-toggle="tab" href="#mailbox" class="color-tile-tek"><i class="notika-icon notika-form"></i>(2)Xuất Nhập Tek</a>
                         </li>
-                        <li id="li-Pagemob">
+                        <li id="li-Pagemob" onclick="kkk('li-Pagemob')">
                             <a data-toggle="tab" href="#Pagemob" class="color-tile-tek"><i class="notika-icon notika-alarm"></i>Dự Án Tek</a>
                         </li>
-                        <li id="li-Forms">
+                        <li id="li-Forms" onclick="kkk('li-Forms')">
                             <a data-toggle="tab" href="#Forms" class="color-tile-tek"><i class="notika-icon notika-print"></i>Serial TeK</a>
                         </li>
-                        <li id="li-Interface">
+                        <li id="li-Interface" onclick="kkk('li-Interface')">
                             <a data-toggle="tab" href="#Interface" class="color-tile-tek"><i class="notika-icon notika-edit"></i> Note Tek</a>
                         </li>
 
-                        <li id="li-Tables">
+                        <li id="li-Tables" onclick="kkk('li-Tables')">
                             @if (Session["quyen"]!=null && int.Parse(Session["quyen"].ToString()) < 5)
                             {
                                 <a data-toggle="tab" href="#Tables"><i class="notika-icon notika-form"></i>(1) Xuất Nhập @Session["UserName"].ToString().ToUpper()</a>
@@ -387,10 +388,10 @@
                     <div class="tab-content custom-menu-content">
                         <div id="Home" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown color-tile-tek">
-                                <li id="ul1-Home">
+                                <li id="ul1-Home" onclick="kkk('ul1-Home')">
                                     <a href="/Admin/ThuChi/ListThuChiTeK"> **Bảng Thu Chi TeK**</a>
                                 </li>
-                                <li id="ul2-Home">
+                                <li id="ul2-Home" onclick="kkk('ul2-Home')">
                                     <a href="/Admin/DanhMuc/ListMaThuChi"> Mã Thu Chi</a>
                                 </li>
 
@@ -398,41 +399,41 @@
                         </div>
                         <div id="mailbox" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li id="ul1-mailbox">
+                                <li id="ul1-mailbox" onclick="kkk('ul1-mailbox')">
                                     <a href="/Admin/XuatNhap/ListXuatNhapTeK"> **Bảng Xuất Nhập TeK**</a>
                                 </li>
-                                <li id="ul2-mailbox">
+                                <li id="ul2-mailbox" onclick="kkk('ul2-mailbox')">
                                     <a href="/Admin/Home/ListHangHoaTek" target="_blank">Hàng Hóa TeK</a>
                                 </li>
                             </ul>
                         </div>
                         <div id="Pagemob" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li id="ul1-Pagemob">
+                                <li id="ul1-Pagemob" onclick="kkk('ul1-Pagemob')">
                                     <a href="/Admin/ProjectTeK/Index">**Theo dõi dự án**</a>
                                 </li>
                             </ul>
                         </div>
                         <div id="Forms" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li id="ul1-Forms">
+                                <li id="ul1-Forms" onclick="kkk('ul1-Forms')">
                                     <a href="/Admin/Serial/ListSerialChuaIn">Tạo mới Serial</a>
                                 </li>
-                                <li id="ul2-Forms">
+                                <li id="ul2-Forms" onclick="kkk('ul2-Forms')">
                                     <a href="/Admin/Serial/ListSerialDaIn">*List Serial đã in*</a>
                                 </li>
 
-                                <li id="ul3-Forms">
+                                <li id="ul3-Forms" onclick="kkk('ul3-Forms')">
                                     <a href="/Admin/Active/Index">**List Serial đã kích hoạt**</a>
                                 </li>
-                                <li id="ul4-Forms">
+                                <li id="ul4-Forms" onclick="kkk('ul4-Forms')">
                                     <a href="/Admin/ChiNhanh/Index">***Xuất Serial_ChiNhanh***</a>
                                 </li>
-                                <li id="ul5-Forms">
+                                <li id="ul5-Forms" onclick="kkk('ul5-Forms')">
                                     <a href="/Admin/DanhMuc/Listchinhanh">List Chi Nhánh</a>
                                 </li>
 
-                                <li id="ul6-Forms">
+                                <li id="ul6-Forms" onclick="kkk('ul6-Forms')">
                                     <a href="/Admin/DanhMuc/Levelchinhanh">LevelChiNhanh</a>
                                 </li>
                             </ul>
@@ -440,48 +441,38 @@
                         <div id="Interface" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
                                 <li id="ul1-Interface">
-                                    <a href="/Admin/NoteKyThuat/Index" target="_blank">Video hướng dẫn</a>
+                                    <a href="/Admin/NoteKyThuat/Index">Video hướng dẫn</a>
                                 </li>
                                 <li id="ul2-Interface">
-                                    <a href="/Admin/NoteKyThuat/VDTEK" target="_blank">Video TeK</a>
+                                    <a href="/Admin/NoteKyThuat/VDTEK">Video TeK</a>
                                 </li>
                                 <li id="ul3-Interface">
-                                    <a href="/Admin/NoteKyThuat/HinhTrangChu" target="_blank">Hình Trang Chủ</a>
+                                    <a href="/Admin/NoteKyThuat/HinhTrangChu">Hình Trang Chủ</a>
                                 </li>
                             </ul>
                         </div>
 
                         <div id="Tables" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li id="ul1-Tables">
+                                <li id="ul1-Tables" onclick="kkk('ul1-Tables')">
                                     @if (Session["quyen"] != null)
                                     {
                                         <a href="/Admin/XuatNhap/ListXuatNhapUser"> **Bảng Xuất Nhập @Session["UserName"].ToString().ToUpper()**</a>
                                     }
                                 </li>
-                                <li id="ul2-Tables">
+                                <li id="ul2-Tables" onclick="kkk('ul2-Tables')">
                                     <a href="/Admin/DanhMuc/ListHangSanXuat"> Hãng Sản Xuất</a>
                                 </li>
-                                <li id="ul3-Tables">
-                                    <a href="/Admin/DanhMuc/ListMauSanPham" target="_blank"> Màu sản phẩm</a>
+                                <li id="ul3-Tables" onclick="kkk('ul3-Tables')">
+                                    <a href="/Admin/DanhMuc/ListMauSanPham"> Màu sản phẩm</a>
                                 </li>
-                                <li id="ul4-Tables">
+                                <li id="ul4-Tables" onclick="kkk('ul4-Tables')">
                                     <a href="/Admin/DanhMuc/NhatKy" target="_blank"> Nhật Ký</a>
                                 </li>
                             </ul>
                         </div>
                         <div id="Forms" class="tab-pane notika-tab-menu-bg animated flipInX">
-                            @*<ul class="notika-main-menu-dropdown">
-                <li>
-                    <a href="form-elements.html">Danh Sách Note User</a>
-                </li>
-                <li>
-                    <a href="form-components.html">Form Components</a>
-                </li>
-                <li>
-                    <a href="form-examples.html">Form Examples</a>
-                </li>
-            </ul>*@
+                            
                         </div>
 
                     </div>
@@ -520,21 +511,21 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="footer-copy-right">
-                            <p>
+                            <p style="text-decoration:underline">
                                 Tổng số lượt: <a>@AppState["Visitors"]</a>
                             </p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="footer-copy-right">
-                            <p>
+                            <p style="text-decoration:underline">
                                 Đang online: <a>@AppState["TotalOnlineUsers"]</a>
                             </p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="footer-copy-right">
-                            <p>
+                            <p style="text-decoration:underline">
                                 Designed by TQK-2025
                             </p>
                         </div>
@@ -563,23 +554,55 @@
             }
             onload()
             function onload() {
-                var secc = $('#Secss').val();
+                const secc = document.getElementById('SecssI').value;
+                
                 if (secc != "") {
                     var se = secc.split('-');
-                    $('#li-' + se[1]).addClass("active");
-                    $('#' + se[1]).addClass("active");
-                    $('#' + se[1] + ' > ul > #' + secc + ' > a').css("text-decoration", "underline");
+                    document.getElementById('li-' + se[1]).classList.add("active");
+                    document.getElementById(se[1]).classList.add("active");
+                    //alert('aaaaa:'+se[1])
+                    if (se[1] != "Interface" || se[1] != "democrou") {
+                        $("ul>#" + secc + ">a").css("text-decoration", "underline overline");
+                    }
                 }
             }
-            $('li').click(function () {
-                var sess = $(this).attr('id');
+            function kkk(tt) {
+                var sess = tt;
                 $.ajax({
                     url: "/Admin/Home/SetSession",
                     data: { Sec: sess },
                     success: function (respone) {
+                        document.getElementById('SecssI').value = sess
                     }
                 });
-            });
+            }
+            onloadmobile()
+            function onloadmobile() {
+                const mb = document.getElementById('SecssMB').value;
+                if (mb != "") {
+                    var see = mb.split('-');
+                    document.getElementById('ul-' + see[1]).classList.add("in");
+                    document.getElementById('ul-' + see[1]).setAttribute("aria-expanded", "true");
+                    document.getElementById(see[1]).classList.add("in");
+                    document.getElementById(see[1]).setAttribute("aria-expanded", "true");
+                    //document.getElementById(se[1]).classList.add("active");
+                    
+                    if (see[1] != "democrou" || see[1] != "Interface") {
+                        $("ul>li>#"+mb).css("text-decoration", "underline overline");
+                    }
+                }
+            }
+            function mobile(tt) {
+                var sess = tt;
+                $.ajax({
+                    url: "/Admin/Home/SetSessionMB",
+                    data: { Sec: sess },
+                    success: function (respone) {
+                        document.getElementById('SecssMB').value = sess
+                    }
+                });
+            }
+            
         </script>
         <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
         <script src="~/Areas/Admin/Content/js/vendor/jquery-1.12.4.min.js"></script>
@@ -703,7 +726,7 @@
         return db.MsgAotus
             .OrderByDescending(kh => kh.NgayTao)
             .Skip(0)
-            .Take(15)
+            .Take(30)
             .ToList();
     }
     public List<string> liststringMsg()

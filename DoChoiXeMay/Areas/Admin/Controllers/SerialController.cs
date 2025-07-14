@@ -9,6 +9,7 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -135,6 +136,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
                 Session["ThongBaoSerialSPchuaIn"] = "Tạo mới thành công "+SoSerialN+" Serial SP.";
                 Session["ThongBaoSerialBoxchuaIn"] = "Tạo mới thành công " + SoSerialN + " Serial Box.";
+                //SMS hệ thống
+                string sms = " đã tạo mới thành công " + SoSerialN + " Serial SP và Box.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
             }
             catch (Exception ex) {
                 string loi = ex.ToString();
@@ -157,6 +162,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
                     InFromData(null, SN, mayin);
                     Session["ThongBaoSerialBoxchuaIn"] = "Đã in "+soluong+" serial, thành công.";
+                    //SMS hệ thống
+                    string sms = " đã in " + soluong + " serial Box, thành công.";
+                    new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                        , Session["quyen"].ToString(), sms);
                 }
                 else
                 {
@@ -168,6 +177,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
 
                     InFromData(SN, null, mayin);
                     Session["ThongBaoSerialSPchuaIn"] = "Đã in " + soluong + " serial, thành công.";
+                    //SMS hệ thống
+                    string sms = " đã in " + soluong + " serial SP, thành công.";
+                    new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                        , Session["quyen"].ToString(), sms);
                 }
                 return RedirectToAction("ListSerialChuaIn");
             }
@@ -305,6 +318,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 string sql = "DELETE  FROM [" + DBname + "TechZone].[dbo].[Ser_sp] where DaIn=0";
                 var XoaChitietXN = dbc.Database.ExecuteSqlCommand(sql);
                 Session["ThongBaoSerialSPchuaIn"] = "Xóa tất cả S/N SP thành công.";
+                //SMS hệ thống
+                string sms = "  đã Xóa tất cả S/N SP chưa In, thành công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
                 return RedirectToAction("ListSerialChuaIn");
             }
             catch (Exception ex) {
@@ -330,6 +347,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         string sql = "DELETE  FROM [" + DBname + "TechZone].[dbo].[Ser_sp] where SerialSP='"+sp.SerialSP+"'";
                         var Xoaserialsp = dbc.Database.ExecuteSqlCommand(sql);
                         Session["ThongBaoSerialSPDaIn"] = "Xóa thành công serial: " + serialsp + ".";
+                        //SMS hệ thống
+                        string sms = " đã Xóa thành công serial: " + serialsp + ".";
+                        new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                            , Session["quyen"].ToString(), sms);
                         return RedirectToAction("ListSerialDaIn");
                     }
                 }
@@ -346,6 +367,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                         string sql = "DELETE  FROM [" + DBname + "TechZone].[dbo].[Ser_box] where Serial='" + box.Serial + "'";
                         var Xoaserialsp = dbc.Database.ExecuteSqlCommand(sql);
                         Session["ThongBaoSerialBoxDaIn"] = "Xóa thành công serial: "+ serialsp+".";
+                        //SMS hệ thống
+                        string sms = " đã Xóa thành công serial: " + serialsp + ".";
+                        new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                            , Session["quyen"].ToString(), sms);
                         return RedirectToAction("ListSerialDaIn");
                     }
                     
@@ -373,6 +398,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 string sql = "DELETE  FROM [" + DBname + "TechZone].[dbo].[Ser_box] where DaIn=0";
                 var XoaChitietXN = dbc.Database.ExecuteSqlCommand(sql);
                 Session["ThongBaoSerialBoxchuaIn"] = "Xóa tất cả S/N Box thành công.";
+                //SMS hệ thống
+                string sms = " đã Xóa tất cả S/N Box thành công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
                 return RedirectToAction("ListSerialChuaIn");
             }
             catch (Exception ex)

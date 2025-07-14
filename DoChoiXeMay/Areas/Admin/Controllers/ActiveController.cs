@@ -61,9 +61,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
                 Session["ThongBaoListDaActive"] = "Update thành công số SN: " + SerSP.SerialSP + ".";
-                var userid = int.Parse(Session["UserId"].ToString());
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "Update thành công số SN -" + model.Ser_sp.SerialSP + "-" + DateTime.Now.ToString(), "");
+                
+                //SMS hệ thống
+                string sms = "Update thành công số SN: " + SerSP.SerialSP + ".";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
                 if (requestUri != null)

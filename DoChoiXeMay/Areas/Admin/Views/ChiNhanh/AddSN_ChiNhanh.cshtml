@@ -92,16 +92,7 @@
 </div>
 
 <div id="Grid" class="container" style="background-color: white; padding-top: 10px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
-    <style>
-        .DaXoa {
-            color: red;
-        }
-
-        .NPP {
-            color: blue;
-        }
-    </style>
-
+    
     <h5><a style="text-decoration: none">Danh Sách S/N Đã add cho chi nhánh: @Session["TenChiNhanh"] (lô hàng Id= @Session["IdSN_CN"])</a></h5>
     <div class="table-responsive">
         <div class="panel-heading">
@@ -143,17 +134,23 @@
                     </tr>
                 </thead>
                 <tbody style="border: 2px solid black !important">
-                    @foreach (DoChoiXeMay.Models.Ser_Chitiet_XuatSN_CN Item in ViewBag.GetListSNtoNPP)
+                    @if (ViewBag.GetCountSNtoNPP > 0)
                     {
-                        <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                            <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important">@Item.Ghichu</td>
-                            <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important">@Item.Serial</td>
-                            <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important">@Item.NgayXuat</td>
-                            <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important"></td>
-                            <td style="border-left: 2px solid black !important; border-right: 2px solid black !important; border-bottom: 2px solid black !important "></td>
-                        </tr>
+                        foreach (DoChoiXeMay.Models.Ser_Chitiet_XuatSN_CN Item in ViewBag.GetListSNtoNPP)
+                        {
+                            var kichhoat = new DoChoiXeMay.Areas.Admin.Data.ActiveData().CheckSNActive(Item.Serial);
 
+                            <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                                <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important">@Item.Ghichu</td>
+                                <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important">@Item.Serial</td>
+                                <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important">@Item.NgayXuat</td>
+                                <td style="border-left: 2px solid black !important; border-bottom: 2px solid black !important">@kichhoat</td>
+                                <td style="border-left: 2px solid black !important; border-right: 2px solid black !important; border-bottom: 2px solid black !important "></td>
+                            </tr>
+
+                        }
                     }
+
                 </tbody>
             </table>
 

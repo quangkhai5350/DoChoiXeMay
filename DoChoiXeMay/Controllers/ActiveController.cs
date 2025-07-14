@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoChoiXeMay.Areas.Admin.Data;
+using DoChoiXeMay.Utils;
+using System.Text;
 
 namespace DoChoiXeMay.Controllers
 {
@@ -56,6 +58,33 @@ namespace DoChoiXeMay.Controllers
             ViewBag.KhuVuc = new SelectList(dbc.KhuVucs.ToList(), "Id", "TenKhuvuc");
             ViewBag.TotalSerialDaKH = dbc.Ser_kichhoat.Where(kh => kh.IdChiNhanh == chinhanh.Id).Count();
             return View(chinhanh);
+        }
+        [ProtectKH]
+        public ActionResult GetListSNofchinhanhbyLo()
+        {
+            var idchinhanh = int.Parse(Session["idchinhanhAt"].ToString());
+            var model = dbc.Ser_XuatSN_CN.Where(kh => kh.IdChiNhanh == idchinhanh)
+                .OrderByDescending(kh => kh.Id)
+                .ThenByDescending(kh => kh.SoLuong).ToList();
+            ViewBag.GetListSNchinhanhbyLo = model;
+            return PartialView(model);
+        }
+        [ProtectKH]
+        public ActionResult GetListSNobyLo(int id)
+        {
+            var model = dbc.Ser_Chitiet_XuatSN_CN.Where(kh => kh.IdSN_CN == id)
+                                .OrderBy(kh => kh.NgayXuat)
+                                .ToList();
+            for (int i = 0; i < model.Count(); i++)
+            {
+                model[i].Ghichu = (i + 1).ToString();
+            }
+            Session["TenChiNhanh"] = new Areas.Admin.Data.ChiNhanhData().GetChiNhanhByIdXuat(id).TenChiNhanh;
+            Session["IdSN_CN"] = id;
+            //Session["SoLuong"] = dbc.Ser_XuatSN_CN.Find(id).SoLuong;
+            ViewBag.GetListSNtoNPP = model.OrderByDescending(kh => kh.NgayXuat).ToList();
+            ViewBag.GetCountSNtoNPP = model.Count();
+            return View(model);
         }
         [ProtectKH]
         public ActionResult GetListKHBHbyChiNhanh(string tu, string den, int PageNo = 0, int PageSize = 0, int IdCN = 0, string KeywordsTTT = "")
@@ -215,6 +244,39 @@ namespace DoChoiXeMay.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Bad Request");
             }
             
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public EmptyResult Export(string GridHtml)
+        {
+            var html = XString.EditStringCV(GridHtml);
+            string htmlcv = html;
+
+            string _fileCSS = Server.MapPath("~/Areas/Admin/Content/css/Info_Style.css");
+            string _strCSS = System.IO.File.ReadAllText(_fileCSS);
+            StringBuilder strBody = new StringBuilder();
+            strBody.Append("<html " +
+             " xmlns:o='urn:schemas-microsoft-com:office:office' " +
+             " xmlns:w='urn:schemas-microsoft-com:office:word'" +
+              " xmlns='http://www.w3.org/TR/REC-html40'>" +
+              "<head><title>Invoice Sample</title>");
+            strBody.Append("<xml>" +
+            "<w:WordDocument>" +
+            " <w:View>Print</w:View>" +
+            " <w:Zoom>50</w:Zoom>" +
+            " <w:DoNotOptimizeForBrowser/>" +
+            " </w:WordDocument>" +
+            " </xml>");
+
+            strBody.Append("<style>" + _strCSS + "</style></head>");
+            //strBody.Append("<body lang=EN-US style='tab-interval:.5in'>" + "<div class=Section1>");
+            strBody.Append("<body><div class='page-settings'>" + htmlcv + "</div></body></html>");
+            //strBody.Append("</div></body></html>");
+            Response.AppendHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml");
+            Response.AppendHeader("Content-disposition", "attachment;filename=myword.doc");
+            Response.Write(strBody.ToString());
+
+            return new EmptyResult();
         }
     }
 }

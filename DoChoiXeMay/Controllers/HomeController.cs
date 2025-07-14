@@ -211,7 +211,7 @@ namespace DoChoiXeMay.Controllers
                                 bool nhatky = Areas.Admin.Data.XuatNhapData.InsertNhatKy_Admin(dbc, UserFirt, Session["quyen"].ToString()
                                     , Session["UserName"].ToString(), "LoginWeb_Admin", "");
                             }
-                            Session.Remove("Thongbaodangky");
+                            Session.Remove("ThongbaoLogin");
                             //tro lai trang truoc do 
                             if (requestUri != null)
                             {

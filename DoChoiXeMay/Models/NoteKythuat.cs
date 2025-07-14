@@ -18,8 +18,8 @@ namespace DoChoiXeMay.Models
 
         public string NoiDung { get; set; }
 
-        [StringLength(500)]
-        public string SavenhieuFile { get; set; }
+        [StringLength(50)]
+        public string Stt { get; set; }
 
         public int UserId { get; set; }
 
