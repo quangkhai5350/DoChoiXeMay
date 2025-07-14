@@ -19,15 +19,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult Index()
         {// video huong dan Tek
             Session["requestUri"] = "/Admin/NoteKyThuat/Index";
-            ViewBag.ViDeo = new Data.NoteKyThuatData().GetListNotebyHD(0, 1);
-            ViewBag.ViDeo1 = new Data.NoteKyThuatData().Get1ListNotebyHD(0, 1);
+            ViewBag.ViDeo = new Data.NoteKyThuatData().GetListNotebyHD(1);
+            ViewBag.ViDeo1 = new Data.NoteKyThuatData().Get1ListNotebyHD(1);
             return View();
         }
         public ActionResult VDTEK()
         {//video quang cao tek
             Session["requestUri"] = "/Admin/NoteKyThuat/VDTEK";
-            ViewBag.ViDeo = new Data.NoteKyThuatData().GetListNotebyHD(0, 2);
-            ViewBag.ViDeo1 = new Data.NoteKyThuatData().Get1ListNotebyHD(0, 2);
+            ViewBag.ViDeo = new Data.NoteKyThuatData().GetListNotebyHD(2);
+            ViewBag.ViDeo1 = new Data.NoteKyThuatData().Get1ListNotebyHD(2);
             return View();
         }
         public ActionResult InsertVD(int loai)
@@ -42,7 +42,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             model.Id = Max + 1;
             model.NoteName = "Video New TeK.";
             model.NoiDung = "Cần update để sử dụng";
-            model.SavenhieuFile = "";
+            model.Stt = "";
             model.UserId = userid;
             model.UPush = true;
             model.PushtoNoteId = 1;
@@ -65,13 +65,15 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult DeleteVideo(int id)
         {
-            var userid = int.Parse(Session["UserId"].ToString());
             var model = dbc.NoteKythuats.Find(id);
             dbc.NoteKythuats.Remove(model);
             dbc.SaveChanges();
             Session["ThongBaoVDTEK"] = "Delete Video thành công.";
-            var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "Delete Video -" + model.NoteName + "-" + DateTime.Now.ToString(), "");
+            //SMS hệ thống
+            var sms = "Delete Video -" + model.NoteName+", thành công.";
+            new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                , Session["quyen"].ToString(), sms);
+
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;
             if (requestUri != null)
@@ -83,6 +85,7 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         public ActionResult EditVideo(int id)
         {
             var model = dbc.NoteKythuats.Find(id);
+            ViewBag.IdHanhDong = new SelectList(dbc.HanhDongs.ToList(), "Id", "TenHD", model.IdHanhDong);
             return View(model);
         }
         [HttpPost]
@@ -202,10 +205,11 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 model.Ngay = DateTime.Now;
                 dbc.Entry(model).State = EntityState.Modified;
                 dbc.SaveChanges();
-                var uid = int.Parse(Session["UserId"].ToString());
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, uid, Session["quyen"].ToString()
-                                , Session["UserName"].ToString(), "Update hình trang chủ: Id=" + model.Id + " Thành Công. ", "");
                 Session["ThongBaoHinhtrangchu"] = "Update hình trang chủ: Id= " + model.Id + " Thành Công.";
+                //SMS hệ thống
+                string sms = "Update hình trang chủ: Id= " + model.Id + " Thành Công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
                 if (requestUri != null)

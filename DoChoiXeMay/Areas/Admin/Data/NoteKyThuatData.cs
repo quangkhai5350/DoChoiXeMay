@@ -14,26 +14,26 @@ namespace DoChoiXeMay.Areas.Admin.Data
         {
             _context = new Model1();
         }
-        public List<NoteKythuat> GetListNotebyHD(int hanhdong, int loai)
+        public List<NoteKythuat> GetListNotebyHD(int loai)
         {
-            var model = _context.NoteKythuats.Where(kh => kh.IdHanhDong == hanhdong && kh.LoaiNoteId==loai)
+            var model = _context.NoteKythuats.Where(kh => kh.LoaiNoteId==loai)
                     .OrderBy(kh => kh.Id)
                     .ToList();
             for (int i = 0; i < model.Count(); i++)
             {
-                model[i].SavenhieuFile = (i + 1).ToString();
+                model[i].Stt = (i + 1).ToString();
             }
             model = model
                 .OrderByDescending(kh => kh.Id)
                 .ToList();
             return model;
         }
-        public List<NoteKythuat> Get1ListNotebyHD(int hanhdong, int loai)
+        public List<NoteKythuat> Get1ListNotebyHD(int loai)
         {
-            var modle = _context.NoteKythuats.Where(kh => kh.IdHanhDong == hanhdong && kh.LoaiNoteId == loai).ToList();
+            var modle = _context.NoteKythuats.Where(kh => kh.LoaiNoteId == loai).ToList();
             if(modle != null)
             {
-                modle = _context.NoteKythuats.Where(kh => kh.IdHanhDong == hanhdong && kh.LoaiNoteId==loai)
+                modle = _context.NoteKythuats.Where(kh => kh.LoaiNoteId==loai)
                     .OrderByDescending(kh => kh.Id)
                     .Take(1)
                     .ToList();

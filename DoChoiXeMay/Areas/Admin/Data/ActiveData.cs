@@ -25,7 +25,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     .Where(kh => kh.Ser_sp.SerialSP.ToLower().Contains(strTK)
                             || kh.Ser_box.Serial.ToLower().Contains(strTK)
                             || kh.DiaChiKhach.ToLower().Contains(strTK)
-                            || kh.TenKhachHang.ToLower().Contains(strTK)).ToList();
+                            || kh.TenKhachHang.ToLower().Contains(strTK)
+                            || kh.Ser_box.LoSanXuat.Contains(strTK)).ToList();
             }
             else
             {
@@ -33,7 +34,8 @@ namespace DoChoiXeMay.Areas.Admin.Data
                         && (kh.Ser_sp.SerialSP.ToLower().Contains(strTK)
                             || kh.Ser_box.Serial.ToLower().Contains(strTK)
                             || kh.DiaChiKhach.ToLower().Contains(strTK)
-                            || kh.TenKhachHang.ToLower().Contains(strTK))).ToList();
+                            || kh.TenKhachHang.ToLower().Contains(strTK)
+                            || kh.Ser_box.LoSanXuat.Contains(strTK))).ToList();
             }
             if (tu != "" && den != "")
             {
@@ -136,6 +138,27 @@ namespace DoChoiXeMay.Areas.Admin.Data
                 return model.UserName;
             }
             return "No";
+        }
+        public bool CheckSNActive(string SN)
+        {
+            bool kq = false;
+            if (SN !=null && SN.Length == 14)
+            {
+                var modelBox = _context.Ser_box.FirstOrDefault(kh => kh.Serial == SN);
+                if (modelBox != null) {
+                    var modelKH = _context.Ser_kichhoat.FirstOrDefault(kh => kh.IDSer_box == modelBox.Id);
+                    if (modelKH != null) kq = true;
+                }
+            }
+            else if(SN != null && SN.Length == 11)
+            {
+                var modelSP = _context.Ser_sp.FirstOrDefault(kh => kh.SerialSP == SN);
+                if (modelSP != null) { 
+                    var modelKH = _context.Ser_kichhoat.FirstOrDefault(kh=>kh.IDSer_sp == modelSP.Id);
+                    if(modelKH != null)kq = true;
+                }
+            }
+            return kq;
         }
     }
 }

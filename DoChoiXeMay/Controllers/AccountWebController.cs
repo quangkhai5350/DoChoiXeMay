@@ -36,7 +36,8 @@ namespace DoChoiXeMay.Controllers
                     var kq = Mailer.Send(user_mem.EmailConnection, "Quên password được gửi từ tek-lightning", "password của bạn là: " + pas);
                     if (kq)
                     {
-                        ModelState.AddModelError("", "Đã gửi mật khẩu đến email " + user_mem.EmailConnection);
+                        Session["ThongbaoLogin"] = "Đã gửi mật khẩu đến email " + user_mem.EmailConnection;
+                        return Redirect("/Login");
                     }
                     else
                     {
@@ -49,7 +50,7 @@ namespace DoChoiXeMay.Controllers
                 }
                 
             }
-            return View("_ForgotPass");
+            return View();
         }
         public ActionResult _ChangeInFo(int Id)
         {

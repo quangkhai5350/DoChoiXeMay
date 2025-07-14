@@ -560,6 +560,8 @@
     <Content Include="Views\Active\GetListKHBHbyChiNhanh.cshtml" />
     <Content Include="Views\AccountWeb\_ForgotPass.cshtml" />
     <Content Include="Views\AccountWeb\_ChangeInFo.cshtml" />
+    <Content Include="Views\Active\GetListSNofchinhanhbyLo.cshtml" />
+    <Content Include="Views\Active\GetListSNobyLo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

@@ -34,16 +34,28 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-hover table-striped" style="margin-bottom:0">
+                    <thead>
+                        <tr class="canhgiua" style="background-color: #00bcd4">
+                            <th class="canhgiua">Stt</th>
+                            <th class="canhgiua">Tên VD</th>
+                            <th class="canhgiua">Vị trí</th>
+                            <th class="canhgiua">User</th>
+                            <th class="canhgiua">Update/Delete</th>
+                        </tr>
+                    </thead>
                     <tbody style="border: 2px solid black !important">
                         @foreach (DoChoiXeMay.Models.NoteKythuat Item in ViewBag.ViDeo)
                         {
                             var str = DoChoiXeMay.Areas.Admin.Data.XstringAdmin.Cutstring_getLastString(Item.NoiDung);
                             <tr class="canhgiua" style="border-bottom: 2px solid black !important">
-                                <td>@Item.SavenhieuFile</td>
+                                <td>@Item.Stt</td>
                                 <td>
                                     <a href="" onclick="chose_view(this.id);return false" id="@str">
                                         @Item.NoteName
                                     </a>
+                                </td>
+                                <td>
+                                    <a>@Item.HanhDong.TenHD</a>
                                 </td>
                                 <td>
                                     <a>@Item.UserTek.UserName</a>

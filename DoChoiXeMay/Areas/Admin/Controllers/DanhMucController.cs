@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using System.Windows.Documents;
+using static QRCoder.PayloadGenerator;
 
 namespace DoChoiXeMay.Areas.Admin.Controllers
 {
@@ -137,17 +138,20 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 }
 
                 var kqupdate = new ChiNhanhData().Update_ChiNhanh(CN, DBname);
+                string sms = "";
                 if (updateUser == 1)
                 {
                     Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + " và User Web, thành công.";
+                    sms = "Update chi nhánh Id=" + CN.Id + " và User Web, thành công.";
                 }
                 else
                 {
                     Session["ThongBaoListChiNhanh"] = "Update chi nhánh Id=" + CN.Id + ", thành công.";
+                    sms = "Update chi nhánh Id=" + CN.Id + ", thành công.";
                 }
-                var userid = int.Parse(Session["UserId"].ToString());
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "Update chi nhánh Id=" + CN.Id + "-" + DateTime.Now.ToString(), "");
+                //SMS hệ thống
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
                 if (requestUri != null)
@@ -215,19 +219,23 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 var user = dbc.UserTeks.FirstOrDefault(kh=>kh.Id == model.IdUser);
                 dbc.Ser_ChiNhanh.Remove(model);
                 dbc.SaveChanges();
-                if(User != null)
+                var sms = "";
+                if (User != null)
                 {
                     var UserD = dbc.UserTeks.Find(model.IdUser);
                     dbc.UserTeks.Remove(UserD);
                     dbc.SaveChanges();
                     Session["ThongBaoListChiNhanh"] = "Delete chi nhánh và User liên kết :" + model.TenChiNhanh + " thành công.";
+                    sms = "Delete chi nhánh và User liên kết :" + model.TenChiNhanh + " thành công.";
                 }
                 else
                 {
                     Session["ThongBaoListChiNhanh"] = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
+                    sms = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
                 }
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                            , Session["UserName"].ToString(), "Delete chi nhánh -" + model.TenChiNhanh + "-" + DateTime.Now.ToString(), "");
+                //SMS hệ thống
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
             }
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;
@@ -250,9 +258,10 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 dbc.Entry(LV).State = EntityState.Modified;
                 dbc.SaveChanges();
                 Session["ThongBaoLVChiNhanh"] = "Update Level chi nhánh Id=" + LV.Id + ", thành công.";
-                var userid = int.Parse(Session["UserId"].ToString());
-                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
-                        , Session["UserName"].ToString(), "Update Level chi nhánh Id=" + LV.Id + "-" + DateTime.Now.ToString(), "");
+                //SMS hệ thống
+                var sms = "Update Level chi nhánh Id=" + LV.Id + ", thành công.";
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
                 //tro lai trang truoc do 
                 var requestUri = Session["requestUri"] as string;
                 if (requestUri != null)
