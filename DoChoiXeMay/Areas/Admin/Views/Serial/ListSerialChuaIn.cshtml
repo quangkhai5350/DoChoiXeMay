@@ -5,6 +5,11 @@
 }
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="row">
+    <div class="Title_Notin" style="text-align:center">
+        <span class="">List Serial chưa In</span>
+    </div>
+</div>
+<div class="row">
     @if (Session["quyen"]!=null)
     {
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6">
@@ -13,9 +18,6 @@
             </a>
         </div>
     }
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 Title_Notin">
-        <span class="">List Serial chưa In</span>
-    </div>
 </div>
 <div class="row">
     <div class="col-md-8">
@@ -35,7 +37,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6">
                         <h5>List Serial Sản Phẩm</h5>
                     </div>
-                    
+
                 </div>
 
                 </div>
@@ -119,7 +121,7 @@
                         <button id="InBox" class="btn btn-success" style="margin-left:20px" data-action="InSNmoitaoBox?bang=2&soluong=" onclick="InBox()">
                             <i class="glyphicon glyphicon-print"></i>&nbsp;&nbsp; In S/N Box
                         </button>
-                        
+
                         <script>
                             function InBox() {
                                 var ma = $('#SoSNBOX').val();
@@ -144,12 +146,12 @@
                     <div class="col-md-2" style="text-align:right">
                         @ViewBag.TotalSerialBoXchuaIn
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-    
+
 </div>
 <script>
 

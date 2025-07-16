@@ -11,11 +11,14 @@
     }
 </style>
 <div class="">
-    <h2>List Serial đã Active </h2>
+    <div class="row">
+        <div class="Title_Notin" style="text-align:center">
+            <span class="">List Serial đã Active</span>
+        </div>
+    </div>
     <div class="panel panel-default" style="margin-top:10px">
         <div class="panel-heading">
             <div class="row">
-
                 <div class="pull-right label label-warning" style="margin-bottom: 5px; color: white; font-family: monospace; font-weight: bold; font-size: large">
                     @Session["ThongBaoListDaActive"]
                 </div>
@@ -40,7 +43,7 @@
                 </div>
             </div>
 
-            </div>
+        </div>
         <div class="panel-body">
             <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
             <div class="listDaAC">
@@ -63,14 +66,14 @@
             </div>
 
 
-                <ul class="pager">
-                    <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-                </ul>
+            <ul class="pager">
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+            </ul>
 
-            </div>
+        </div>
     </div>
 </div>
 <script>

@@ -12,6 +12,11 @@
     }
 </style>
 <div class="row">
+    <div class="Title_Notin" style="text-align:center">
+        <span>Bảng Thu Chi TeK</span>
+    </div>
+</div>
+<div class="row">
     @if (Session["quyen"].ToString() == "1")
     {
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6">
@@ -20,10 +25,6 @@
             </a>
         </div>
     }
-    
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 Title_Notin">
-        <span>Bảng Thu Chi TeK</span>
-    </div>
 </div>
 
 <div class="panel panel-default" style="margin-top:10px">
@@ -68,7 +69,7 @@
     <div class="panel-body">
         <img id="loading" hidden src="~/Areas/Admin/Content/img/loading.gif" />
         <div class="list">
-            
+
 
         </div>
     </div>
@@ -112,9 +113,9 @@
         var TCC = $('#SelectTC').val();
         var TNO = $('#SelectNo').val();
         var KeywordsTT = $('#KeywordsTT').val();
-        
+
         getTongSanPham(tungay, denngay, TCC,TNO,KeywordsTT, pageSize, pageNo);
-    
+
         $(".pager a:eq(0)").click(function () {
             if (pageNo > 0) {
                 pageNo = 0;
@@ -243,7 +244,7 @@
         var KeywordsTTT = $('#KeywordsTT').val();
         $("#loading").show();
         $(".list").css('display', 'none');
-        
+
         setTimeout(function () {
             $(".list").css('display', 'block');
             getTongSanPham(tungay, denngay, TCC,TNO,KeywordsTTT, pageSize, pageNo);
@@ -251,7 +252,7 @@
         }, 800);
         $("#loading").hide();
     };
-    
+
 </script>
 
 

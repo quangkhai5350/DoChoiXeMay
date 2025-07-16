@@ -64,17 +64,6 @@ namespace DoChoiXeMay
             var Max = dbc.aspnet_getVisitors.OrderByDescending(kh => kh.Id)
                                             .Take(1)
                                             .Single();
-            //var Maxold = dbc.aspnet_getVisitors.OrderByDescending(kh => kh.Id)
-            //                                .Skip(1)
-            //                                .Take(1)
-            //                                .Single();
-            //var MaxoldPre = dbc.aspnet_getVisitors.OrderByDescending(kh => kh.Id)
-            //                                .Skip(2)
-            //                                .Take(1)
-            //                                .Single();
-            //Application["VisiYesterday"] = Maxold.TongLuotTruyCap - MaxoldPre.TongLuotTruyCap;
-            //Application["Visitoday"] = Max.TongLuotTruyCap - Maxold.TongLuotTruyCap;
-            
                 if (int.Parse(text) > Max.TongLuotTruyCap)
                 {
                     var dayyy = Max.Ngay.ToShortDateString();
@@ -103,7 +92,7 @@ namespace DoChoiXeMay
                     }
                 }
         }
-        void Session_End(object sender, EventArgs e)
+        public void Session_End(object sender, EventArgs e)
         {
             //Xảy ra khi phiên làm việc không có gởi yêu cầu hoặc làm tươi trang aspx của ứng dụng web trong một khoảng thời gian (mặc định là 20 phút)
             Application.Lock();

@@ -3,8 +3,11 @@
     ViewBag.Title = "ListXuatNhapUser";
     Layout = "~/Areas/Admin/Views/Shared/_Layoutadmin.cshtml";
 }
-
-<h2>Bảng Xuất Nhập Của User @Session["UserName"]</h2>
+<div class="row">
+    <div class="Title_Notin" style="text-align:center">
+        <span class="">Bảng Xuất Nhập Của User @Session["UserName"]</span>
+    </div>
+</div>
 <script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <style>
     .canhgiua {
