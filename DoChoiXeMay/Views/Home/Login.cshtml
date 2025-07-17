@@ -6,6 +6,7 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link href="~/Content/Login_Style.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/jquery2.0.3.min.js"></script>
 <div class="container" style="width:100%;background-color: white; margin-top: 100px; border-radius: 4px 4px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.32);">
 
     <div class="omb_login">
@@ -25,13 +26,13 @@
                     <form class="omb_loginForm" action="" autocomplete="off" method="post">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input value="@ViewBag.UserName" type="text" class="form-control" name="UserName" placeholder="Tên tài khoản" required>
+                            <input value="aa" type="text" class="form-control" id="UserName" name="UserName" placeholder="Tên tài khoản" required>
                         </div>
                         <span class="help-block"></span>
 
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input value="@ViewBag.Password" type="password" class="form-control" name="Password" placeholder="Mật khẩu" required>
+                            <input value="" type="password" class="form-control" id="Password" name="Password" placeholder="Mật khẩu" required>
                         </div>
                         <span class="help-block">@Html.ValidationSummary(false, "", new { @class = "text-danger" })</span>
 
