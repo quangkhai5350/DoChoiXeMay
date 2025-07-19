@@ -37,18 +37,18 @@
         <div class="nav-inner">
             <!-- Site Logo -->
             <div class="site-logo">
-                @if (Session["UserName"] != null)
-                {
-                    <a href="/Active/IndexDL" id="logo-text" title="Click đến trang của NPP" class="scroll logo">
-                        <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
-                        <span class="Title_TC">@Session["UserName"].ToString()</span>
-                    </a>
-                }
-                else
+                @if (Session["UserName"] == null)
                 {
                     <a href="" id="logo-text" class="scroll logo">
                         <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
                         <span class="Title_TC">Trần Nguyễn TechZone</span>
+                    </a>
+                }
+                else
+                {
+                    <a href="/Active/IndexDL" id="logo-text" title="Click đến trang của NPP" class="scroll logo">
+                        <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" style="width:50px;margin-bottom:10px" />
+                        <span class="Title_TC">@Session["UserName"].ToString()</span>
                     </a>
                 }
 
@@ -59,7 +59,7 @@
                 <ul class="nav uppercase">
                     <li style="display:inline-block !important"><a href="/Home/Index" class="scroll">Home</a></li>
 
-                    @if (Session["UserName"] != null)
+                    @if (Session["UserName"] != null && Session["idchinhanhAt"] !=null)
                     {
                         <li style="display:inline-block !important"><a href="/AccountWeb/_ChangeInFo/@int.Parse(Session["idchinhanhAt"].ToString())" class="scroll">ThongTinTaiKhoan</a></li>
                         <li style="display:inline-block !important"><a href="/Home/LogOut" class="scroll">LogOut</a></li>

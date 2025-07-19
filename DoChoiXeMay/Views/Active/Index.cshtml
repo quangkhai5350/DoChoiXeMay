@@ -19,8 +19,8 @@
 
         @using (Html.BeginForm("Index", "Active", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            var ND = @ViewBag.ND;
-            var NPP = @ViewBag.NPP;
+            var ND = ViewBag.ND;
+            var NPP = ViewBag.NPP;
             <div class="row omb_row-sm-offset-3">
                 <div class="col-xs-12 col-sm-6" style="padding-bottom:10px">
                     <form class="omb_loginForm" action="" autocomplete="off" method="post">
@@ -75,16 +75,16 @@
                         </div>
                         <p class="pull-right label label-warning" id="thongbaoSP"></p>
                         <div class="input-group" style="margin-bottom:5px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
                             <input value="" type="text" class="form-control" id="SerialSP" name="SerialSP" placeholder="S/N trên sản phẩm">
                         </div>
                         <p class="pull-right label label-warning" id="thongbaoBox"></p>
                         <div class="input-group" style="margin-bottom:5px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-warning-sign"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
                             <input value="" type="text" class="form-control" id="SerialBox" name="SerialBox" placeholder="S/N trên hộp">
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
                             <input value="" type="email" class="form-control" id="GmailND" name="GmailND" placeholder="Gmail Người Dùng" required>
                         </div>
                         <div class="input-group" style="margin-bottom:10px">
