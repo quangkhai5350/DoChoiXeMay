@@ -76,9 +76,12 @@
                         <td>
                             @if (int.Parse(Session["quyen"].ToString()) < 5)
                             {
+                                if(Item.Id > 1)
+                                {
+                                    <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.TenChiNhanh ??')" href="/Admin/DanhMuc/DeleteChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                                }
                                 <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateChiNhanhvaUser/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
-                                <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa LV Chi Nhánh: @Item.TenChiNhanh ??')" href="/Admin/DanhMuc/DeleteChiNhanh/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
-                            }
+                             }
                         </td>
                     </tr>
 

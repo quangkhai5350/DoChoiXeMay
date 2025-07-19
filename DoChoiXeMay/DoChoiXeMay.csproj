@@ -414,6 +414,7 @@
     <Content Include="Content\images\logo-icon.png" />
     <Content Include="Content\images\pattern-white.png" />
     <Content Include="Content\images\slider-arrows.png" />
+    <Content Include="Content\imgTeK\favicon.jpg" />
     <Content Include="Content\imgTeK\loading.gif" />
     <Content Include="Content\imgTeK\Namn.png" />
     <Content Include="Content\js\bootstrap.min.js" />

@@ -46,7 +46,8 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
         }
         public ActionResult GetListchinhanh()
         {
-            var model = dbc.Ser_ChiNhanh.OrderByDescending(kh => kh.Id)
+            var model = dbc.Ser_ChiNhanh.Where(kh=>kh.Id>0)
+                .OrderByDescending(kh => kh.Id)
                 .ThenByDescending(kh=>kh.IdLevel).ToList();
             ViewBag.GetListchinhanh = model;
             return PartialView(model);
@@ -215,27 +216,37 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             var userid = int.Parse(Session["UserId"].ToString());
             if(id > 1)
             {
-                var model = dbc.Ser_ChiNhanh.Find(id);
-                var user = dbc.UserTeks.FirstOrDefault(kh=>kh.Id == model.IdUser);
-                dbc.Ser_ChiNhanh.Remove(model);
-                dbc.SaveChanges();
-                var sms = "";
-                if (User != null)
+                try
                 {
-                    var UserD = dbc.UserTeks.Find(model.IdUser);
-                    dbc.UserTeks.Remove(UserD);
+                    var model = dbc.Ser_ChiNhanh.Find(id);
+                    var user = dbc.UserTeks.FirstOrDefault(kh => kh.Id == model.IdUser);
+                    dbc.Ser_ChiNhanh.Remove(model);
                     dbc.SaveChanges();
-                    Session["ThongBaoListChiNhanh"] = "Delete chi nhánh và User liên kết :" + model.TenChiNhanh + " thành công.";
-                    sms = "Delete chi nhánh và User liên kết :" + model.TenChiNhanh + " thành công.";
+                    var sms = "";
+                    if (User != null)
+                    {
+                        var UserD = dbc.UserTeks.Find(model.IdUser);
+                        dbc.UserTeks.Remove(UserD);
+                        dbc.SaveChanges();
+                        Session["ThongBaoListChiNhanh"] = "Delete chi nhánh và User liên kết :" + model.TenChiNhanh + " thành công.";
+                        sms = "Delete chi nhánh và User liên kết :" + model.TenChiNhanh + " thành công.";
+                    }
+                    else
+                    {
+                        Session["ThongBaoListChiNhanh"] = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
+                        sms = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
+                    }
+                    //SMS hệ thống
+                    new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                        , Session["quyen"].ToString(), sms);
                 }
-                else
-                {
-                    Session["ThongBaoListChiNhanh"] = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
-                    sms = "Delete chi nhánh :" + model.TenChiNhanh + " thành công.";
+                catch (Exception ex) {
+                    string message = ex.Message;
+                    Session["ThongBaoListChiNhanh"] = "Chi nhánh đã mua hàng, delete chi nhánh Không thành công!!!."+message;
+
+                    return RedirectToAction("Listchinhanh");
                 }
-                //SMS hệ thống
-                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
-                    , Session["quyen"].ToString(), sms);
+                
             }
             //tro lai trang truoc do 
             var requestUri = Session["requestUri"] as string;

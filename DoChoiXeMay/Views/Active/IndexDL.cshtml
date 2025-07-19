@@ -40,7 +40,7 @@
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
                             <span class="text-primary-emphasis">_Để kiểm tra thời gian bảo hành sản phẩm:</span>
-                            <span class="text-primary-emphasis"> * Chỉ cần 1 số serial trên sản phẩm(SP)*</span>
+                            <span class="text-primary-emphasis"> *Điền S/N vào danh sách đã active phía dưới.*</span>
                         </div>
 
 
@@ -56,16 +56,16 @@
                         </div>
                         <p class="pull-right label label-warning" id="thongbaoSP"></p>
                         <div class="input-group" style="margin-bottom:5px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
                             <input value="" type="text" class="form-control" id="SerialSP" name="SerialSP" placeholder="S/N trên sản phẩm">
                         </div>
                         <p class="pull-right label label-warning" id="thongbaoBox"></p>
                         <div class="input-group" style="margin-bottom:5px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-warning-sign"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-qrcode"></i></span>
                             <input value="" type="text" class="form-control" id="SerialBox" name="SerialBox" placeholder="S/N trên hộp">
                         </div>
                         <div class="input-group" style="margin-bottom:5px">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-import"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
                             <input value="" type="email" class="form-control" id="Gmail" name="Gmail" placeholder="Gmail người dùng" required>
                         </div>
                         <div class="input-group" style="margin-bottom:10px">
@@ -80,19 +80,19 @@
                             <p class="pull-right label label-warning" style="font-size:15px" id="thongbaoActive"></p>
                             <p class="pull-right label label-success" style="font-size:15px" id="thongbaoAcTC"></p>
                         </div>
-                        <div id="ThongtinBH">
+                        @*<div id="ThongtinBH">
                             <label class="col-md-12" id="tt1">@Session["thongtin1"]</label>
                             <label class="col-md-12" id="tt2">@Session["thongtin2"]</label>
                             <label class="col-md-12" id="tt3">@Session["thongtin3"]</label>
                             <label class="col-md-12" id="tt4">@Session["thongtin4"]</label>
-                        </div>
+                        </div>*@
                         <span class="help-block">@Html.ValidationSummary(false, "", new { @class = "text-danger" })</span>
-                        <div class="col-md-6">
+                        <div class="row" style="text-align:center">
                             <a class="btn btn-lg btn-primary btn-block" onclick="Kichhoatbh()"><span id="nameBH">Kíck hoạt BH </span> </a>
                         </div>
-                        <div class="col-md-6">
+                        @*<div class="col-md-6">
                             <a class="btn btn-lg btn-primary btn-block" onclick="kiemtrabh()"><span id="nameKT">Kiểm tra BH</span></a>
-                        </div>
+                        </div>*@
 
                     </form>
 
@@ -317,14 +317,7 @@
         getTongSanPhamAC(tungay, denngay, IdCN, KeywordsTTT);
 
     };
-    function kiemtrabh() {
-        if (!confirm("Bạn là đại Lý? Bạn cần đăng nhập web để kiểm tra BH điện tử. Nếu chưa có thông tin đăng nhập, hãy liên hệ Admin TeK.")) {
-            return false;
-        } else {
-            window.location.href = "/Active/IndexDL"
-            @*//@Url.Action("LoginWebGuest", "Home")*@
-        }
-    }
+    
     function Kichhoatbh() {
         var serialBox = $("#SerialBox").val()
         var serialSP = $("#SerialSP").val()
