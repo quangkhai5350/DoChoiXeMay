@@ -127,9 +127,9 @@
                     <div class="logo-Tek">
                         <p>
                             <img src="~/Areas/Admin/Content/img/logo/Teklogoo.png" alt="" class="avatartek" />
-                            @if (Session["UserName"] != null)
+                            @if (Session["UserName"] != null && Session["avatar"] != null)
                             {
-                                if (Session["avatar"] != null && Session["avatar"].ToString().Trim() != "")
+                                if (Session["avatar"].ToString().Trim() != "")
                                 {
                                     var tt = Session["avatar"].ToString();
                                     <img src="~/Content/imgTeK/@tt" alt="" class="avatartek" />
