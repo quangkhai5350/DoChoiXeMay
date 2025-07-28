@@ -563,6 +563,7 @@
     <Content Include="Views\AccountWeb\_ChangeInFo.cshtml" />
     <Content Include="Views\Active\GetListSNofchinhanhbyLo.cshtml" />
     <Content Include="Views\Active\GetListSNobyLo.cshtml" />
+    <Content Include="Views\Home\LoadVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\imgthuchi\" />

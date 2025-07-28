@@ -256,5 +256,21 @@ namespace DoChoiXeMay.Controllers
             Session.Clear();
             return Redirect("/warranty");
         }
+        public ActionResult LoadVideo()
+        {
+            //1=IdHanhDong:Admin & trangchu // 2=LoaiNoteId:Video global TeK
+            //0 = IdHanhDong:Page Admin // 1=LoaiNoteId:Hướng dẫn TeK
+            var model = dbc.NoteKythuats.Where(kh => kh.IdHanhDong == 1 && kh.LoaiNoteId == 2)
+                        .OrderByDescending(kh => kh.Id)
+                        .ToList();
+            ViewBag.Video1_kh = model.Take(1).ToList();
+            for (int i = 0; i < model.Count(); i++)
+            {
+                model[i].Id = i + 1;
+            }
+            ViewBag.Video_kh = model;
+            ViewBag.totalvd = model.Count();
+            return PartialView();
+        }
     }
 }
