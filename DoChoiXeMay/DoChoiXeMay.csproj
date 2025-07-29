@@ -400,6 +400,8 @@
     <Content Include="Content\css\reset.css" />
     <Content Include="Content\css\responsive.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont862f.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular-2.html" />
     <Content Include="Content\fonts\glyphicons-halflings-regular-3.html" />
@@ -410,6 +412,7 @@
     <Content Include="Content\images\bgd\background6.jpg" />
     <Content Include="Content\images\bgd\horse.png" />
     <Content Include="Content\images\icons8-zalo-48.png" />
+    <Content Include="Content\images\icons8-zalo-50.png" />
     <Content Include="Content\images\logo-icon.jpg" />
     <Content Include="Content\images\logo-icon.png" />
     <Content Include="Content\images\pattern-white.png" />
@@ -433,6 +436,7 @@
     <Content Include="Content\js\SmoothScroll.js" />
     <Content Include="Content\Login_Style.css" />
     <Content Include="favicon.jpg" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -529,6 +533,11 @@
     <Content Include="Areas\Admin\Views\NoteKyThuat\HinhTrangChu.cshtml" />
     <Content Include="Areas\Admin\Views\NoteKyThuat\GetHinhTrangChu.cshtml" />
     <Content Include="Areas\Admin\Views\NoteKyThuat\UpdateHTC.cshtml" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
