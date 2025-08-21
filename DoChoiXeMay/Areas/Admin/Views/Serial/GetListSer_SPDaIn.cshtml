@@ -17,6 +17,7 @@
         <tbody style="border: 2px solid black !important">
             @foreach (DoChoiXeMay.Models.Ser_sp Item in ViewBag.SerSPDaIn)
             {
+                var tang = Item.HangTangKhongBan;
                 <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                     <td>@Item.Stt</td>
                     <td>
@@ -41,9 +42,18 @@
                     <td>
                         @Item.Idver
                     </td>
-                    <td>
-                        @Item.HangTangKhongBan
-                    </td>
+                    @if (tang)
+                    {
+                        <td style="background-color:yellow">
+                            @tang
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @tang
+                        </td>
+                    }
 
                 </tr>
 

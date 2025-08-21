@@ -24,6 +24,7 @@
                 <th class="canhgiua">SDT ChiNhanh</th>
                 <th class="canhgiua">Trạng Thái</th>
                 <th class="canhgiua">Lô sx</th>
+                <th class="canhgiua">Tặng</th>
                 <th class="canhgiua">Hết hạn</th>
                 <th class="canhgiua">Update</th>
             </tr>
@@ -36,6 +37,7 @@
                 {
                     var chinhanh = dmdata.GetChiNhanhbyID(Item.IdChiNhanh);
                     var hh = DateTime.Parse(Item.Ghichu);
+                    var tang = Item.Ser_sp.HangTangKhongBan;
                     <tr class="canhgiua" style="border-bottom: 2px solid black !important">
                         <td>@Item.NgayKichHoat</td>
                         <td>@Item.Ser_box.Serial</td>
@@ -59,7 +61,7 @@
                             }
                             else if (chinhanh.Id == 1)
                             {
-                                <span>Cá Nhân</span>
+                                <span style="background-color:lightblue">Cá Nhân</span>
                             }
                             else
                             {
@@ -75,6 +77,18 @@
                         <td>
                             @Item.Ser_sp.LoSanXuat
                         </td>
+                        @if (tang)
+                        {
+                            <td style="background-color:yellow">
+                                @tang
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @tang
+                            </td>
+                        }
                         <td>
                             @if (DateTime.Now > hh)
                             {
