@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "E:\\GitHubDestop\\DoChoiXeMay\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|e:\\githubdestop\\dochoixemay\\dochoixemay\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{8894686E-1D79-4197-B802-AD8B3C67A1D8}|DoChoiXeMay\\DoChoiXeMay.csproj|solutionrelative:dochoixemay\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
@@ -43,19 +47,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "DoChoiXeMay\\Views\\Home\\Index.cshtml",
+              "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "DoChoiXeMay\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAKIAAAAAAAAAAAAAAKoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-24T12:57:33.625Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Web.config",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Web.config",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Web.config",
               "ToolTip": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Web.config",
               "RelativeToolTip": "DoChoiXeMay\\Web.config",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAEcAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAEgAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
               "WhenOpened": "2025-08-24T12:43:28.937Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "GetListDaActive.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Active\\GetListDaActive.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Active\\GetListDaActive.cshtml",
@@ -68,7 +85,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Active\\Index.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Active\\Index.cshtml",
@@ -80,7 +97,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "GetListSer_SPDaIn.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\GetListSer_SPDaIn.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\Serial\\GetListSer_SPDaIn.cshtml",
@@ -92,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "GetListLoaiHang.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\DanhMuc\\GetListLoaiHang.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\DanhMuc\\GetListLoaiHang.cshtml",
@@ -104,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ListLoaiHang.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\DanhMuc\\ListLoaiHang.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\DanhMuc\\ListLoaiHang.cshtml",
@@ -116,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Listchinhanh.cshtml",
               "DocumentMoniker": "E:\\GitHubDestop\\DoChoiXeMay\\DoChoiXeMay\\Areas\\Admin\\Views\\DanhMuc\\Listchinhanh.cshtml",
               "RelativeDocumentMoniker": "DoChoiXeMay\\Areas\\Admin\\Views\\DanhMuc\\Listchinhanh.cshtml",
