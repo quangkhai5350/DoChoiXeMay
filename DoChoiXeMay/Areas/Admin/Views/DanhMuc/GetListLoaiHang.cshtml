@@ -1,0 +1,53 @@
+﻿@using DoChoiXeMay.Models;
+@model IEnumerable<Ser_LoaiHang>
+<div class="table-responsive">
+    <table class="table table-hover table-striped" style="margin-bottom:0">
+        <thead>
+            <tr class="canhgiua" style="background-color: #00bcd4">
+                <th class="canhgiua">Id</th>
+                <th class="canhgiua">Tên Loại</th>
+                <th class="canhgiua">Tên Viettat</th>
+                <th class="canhgiua">Ghi Chú</th>
+                <th class="canhgiua">Ngày</th>
+                <th class="canhgiua">Update</th>
+            </tr>
+        </thead>
+        @if (Model != null)
+        {
+            Model1 dbc = new Model1();
+            <tbody style="border: 2px solid black !important">
+                @foreach (DoChoiXeMay.Models.Ser_LoaiHang Item in ViewBag.GetListLoaiHang)
+                {
+                    
+                    <tr class="canhgiua" style="border-bottom: 2px solid black !important">
+                        <td>@Item.Id</td>
+                        <td>@Item.Name</td>
+                        <td>@Item.Viettat</td>
+                        <td>
+                            @Item.Ghichu
+                        </td>
+                        <td>
+                            @Html.FormatValue(Item.Ngay, "{0:dd/MM/yyyy}")
+                        </td>
+                        
+                        <td>
+                            @if (int.Parse(Session["quyen"].ToString()) < 5)
+                            {
+                                if (Item.Id > 1)
+                                {
+                                    <a style="display:none" class="btn btn-warning" onclick="return confirm('Bạn muốn xóa Loại Hàng: @Item.Name ??')" href="/Admin/DanhMuc/DeleteLoaiHang/@Item.Id"><span class="glyphicon glyphicon-trash"></span></a>
+                                }
+                                <a class="btn btn-danger" href="/Admin/DanhMuc/UpdateLoaiHang/@Item.Id"><span class="glyphicon glyphicon-edit"></span></a>
+                            }
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        }
+
+
+    </table>
+
+</div>
+

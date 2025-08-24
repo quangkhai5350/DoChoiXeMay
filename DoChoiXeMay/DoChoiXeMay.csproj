@@ -538,6 +538,9 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\Admin\Views\DanhMuc\ListLoaiHang.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\GetListLoaiHang.cshtml" />
+    <Content Include="Areas\Admin\Views\DanhMuc\UpdateLoaiHang.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
