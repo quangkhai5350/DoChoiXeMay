@@ -39,6 +39,112 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
             ViewBag.GetNhatKy = model;
             return PartialView();
         }
+        public ActionResult ListLoaiHang()
+        {
+            Session["requestUri"] = "/Admin/DanhMuc/ListLoaiHang";
+            return View();
+        }
+        public ActionResult GetListLoaiHang()
+        {
+            var model = dbc.Ser_LoaiHang
+                .OrderByDescending(kh => kh.Id).ToList();
+            ViewBag.GetListLoaiHang = model;
+            return PartialView(model);
+        }
+        public ActionResult InsertLoaihang()
+        {
+            try
+            {
+                Ser_LoaiHang model = new Ser_LoaiHang();
+                model.Name = "TeK Auto";
+                model.Viettat = "TeK";
+                model.Ngay =DateTime.Now;
+                model.Ghichu = "Giải thích mục đích sử dụng.";
+                dbc.Ser_LoaiHang.Add(model);
+                dbc.SaveChanges();
+                Session["ThongBaoListLoaihang"] = "Insert Loại Hàng Auto thành công. Cần update để sử dụng.";
+                var userid = int.Parse(Session["UserId"].ToString());
+                var nhatky = Data.XuatNhapData.InsertNhatKy_Admin(dbc, userid, Session["quyen"].ToString()
+                            , Session["UserName"].ToString(), "Insert Loại Hàng - " + model.Name + "-" + DateTime.Now.ToString(), "");
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ListLoaiHang");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return RedirectToAction("ListLoaiHang");
+            }
+        }
+        public ActionResult DeleteLoaiHang(int id)
+        {
+            var userid = int.Parse(Session["UserId"].ToString());
+            if (id > 4)
+            {
+                try
+                {
+                    var model = dbc.Ser_LoaiHang.Find(id);
+                    dbc.Ser_LoaiHang.Remove(model);
+                    dbc.SaveChanges();
+                    Session["ThongBaoListLoaihang"] = "Delete Loại Hàng "+ model.Name +" thành công.";
+                    var sms = "Delete loại hàng "+model.Name;
+                    //SMS hệ thống
+                    new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                        , Session["quyen"].ToString(), sms);
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                    Session["ThongBaoListLoaihang"] = "Loại Hàng này đã được sử dụng, delete Không thành công!!!." + message;
+
+                    return RedirectToAction("ListLoaiHang");
+                }
+
+            }
+            //tro lai trang truoc do 
+            var requestUri = Session["requestUri"] as string;
+            if (requestUri != null)
+            {
+                return Redirect(requestUri);
+            }
+            return RedirectToAction("ListLoaiHang");
+        }
+        public ActionResult UpdateLoaiHang(int id)
+        {
+            var model = dbc.Ser_LoaiHang.Find(id);
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult UpdateLoaiHang(Ser_LoaiHang LH)
+        {
+            try
+            {
+                dbc.Entry(LH).State = EntityState.Modified;
+                dbc.SaveChanges();
+                Session["ThongBaoListLoaihang"] = "Update Loại Hàng Id=" + LH.Id + ", thành công.";
+                var sms = "Update LoaiHang "+ LH.Id +" thành công.";
+                //SMS hệ thống
+                new Data.UserData().SMSvaNhatKy(dbc, Session["UserId"].ToString(), Session["UserName"].ToString()
+                    , Session["quyen"].ToString(), sms);
+                //tro lai trang truoc do 
+                var requestUri = Session["requestUri"] as string;
+                if (requestUri != null)
+                {
+                    return Redirect(requestUri);
+                }
+                return RedirectToAction("ListLoaiHang");
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                ModelState.AddModelError("", "Update Thất Bại !!!!" + message);
+                return RedirectToAction("UpdateLoaiHang");
+            }
+        }
         public ActionResult Listchinhanh()
         {
             Session["requestUri"] = "/Admin/DanhMuc/Listchinhanh";
@@ -531,5 +637,6 @@ namespace DoChoiXeMay.Areas.Admin.Controllers
                 return View(Ma);
             }
         }
+
     }
 }
