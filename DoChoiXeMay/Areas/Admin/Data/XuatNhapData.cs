@@ -244,6 +244,7 @@ namespace DoChoiXeMay.Areas.Admin.Data
                     model.SoLuong = soluong;
                     model.GiaNhap = gianhap;
                     model.NgayAuto = DateTime.Now;
+                    model.IdLoai = 1;
                     model.Hinh1 = hinh1;
                     model.Hinh2 = hinh2;
                     model.Hinh3 = hinh3;
