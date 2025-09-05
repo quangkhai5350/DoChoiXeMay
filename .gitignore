@@ -40,9 +40,10 @@ bld/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
-# NUNIT
+# NUNIT 
 *.VisualState.xml
 TestResult.xml
+Web.config
 
 # Build Results of an ATL Project
 [Dd]ebugPS/
